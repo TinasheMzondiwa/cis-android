@@ -1,0 +1,95 @@
+<resources>
+
+    <style name="Widget.CIS.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemBackground">@color/color_background</item>
+        <item name="labelVisibilityMode">selected</item>
+    </style>
+
+    <style name="Widget.CIS.AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Surface">
+        <item name="android:background">?android:attr/windowBackground</item>
+    </style>
+
+    <style name="Widget.CIS.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="titleTextAppearance">@style/TextAppearance.CIS.Toolbar.Title</item>
+        <item name="searchViewStyle">@style/Widget.CIS.SearchView</item>
+    </style>
+
+    <style name="Widget.CIS.Button.TextButton.DoublePadding" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingStart">@dimen/spacing_double</item>
+        <item name="android:paddingEnd">@dimen/spacing_double</item>
+    </style>
+
+    <style name="Widget.CIS.Chip" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="android:textAppearance">@style/TextAppearance.CIS.Chip</item>
+        <item name="android:textColor">?attr/colorSurface</item>
+        <item name="chipBackgroundColor">?attr/colorOnBackground</item>
+        <item name="rippleColor">?attr/colorOnSurface</item>
+        <item name="closeIconTint">?attr/colorOnSurface</item>
+        <item name="chipIconTint">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="Widget.CIS.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Widget.CIS.TextEditText" parent="Widget.MaterialComponents.TextInputEditText.FilledBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Widget.CIS.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardElevation">@dimen/elevation_card_view</item>
+        <item name="cardBackgroundColor">@color/color_fill</item>
+        <item name="strokeWidth">@dimen/size_stroke</item>
+        <item name="strokeColor">@color/color_stroke</item>
+    </style>
+
+    <style name="Widget.CIS.ProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminate">true</item>
+    </style>
+
+    <style name="Widget.CIS.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="android:elevation">@dimen/elevation_bottom_sheet</item>
+    </style>
+
+    <style name="Widget.CIS.BottomSheet.Modal" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="behavior_peekHeight">@dimen/peek_height_bottom_sheet_modal</item>
+        <item name="behavior_skipCollapsed">true</item>
+    </style>
+
+    <style name="Widget.CIS.RecyclerView" parent="">
+        <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:clipToPadding">false</item>
+    </style>
+
+    <style name="ItemDecoration.CIS.Space" parent="">
+        <item name="android:paddingTop">@dimen/spacing_standard</item>
+        <item name="paddingHorizontal">@dimen/spacing_normal</item>
+    </style>
+
+    <style name="Widget.CIS.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="fontFamily">@font/proxima_nova_soft_bold</item>
+        <item name="android:textSize">@dimen/text_size_body</item>
+    </style>
+
+    <style name="Widget.CIS.Button.Text" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="fontFamily">@font/proxima_nova_soft_bold</item>
+        <item name="android:textSize">@dimen/text_size_body</item>
+    </style>
+
+    <style name="Widget.CIS.SearchView" parent="Widget.AppCompat.SearchView.ActionBar">
+        <item name="queryHint">@string/title_search</item>
+        <item name="searchIcon">@null</item>
+        <item name="iconifiedByDefault">false</item>
+        <item name="searchHintIcon">@null</item>
+    </style>
+
+</resources>

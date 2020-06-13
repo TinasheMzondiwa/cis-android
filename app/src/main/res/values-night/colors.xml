@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">@color/cis_gold</color>
+    <color name="color_primary_variant">@color/white</color>
+    <color name="color_secondary_variant">@color/cis_gold_dark</color>
+    <color name="color_surface">@color/dark_grey</color>
+    <color name="color_on_surface">@color/white</color>
+    <color name="color_background">@color/dark_grey</color>
+    <color name="color_background_secondary">#101818</color>
+    <color name="color_on_background">@color/white</color>
+    <color name="color_on_background_secondary">#fafafa</color>
+    <color name="color_status_bar">@color/color_background</color>
+    <color name="color_status_bar_main">@color/color_on_background_alpha_32</color>
+    <color name="color_navigation_bar_launcher">@color/color_background</color>
+    <color name="color_stroke">@color/color_on_background_alpha_16</color>
+    <color name="color_fill">@color/color_on_background_alpha_8</color>
+
+</resources>

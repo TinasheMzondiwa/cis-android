@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_hymns">
+
+    <fragment
+        android:id="@+id/navigation_hymns"
+        android:name="com.tinashe.christInSong.ui.hymns.HymnsFragment"
+        android:label="@string/title_hymns"
+        tools:layout="@layout/fragment_hymns" />
+
+    <fragment
+        android:id="@+id/navigation_collections"
+        android:name="com.tinashe.christInSong.ui.collections.CollectionsFragment"
+        android:label="@string/title_collections"
+        tools:layout="@layout/fragment_collections" />
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.tinashe.christInSong.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
+        android:id="@+id/navigation_info"
+        android:name="com.tinashe.christInSong.ui.info.InfoFragment"
+        android:label="@string/title_info"
+        tools:layout="@layout/fragment_info" />
+</navigation>

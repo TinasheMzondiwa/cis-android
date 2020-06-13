@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CIS.TextAppearance.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="CIS.TextAppearance.Medium" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="CIS.TextAppearance.Medium.Secondary">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="CIS.TextAppearance.Body" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+    </style>
+</resources>

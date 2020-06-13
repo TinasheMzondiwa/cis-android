@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SpaceItemDecoration">
+        <attr name="android:paddingTop" />
+        <attr name="paddingHorizontal" format="dimension" />
+    </declare-styleable>
+</resources>

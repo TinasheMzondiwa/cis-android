@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.CIS" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Color attributes -->
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryVariant">@color/color_primary_variant</item>
+        <item name="colorOnPrimary">@color/color_on_primary</item>
+        <item name="colorSecondary">@color/color_secondary</item>
+        <item name="colorSecondaryVariant">@color/color_secondary_variant</item>
+        <item name="colorOnSecondary">@color/color_on_secondary</item>
+        <item name="colorError">@color/color_error</item>
+        <item name="colorOnError">@color/color_on_error</item>
+        <item name="colorSurface">@color/color_surface</item>
+        <item name="colorOnSurface">@color/color_on_surface</item>
+        <item name="android:colorBackground">@color/color_background</item>
+        <item name="colorOnBackground">@color/color_on_background</item>
+        <!-- System bar attributes -->
+        <item name="android:statusBarColor">@color/color_status_bar</item>
+        <!-- Type attributes -->
+        <item name="android:fontFamily">@font/proxima_nova_soft_regular</item>
+        <item name="fontFamily">@font/proxima_nova_soft_regular</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.CIS.Headline6</item>
+        <item name="textAppearanceButton">@style/TextAppearance.CIS.Button</item>
+        <!-- Shape attributes -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.CIS.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.CIS.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.CIS.LargeComponent</item>
+        <!-- Widget style attributes -->
+        <item name="toolbarStyle">@style/Widget.CIS.Toolbar</item>
+        <item name="searchViewStyle">@style/Widget.CIS.SearchView</item>
+        <item name="bottomNavigationStyle">@style/Widget.CIS.BottomNavigationView</item>
+        <item name="appBarLayoutStyle">@style/Widget.CIS.AppBarLayout</item>
+        <item name="textInputStyle">@style/Widget.CIS.TextInputLayout</item>
+        <item name="materialCardViewStyle">@style/Widget.CIS.CardView</item>
+        <item name="chipStyle">@style/Widget.CIS.Chip</item>
+        <item name="buttonStyle">@style/Widget.CIS.Button</item>
+        <item name="android:listDivider">@drawable/list_divider</item>
+        <item name="android:progressBarStyle">@style/Widget.CIS.ProgressBar</item>
+        <item name="bottomSheetStyle">@style/Widget.CIS.BottomSheet</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.CIS.BottomSheetDialog</item>
+        <item name="recyclerViewStyle">@style/Widget.CIS.RecyclerView</item>
+    </style>
+
+    <style name="Theme.CIS.Main">
+        <!-- System bar attributes -->
+        <item name="android:statusBarColor">@color/color_status_bar_main</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="M">@bool/window_light_system_bar</item>
+        <item name="android:navigationBarColor">@color/color_navigation_bar_main</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">@bool/window_light_system_bar</item>
+    </style>
+
+    <style name="ThemeOverlay.CIS.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">@bool/window_light_system_bar</item>
+        <item name="bottomSheetStyle">@style/Widget.CIS.BottomSheet.Modal</item>
+    </style>
+
+    <style name="Theme.CIS.Dialog">
+        <item name="android:windowBackground">@color/scrim</item>
+    </style>
+
+    <style name="Theme.CIS.ProgressAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+</resources>
