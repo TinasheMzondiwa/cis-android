@@ -1,7 +1,7 @@
-package com.tinashe.christInSong.ui.info
+package com.tinashe.hymnal.ui.info
 
 import androidx.fragment.app.Fragment
-import com.tinashe.christInSong.R
+import com.tinashe.hymnal.R
 
 class InfoFragment : Fragment(R.layout.fragment_info) {
 }

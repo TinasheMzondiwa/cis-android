@@ -1,4 +1,4 @@
-package com.tinashe.christInSong
+package com.tinashe.hymnal
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

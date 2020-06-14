@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_hymns"
-        android:name="com.tinashe.christInSong.ui.hymns.HymnsFragment"
+        android:name="com.tinashe.hymnal.ui.hymns.HymnsFragment"
         android:label="@string/title_hymns"
         tools:layout="@layout/fragment_hymns" />
 
     <fragment
         android:id="@+id/navigation_collections"
-        android:name="com.tinashe.christInSong.ui.collections.CollectionsFragment"
+        android:name="com.tinashe.hymnal.ui.collections.CollectionsFragment"
         android:label="@string/title_collections"
         tools:layout="@layout/fragment_collections" />
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="com.tinashe.christInSong.ui.search.SearchFragment"
+        android:name="com.tinashe.hymnal.ui.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/navigation_info"
-        android:name="com.tinashe.christInSong.ui.info.InfoFragment"
+        android:name="com.tinashe.hymnal.ui.info.InfoFragment"
         android:label="@string/title_info"
         tools:layout="@layout/fragment_info" />
 </navigation>

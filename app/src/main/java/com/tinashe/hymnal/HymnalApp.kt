@@ -1,4 +1,4 @@
-package com.tinashe.christInSong
+package com.tinashe.hymnal
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

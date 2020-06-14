@@ -1,4 +1,4 @@
-package com.tinashe.christInSong.data.di
+package com.tinashe.hymnal.data.di
 
 import android.app.Application
 import android.content.Context

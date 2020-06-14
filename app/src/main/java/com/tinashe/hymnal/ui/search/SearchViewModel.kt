@@ -1,13 +1,14 @@
-package com.tinashe.christInSong.ui.hymns
+package com.tinashe.hymnal.ui.search
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class HymnsViewModel : ViewModel() {
+class SearchViewModel @ViewModelInject constructor() : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is hymns Fragment"
+        value = "This is search Fragment"
     }
     val text: LiveData<String> = _text
 }

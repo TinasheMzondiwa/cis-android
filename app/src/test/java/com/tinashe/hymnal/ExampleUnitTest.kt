@@ -1,4 +1,4 @@
-package com.tinashe.christInSong
+package com.tinashe.hymnal
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

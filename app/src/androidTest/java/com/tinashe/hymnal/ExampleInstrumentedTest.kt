@@ -1,4 +1,4 @@
-package com.tinashe.christInSong
+package com.tinashe.hymnal
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
