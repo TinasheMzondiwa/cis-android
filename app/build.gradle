@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 29
@@ -29,6 +30,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding = true
+    }
+    hilt {
+        enableTransformForLocalTests = true
+    }
 }
 
 dependencies {
@@ -45,6 +52,10 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${versions.coroutines}"
+
+    // Dagger
+    implementation "com.google.dagger:hilt-android:${versions.hilt_android}"
+    kapt "com.google.dagger:hilt-android-compiler:${versions.hilt_android}"
 
     implementation "com.jakewharton.timber:timber:${versions.timber}"
 
