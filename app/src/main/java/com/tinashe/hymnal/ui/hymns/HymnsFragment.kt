@@ -22,6 +22,6 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns) {
             textView.text = it
         })
 
-        viewModel.test()
+        viewModel.loadData()
     }
 }
