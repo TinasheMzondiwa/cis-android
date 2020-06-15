@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.tinashe.hymnal.R
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,7 +18,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         super.onViewCreated(view, savedInstanceState)
 
         val textView: TextView = view.findViewById(R.id.text_dashboard)
-        viewModel.text.observe(viewLifecycleOwner, {
+        viewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
     }

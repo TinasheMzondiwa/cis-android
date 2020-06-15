@@ -3,6 +3,7 @@ package com.tinashe.hymnal.data.di
 import android.content.Context
 import androidx.room.Room
 import com.tinashe.hymnal.data.db.HymnalDatabase
+import com.tinashe.hymnal.data.db.dao.CollectionsDao
 import com.tinashe.hymnal.data.db.dao.HymnalsDao
 import com.tinashe.hymnal.data.db.dao.HymnsDao
 import dagger.Module
@@ -25,4 +26,7 @@ object PersistenceModule {
 
     @Provides
     fun provideHymnsDao(database: HymnalDatabase): HymnsDao = database.hymnsDao()
+
+    @Provides
+    fun provideCollectionsDao(database: HymnalDatabase): CollectionsDao = database.collectionsDao()
 }
