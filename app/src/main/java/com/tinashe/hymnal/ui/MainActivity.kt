@@ -1,4 +1,4 @@
-package com.tinashe.hymnal
+package com.tinashe.hymnal.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 

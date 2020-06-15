@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.tinashe.hymnal">
 
     <application
+        android:name=".HymnalApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CIS"
-        android:name="com.tinashe.hymnal.HymnalApp">
+        android:theme="@style/Theme.CIS">
         <activity
-            android:name="com.tinashe.hymnal.MainActivity"
+            android:name="com.tinashe.hymnal.ui.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.CIS.Main">
             <intent-filter>
@@ -20,6 +21,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Initializers -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+
+            <meta-data
+                android:name="com.tinashe.hymnal.initializer.TimberInitializer"
+                android:value="androidx.startup" />
+
+        </provider>
     </application>
 
 </manifest>
