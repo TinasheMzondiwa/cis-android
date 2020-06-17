@@ -2,28 +2,26 @@ package com.tinashe.hymnal.ui.hymns
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.asLiveData
+import com.tinashe.hymnal.data.model.Hymn
+import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.data.repository.HymnalRepository
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import timber.log.Timber
+import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
+import com.tinashe.hymnal.extensions.arch.asLiveData
+import kotlinx.coroutines.flow.map
 
 class HymnsViewModel @ViewModelInject constructor(
     private val repository: HymnalRepository
 ) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is hymns Fragment"
-    }
-    val text: LiveData<String> = _text
+    private val mutableViewState = SingleLiveEvent<Status>()
+    val statusLiveData: LiveData<Status> = mutableViewState.asLiveData()
 
-    fun loadData() {
-        viewModelScope.launch {
-            repository.hymnsList().collect {
-                Timber.d("Hymns: ${it.size}")
-            }
+    val hymnListLiveData: LiveData<List<Hymn>> = repository.hymnsList()
+        .map {
+            mutableViewState.postValue(it.status)
+            it.data ?: emptyList()
         }
-    }
+        .asLiveData()
 }

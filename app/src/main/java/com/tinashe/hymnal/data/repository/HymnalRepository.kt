@@ -10,6 +10,7 @@ import com.tinashe.hymnal.data.db.dao.HymnsDao
 import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.data.model.json.JsonHymnal
+import com.tinashe.hymnal.data.model.response.Resource
 import com.tinashe.hymnal.utils.Helper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -30,12 +31,14 @@ class HymnalRepository(
             .build()
     }
 
-    fun hymnsList(): Flow<List<Hymn>> = flow {
+    fun hymnsList(): Flow<Resource<List<Hymn>>> = flow {
         val hymns = hymnalsDao.getHymns(DEF_CODE)
         if (hymns != null) {
-            emit(hymns.hymns)
+            emit(Resource.success(hymns.hymns))
             return@flow
         }
+
+        emit(Resource.loading())
 
         val sample = getSample()
         sample?.let { hymnal ->
@@ -43,10 +46,11 @@ class HymnalRepository(
             hymnsDao.insertAll(hymnal.hymns.map { it.toHymn(hymnal.key) })
         }
 
-        val data = hymnalsDao.getHymns(DEF_CODE)?.hymns ?: emptyList<Hymn>()
-        emit(data)
+        val data: List<Hymn> = hymnalsDao.getHymns(DEF_CODE)?.hymns ?: emptyList<Hymn>()
+        emit(Resource.success(data))
     }.catch {
         Timber.e(it)
+        emit(Resource.error(it))
     }.flowOn(Dispatchers.IO)
 
     private fun getSample(): JsonHymnal? {
