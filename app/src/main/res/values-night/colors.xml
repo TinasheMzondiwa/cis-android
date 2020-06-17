@@ -2,6 +2,7 @@
 <resources>
     <color name="color_primary">@color/cis_gold</color>
     <color name="color_primary_variant">@color/white</color>
+    <color name="color_secondary">@color/cis_gold</color>
     <color name="color_secondary_variant">@color/cis_gold_dark</color>
     <color name="color_surface">@color/dark_grey</color>
     <color name="color_on_surface">@color/white</color>

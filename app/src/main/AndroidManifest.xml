@@ -14,7 +14,8 @@
         <activity
             android:name="com.tinashe.hymnal.ui.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.CIS.Main">
+            android:theme="@style/Theme.CIS.Main"
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

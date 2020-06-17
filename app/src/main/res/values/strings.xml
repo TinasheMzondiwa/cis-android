@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">CIS</string>
+    <string name="title_hymnals">Hymnals</string>
     <string name="title_collections">Collections</string>
     <string name="title_hymns">Hymns</string>
     <string name="title_info">Info</string>

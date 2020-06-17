@@ -2,6 +2,7 @@ package com.tinashe.hymnal.ui.hymns
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.tinashe.hymnal.data.model.Hymn
@@ -18,10 +19,19 @@ class HymnsViewModel @ViewModelInject constructor(
     private val mutableViewState = SingleLiveEvent<Status>()
     val statusLiveData: LiveData<Status> = mutableViewState.asLiveData()
 
+    private val mutableHymnal = MutableLiveData<String>().apply {
+        value = "Christ In Song"
+    }
+    val hymnalTitleLiveData: LiveData<String> = mutableHymnal.asLiveData()
+
     val hymnListLiveData: LiveData<List<Hymn>> = repository.hymnsList()
         .map {
             mutableViewState.postValue(it.status)
             it.data ?: emptyList()
         }
         .asLiveData()
+
+    fun performSearch(query: String?) {
+        // perform search
+    }
 }

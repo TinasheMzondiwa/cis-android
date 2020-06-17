@@ -2,9 +2,11 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/coordinatorLayout">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height_main">
 
@@ -12,8 +14,8 @@
             android:id="@+id/toolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:expandedTitleMarginStart="@dimen/spacing_medium"
             app:collapsedTitleTextAppearance="@style/TextAppearance.CIS.Toolbar.Title"
+            app:expandedTitleMarginStart="@dimen/spacing_medium"
             app:expandedTitleTextAppearance="@style/CIS.TextAppearance.Toolbar.Expanded"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
