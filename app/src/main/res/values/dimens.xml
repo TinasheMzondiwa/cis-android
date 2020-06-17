@@ -39,6 +39,8 @@
     <dimen name="elevation_bottom_sheet">16dp</dimen>
     <dimen name="peek_height_bottom_sheet_modal">1000dp</dimen>
 
+    <dimen name="app_bar_height_main">120dp</dimen>
+    <dimen name="app_bar_anchor_width">48dp</dimen>
     <dimen name="app_bar_divider_height">0dp</dimen>
 
 </resources>

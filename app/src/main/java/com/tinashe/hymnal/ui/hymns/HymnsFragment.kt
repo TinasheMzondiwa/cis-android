@@ -47,8 +47,8 @@ class HymnsFragment : Fragment() {
                 progressBar.isVisible = it == Status.LOADING
             }
         }
-        viewModel.hymnListLiveData.observeNonNull(viewLifecycleOwner) {
-            listAdapter.submitList(ArrayList(it))
+        viewModel.hymnListLiveData.observeNonNull(viewLifecycleOwner) { hymns ->
+            listAdapter.submitList(ArrayList(hymns))
         }
     }
 }

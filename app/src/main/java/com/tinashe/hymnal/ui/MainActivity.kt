@@ -33,5 +33,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
+        binding.toolbarLayout.setupWithNavController(binding.toolbar, navController, appBarConfiguration)
     }
 }
