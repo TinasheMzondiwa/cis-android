@@ -32,9 +32,9 @@ class HymnalRepository(
     }
 
     fun hymnsList(): Flow<Resource<List<Hymn>>> = flow {
-        val hymns = hymnalsDao.getHymns(DEF_CODE)
-        if (hymns != null) {
-            emit(Resource.success(hymns.hymns))
+        val hymns = hymnsDao.listAll(DEF_CODE)
+        if (hymns.isNotEmpty()) {
+            emit(Resource.success(hymns))
             return@flow
         }
 
@@ -46,7 +46,7 @@ class HymnalRepository(
             hymnsDao.insertAll(hymnal.hymns.map { it.toHymn(hymnal.key) })
         }
 
-        val data: List<Hymn> = hymnalsDao.getHymns(DEF_CODE)?.hymns ?: emptyList<Hymn>()
+        val data: List<Hymn> = hymnsDao.listAll(DEF_CODE)
         emit(Resource.success(data))
     }.catch {
         Timber.e(it)
@@ -57,6 +57,10 @@ class HymnalRepository(
         val jsonString = Helper.getJson(context.resources, R.raw.sample)
         val adapter: JsonAdapter<JsonHymnal> = moshi.adapter(JsonHymnal::class.java)
         return adapter.fromJson(jsonString)
+    }
+
+    suspend fun searchHymns(query: String?): List<Hymn> {
+        return hymnsDao.search(DEF_CODE, "%${query ?: ""}%")
     }
 
     companion object {

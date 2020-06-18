@@ -4,13 +4,15 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.data.repository.HymnalRepository
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
 
 class HymnsViewModel @ViewModelInject constructor(
     private val repository: HymnalRepository
@@ -24,14 +26,23 @@ class HymnsViewModel @ViewModelInject constructor(
     }
     val hymnalTitleLiveData: LiveData<String> = mutableHymnal.asLiveData()
 
-    val hymnListLiveData: LiveData<List<Hymn>> = repository.hymnsList()
-        .map {
-            mutableViewState.postValue(it.status)
-            it.data ?: emptyList()
+    private val mutableHymnsList: MutableLiveData<List<Hymn>> by lazy {
+        MutableLiveData<List<Hymn>>().apply {
+            viewModelScope.launch {
+                value = repository.hymnsList()
+                    .map {
+                        mutableViewState.postValue(it.status)
+                        it.data ?: emptyList()
+                    }.toList(mutableListOf()).flatten()
+            }
         }
-        .asLiveData()
+    }
+    val hymnListLiveData: LiveData<List<Hymn>> get() = mutableHymnsList.asLiveData()
 
     fun performSearch(query: String?) {
-        // perform search
+        viewModelScope.launch {
+            val results = repository.searchHymns(query)
+            mutableHymnsList.postValue(results)
+        }
     }
 }

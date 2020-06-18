@@ -72,7 +72,7 @@ class HymnsFragment : Fragment() {
         inflater.inflate(R.menu.hymns_list, menu)
 
         val searchItem = menu.findItem(R.id.action_search)
-        val searchView : SearchView = searchItem.actionView as SearchView
+        val searchView: SearchView = searchItem.actionView as SearchView
         searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 appBarBehaviour?.setAppBarExpanded(false)
