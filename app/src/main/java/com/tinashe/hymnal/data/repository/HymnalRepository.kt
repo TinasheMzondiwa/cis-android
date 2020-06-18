@@ -3,7 +3,6 @@ package com.tinashe.hymnal.data.repository
 import android.content.Context
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.db.dao.HymnalsDao
 import com.tinashe.hymnal.data.db.dao.HymnsDao
@@ -22,14 +21,9 @@ import timber.log.Timber
 class HymnalRepository(
     private val context: Context,
     private val hymnalsDao: HymnalsDao,
-    private val hymnsDao: HymnsDao
+    private val hymnsDao: HymnsDao,
+    private val moshi: Moshi
 ) {
-
-    private val moshi: Moshi by lazy {
-        Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
-    }
 
     fun hymnsList(): Flow<Resource<List<Hymn>>> = flow {
         val hymns = hymnsDao.listAll(DEF_CODE)
