@@ -2,6 +2,9 @@ package com.tinashe.hymnal.data.di
 
 import android.app.Application
 import android.content.Context
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -20,4 +23,7 @@ object HymnalModule {
     fun provideMoshi(): Moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
+
+    @Provides
+    fun provideFirebaseDatabase(): FirebaseDatabase = Firebase.database
 }

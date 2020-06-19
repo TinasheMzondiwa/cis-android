@@ -17,6 +17,9 @@ ext.versions = [
         'hilt'              : '2.28-alpha',
         'hilt_androidx'     : '1.0.0-alpha01',
         'moshi'             : '1.9.3',
+        'fb_storage'        : '19.1.1',
+        'fb_database'       : '19.3.0',
+        'fb_auth'           : '19.3.1',
 
         // testing
         'junit'             : '4.13',

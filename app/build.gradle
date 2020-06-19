@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -76,6 +77,11 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$versions.hilt_androidx"
     kapt "com.google.dagger:hilt-android-compiler:${versions.hilt}"
     kapt "androidx.hilt:hilt-compiler:$versions.hilt_androidx"
+
+    // Firebase
+    implementation "com.google.firebase:firebase-storage-ktx:${versions.fb_storage}"
+    implementation "com.google.firebase:firebase-auth-ktx:${versions.fb_auth}"
+    implementation "com.google.firebase:firebase-database-ktx:${versions.fb_database}"
 
     implementation "com.squareup.moshi:moshi-kotlin:${versions.moshi}"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:${versions.moshi}"
