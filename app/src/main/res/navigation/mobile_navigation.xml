@@ -9,7 +9,21 @@
         android:id="@+id/navigation_hymns"
         android:name="com.tinashe.hymnal.ui.hymns.HymnsFragment"
         android:label="@string/title_hymns"
-        tools:layout="@layout/fragment_hymns" />
+        tools:layout="@layout/fragment_hymns" >
+        <action
+            android:id="@+id/action_navigation_hymns_to_hymnalListFragment"
+            app:destination="@id/hymnalListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/hymnalListFragment"
+        android:name="com.tinashe.hymnal.ui.hymns.list.HymnalListFragment"
+        android:label="@string/title_hymns"
+        tools:layout="@layout/hymnal_list_fragment" />
 
     <fragment
         android:id="@+id/navigation_collections"
@@ -28,4 +42,5 @@
         android:name="com.tinashe.hymnal.ui.info.InfoFragment"
         android:label="@string/title_info"
         tools:layout="@layout/fragment_info" />
+
 </navigation>
