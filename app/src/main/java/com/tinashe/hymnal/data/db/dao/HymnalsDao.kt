@@ -9,4 +9,7 @@ interface HymnalsDao : BaseDao<Hymnal> {
 
     @Query("SELECT * FROM hymnals ORDER BY title")
     fun listAll(): List<Hymnal>
+
+    @Query("SELECT * FROM hymnals WHERE code =:code")
+    fun findByCode(code: String): Hymnal?
 }

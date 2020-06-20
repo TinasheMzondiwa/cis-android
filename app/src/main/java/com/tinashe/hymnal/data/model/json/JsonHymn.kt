@@ -1,14 +1,17 @@
 package com.tinashe.hymnal.data.model.json
 
+import android.os.Parcelable
 import com.squareup.moshi.JsonClass
 import com.tinashe.hymnal.data.model.Hymn
+import kotlinx.android.parcel.Parcelize
 
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class JsonHymn(
     val title: String,
     val number: Int,
     val content: String
-) {
+): Parcelable {
     fun toHymn(book: String): Hymn = Hymn(
         id = 0,
         book = book,

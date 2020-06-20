@@ -17,10 +17,12 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.constants.Status
+import com.tinashe.hymnal.data.model.json.JsonHymnal
 import com.tinashe.hymnal.databinding.FragmentHymnsBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.AppBarBehaviour
 import com.tinashe.hymnal.ui.hymns.adapter.HymnListAdapter
+import com.tinashe.hymnal.ui.hymns.hymnals.HymnalListFragment.Companion.SELECTED_HYMNAL_KEY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -71,6 +73,14 @@ class HymnsFragment : Fragment() {
         viewModel.hymnListLiveData.observeNonNull(viewLifecycleOwner) { hymns ->
             listAdapter.submitList(ArrayList(hymns))
         }
+
+        findNavController()
+                .currentBackStackEntry
+                ?.savedStateHandle
+                ?.getLiveData<JsonHymnal>(SELECTED_HYMNAL_KEY)
+                ?.observeNonNull(viewLifecycleOwner) {
+                    viewModel.hymnalSelected(it)
+                }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

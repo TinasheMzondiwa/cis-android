@@ -2,11 +2,12 @@ package com.tinashe.hymnal.ui.hymns.hymnals.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.tinashe.hymnal.data.model.Hymnal
+import com.tinashe.hymnal.data.model.json.JsonHymnal
 
-class HymnalsListAdapter : RecyclerView.Adapter<HymnalViewHolder>() {
+class HymnalsListAdapter(private val hymnalSelected: (JsonHymnal) -> Unit) :
+        RecyclerView.Adapter<HymnalViewHolder>() {
 
-    var hymnals: List<Hymnal> = emptyList()
+    var hymnals: List<JsonHymnal> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -23,7 +24,7 @@ class HymnalsListAdapter : RecyclerView.Adapter<HymnalViewHolder>() {
         holder.bind(hymnal)
 
         holder.itemView.setOnClickListener {
-
+            hymnalSelected(hymnal)
         }
     }
 }

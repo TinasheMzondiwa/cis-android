@@ -7,18 +7,26 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.storage.FirebaseStorage
-import com.tinashe.hymnal.data.model.Hymnal
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import com.tinashe.hymnal.data.model.TitleLanguage
+import com.tinashe.hymnal.data.model.json.JsonHymn
+import com.tinashe.hymnal.data.model.json.JsonHymnal
 import com.tinashe.hymnal.data.model.response.Resource
+import com.tinashe.hymnal.utils.Helper
 import kotlinx.coroutines.tasks.await
 import timber.log.Timber
+import java.io.File
+import java.lang.reflect.Type
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class RemoteHymnsRepository(
         private val database: FirebaseDatabase,
         private val auth: FirebaseAuth,
-        private val storage: FirebaseStorage
+        private val storage: FirebaseStorage,
+        private val moshi: Moshi
 ) {
 
     private suspend fun checkAuthState() {
@@ -27,10 +35,10 @@ class RemoteHymnsRepository(
         }
     }
 
-    suspend fun listHymns(): Resource<List<Hymnal>> {
+    suspend fun listHymns(): Resource<List<JsonHymnal>> {
         return try {
             checkAuthState()
-            val data: List<Hymnal> = suspendCoroutine { continuation ->
+            val data: List<JsonHymnal> = suspendCoroutine { continuation ->
                 database.getReference("cis")
                         .addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onCancelled(error: DatabaseError) {
@@ -41,7 +49,7 @@ class RemoteHymnsRepository(
                                 val hymns = snapshot.children.mapNotNull { child ->
                                     child.key?.let { code ->
                                         child.getValue<TitleLanguage>()?.let {
-                                            Hymnal(code, it.title, it.language)
+                                            JsonHymnal(code, it.title, it.language)
                                         }
                                     }
                                 }
@@ -54,5 +62,40 @@ class RemoteHymnsRepository(
             Timber.e(ex)
             Resource.error(ex)
         }
+    }
+
+    suspend fun downloadHymnal(code: String): Resource<List<JsonHymn>?> {
+        return try {
+            checkAuthState()
+
+            val ref = storage.getReference("cis")
+                    .child("$code.$FILE_SUFFIX")
+            val localFile = createFile(code)
+            val snapshot = ref.getFile(localFile).await()
+            if (snapshot.error != null) {
+                Timber.e(snapshot.error)
+                Resource.error(snapshot.error!!)
+            } else {
+                val jsonString = Helper.getJson(localFile)
+                val hymnal = parseJson(jsonString)
+                Resource.success(hymnal)
+            }
+
+        } catch (ex: Exception) {
+            Timber.e(ex)
+            Resource.error(ex)
+        }
+    }
+
+    private fun createFile(code: String): File = File.createTempFile(code, FILE_SUFFIX)
+
+    private fun parseJson(jsonString: String): List<JsonHymn>? {
+        val listDataType: Type = Types.newParameterizedType(List::class.java, JsonHymn::class.java)
+        val adapter: JsonAdapter<List<JsonHymn>> = moshi.adapter(listDataType)
+        return adapter.fromJson(jsonString)
+    }
+
+    companion object {
+        private const val FILE_SUFFIX = "json"
     }
 }

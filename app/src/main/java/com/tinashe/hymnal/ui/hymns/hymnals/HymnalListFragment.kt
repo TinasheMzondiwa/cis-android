@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.tinashe.hymnal.databinding.HymnalListFragmentBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.hymns.hymnals.adapter.HymnalsListAdapter
@@ -19,7 +20,14 @@ class HymnalListFragment : Fragment() {
 
     private var binding: HymnalListFragmentBinding? = null
 
-    private val listAdapter: HymnalsListAdapter = HymnalsListAdapter()
+    private val listAdapter: HymnalsListAdapter = HymnalsListAdapter {
+        with(findNavController()) {
+            previousBackStackEntry
+                    ?.savedStateHandle
+                    ?.set(SELECTED_HYMNAL_KEY, it)
+            popBackStack()
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -42,4 +50,7 @@ class HymnalListFragment : Fragment() {
         viewModel.loadData()
     }
 
+    companion object {
+        const val SELECTED_HYMNAL_KEY = "arg:hymnal"
+    }
 }

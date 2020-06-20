@@ -24,18 +24,21 @@ object RepositoryModule {
     @Provides
     @ActivityRetainedScoped
     fun provideRepository(
-        context: Context,
-        hymnalsDao: HymnalsDao,
-        hymnsDao: HymnsDao,
-        moshi: Moshi,
-        hymnalPrefs: HymnalPrefs
-    ): HymnalRepository = HymnalRepository(context, hymnalsDao, hymnsDao, moshi, hymnalPrefs)
+            context: Context,
+            hymnalsDao: HymnalsDao,
+            hymnsDao: HymnsDao,
+            moshi: Moshi,
+            hymnalPrefs: HymnalPrefs,
+            remoteHymnsRepository: RemoteHymnsRepository
+    ): HymnalRepository = HymnalRepository(
+            context, hymnalsDao, hymnsDao, moshi, hymnalPrefs, remoteHymnsRepository)
 
     @Provides
     @ActivityRetainedScoped
-    fun provideRemoteRepository(): RemoteHymnsRepository = RemoteHymnsRepository(
-        Firebase.database,
-        Firebase.auth,
-        Firebase.storage
+    fun provideRemoteRepository(moshi: Moshi): RemoteHymnsRepository = RemoteHymnsRepository(
+            Firebase.database,
+            Firebase.auth,
+            Firebase.storage,
+            moshi
     )
 }
