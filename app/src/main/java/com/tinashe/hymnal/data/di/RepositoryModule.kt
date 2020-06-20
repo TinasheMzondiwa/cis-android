@@ -10,6 +10,7 @@ import com.tinashe.hymnal.data.db.dao.HymnalsDao
 import com.tinashe.hymnal.data.db.dao.HymnsDao
 import com.tinashe.hymnal.data.repository.HymnalRepository
 import com.tinashe.hymnal.data.repository.RemoteHymnsRepository
+import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,8 +27,9 @@ object RepositoryModule {
         context: Context,
         hymnalsDao: HymnalsDao,
         hymnsDao: HymnsDao,
-        moshi: Moshi
-    ): HymnalRepository = HymnalRepository(context, hymnalsDao, hymnsDao, moshi)
+        moshi: Moshi,
+        hymnalPrefs: HymnalPrefs
+    ): HymnalRepository = HymnalRepository(context, hymnalsDao, hymnsDao, moshi, hymnalPrefs)
 
     @Provides
     @ActivityRetainedScoped

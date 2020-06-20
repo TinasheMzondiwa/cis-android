@@ -66,6 +66,7 @@ dependencies {
     kapt "androidx.room:room-compiler:${versions.room}"
     implementation "androidx.startup:startup-runtime:${versions.startup}"
     implementation "androidx.paging:paging-runtime:${versions.paging}"
+    implementation "androidx.preference:preference-ktx:${versions.preference}"
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}"
