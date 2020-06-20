@@ -1,5 +1,6 @@
 package com.tinashe.hymnal.data.repository
 
+import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -10,6 +11,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
+import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.TitleLanguage
 import com.tinashe.hymnal.data.model.remote.RemoteHymn
 import com.tinashe.hymnal.data.model.remote.RemoteHymnal
@@ -26,8 +28,15 @@ class RemoteHymnsRepository(
         private val database: FirebaseDatabase,
         private val auth: FirebaseAuth,
         private val storage: FirebaseStorage,
-        private val moshi: Moshi
+        private val moshi: Moshi,
+        private val context: Context
 ) {
+
+    fun getSample(): RemoteHymnal? {
+        val jsonString = Helper.getJson(context.resources, R.raw.english)
+        val adapter: JsonAdapter<RemoteHymnal> = moshi.adapter(RemoteHymnal::class.java)
+        return adapter.fromJson(jsonString)
+    }
 
     private suspend fun checkAuthState() {
         if (auth.currentUser == null) {
@@ -39,7 +48,7 @@ class RemoteHymnsRepository(
         return try {
             checkAuthState()
             val data: List<RemoteHymnal> = suspendCoroutine { continuation ->
-                database.getReference("cis")
+                database.getReference(FOLDER)
                         .addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onCancelled(error: DatabaseError) {
                                 throw error.toException()
@@ -68,7 +77,7 @@ class RemoteHymnsRepository(
         return try {
             checkAuthState()
 
-            val ref = storage.getReference("cis")
+            val ref = storage.getReference(FOLDER)
                     .child("$code.$FILE_SUFFIX")
             val localFile = createFile(code)
             val snapshot = ref.getFile(localFile).await()
@@ -96,6 +105,7 @@ class RemoteHymnsRepository(
     }
 
     companion object {
+        private const val FOLDER = "cis"
         private const val FILE_SUFFIX = "json"
     }
 }

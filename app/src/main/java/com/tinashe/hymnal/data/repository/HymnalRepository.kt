@@ -1,9 +1,5 @@
 package com.tinashe.hymnal.data.repository
 
-import android.content.Context
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.db.dao.HymnalsDao
 import com.tinashe.hymnal.data.db.dao.HymnsDao
 import com.tinashe.hymnal.data.model.Hymn
@@ -12,7 +8,6 @@ import com.tinashe.hymnal.data.model.HymnalHymns
 import com.tinashe.hymnal.data.model.remote.RemoteHymnal
 import com.tinashe.hymnal.data.model.response.Resource
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
-import com.tinashe.hymnal.utils.Helper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -20,10 +15,8 @@ import kotlinx.coroutines.flow.flowOn
 import timber.log.Timber
 
 class HymnalRepository(
-        private val context: Context,
         private val hymnalsDao: HymnalsDao,
         private val hymnsDao: HymnsDao,
-        private val moshi: Moshi,
         private val prefs: HymnalPrefs,
         private val remoteHymnsRepository: RemoteHymnsRepository
 ) {
@@ -37,7 +30,7 @@ class HymnalRepository(
             hymnal == null && hymnalsDao.findByCode(selectedCode) == null -> {
                 emit(Resource.loading())
 
-                val sample = getSample()
+                val sample = remoteHymnsRepository.getSample()
                 sample?.let { json ->
                     hymnalsDao.insert(Hymnal(json.key, json.title, json.language))
                     hymnsDao.insertAll(json.hymns.map { it.toHymn(json.key) })
@@ -66,22 +59,15 @@ class HymnalRepository(
             }
         }
 
-        val data = hymnalsDao.findByCode(selectedCode)
-        val hymns = hymnsDao.listAll(selectedCode)
-        data?.let {
-            emit(Resource.success(HymnalHymns(data, hymns)))
+        hymnalsDao.findByCode(selectedCode)?.let {
+            val hymns = hymnsDao.listAll(selectedCode)
+            emit(Resource.success(HymnalHymns(it, hymns)))
         }
 
     }.catch {
         Timber.e(it)
         emit(Resource.error(it))
     }.flowOn(Dispatchers.IO)
-
-    private fun getSample(): RemoteHymnal? {
-        val jsonString = Helper.getJson(context.resources, R.raw.english)
-        val adapter: JsonAdapter<RemoteHymnal> = moshi.adapter(RemoteHymnal::class.java)
-        return adapter.fromJson(jsonString)
-    }
 
     suspend fun searchHymns(query: String?): List<Hymn> {
         return hymnsDao.search(selectedCode, "%${query ?: ""}%")
