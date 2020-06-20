@@ -1,7 +1,9 @@
 package com.tinashe.hymnal.data.model.response
 
 import com.tinashe.hymnal.data.model.constants.Status
-import com.tinashe.hymnal.data.model.constants.Status.*
+import com.tinashe.hymnal.data.model.constants.Status.ERROR
+import com.tinashe.hymnal.data.model.constants.Status.LOADING
+import com.tinashe.hymnal.data.model.constants.Status.SUCCESS
 
 class Resource<out T> private constructor(val status: Status = LOADING,
                                           val data: T?,

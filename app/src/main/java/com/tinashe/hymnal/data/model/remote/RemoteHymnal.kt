@@ -1,12 +1,12 @@
-package com.tinashe.hymnal.data.model.json
+package com.tinashe.hymnal.data.model.remote
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class JsonHymnal(
+data class RemoteHymnal(
         val key: String,
         val title: String,
         val language: String,
-        val hymns: List<JsonHymn> = emptyList()
+        val hymns: List<RemoteHymn> = emptyList()
 ) : Parcelable

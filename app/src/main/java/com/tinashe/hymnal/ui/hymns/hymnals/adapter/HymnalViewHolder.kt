@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.json.JsonHymnal
+import com.tinashe.hymnal.data.model.remote.RemoteHymnal
 import com.tinashe.hymnal.databinding.HymnalListItemBinding
 import com.tinashe.hymnal.extensions.tint
 import com.tinashe.hymnal.extensions.toColor
@@ -14,7 +14,7 @@ class HymnalViewHolder(private val containerView: View) : RecyclerView.ViewHolde
 
     private val binding: HymnalListItemBinding by lazy { HymnalListItemBinding.bind(containerView) }
 
-    fun bind(hymnal: JsonHymnal) {
+    fun bind(hymnal: RemoteHymnal) {
         binding.apply {
             icon.background.tint(COLORS.random().toColor())
             hymnalTitle.text = hymnal.title

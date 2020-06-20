@@ -11,8 +11,8 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.tinashe.hymnal.data.model.TitleLanguage
-import com.tinashe.hymnal.data.model.json.JsonHymn
-import com.tinashe.hymnal.data.model.json.JsonHymnal
+import com.tinashe.hymnal.data.model.remote.RemoteHymn
+import com.tinashe.hymnal.data.model.remote.RemoteHymnal
 import com.tinashe.hymnal.data.model.response.Resource
 import com.tinashe.hymnal.utils.Helper
 import kotlinx.coroutines.tasks.await
@@ -35,10 +35,10 @@ class RemoteHymnsRepository(
         }
     }
 
-    suspend fun listHymns(): Resource<List<JsonHymnal>> {
+    suspend fun listHymnals(): Resource<List<RemoteHymnal>> {
         return try {
             checkAuthState()
-            val data: List<JsonHymnal> = suspendCoroutine { continuation ->
+            val data: List<RemoteHymnal> = suspendCoroutine { continuation ->
                 database.getReference("cis")
                         .addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onCancelled(error: DatabaseError) {
@@ -46,14 +46,14 @@ class RemoteHymnsRepository(
                             }
 
                             override fun onDataChange(snapshot: DataSnapshot) {
-                                val hymns = snapshot.children.mapNotNull { child ->
+                                val hymnals = snapshot.children.mapNotNull { child ->
                                     child.key?.let { code ->
                                         child.getValue<TitleLanguage>()?.let {
-                                            JsonHymnal(code, it.title, it.language)
+                                            RemoteHymnal(code, it.title, it.language)
                                         }
                                     }
                                 }
-                                continuation.resume(hymns)
+                                continuation.resume(hymnals)
                             }
                         })
             }
@@ -64,7 +64,7 @@ class RemoteHymnsRepository(
         }
     }
 
-    suspend fun downloadHymnal(code: String): Resource<List<JsonHymn>?> {
+    suspend fun downloadHymns(code: String): Resource<List<RemoteHymn>?> {
         return try {
             checkAuthState()
 
@@ -77,8 +77,8 @@ class RemoteHymnsRepository(
                 Resource.error(snapshot.error!!)
             } else {
                 val jsonString = Helper.getJson(localFile)
-                val hymnal = parseJson(jsonString)
-                Resource.success(hymnal)
+                val hymns = parseJson(jsonString)
+                Resource.success(hymns)
             }
 
         } catch (ex: Exception) {
@@ -89,9 +89,9 @@ class RemoteHymnsRepository(
 
     private fun createFile(code: String): File = File.createTempFile(code, FILE_SUFFIX)
 
-    private fun parseJson(jsonString: String): List<JsonHymn>? {
-        val listDataType: Type = Types.newParameterizedType(List::class.java, JsonHymn::class.java)
-        val adapter: JsonAdapter<List<JsonHymn>> = moshi.adapter(listDataType)
+    private fun parseJson(jsonString: String): List<RemoteHymn>? {
+        val listDataType: Type = Types.newParameterizedType(List::class.java, RemoteHymn::class.java)
+        val adapter: JsonAdapter<List<RemoteHymn>> = moshi.adapter(listDataType)
         return adapter.fromJson(jsonString)
     }
 

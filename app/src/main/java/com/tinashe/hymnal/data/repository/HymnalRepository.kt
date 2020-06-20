@@ -9,7 +9,7 @@ import com.tinashe.hymnal.data.db.dao.HymnsDao
 import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.data.model.HymnalHymns
-import com.tinashe.hymnal.data.model.json.JsonHymnal
+import com.tinashe.hymnal.data.model.remote.RemoteHymnal
 import com.tinashe.hymnal.data.model.response.Resource
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import com.tinashe.hymnal.utils.Helper
@@ -30,7 +30,7 @@ class HymnalRepository(
 
     private val selectedCode: String get() = prefs.getSelectedHymnal()
 
-    fun getHymns(selectedHymnal: JsonHymnal? = null) = flow {
+    fun getHymns(selectedHymnal: RemoteHymnal? = null) = flow {
         val hymnal = hymnalsDao.findByCode(selectedHymnal?.key ?: selectedCode)
 
         when {
@@ -47,7 +47,7 @@ class HymnalRepository(
             selectedHymnal != null && hymnalsDao.findByCode(selectedHymnal.key) == null -> {
                 emit(Resource.loading())
                 // fetch remote hymnal
-                val resource = remoteHymnsRepository.downloadHymnal(
+                val resource = remoteHymnsRepository.downloadHymns(
                         selectedHymnal.key)
 
                 if (resource.isSuccessFul) {
@@ -77,9 +77,9 @@ class HymnalRepository(
         emit(Resource.error(it))
     }.flowOn(Dispatchers.IO)
 
-    private fun getSample(): JsonHymnal? {
+    private fun getSample(): RemoteHymnal? {
         val jsonString = Helper.getJson(context.resources, R.raw.english)
-        val adapter: JsonAdapter<JsonHymnal> = moshi.adapter(JsonHymnal::class.java)
+        val adapter: JsonAdapter<RemoteHymnal> = moshi.adapter(RemoteHymnal::class.java)
         return adapter.fromJson(jsonString)
     }
 

@@ -8,5 +8,7 @@ data class HymnalHymns(
 ) {
     constructor(hymnal: Hymnal, hymns: List<Hymn>) : this(
             hymnal.code,
-            hymnal.title, hymnal.language, hymns)
+            hymnal.title,
+            hymnal.language,
+            hymns)
 }
