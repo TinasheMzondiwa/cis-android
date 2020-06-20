@@ -11,7 +11,8 @@ import com.tinashe.hymnal.extensions.arch.asLiveData
 import kotlinx.coroutines.launch
 
 class HymnalListViewModel @ViewModelInject constructor(
-        private val repository: RemoteHymnsRepository) : ViewModel() {
+    private val repository: RemoteHymnsRepository
+) : ViewModel() {
 
     private val mutableHymnalList = MutableLiveData<List<RemoteHymnal>>()
     val hymnalListLiveData: LiveData<List<RemoteHymnal>> = mutableHymnalList.asLiveData()

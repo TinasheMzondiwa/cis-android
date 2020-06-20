@@ -1,13 +1,13 @@
 package com.tinashe.hymnal.data.model.response
 
 import com.tinashe.hymnal.data.model.constants.Status
-import com.tinashe.hymnal.data.model.constants.Status.ERROR
-import com.tinashe.hymnal.data.model.constants.Status.LOADING
-import com.tinashe.hymnal.data.model.constants.Status.SUCCESS
+import com.tinashe.hymnal.data.model.constants.Status.*
 
-class Resource<out T> private constructor(val status: Status = LOADING,
-                                          val data: T?,
-                                          val error: Throwable?) {
+class Resource<out T> private constructor(
+    val status: Status = LOADING,
+    val data: T?,
+    val error: Throwable?
+) {
 
     val isSuccessFul: Boolean get() = data != null
 

@@ -2,12 +2,7 @@ package com.tinashe.hymnal.ui.hymns
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -44,9 +39,9 @@ class HymnsFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return FragmentHymnsBinding.inflate(inflater, container, false).also {
             setHasOptionsMenu(true)
@@ -75,12 +70,12 @@ class HymnsFragment : Fragment() {
         }
 
         findNavController()
-                .currentBackStackEntry
-                ?.savedStateHandle
-                ?.getLiveData<RemoteHymnal>(SELECTED_HYMNAL_KEY)
-                ?.observeNonNull(viewLifecycleOwner) {
-                    viewModel.hymnalSelected(it)
-                }
+            .currentBackStackEntry
+            ?.savedStateHandle
+            ?.getLiveData<RemoteHymnal>(SELECTED_HYMNAL_KEY)
+            ?.observeNonNull(viewLifecycleOwner) {
+                viewModel.hymnalSelected(it)
+            }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

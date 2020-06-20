@@ -3,7 +3,7 @@ package com.tinashe.hymnal.extensions
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import androidx.core.graphics.drawable.DrawableCompat
-import java.util.Random
+import java.util.*
 
 /**
  * Returns a random element.

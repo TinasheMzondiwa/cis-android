@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 
 fun inflateView(@LayoutRes layoutResId: Int, parent: ViewGroup, attachToRoot: Boolean): View =
-        LayoutInflater.from(parent.context).inflate(layoutResId, parent, attachToRoot)
+    LayoutInflater.from(parent.context).inflate(layoutResId, parent, attachToRoot)
 
 fun RecyclerView.smoothScrollToPositionWithSpeed(
-        position: Int,
-        millisPerInch: Float = 25f
+    position: Int,
+    millisPerInch: Float = 25f
 ) {
     val scroller = object : LinearSmoothScroller(context) {
         override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics): Float {

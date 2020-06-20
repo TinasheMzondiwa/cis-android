@@ -19,7 +19,6 @@ class HymnListAdapter : ListAdapter<Hymn, HymnListAdapter.TitleHolder>(HymnsDiff
         holder.bind(item)
 
         holder.itemView.setOnClickListener {
-
         }
     }
 

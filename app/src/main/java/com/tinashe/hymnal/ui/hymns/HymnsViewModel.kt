@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class HymnsViewModel @ViewModelInject constructor(
-        private val repository: HymnalRepository
+    private val repository: HymnalRepository
 ) : ViewModel() {
 
     private val mutableViewState = SingleLiveEvent<Status>()

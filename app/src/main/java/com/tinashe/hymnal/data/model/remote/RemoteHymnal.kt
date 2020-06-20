@@ -5,8 +5,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class RemoteHymnal(
-        val key: String,
-        val title: String,
-        val language: String,
-        val hymns: List<RemoteHymn> = emptyList()
+    val key: String,
+    val title: String,
+    val language: String,
+    val hymns: List<RemoteHymn> = emptyList()
 ) : Parcelable

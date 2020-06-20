@@ -25,11 +25,11 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class RemoteHymnsRepository(
-        private val database: FirebaseDatabase,
-        private val auth: FirebaseAuth,
-        private val storage: FirebaseStorage,
-        private val moshi: Moshi,
-        private val context: Context
+    private val database: FirebaseDatabase,
+    private val auth: FirebaseAuth,
+    private val storage: FirebaseStorage,
+    private val moshi: Moshi,
+    private val context: Context
 ) {
 
     fun getSample(): RemoteHymnal? {
@@ -49,22 +49,22 @@ class RemoteHymnsRepository(
             checkAuthState()
             val data: List<RemoteHymnal> = suspendCoroutine { continuation ->
                 database.getReference(FOLDER)
-                        .addListenerForSingleValueEvent(object : ValueEventListener {
-                            override fun onCancelled(error: DatabaseError) {
-                                throw error.toException()
-                            }
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onCancelled(error: DatabaseError) {
+                            throw error.toException()
+                        }
 
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                val hymnals = snapshot.children.mapNotNull { child ->
-                                    child.key?.let { code ->
-                                        child.getValue<TitleLanguage>()?.let {
-                                            RemoteHymnal(code, it.title, it.language)
-                                        }
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val hymnals = snapshot.children.mapNotNull { child ->
+                                child.key?.let { code ->
+                                    child.getValue<TitleLanguage>()?.let {
+                                        RemoteHymnal(code, it.title, it.language)
                                     }
                                 }
-                                continuation.resume(hymnals)
                             }
-                        })
+                            continuation.resume(hymnals)
+                        }
+                    })
             }
             Resource.success(data)
         } catch (ex: Exception) {
@@ -78,7 +78,7 @@ class RemoteHymnsRepository(
             checkAuthState()
 
             val ref = storage.getReference(FOLDER)
-                    .child("$code.$FILE_SUFFIX")
+                .child("$code.$FILE_SUFFIX")
             val localFile = createFile(code)
             val snapshot = ref.getFile(localFile).await()
             if (snapshot.error != null) {
@@ -89,7 +89,6 @@ class RemoteHymnsRepository(
                 val hymns = parseJson(jsonString)
                 Resource.success(hymns)
             }
-
         } catch (ex: Exception) {
             Timber.e(ex)
             Resource.error(ex)

@@ -23,7 +23,6 @@ class ListSectionAdapter : RecyclerView.Adapter<SectionHolder>() {
     override fun onBindViewHolder(holder: SectionHolder, position: Int) {
         holder.binding.titleView.text = title
     }
-
 }
 
 class SectionHolder(private val containerView: View) : RecyclerView.ViewHolder(containerView) {
@@ -35,5 +34,4 @@ class SectionHolder(private val containerView: View) : RecyclerView.ViewHolder(c
             inflateView(R.layout.list_section_item, parent, false)
         )
     }
-
 }

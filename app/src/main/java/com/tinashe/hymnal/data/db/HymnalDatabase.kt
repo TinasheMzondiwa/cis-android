@@ -14,7 +14,9 @@ import com.tinashe.hymnal.data.model.Hymnal
     entities = [
         Hymnal::class,
         Hymn::class,
-        HymnCollection::class], version = 1, exportSchema = true
+        HymnCollection::class
+    ],
+    version = 1, exportSchema = true
 )
 @TypeConverters(DataTypeConverters::class)
 abstract class HymnalDatabase : RoomDatabase() {

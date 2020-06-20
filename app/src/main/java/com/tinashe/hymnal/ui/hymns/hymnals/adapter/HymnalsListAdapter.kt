@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tinashe.hymnal.data.model.remote.RemoteHymnal
 
 class HymnalsListAdapter(private val hymnalSelected: (RemoteHymnal) -> Unit) :
-        RecyclerView.Adapter<HymnalViewHolder>() {
+    RecyclerView.Adapter<HymnalViewHolder>() {
 
     var hymnals: List<RemoteHymnal> = emptyList()
         set(value) {
@@ -14,8 +14,7 @@ class HymnalsListAdapter(private val hymnalSelected: (RemoteHymnal) -> Unit) :
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HymnalViewHolder =
-            HymnalViewHolder.create(parent)
-
+        HymnalViewHolder.create(parent)
 
     override fun getItemCount(): Int = hymnals.size
 

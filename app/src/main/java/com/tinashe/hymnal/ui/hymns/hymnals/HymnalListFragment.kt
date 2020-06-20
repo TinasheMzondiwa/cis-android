@@ -23,15 +23,17 @@ class HymnalListFragment : Fragment() {
     private val listAdapter: HymnalsListAdapter = HymnalsListAdapter {
         with(findNavController()) {
             previousBackStackEntry
-                    ?.savedStateHandle
-                    ?.set(SELECTED_HYMNAL_KEY, it)
+                ?.savedStateHandle
+                ?.set(SELECTED_HYMNAL_KEY, it)
             popBackStack()
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return HymnalListFragmentBinding.inflate(inflater, container, false).also {
             binding = it
             binding?.apply {

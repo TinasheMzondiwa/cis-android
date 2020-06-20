@@ -21,6 +21,7 @@ ext.versions = [
         'fb_storage'        : '19.1.1',
         'fb_database'       : '19.3.0',
         'fb_auth'           : '19.3.1',
+        'ktlint'            : '0.37.1',
 
         // testing
         'junit'             : '4.13',

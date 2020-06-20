@@ -31,7 +31,7 @@ class HymnalViewHolder(private val containerView: View) : RecyclerView.ViewHolde
         private val COLORS = arrayListOf("#4b207f", "#5e3929", "#7f264a", "#2f557f", "#e36520", "#448d21", "#3e8391")
 
         fun create(parent: ViewGroup): HymnalViewHolder = HymnalViewHolder(
-                inflateView(R.layout.hymnal_list_item, parent, false)
+            inflateView(R.layout.hymnal_list_item, parent, false)
         )
     }
 }

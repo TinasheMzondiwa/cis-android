@@ -15,10 +15,10 @@ import kotlinx.coroutines.flow.flowOn
 import timber.log.Timber
 
 class HymnalRepository(
-        private val hymnalsDao: HymnalsDao,
-        private val hymnsDao: HymnsDao,
-        private val prefs: HymnalPrefs,
-        private val remoteHymnsRepository: RemoteHymnsRepository
+    private val hymnalsDao: HymnalsDao,
+    private val hymnsDao: HymnsDao,
+    private val prefs: HymnalPrefs,
+    private val remoteHymnsRepository: RemoteHymnsRepository
 ) {
 
     private val selectedCode: String get() = prefs.getSelectedHymnal()
@@ -41,7 +41,8 @@ class HymnalRepository(
                 emit(Resource.loading())
                 // fetch remote hymnal
                 val resource = remoteHymnsRepository.downloadHymns(
-                        selectedHymnal.key)
+                    selectedHymnal.key
+                )
 
                 if (resource.isSuccessFul) {
                     resource.data?.let { json ->
@@ -63,7 +64,6 @@ class HymnalRepository(
             val hymns = hymnsDao.listAll(selectedCode)
             emit(Resource.success(HymnalHymns(it, hymns)))
         }
-
     }.catch {
         Timber.e(it)
         emit(Resource.error(it))

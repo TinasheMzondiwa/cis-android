@@ -18,8 +18,11 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         super.onViewCreated(view, savedInstanceState)
 
         val textView: TextView = view.findViewById(R.id.text_notifications)
-        viewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+        viewModel.text.observe(
+            viewLifecycleOwner,
+            Observer {
+                textView.text = it
+            }
+        )
     }
 }

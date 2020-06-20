@@ -18,8 +18,11 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         super.onViewCreated(view, savedInstanceState)
 
         val textView: TextView = view.findViewById(R.id.text_dashboard)
-        viewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+        viewModel.text.observe(
+            viewLifecycleOwner,
+            Observer {
+                textView.text = it
+            }
+        )
     }
 }

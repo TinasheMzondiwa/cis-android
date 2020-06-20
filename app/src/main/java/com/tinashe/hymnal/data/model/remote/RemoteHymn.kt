@@ -11,7 +11,7 @@ data class RemoteHymn(
     val title: String,
     val number: Int,
     val content: String
-): Parcelable {
+) : Parcelable {
     fun toHymn(book: String): Hymn = Hymn(
         id = 0,
         book = book,
