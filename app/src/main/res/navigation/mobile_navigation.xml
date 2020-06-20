@@ -21,8 +21,8 @@
 
     <fragment
         android:id="@+id/hymnalListFragment"
-        android:name="com.tinashe.hymnal.ui.hymns.list.HymnalListFragment"
-        android:label="@string/title_hymns"
+        android:name="com.tinashe.hymnal.ui.hymns.hymnals.HymnalListFragment"
+        android:label="@string/title_hymnals"
         tools:layout="@layout/hymnal_list_fragment" />
 
     <fragment

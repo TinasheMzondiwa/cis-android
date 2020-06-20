@@ -21,9 +21,11 @@ object HymnalModule {
 
     @Provides
     fun provideMoshi(): Moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
+            .add(KotlinJsonAdapterFactory())
+            .build()
 
     @Provides
-    fun provideFirebaseDatabase(): FirebaseDatabase = Firebase.database
+    fun provideFirebaseDatabase(): FirebaseDatabase = Firebase.database.also {
+        it.setPersistenceEnabled(true)
+    }
 }

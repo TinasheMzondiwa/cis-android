@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.hymns.list.HymnalListFragment">
+    tools:context=".ui.hymns.hymnals.HymnalListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/hymnalsListView"
@@ -21,7 +21,6 @@
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
