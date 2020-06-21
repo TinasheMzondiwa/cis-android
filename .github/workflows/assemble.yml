@@ -1,9 +1,9 @@
-name: Debug workflow
+name: Testing workflow
 on: push
 
 jobs:
-  asembleProject:
-    name: Assemble Project
+  unitTests:
+    name: Run Unit Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -15,11 +15,10 @@ jobs:
         with:
           java-version: 1.8
 
-      # Step 2: Decode Google services configuration file
       - name: Decode google-services.json
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
         run: echo $FIREBASE_CONFIG > app/google-services.json
 
-      - name: Assemble project
-        run: ./gradlew bundleDebug
+      - name: Run unit tests
+        run: ./gradlew testDebugUnitTest
