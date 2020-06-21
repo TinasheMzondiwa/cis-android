@@ -40,7 +40,10 @@ class RemoteHymnsRepository(
 
     private suspend fun checkAuthState() {
         if (auth.currentUser == null) {
-            auth.signInAnonymously().await()
+            val result = auth.signInAnonymously().await()
+            if (result.user == null) {
+                throw IllegalStateException("Could not authenticate user")
+            }
         }
     }
 
