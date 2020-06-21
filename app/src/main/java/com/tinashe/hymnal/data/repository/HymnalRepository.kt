@@ -13,12 +13,14 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import timber.log.Timber
+import kotlin.coroutines.CoroutineContext
 
 class HymnalRepository(
     private val hymnalsDao: HymnalsDao,
     private val hymnsDao: HymnsDao,
     private val prefs: HymnalPrefs,
-    private val remoteHymnsRepository: RemoteHymnsRepository
+    private val remoteHymnsRepository: RemoteHymnsRepository,
+    private val backgroundContext: CoroutineContext = Dispatchers.IO
 ) {
 
     private val selectedCode: String get() = prefs.getSelectedHymnal()
@@ -67,7 +69,7 @@ class HymnalRepository(
     }.catch {
         Timber.e(it)
         emit(Resource.error(it))
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(backgroundContext)
 
     suspend fun searchHymns(query: String?): List<Hymn> {
         return hymnsDao.search(selectedCode, "%${query ?: ""}%")

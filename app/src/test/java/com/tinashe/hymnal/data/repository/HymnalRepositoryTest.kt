@@ -11,7 +11,7 @@ import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import com.tinashe.hymnal.utils.CoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.amshove.kluent.mock
 import org.amshove.kluent.shouldBeEqualTo
@@ -49,16 +49,17 @@ internal class HymnalRepositoryTest {
 
     private lateinit var repository: HymnalRepository
 
+    @ExperimentalCoroutinesApi
     @Before
     fun setup() {
         repository = HymnalRepository(
-            mockHymnalsDao, mockHymnsDao, mockPrefs, mockRemoteHymnsRepository
+            mockHymnalsDao, mockHymnsDao, mockPrefs, mockRemoteHymnsRepository, TestCoroutineDispatcher()
         )
     }
 
     @ExperimentalCoroutinesApi
     @Test
-    fun `should load sample hymnal on first launch`() = runBlocking {
+    fun `should load sample hymnal on first launch`() = runBlockingTest {
         // given
         val code = "english"
         val title = "Christ In Song"
@@ -74,8 +75,7 @@ internal class HymnalRepositoryTest {
 
         // when
         repository.getHymns().collect {
-            if (it.status == Status.LOADING) {
-            } else {
+            if (it.status == Status.SUCCESS) {
                 verify(mockHymnalsDao.insert(Hymnal(code, title, language)))
                 verify(mockHymnsDao.insertAll(hymns))
                 verify(mockPrefs.setSelectedHymnal(code))
