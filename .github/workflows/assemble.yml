@@ -13,7 +13,6 @@ jobs:
         env:
           LARGE_SECRET_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
 
-    assemble:
       - name: Assemble project
         runs-on: ubuntu-latest
         run: ./gradlew bundleDebug
