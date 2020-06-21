@@ -36,3 +36,33 @@
     <fields>;
     **[] values();
 }
+
+## Coroutines
+## https://github.com/Kotlin/kotlinx.coroutines/blob/master/core/kotlinx-coroutines-core/resources/META-INF/proguard/coroutines.pro
+
+# ServiceLoader support
+-keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
+-keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}
+-keepnames class kotlinx.coroutines.android.AndroidExceptionPreHandler {}
+-keepnames class kotlinx.coroutines.android.AndroidDispatcherFactory {}
+
+# Most of volatile fields are updated with AFU and should not be mangled
+-keepclassmembernames class kotlinx.** {
+    volatile <fields>;
+}
+
+## Jetpack Navigation
+
+-keepnames class androidx.navigation.fragment.NavHostFragment
+
+# Application model classes
+-keep class com.tinashe.hymnal.data.model.** { *; }
+
+# Ignore annotation used for build tooling.
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+
+# Ignore JSR 305 annotations for embedding nullability information.
+-dontwarn javax.annotation.**
+
+# Guarded by a NoClassDefFoundError try/catch and only used when on the classpath.
+-dontwarn kotlin.Unit
