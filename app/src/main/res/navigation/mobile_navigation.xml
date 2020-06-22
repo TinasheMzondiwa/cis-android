@@ -8,15 +8,27 @@
     <fragment
         android:id="@+id/navigation_hymns"
         android:name="com.tinashe.hymnal.ui.hymns.HymnsFragment"
-        android:label="@string/title_hymns"
-        tools:layout="@layout/fragment_hymns" >
+        android:label="@string/blank"
+        tools:layout="@layout/fragment_hymns">
         <action
             android:id="@+id/action_navigation_hymns_to_hymnalListFragment"
             app:destination="@id/hymnalListFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_singHymnsFragment"
+            app:destination="@id/singHymnsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                android:name="selected_hymn"
+                app:argType="integer"
+                android:defaultValue="1"/>
+        </action>
     </fragment>
 
     <fragment
@@ -24,6 +36,11 @@
         android:name="com.tinashe.hymnal.ui.hymns.hymnals.HymnalListFragment"
         android:label="@string/title_hymnals"
         tools:layout="@layout/hymnal_list_fragment" />
+
+    <fragment
+        android:id="@+id/singHymnsFragment"
+        android:name="com.tinashe.hymnal.ui.hymns.sing.SingHymnsFragment"
+        android:label="@string/blank" />
 
     <fragment
         android:id="@+id/navigation_collections"

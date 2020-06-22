@@ -17,7 +17,7 @@
             app:collapsedTitleTextAppearance="@style/TextAppearance.CIS.Toolbar.Title"
             app:expandedTitleMarginStart="@dimen/spacing_medium"
             app:expandedTitleTextAppearance="@style/CIS.TextAppearance.Toolbar.Expanded"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"

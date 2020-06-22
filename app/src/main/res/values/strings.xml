@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">CIS</string>
+    <string name="blank"/>
     <string name="title_hymnals">Hymnals</string>
     <string name="title_collections">Collections</string>
     <string name="title_hymns">Hymns</string>
     <string name="title_info">Info</string>
     <string name="title_search">Search</string>
+    <string name="title_sing">Sing</string>
+    <string name="title_text_format">Text Format</string>
 </resources>

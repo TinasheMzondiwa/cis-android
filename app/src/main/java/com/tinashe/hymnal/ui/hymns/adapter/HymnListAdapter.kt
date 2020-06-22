@@ -9,7 +9,9 @@ import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.databinding.HymnListItemBinding
 import com.tinashe.hymnal.extensions.view.inflateView
 
-class HymnListAdapter : ListAdapter<Hymn, HymnListAdapter.TitleHolder>(HymnsDiff) {
+class HymnListAdapter(
+    private val hymnSelected: (Hymn) -> Unit
+) : ListAdapter<Hymn, HymnListAdapter.TitleHolder>(HymnsDiff) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TitleHolder =
         TitleHolder.create(parent)
@@ -19,6 +21,7 @@ class HymnListAdapter : ListAdapter<Hymn, HymnListAdapter.TitleHolder>(HymnsDiff
         holder.bind(item)
 
         holder.itemView.setOnClickListener {
+            hymnSelected(item)
         }
     }
 

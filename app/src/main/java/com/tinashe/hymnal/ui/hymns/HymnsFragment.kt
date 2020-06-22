@@ -32,15 +32,17 @@ class HymnsFragment : Fragment() {
 
     private var binding: FragmentHymnsBinding? = null
 
-    private val listAdapter: HymnListAdapter = HymnListAdapter()
+    private val listAdapter: HymnListAdapter = HymnListAdapter {
+        val direction = HymnsFragmentDirections.actionSingHymnsFragment(it.number)
+        findNavController().navigate(direction)
+    }
 
     private var appBarBehaviour: AppBarBehaviour? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is AppBarBehaviour) {
-            appBarBehaviour = context
-        }
+        appBarBehaviour = context as? AppBarBehaviour
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -49,7 +51,6 @@ class HymnsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return FragmentHymnsBinding.inflate(inflater, container, false).also {
-            setHasOptionsMenu(true)
             binding = it
             binding?.hymnsListView?.apply {
                 addItemDecoration(DividerItemDecoration(context, VERTICAL))
