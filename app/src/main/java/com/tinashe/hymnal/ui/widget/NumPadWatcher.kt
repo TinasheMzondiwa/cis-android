@@ -1,4 +1,4 @@
-package com.tinashe.hymnal.ui.hymns.sing
+package com.tinashe.hymnal.ui.widget
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -43,8 +43,10 @@ class NumPadWatcher(
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        // no op
     }
 
     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        // no op
     }
 }

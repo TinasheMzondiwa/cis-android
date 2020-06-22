@@ -8,12 +8,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.text.isDigitsOnly
-import androidx.core.view.children
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -32,11 +26,6 @@ class SingHymnsFragment : Fragment() {
     private var binding: FragmentSingBinding? = null
 
     private var appBarBehaviour: AppBarBehaviour? = null
-
-    private val numPadContainer: ConstraintLayout? get() = binding?.sheet?.findViewById(R.id.numPadContainer)
-    private val btnBackSpace: View? get() = binding?.sheet?.findViewById(R.id.btnBackSpace)
-    private val txtNumber: EditText? get() = binding?.sheet?.findViewById(R.id.txtNumber)
-    private val btnGo: Button? get() = binding?.sheet?.findViewById(R.id.btnGo)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -78,40 +67,13 @@ class SingHymnsFragment : Fragment() {
         }
 
         binding?.apply {
-            numPadContainer?.children?.forEach {
-                if (it is Button) {
-                    it.setOnClickListener(btnClick)
-                }
-            }
-
-            txtNumber?.apply {
-                val watcher = NumPadWatcher(
-                    this,
-                    object : NumPadWatcher.Callbacks {
-                        override fun displayValidNumber(number: String) {
-                            btnGo?.isInvisible = false
-                        }
-
-                        override fun onInputEmpty() {
-                            btnGo?.isInvisible = true
-                        }
-                    }
-                )
-                txtNumber?.addTextChangedListener(watcher)
-                txtNumber?.setOnTouchListener { _, _ ->
-                    true
-                }
-
-                btnBackSpace?.setOnClickListener {
-                    val length = txtNumber?.text?.length ?: return@setOnClickListener
-                    if (length > 0) {
-                        txtNumber?.text?.delete(length - 1, length)
-                    }
-                }
+            numberPadView.setOnNumSelectedCallback {
+                hideNumPad()
+                viewPager.setCurrentItem(it.minus(1), false)
             }
 
             fabNumber.setOnClickListener {
-                txtNumber?.setText("")
+                numberPadView.onShown()
                 fabNumber.isExpanded = true
                 scrimOverLay.isVisible = true
             }
@@ -121,18 +83,6 @@ class SingHymnsFragment : Fragment() {
                 }
                 true
             }
-        }
-    }
-
-    private val btnClick = View.OnClickListener {
-        if (it.id == R.id.btnGo) {
-            hideNumPad()
-            val number = txtNumber?.text?.toString() ?: return@OnClickListener
-            if (number.isDigitsOnly()) {
-                binding?.viewPager?.setCurrentItem((number.toInt().minus(1)), false)
-            }
-        } else if (it is Button) {
-            txtNumber?.text?.append(it.text)
         }
     }
 

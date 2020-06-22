@@ -5,7 +5,7 @@
     android:id="@+id/numPadContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:background="?attr/colorPrimary">
+    android:background="?attr/colorPrimary">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/inputContainer"

@@ -27,7 +27,10 @@
         app:layout_behavior="com.google.android.material.transformation.FabTransformationSheetBehavior"
         tools:visibility="visible">
 
-        <include layout="@layout/number_pad" />
+        <com.tinashe.hymnal.ui.widget.NumberPadView
+            android:id="@+id/numberPadView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </com.google.android.material.circularreveal.CircularRevealFrameLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
