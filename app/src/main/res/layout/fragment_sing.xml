@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="?attr/colorPrimary"
+        android:elevation="@dimen/spacing_medium"
         android:visibility="invisible"
         app:layout_behavior="com.google.android.material.transformation.FabTransformationSheetBehavior"
         tools:visibility="visible">
@@ -30,7 +31,7 @@
         <com.tinashe.hymnal.ui.widget.NumberPadView
             android:id="@+id/numberPadView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </com.google.android.material.circularreveal.CircularRevealFrameLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -39,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/spacing_medium"
-        android:layout_marginBottom="@dimen/spacing_large"
+        android:layout_marginBottom="72dp"
         android:src="@drawable/ic_dialpad"
         app:backgroundTint="?attr/colorPrimary" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
