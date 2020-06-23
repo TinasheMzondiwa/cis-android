@@ -1,12 +1,13 @@
 package com.tinashe.hymnal.ui.hymns.sing
 
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.ui.hymns.sing.hymn.HymnFragment
 
 class SingFragmentsAdapter(
-    fragment: Fragment,
+    fragment: FragmentActivity,
     val hymns: List<Hymn>
 ) : FragmentStateAdapter(fragment) {
 

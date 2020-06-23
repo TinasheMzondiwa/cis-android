@@ -23,6 +23,7 @@ import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.AppBarBehaviour
 import com.tinashe.hymnal.ui.hymns.adapter.HymnListAdapter
 import com.tinashe.hymnal.ui.hymns.hymnals.HymnalListFragment.Companion.SELECTED_HYMNAL_KEY
+import com.tinashe.hymnal.ui.hymns.sing.SingHymnsActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,8 +34,8 @@ class HymnsFragment : Fragment() {
     private var binding: FragmentHymnsBinding? = null
 
     private val listAdapter: HymnListAdapter = HymnListAdapter {
-        val direction = HymnsFragmentDirections.actionSingHymnsFragment(it.number)
-        findNavController().navigate(direction)
+        val intent = SingHymnsActivity.singIntent(requireContext(), it.number)
+        startActivity(intent)
     }
 
     private var appBarBehaviour: AppBarBehaviour? = null

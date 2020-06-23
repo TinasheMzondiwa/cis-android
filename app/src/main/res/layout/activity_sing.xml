@@ -5,10 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/app_bar_divider_height"
+            android:layout_gravity="bottom"
+            android:background="@drawable/list_divider" />
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <View
         android:id="@+id/scrimOverLay"
@@ -22,11 +40,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?attr/colorPrimary"
+        android:background="@color/cis_gold"
         android:elevation="@dimen/spacing_medium"
         android:visibility="invisible"
         app:layout_behavior="com.google.android.material.transformation.FabTransformationSheetBehavior"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <com.tinashe.hymnal.ui.widget.NumberPadView
             android:id="@+id/numberPadView"
@@ -34,13 +52,21 @@
             android:layout_height="wrap_content" />
     </com.google.android.material.circularreveal.CircularRevealFrameLayout>
 
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:hideOnScroll="true"
+        app:fabAlignmentMode="end"
+        app:menu="@menu/sing_hymn_menu" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/spacing_medium"
-        android:layout_marginBottom="72dp"
         android:src="@drawable/ic_dialpad"
-        app:backgroundTint="?attr/colorPrimary" />
+        app:backgroundTint="@color/cis_gold"
+        app:layout_anchor="@id/bottomAppBar"
+        app:layout_behavior="com.tinashe.hymnal.ui.widget.ScrollAwareFABBehavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

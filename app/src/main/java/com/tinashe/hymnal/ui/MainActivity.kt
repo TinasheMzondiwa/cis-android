@@ -3,12 +3,10 @@ package com.tinashe.hymnal.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.ActivityMainBinding
-import com.tinashe.hymnal.ui.hymns.sing.SingHymnsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,19 +44,5 @@ class MainActivity : AppCompatActivity(), AppBarBehaviour {
 
     override fun setAppBarTitle(title: String) {
         binding.toolbarLayout.title = title
-    }
-
-    override fun onBackPressed() {
-        val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-        if (navHost is NavHostFragment) {
-            val fragments = navHost.childFragmentManager.fragments
-            if (fragments.isNotEmpty()) {
-                val fragment = fragments.first()
-                if (fragment is SingHymnsFragment && fragment.didHandleBackPress()) {
-                    return
-                }
-            }
-        }
-        super.onBackPressed()
     }
 }
