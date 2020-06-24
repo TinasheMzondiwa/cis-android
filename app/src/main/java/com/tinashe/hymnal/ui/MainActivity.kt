@@ -7,6 +7,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.ActivityMainBinding
+import com.tinashe.hymnal.extensions.activity.applyExitMaterialTransform
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity(), AppBarBehaviour {
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        applyExitMaterialTransform()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)

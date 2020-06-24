@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.ActivitySingBinding
+import com.tinashe.hymnal.extensions.activity.applyMaterialTransform
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +25,7 @@ class SingHymnsActivity : AppCompatActivity() {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
+        applyMaterialTransform(getString(R.string.transition_shared_element))
         super.onCreate(savedInstanceState)
         binding = ActivitySingBinding.inflate(layoutInflater)
         setContentView(binding.root)

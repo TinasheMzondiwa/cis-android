@@ -1,5 +1,6 @@
 package com.tinashe.hymnal.ui.hymns
 
+import android.app.ActivityOptions
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -33,9 +34,14 @@ class HymnsFragment : Fragment() {
 
     private var binding: FragmentHymnsBinding? = null
 
-    private val listAdapter: HymnListAdapter = HymnListAdapter {
-        val intent = SingHymnsActivity.singIntent(requireContext(), it.number)
-        startActivity(intent)
+    private val listAdapter: HymnListAdapter = HymnListAdapter { pair ->
+        val intent = SingHymnsActivity.singIntent(requireContext(), pair.first.number)
+        val options = ActivityOptions.makeSceneTransitionAnimation(
+            requireActivity(),
+            pair.second,
+            getString(R.string.transition_shared_element)
+        )
+        requireActivity().startActivity(intent, options.toBundle())
     }
 
     private var appBarBehaviour: AppBarBehaviour? = null
