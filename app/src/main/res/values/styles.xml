@@ -2,7 +2,7 @@
 
     <style name="Widget.CIS.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="itemBackground">@color/color_background</item>
-        <item name="labelVisibilityMode">selected</item>
+        <item name="labelVisibilityMode">labeled</item>
     </style>
 
     <style name="Widget.CIS.AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Surface">

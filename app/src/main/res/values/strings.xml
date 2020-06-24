@@ -7,5 +7,7 @@
     <string name="title_info">Info</string>
     <string name="title_search">Search</string>
     <string name="title_sing">Sing</string>
+    <string name="title_support">Support</string>
     <string name="title_text_format">Text Format</string>
+    <string name="empty_collections">Your Collection of hymns will appear here</string>
 </resources>

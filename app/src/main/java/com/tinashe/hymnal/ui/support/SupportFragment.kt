@@ -1,4 +1,4 @@
-package com.tinashe.hymnal.ui.search
+package com.tinashe.hymnal.ui.support
 
 import android.os.Bundle
 import android.view.View
@@ -10,9 +10,9 @@ import com.tinashe.hymnal.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(R.layout.fragment_search) {
+class SupportFragment : Fragment(R.layout.fragment_search) {
 
-    private val viewModel: SearchViewModel by viewModels()
+    private val viewModel: SupportViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

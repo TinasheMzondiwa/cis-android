@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), AppBarBehaviour {
                 setOf(
                     R.id.navigation_hymns,
                     R.id.navigation_collections,
-                    R.id.navigation_search,
+                    R.id.navigation_support,
                     R.id.navigation_info
                 )
             )
