@@ -33,6 +33,7 @@
             android:layout_marginTop="@dimen/spacing_large"
             android:text="@string/empty_collections"
             android:textAlignment="center"
+            android:textSize="@dimen/text_size_body"
             android:textAppearance="?attr/textAppearanceCaption"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -35,7 +35,7 @@
         android:id="@+id/navigation_support"
         android:name="com.tinashe.hymnal.ui.support.SupportFragment"
         android:label="@string/title_support"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_support" />
 
     <fragment
         android:id="@+id/navigation_info"
