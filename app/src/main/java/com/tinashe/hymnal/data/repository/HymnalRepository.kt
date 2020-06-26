@@ -5,6 +5,7 @@ import com.tinashe.hymnal.data.db.dao.HymnalsDao
 import com.tinashe.hymnal.data.db.dao.HymnsDao
 import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.data.model.HymnCollection
+import com.tinashe.hymnal.data.model.HymnCollectionModel
 import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.data.model.HymnalHymns
 import com.tinashe.hymnal.data.model.TitleBody
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
@@ -86,10 +88,18 @@ class HymnalRepository(
         return hymnsDao.search(selectedCode, "%${query ?: ""}%")
     }
 
-    fun getCollections(): Flow<List<HymnCollection>> = collectionsDao.listAll()
+    fun getCollections(): Flow<List<HymnCollectionModel>> {
+        return collectionsDao.listAll().map {
+            it.map { collection ->
+                HymnCollectionModel(collection, hymnsDao.collectionHymns(collection.id))
+            }
+        }
+    }
 
-    suspend fun searchCollections(query: String?): List<HymnCollection> {
-        return collectionsDao.searchFor("%${query ?: ""}%")
+    suspend fun searchCollections(query: String?): List<HymnCollectionModel> {
+        return collectionsDao.searchFor("%${query ?: ""}%").map { collection ->
+            HymnCollectionModel(collection, hymnsDao.collectionHymns(collection.id))
+        }
     }
 
     suspend fun addCollection(content: TitleBody) {
@@ -100,4 +110,6 @@ class HymnalRepository(
         )
         collectionsDao.insert(collection)
     }
+
+    suspend fun collectionHymns(id: Int): List<Hymn> = hymnsDao.collectionHymns(id)
 }

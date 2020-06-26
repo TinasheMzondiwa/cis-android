@@ -6,6 +6,9 @@
     <string name="error_required">Required</string>
     <string name="hint_description">Description (Optional)</string>
     <string name="hint_title">Title</string>
+    <string name="hymn_count_one">One Hymn</string>
+    <string name="hymn_count_other">%1$d Hymns</string>
+    <string name="hymn_count_zero">No Hymns</string>
     <string name="new_collection">New Collection</string>
     <string name="support_headline">Support us with a Donation!</string>
     <string name="support_message">If you find this app useful please consider supporting us with a donation.</string>

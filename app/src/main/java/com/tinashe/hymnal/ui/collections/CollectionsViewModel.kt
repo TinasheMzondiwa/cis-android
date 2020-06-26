@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tinashe.hymnal.data.model.HymnCollection
+import com.tinashe.hymnal.data.model.HymnCollectionModel
 import com.tinashe.hymnal.data.model.TitleBody
 import com.tinashe.hymnal.data.repository.HymnalRepository
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
@@ -20,8 +20,8 @@ class CollectionsViewModel @ViewModelInject constructor(
     private val mutableViewState = SingleLiveEvent<ViewState>()
     val viewStateLiveData: LiveData<ViewState> = mutableViewState.asLiveData()
 
-    private val mutableCollections = MutableLiveData<List<HymnCollection>>()
-    val collectionsLiveData: LiveData<List<HymnCollection>> = mutableCollections.asLiveData()
+    private val mutableCollections = MutableLiveData<List<HymnCollectionModel>>()
+    val collectionsLiveData: LiveData<List<HymnCollectionModel>> = mutableCollections.asLiveData()
 
     fun loadData() {
         mutableViewState.postValue(ViewState.LOADING)

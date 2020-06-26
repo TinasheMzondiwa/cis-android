@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="hymns_count">
+        <item quantity="one">@string/hymn_count_one</item>
+        <item quantity="other">@string/hymn_count_other</item>
+    </plurals>
+</resources>

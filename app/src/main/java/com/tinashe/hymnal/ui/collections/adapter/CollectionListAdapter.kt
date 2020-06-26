@@ -3,12 +3,12 @@ package com.tinashe.hymnal.ui.collections.adapter
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.tinashe.hymnal.data.model.HymnCollection
+import com.tinashe.hymnal.data.model.HymnCollectionModel
 
 class CollectionListAdapter(
-    private val callback: (Pair<HymnCollection, View>) -> Unit
+    private val callback: (Pair<HymnCollectionModel, View>) -> Unit
 ) :
-    ListAdapter<HymnCollection, CollectionHolder>(CollectionsDiff) {
+    ListAdapter<HymnCollectionModel, CollectionHolder>(CollectionsDiff) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionHolder {
         return CollectionHolder.create(parent)
