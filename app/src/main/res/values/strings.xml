@@ -1,6 +1,10 @@
 <resources>
+    <string name="add_to_collection">Add to Collection</string>
     <string name="app_name">CIS</string>
     <string name="blank"/>
+    <string name="hint_description">Description (Optional)</string>
+    <string name="hint_title">Title</string>
+    <string name="new_collection">New Collection</string>
     <string name="support_headline">Support us with a Donation!</string>
     <string name="support_message">If you find this app useful please consider supporting us with a donation.</string>
     <string name="title_hymnals">Hymnals</string>
@@ -8,9 +12,12 @@
     <string name="title_help">Help</string>
     <string name="title_hymns">Hymns</string>
     <string name="title_info">Info</string>
+    <string name="title_save">Save</string>
     <string name="title_search">Search</string>
     <string name="title_sing">Sing</string>
     <string name="title_support">Support</string>
     <string name="title_text_format">Text Format</string>
     <string name="empty_collections">Your Collection of hymns will appear here</string>
+    <string name="empty_collections_add">Create your first Collection</string>
+    <string name="title_new">New</string>
 </resources>

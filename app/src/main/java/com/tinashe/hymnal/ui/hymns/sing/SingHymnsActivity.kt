@@ -13,6 +13,7 @@ import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.ActivitySingBinding
 import com.tinashe.hymnal.extensions.activity.applyMaterialTransform
 import com.tinashe.hymnal.extensions.arch.observeNonNull
+import com.tinashe.hymnal.ui.collections.add.AddToCollectionFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -65,6 +66,23 @@ class SingHymnsActivity : AppCompatActivity() {
                 }
                 true
             }
+
+            bottomAppBar.setOnMenuItemClickListener {
+                return@setOnMenuItemClickListener when (it.itemId) {
+                    R.id.action_text_format -> {
+                        true
+                    }
+                    R.id.action_edit -> {
+                        true
+                    }
+                    R.id.action_add_to_list -> {
+                        val fragment = AddToCollectionFragment()
+                        fragment.show(supportFragmentManager, fragment.tag)
+                        true
+                    }
+                    else -> false
+                }
+            }
         }
     }
 
@@ -102,8 +120,8 @@ class SingHymnsActivity : AppCompatActivity() {
         private const val ARG_SELECTED = "arg:selected_number"
 
         fun singIntent(context: Context, number: Int): Intent =
-            Intent(context, SingHymnsActivity::class.java).apply {
-                putExtra(ARG_SELECTED, number)
-            }
+                Intent(context, SingHymnsActivity::class.java).apply {
+                    putExtra(ARG_SELECTED, number)
+                }
     }
 }
