@@ -1,14 +1,17 @@
 package com.tinashe.hymnal.data.repository
 
+import com.tinashe.hymnal.data.db.dao.CollectionsDao
 import com.tinashe.hymnal.data.db.dao.HymnalsDao
 import com.tinashe.hymnal.data.db.dao.HymnsDao
 import com.tinashe.hymnal.data.model.Hymn
+import com.tinashe.hymnal.data.model.HymnCollection
 import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.data.model.HymnalHymns
 import com.tinashe.hymnal.data.model.remote.RemoteHymnal
 import com.tinashe.hymnal.data.model.response.Resource
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -18,6 +21,7 @@ import kotlin.coroutines.CoroutineContext
 class HymnalRepository(
     private val hymnalsDao: HymnalsDao,
     private val hymnsDao: HymnsDao,
+    private val collectionsDao: CollectionsDao,
     private val prefs: HymnalPrefs,
     private val remoteHymnsRepository: RemoteHymnsRepository,
     private val backgroundContext: CoroutineContext = Dispatchers.IO
@@ -73,5 +77,11 @@ class HymnalRepository(
 
     suspend fun searchHymns(query: String?): List<Hymn> {
         return hymnsDao.search(selectedCode, "%${query ?: ""}%")
+    }
+
+    fun getCollections(): Flow<List<HymnCollection>> = collectionsDao.listAll()
+
+    suspend fun searchCollections(query: String?): List<HymnCollection> {
+        return collectionsDao.searchFor("%${query ?: ""}%")
     }
 }

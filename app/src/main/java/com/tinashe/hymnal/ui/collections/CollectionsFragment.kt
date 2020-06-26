@@ -2,23 +2,33 @@ package com.tinashe.hymnal.ui.collections
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.tinashe.hymnal.R
+import com.tinashe.hymnal.databinding.FragmentCollectionsBinding
+import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.AppBarBehaviour
+import com.tinashe.hymnal.ui.collections.adapter.CollectionListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CollectionsFragment : Fragment(R.layout.fragment_collections) {
+class CollectionsFragment : Fragment() {
 
     private val viewModel: CollectionsViewModel by viewModels()
 
     private var appBarBehaviour: AppBarBehaviour? = null
+
+    private var binding: FragmentCollectionsBinding? = null
+    private val listAdapter = CollectionListAdapter { }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -26,8 +36,46 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         setHasOptionsMenu(true)
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return FragmentCollectionsBinding.inflate(inflater, container, false).also {
+            binding = it
+            binding?.listView?.apply {
+                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+                adapter = listAdapter
+            }
+        }.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.viewStateLiveData.observeNonNull(viewLifecycleOwner) {
+            binding?.apply {
+                when (it) {
+                    ViewState.LOADING -> {
+                        listView.isVisible = false
+                        emptyView.isVisible = false
+                    }
+                    ViewState.NO_RESULTS -> {
+                        listView.isVisible = false
+                        emptyView.isVisible = false
+                        progressBar.isVisible = false
+                    }
+                    ViewState.HAS_RESULTS -> {
+                        progressBar.isVisible = false
+                        if (listAdapter.itemCount > 0) {
+                            listView.isVisible = true
+                        } else {
+                            emptyView.isVisible = true
+                        }
+                    }
+                }
+            }
+        }
+        viewModel.collectionsLiveData.observeNonNull(viewLifecycleOwner) {
+            listAdapter.submitList(ArrayList(it))
+        }
+
+        viewModel.loadData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
