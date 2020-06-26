@@ -23,7 +23,13 @@ class ListCollectionsFragment : Fragment() {
 
     private var binding: FragmentCollectionListBinding? = null
 
-    private val listAdapter = CollectionTitlesListAdapter { }
+    private val hymnNumber: Int? get() = arguments?.getInt(ARG_HYMN_NUMBER)
+
+    private val listAdapter = CollectionTitlesListAdapter { pair ->
+        hymnNumber?.let {
+            viewModel.updateHymnCollections(it, pair.first.collection, pair.second)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentCollectionListBinding.inflate(inflater, container, false).also {
@@ -63,8 +69,17 @@ class ListCollectionsFragment : Fragment() {
                 }
             }
         }
-        viewModel.collectionsLiveData.observeNonNull(viewLifecycleOwner) {
-            listAdapter.submitList(ArrayList(it))
+        viewModel.collectionsLiveData.observeNonNull(viewLifecycleOwner) { models ->
+            listAdapter.apply {
+                collectionSelectionMap.apply {
+                    clear()
+                    models.forEach { model ->
+                        put(model.collection.collectionId, model.hymns.find { it.number == hymnNumber } != null)
+                    }
+                }
+                submitList(ArrayList(models))
+                notifyDataSetChanged()
+            }
         }
         viewModel.loadData()
     }

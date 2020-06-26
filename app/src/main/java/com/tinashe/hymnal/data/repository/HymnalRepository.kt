@@ -5,10 +5,11 @@ import com.tinashe.hymnal.data.db.dao.HymnalsDao
 import com.tinashe.hymnal.data.db.dao.HymnsDao
 import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.data.model.HymnCollection
-import com.tinashe.hymnal.data.model.HymnCollectionModel
 import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.data.model.HymnalHymns
 import com.tinashe.hymnal.data.model.TitleBody
+import com.tinashe.hymnal.data.model.collections.CollectionHymnCrossRef
+import com.tinashe.hymnal.data.model.collections.CollectionHymns
 import com.tinashe.hymnal.data.model.remote.RemoteHymnal
 import com.tinashe.hymnal.data.model.response.Resource
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
@@ -17,7 +18,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
@@ -88,19 +88,10 @@ class HymnalRepository(
         return hymnsDao.search(selectedCode, "%${query ?: ""}%")
     }
 
-    fun getCollections(): Flow<List<HymnCollectionModel>> {
-        return collectionsDao.listAll().map {
-            it.map { collection ->
-                HymnCollectionModel(collection, hymnsDao.collectionHymns(collection.id))
-            }
-        }
-    }
+    fun getCollectionHymns(): Flow<List<CollectionHymns>> = collectionsDao.getCollectionsWithHymns()
 
-    suspend fun searchCollections(query: String?): List<HymnCollectionModel> {
-        return collectionsDao.searchFor("%${query ?: ""}%").map { collection ->
-            HymnCollectionModel(collection, hymnsDao.collectionHymns(collection.id))
-        }
-    }
+    suspend fun searchCollections(query: String?): List<CollectionHymns> =
+        collectionsDao.searchFor("%${query ?: ""}%")
 
     suspend fun addCollection(content: TitleBody) {
         val collection = HymnCollection(
@@ -111,5 +102,13 @@ class HymnalRepository(
         collectionsDao.insert(collection)
     }
 
-    suspend fun collectionHymns(id: Int): List<Hymn> = hymnsDao.collectionHymns(id)
+    suspend fun updateHymnCollections(hymnNumber: Int, collectionId: Int, add: Boolean) {
+        hymnsDao.findByNumber(hymnNumber, selectedCode)?.let { hymn ->
+            if (add) {
+                collectionsDao.insertRef(CollectionHymnCrossRef(collectionId, hymn.hymnId))
+            } else {
+                collectionsDao.deleteRef(collectionId, hymn.hymnId)
+            }
+        }
+    }
 }

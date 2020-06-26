@@ -5,8 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tinashe.hymnal.data.model.HymnCollectionModel
+import com.tinashe.hymnal.data.model.HymnCollection
 import com.tinashe.hymnal.data.model.TitleBody
+import com.tinashe.hymnal.data.model.collections.CollectionHymns
 import com.tinashe.hymnal.data.repository.HymnalRepository
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
@@ -20,13 +21,13 @@ class CollectionsViewModel @ViewModelInject constructor(
     private val mutableViewState = SingleLiveEvent<ViewState>()
     val viewStateLiveData: LiveData<ViewState> = mutableViewState.asLiveData()
 
-    private val mutableCollections = MutableLiveData<List<HymnCollectionModel>>()
-    val collectionsLiveData: LiveData<List<HymnCollectionModel>> = mutableCollections.asLiveData()
+    private val mutableCollections = MutableLiveData<List<CollectionHymns>>()
+    val collectionsLiveData: LiveData<List<CollectionHymns>> = mutableCollections.asLiveData()
 
     fun loadData() {
         mutableViewState.postValue(ViewState.LOADING)
         viewModelScope.launch {
-            repository.getCollections().collect { collections ->
+            repository.getCollectionHymns().collect { collections ->
                 mutableCollections.postValue(collections)
                 mutableViewState.postValue(ViewState.HAS_RESULTS)
             }
@@ -49,6 +50,12 @@ class CollectionsViewModel @ViewModelInject constructor(
     fun addCollection(content: TitleBody) {
         viewModelScope.launch {
             repository.addCollection(content)
+        }
+    }
+
+    fun updateHymnCollections(hymnNumber: Int, collection: HymnCollection, add: Boolean) {
+        viewModelScope.launch {
+            repository.updateHymnCollections(hymnNumber, collection.collectionId, add)
         }
     }
 }

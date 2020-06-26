@@ -5,7 +5,7 @@ import com.tinashe.hymnal.data.model.Hymn
 
 object HymnsDiff : DiffUtil.ItemCallback<Hymn>() {
     override fun areItemsTheSame(oldItem: Hymn, newItem: Hymn): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.hymnId == newItem.hymnId
     }
 
     override fun areContentsTheSame(oldItem: Hymn, newItem: Hymn): Boolean {

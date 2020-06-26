@@ -9,11 +9,10 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Hymn(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val hymnId: Int = 0,
     val book: String,
     val number: Int,
     val title: String,
     val content: String,
-    val majorKey: String?,
-    val collections: List<Int>
+    val majorKey: String?
 ) : Parcelable

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "66cc3db34a4abb8bcb3d1cbece194eb7",
+    "identityHash": "97543aef46925b8ef5f882c65002957c",
     "entities": [
       {
         "tableName": "hymnals",
@@ -38,11 +38,11 @@
       },
       {
         "tableName": "hymns",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `book` TEXT NOT NULL, `number` INTEGER NOT NULL, `title` TEXT NOT NULL, `content` TEXT NOT NULL, `majorKey` TEXT, `collections` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`hymnId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `book` TEXT NOT NULL, `number` INTEGER NOT NULL, `title` TEXT NOT NULL, `content` TEXT NOT NULL, `majorKey` TEXT)",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
+            "fieldPath": "hymnId",
+            "columnName": "hymnId",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -75,17 +75,11 @@
             "columnName": "majorKey",
             "affinity": "TEXT",
             "notNull": false
-          },
-          {
-            "fieldPath": "collections",
-            "columnName": "collections",
-            "affinity": "TEXT",
-            "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "hymnId"
           ],
           "autoGenerate": true
         },
@@ -94,11 +88,11 @@
       },
       {
         "tableName": "collections",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `description` TEXT, `created` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`collectionId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `description` TEXT, `created` INTEGER NOT NULL)",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
+            "fieldPath": "collectionId",
+            "columnName": "collectionId",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -123,9 +117,36 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "collectionId"
           ],
           "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "collectionHymnsRef",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`collectionId` INTEGER NOT NULL, `hymnId` INTEGER NOT NULL, PRIMARY KEY(`collectionId`, `hymnId`))",
+        "fields": [
+          {
+            "fieldPath": "collectionId",
+            "columnName": "collectionId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hymnId",
+            "columnName": "hymnId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "collectionId",
+            "hymnId"
+          ],
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -134,7 +155,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '66cc3db34a4abb8bcb3d1cbece194eb7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '97543aef46925b8ef5f882c65002957c')"
     ]
   }
 }

@@ -7,7 +7,7 @@ import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import androidx.recyclerview.widget.RecyclerView
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.HymnCollectionModel
+import com.tinashe.hymnal.data.model.collections.CollectionHymns
 import com.tinashe.hymnal.databinding.HymnCollectionItemBinding
 import com.tinashe.hymnal.extensions.view.inflateView
 
@@ -19,7 +19,7 @@ class CollectionHolder(
         HymnCollectionItemBinding.bind(containerView)
     }
 
-    fun bind(model: HymnCollectionModel) {
+    fun bind(model: CollectionHymns) {
         binding.apply {
             titleView.text = model.collection.title
             val resources = containerView.resources

@@ -13,12 +13,11 @@ data class RemoteHymn(
     val content: String
 ) : Parcelable {
     fun toHymn(book: String): Hymn = Hymn(
-        id = 0,
+        hymnId = 0,
         book = book,
         number = number,
         title = title,
         content = content,
-        collections = emptyList(),
         majorKey = ""
     )
 }

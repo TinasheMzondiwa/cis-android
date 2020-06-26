@@ -5,15 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.HymnCollectionModel
+import com.tinashe.hymnal.data.model.collections.CollectionHymns
 import com.tinashe.hymnal.databinding.HymnCollectionTitleItemBinding
 import com.tinashe.hymnal.extensions.view.inflateView
 import com.tinashe.hymnal.ui.collections.adapter.CollectionsDiff
 
 class CollectionTitlesListAdapter(
-    private val callback: (Pair<HymnCollectionModel, Boolean>) -> Unit
+    private val callback: (Pair<CollectionHymns, Boolean>) -> Unit
 ) :
-    ListAdapter<HymnCollectionModel, CollectionTitlesListAdapter.TitleHolder>(CollectionsDiff) {
+    ListAdapter<CollectionHymns, CollectionTitlesListAdapter.TitleHolder>(CollectionsDiff) {
 
     var collectionSelectionMap: MutableMap<Int, Boolean> = mutableMapOf()
 
@@ -23,13 +23,13 @@ class CollectionTitlesListAdapter(
 
     override fun onBindViewHolder(holder: TitleHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, collectionSelectionMap[item.collection.id] ?: false) {
-            collectionSelectionMap[item.collection.id] = it
+        holder.bind(item, collectionSelectionMap[item.collection.collectionId] ?: false) {
+            collectionSelectionMap[item.collection.collectionId] = it
             callback(item to it)
         }
         holder.itemView.setOnClickListener {
-            val checked = !(collectionSelectionMap[item.collection.id] ?: false)
-            collectionSelectionMap[item.collection.id] = checked
+            val checked = !(collectionSelectionMap[item.collection.collectionId] ?: false)
+            collectionSelectionMap[item.collection.collectionId] = checked
             callback(item to checked)
             notifyItemChanged(position)
         }
@@ -41,7 +41,7 @@ class CollectionTitlesListAdapter(
             HymnCollectionTitleItemBinding.bind(containerView)
         }
 
-        fun bind(model: HymnCollectionModel, checked: Boolean, selectionChange: (Boolean) -> Unit) {
+        fun bind(model: CollectionHymns, checked: Boolean, selectionChange: (Boolean) -> Unit) {
             binding.titleView.text = model.collection.title
             binding.checkBox.apply {
                 setOnCheckedChangeListener(null)
