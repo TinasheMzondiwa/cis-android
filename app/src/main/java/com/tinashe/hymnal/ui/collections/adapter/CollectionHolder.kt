@@ -1,5 +1,6 @@
 package com.tinashe.hymnal.ui.collections.adapter
 
+import android.text.format.DateUtils
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.bold
@@ -23,9 +24,9 @@ class CollectionHolder(
             titleView.text = collection.title
             descView.text = collection.description
             dateView.text = buildSpannedString {
-                append("Create:")
+                append(containerView.resources.getString(R.string.created_label))
                 append(" ")
-                bold { append("Yesterday") }
+                bold { append(DateUtils.getRelativeTimeSpanString(collection.created)) }
             }
         }
     }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,7 +13,7 @@ import com.tinashe.hymnal.databinding.FragmentCollectionListBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.collections.CollectionsViewModel
 import com.tinashe.hymnal.ui.collections.ViewState
-import com.tinashe.hymnal.ui.collections.adapter.CollectionListAdapter
+import com.tinashe.hymnal.ui.collections.adapter.title.CollectionTitlesListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,7 +23,7 @@ class ListCollectionsFragment : Fragment() {
 
     private var binding: FragmentCollectionListBinding? = null
 
-    private val listAdapter = CollectionListAdapter { }
+    private val listAdapter = CollectionTitlesListAdapter { }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentCollectionListBinding.inflate(inflater, container, false).also {
@@ -66,5 +67,14 @@ class ListCollectionsFragment : Fragment() {
             listAdapter.submitList(ArrayList(it))
         }
         viewModel.loadData()
+    }
+
+    companion object {
+        private const val ARG_HYMN_NUMBER = "arg:hymn_number"
+
+        fun newInstance(hymnNumber: Int): ListCollectionsFragment =
+            ListCollectionsFragment().apply {
+                arguments = bundleOf(ARG_HYMN_NUMBER to hymnNumber)
+            }
     }
 }

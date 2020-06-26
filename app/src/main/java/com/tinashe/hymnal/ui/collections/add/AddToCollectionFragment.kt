@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -23,6 +24,8 @@ class AddToCollectionFragment : BottomSheetDialogFragment() {
         get() = childFragmentManager.findFragmentById(
             R.id.fragment_container
         ) is NewCollectionFragment
+
+    override fun getTheme(): Int = R.style.ThemeOverlay_CIS_BottomSheetDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,13 +72,14 @@ class AddToCollectionFragment : BottomSheetDialogFragment() {
     }
 
     private fun showListFragment() {
+        val number = arguments?.getInt(ARG_HYMN_NUMBER) ?: return
         binding?.apply {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_down)
             toolbar.setTitle(R.string.add_to_collection)
             btnNew.setText(R.string.title_new)
             btnNew.setIconResource(R.drawable.ic_add)
 
-            showFragment(ListCollectionsFragment())
+            showFragment(ListCollectionsFragment.newInstance(number))
         }
     }
 
@@ -83,5 +87,14 @@ class AddToCollectionFragment : BottomSheetDialogFragment() {
         childFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
+    }
+
+    companion object {
+        private const val ARG_HYMN_NUMBER = "arg:hymn_number"
+
+        fun newInstance(hymnNumber: Int): AddToCollectionFragment =
+            AddToCollectionFragment().apply {
+                arguments = bundleOf(ARG_HYMN_NUMBER to hymnNumber)
+            }
     }
 }

@@ -18,16 +18,15 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnNew"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+            style="@style/Widget.CIS.Button.Text"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:text="@string/title_new"
             app:icon="@drawable/ic_add" />
     </androidx.appcompat.widget.Toolbar>
 
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
