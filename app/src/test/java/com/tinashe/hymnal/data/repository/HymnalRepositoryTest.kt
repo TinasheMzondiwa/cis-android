@@ -1,6 +1,7 @@
 package com.tinashe.hymnal.data.repository
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.tinashe.hymnal.data.db.dao.CollectionsDao
 import com.tinashe.hymnal.data.db.dao.HymnalsDao
 import com.tinashe.hymnal.data.db.dao.HymnsDao
 import com.tinashe.hymnal.data.model.Hymn
@@ -42,6 +43,9 @@ internal class HymnalRepositoryTest {
     private lateinit var mockHymnsDao: HymnsDao
 
     @Mock
+    private lateinit var mockCollectionsDao: CollectionsDao
+
+    @Mock
     private lateinit var mockPrefs: HymnalPrefs
 
     @Mock
@@ -53,7 +57,7 @@ internal class HymnalRepositoryTest {
     @Before
     fun setup() {
         repository = HymnalRepository(
-            mockHymnalsDao, mockHymnsDao, mockPrefs, mockRemoteHymnsRepository, TestCoroutineDispatcher()
+            mockHymnalsDao, mockHymnsDao, mockCollectionsDao, mockPrefs, mockRemoteHymnsRepository, TestCoroutineDispatcher()
         )
     }
 

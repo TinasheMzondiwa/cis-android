@@ -13,15 +13,6 @@ class NewCollectionFragment : Fragment() {
 
     private var binding: FragmentNewCollectionBinding? = null
 
-    /*override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val forward = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-        enterTransition = forward
-
-        val backward = MaterialSharedAxis(MaterialSharedAxis.Z, false)
-        returnTransition = backward
-    }*/
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
