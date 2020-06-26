@@ -17,17 +17,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_title"
             android:inputType="textCapWords"
             android:maxLength="35" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilDescription"
-        android:layout_width="0dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_medium"
         android:hint="@string/hint_description"
@@ -36,9 +36,9 @@
         app:layout_constraintTop_toBottomOf="@id/tilTitle">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_description"
             android:inputType="textCapSentences|textImeMultiLine|textMultiLine" />
     </com.google.android.material.textfield.TextInputLayout>
 

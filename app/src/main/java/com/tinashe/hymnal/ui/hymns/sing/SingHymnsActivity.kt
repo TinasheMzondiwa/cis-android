@@ -120,8 +120,8 @@ class SingHymnsActivity : AppCompatActivity() {
         private const val ARG_SELECTED = "arg:selected_number"
 
         fun singIntent(context: Context, number: Int): Intent =
-                Intent(context, SingHymnsActivity::class.java).apply {
-                    putExtra(ARG_SELECTED, number)
-                }
+            Intent(context, SingHymnsActivity::class.java).apply {
+                putExtra(ARG_SELECTED, number)
+            }
     }
 }

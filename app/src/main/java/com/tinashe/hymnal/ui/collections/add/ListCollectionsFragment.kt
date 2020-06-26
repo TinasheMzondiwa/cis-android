@@ -42,6 +42,7 @@ class ListCollectionsFragment : Fragment() {
                     ViewState.LOADING -> {
                         listView.isVisible = false
                         emptyView.isVisible = false
+                        progressBar.isVisible = true
                     }
                     ViewState.NO_RESULTS -> {
                         listView.isVisible = false

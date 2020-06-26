@@ -63,9 +63,11 @@ class CollectionsFragment : Fragment() {
                     ViewState.HAS_RESULTS -> {
                         progressBar.isVisible = false
                         if (listAdapter.itemCount > 0) {
+                            emptyView.isVisible = false
                             listView.isVisible = true
                         } else {
                             emptyView.isVisible = true
+                            listView.isVisible = false
                         }
                     }
                 }

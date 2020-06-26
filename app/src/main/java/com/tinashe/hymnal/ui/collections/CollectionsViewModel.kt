@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tinashe.hymnal.data.model.HymnCollection
+import com.tinashe.hymnal.data.model.TitleBody
 import com.tinashe.hymnal.data.repository.HymnalRepository
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
@@ -42,6 +43,12 @@ class CollectionsViewModel @ViewModelInject constructor(
                 ViewState.NO_RESULTS
             }
             mutableViewState.postValue(state)
+        }
+    }
+
+    fun addCollection(content: TitleBody) {
+        viewModelScope.launch {
+            repository.addCollection(content)
         }
     }
 }

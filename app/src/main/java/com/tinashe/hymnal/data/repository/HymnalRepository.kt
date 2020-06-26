@@ -7,6 +7,7 @@ import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.data.model.HymnCollection
 import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.data.model.HymnalHymns
+import com.tinashe.hymnal.data.model.TitleBody
 import com.tinashe.hymnal.data.model.remote.RemoteHymnal
 import com.tinashe.hymnal.data.model.response.Resource
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
@@ -52,7 +53,13 @@ class HymnalRepository(
 
                 if (resource.isSuccessFul) {
                     resource.data?.let { json ->
-                        hymnalsDao.insert(Hymnal(selectedHymnal.key, selectedHymnal.title, selectedHymnal.language))
+                        hymnalsDao.insert(
+                            Hymnal(
+                                selectedHymnal.key,
+                                selectedHymnal.title,
+                                selectedHymnal.language
+                            )
+                        )
                         hymnsDao.insertAll(json.map { it.toHymn(selectedHymnal.key) })
                         prefs.setSelectedHymnal(selectedHymnal.key)
                     }
@@ -83,5 +90,14 @@ class HymnalRepository(
 
     suspend fun searchCollections(query: String?): List<HymnCollection> {
         return collectionsDao.searchFor("%${query ?: ""}%")
+    }
+
+    suspend fun addCollection(content: TitleBody) {
+        val collection = HymnCollection(
+            title = content.title,
+            description = content.body,
+            created = System.currentTimeMillis()
+        )
+        collectionsDao.insert(collection)
     }
 }
