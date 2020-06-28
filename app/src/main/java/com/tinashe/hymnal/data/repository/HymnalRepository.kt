@@ -106,7 +106,9 @@ class HymnalRepository(
         if (add) {
             collectionsDao.insertRef(CollectionHymnCrossRef(collectionId, hymnId))
         } else {
-            collectionsDao.deleteRef(collectionId, hymnId)
+            collectionsDao.findRef(hymnId, collectionId)?.let {
+                collectionsDao.deleteRef(it)
+            }
         }
     }
 
@@ -118,8 +120,10 @@ class HymnalRepository(
 
     suspend fun deleteCollection(collection: CollectionHymns) {
         val collectionId = collection.collection.collectionId
-        collection.hymns.forEach {
-            collectionsDao.deleteRef(it.hymnId, collectionId)
+        collection.hymns.forEach { hymn ->
+            collectionsDao.findRef(hymn.hymnId, collectionId)?.let {
+                collectionsDao.deleteRef(it)
+            }
         }
         collectionsDao.deleteCollection(collectionId)
     }

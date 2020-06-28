@@ -1,6 +1,7 @@
 package com.tinashe.hymnal.data.db.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -13,9 +14,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface CollectionsDao : BaseDao<HymnCollection> {
 
+    @Transaction
     @Query("SELECT * FROM collections WHERE collectionId = :id LIMIT 1")
     suspend fun findById(id: Int): CollectionHymns?
 
+    @Transaction
     @Query("SELECT * FROM collections WHERE title LIKE :query OR description LIKE :query")
     suspend fun searchFor(query: String): List<CollectionHymns>
 
@@ -26,8 +29,12 @@ interface CollectionsDao : BaseDao<HymnCollection> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRef(ref: CollectionHymnCrossRef)
 
-    @Query("DELETE FROM collectionHymnsRef WHERE collectionId = :collectionId AND hymnId = :hymnId")
-    suspend fun deleteRef(hymnId: Int, collectionId: Int)
+    @Delete
+    suspend fun deleteRef(ref: CollectionHymnCrossRef)
+
+    @Transaction
+    @Query("SELECT * FROM collectionHymnsRef WHERE hymnId = :hymnId AND collectionId = :collectionId")
+    suspend fun findRef(hymnId: Int, collectionId: Int): CollectionHymnCrossRef?
 
     @Query("DELETE FROM collections WHERE collectionId = :id")
     suspend fun deleteCollection(id: Int)
