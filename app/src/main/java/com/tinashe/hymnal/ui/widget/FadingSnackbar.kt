@@ -9,7 +9,7 @@ import androidx.annotation.StringRes
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.extensions.view.inflateView
 
-class FadingSnackbar (context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
+class FadingSnackbar(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
 
     private val message: TextView
     private val action: Button
