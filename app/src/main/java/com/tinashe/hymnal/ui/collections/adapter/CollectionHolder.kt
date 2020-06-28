@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.collections.CollectionHymns
@@ -28,7 +29,10 @@ class CollectionHolder(
                 0 -> resources.getString(R.string.hymn_count_zero)
                 else -> resources.getQuantityString(R.plurals.hymns_count, count, count)
             }
-            descView.text = model.collection.description
+            descView.apply {
+                text = model.collection.description
+                isVisible = text.isNotEmpty()
+            }
             dateView.text = buildSpannedString {
                 append(containerView.resources.getString(R.string.created_label))
                 append(" ")

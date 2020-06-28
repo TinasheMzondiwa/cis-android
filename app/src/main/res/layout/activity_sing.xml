@@ -70,4 +70,14 @@
         app:backgroundTint="@color/cis_gold"
         app:layout_anchor="@id/bottomAppBar"
         app:layout_behavior="com.tinashe.hymnal.ui.widget.ScrollAwareFABBehavior" />
+
+    <com.tinashe.hymnal.ui.widget.FadingSnackbar
+        android:id="@+id/snackbar"
+        android:layout_width="@dimen/snackbar_width"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/snackbar_margin_end_fab"
+        android:layout_marginBottom="@dimen/snackbar_margin_bottom"
+        android:visibility="gone"
+        android:layout_gravity="bottom"
+        tools:visibility="visible" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

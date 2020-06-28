@@ -2,7 +2,9 @@
     <string name="add_to_collection">Add to Collection</string>
     <string name="app_name">CIS</string>
     <string name="blank"/>
+    <string name="collection_deleted">Collection Deleted</string>
     <string name="created_label">Created: </string>
+    <string name="error_empty_collection">Add hymns to Collection</string>
     <string name="error_required">Required</string>
     <string name="error_invalid_number">Hymn %1$d is unavailable</string>
     <string name="hint_description">Description (Optional)</string>
@@ -23,6 +25,7 @@
     <string name="title_sing">Sing</string>
     <string name="title_support">Support</string>
     <string name="title_text_format">Text Format</string>
+    <string name="title_undo">Undo</string>
     <string name="empty_collections">Your Collection of hymns will appear here</string>
     <string name="empty_collections_add">Create your first Collection</string>
     <string name="title_new">New</string>

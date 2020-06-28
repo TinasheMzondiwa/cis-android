@@ -9,7 +9,6 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.google.android.material.snackbar.Snackbar
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.ActivitySingBinding
 import com.tinashe.hymnal.extensions.activity.applyMaterialTransform
@@ -62,11 +61,7 @@ class SingHymnsActivity : AppCompatActivity() {
                 hideNumPad()
                 val position = pagerAdapter?.hymns?.indexOfFirst { it.number == number }
                 if (position == null || position < 0) {
-                    Snackbar.make(
-                        fabNumber,
-                        getString(R.string.error_invalid_number, number),
-                        Snackbar.LENGTH_LONG
-                    ).show()
+                    snackbar.show(messageText = getString(R.string.error_invalid_number, number))
                     return@setOnNumSelectedCallback
                 }
                 viewPager.setCurrentItem(position, false)

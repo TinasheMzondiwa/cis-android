@@ -43,4 +43,12 @@
     <dimen name="app_bar_anchor_width">48dp</dimen>
     <dimen name="app_bar_divider_height">0dp</dimen>
 
+    <!-- per android.view.ViewGroup.LayoutParams -->
+    <item name="match_parent" format="integer" type="dimen">-1</item>
+    <item name="wrap_content" format="integer" type="dimen">-2</item>
+
+    <dimen name="snackbar_width">@dimen/match_parent</dimen>
+    <dimen name="snackbar_margin_end_fab">0dp</dimen>
+    <dimen name="snackbar_margin_bottom">128dp</dimen>
+
 </resources>

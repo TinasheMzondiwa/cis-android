@@ -14,12 +14,15 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentCollectionsBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.AppBarBehaviour
 import com.tinashe.hymnal.ui.collections.adapter.CollectionListAdapter
 import com.tinashe.hymnal.ui.hymns.sing.SingHymnsActivity
+import com.tinashe.hymnal.ui.widget.SwipeToDeleteCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,16 +33,47 @@ class CollectionsFragment : Fragment() {
     private var appBarBehaviour: AppBarBehaviour? = null
 
     private var binding: FragmentCollectionsBinding? = null
-    private val listAdapter = CollectionListAdapter { pair ->
-        val intent = SingHymnsActivity.singCollectionIntent(
-            requireContext(), pair.first.collection.collectionId
-        )
-        val options = ActivityOptions.makeSceneTransitionAnimation(
-            requireActivity(),
-            pair.second,
-            getString(R.string.transition_shared_element)
-        )
-        requireActivity().startActivity(intent, options.toBundle())
+    private val listAdapter by lazy {
+        CollectionListAdapter { pair ->
+            val collection = pair.first
+            if (collection.hymns.isEmpty()) {
+                binding?.snackbar?.show(messageId = R.string.error_empty_collection)
+                return@CollectionListAdapter
+            }
+            val intent = SingHymnsActivity.singCollectionIntent(
+                requireContext(), pair.first.collection.collectionId
+            )
+            val options = ActivityOptions.makeSceneTransitionAnimation(
+                requireActivity(),
+                pair.second,
+                getString(R.string.transition_shared_element)
+            )
+            requireActivity().startActivity(intent, options.toBundle())
+        }
+    }
+
+    private val swipeHandler: ItemTouchHelper.SimpleCallback by lazy {
+        object : SwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.absoluteAdapterPosition
+                viewModel.onIntentToDelete(position)
+
+                binding?.snackbar?.apply {
+                    show(
+                        messageId = R.string.collection_deleted,
+                        actionId = R.string.title_undo,
+                        longDuration = true,
+                        actionClick = {
+                            viewModel.undoDelete()
+                            dismiss()
+                        },
+                        dismissListener = {
+                            viewModel.deleteConfirmed()
+                        }
+                    )
+                }
+            }
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -53,6 +87,8 @@ class CollectionsFragment : Fragment() {
             binding = it
             binding?.listView?.apply {
                 addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+                val itemTouchHelper = ItemTouchHelper(swipeHandler)
+                itemTouchHelper.attachToRecyclerView(this)
                 adapter = listAdapter
             }
         }.root
@@ -62,6 +98,7 @@ class CollectionsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.viewStateLiveData.observeNonNull(viewLifecycleOwner) {
             binding?.apply {
+                val size = viewModel.collectionsLiveData.value?.size
                 when (it) {
                     ViewState.LOADING -> {
                         listView.isVisible = false
@@ -74,7 +111,8 @@ class CollectionsFragment : Fragment() {
                     }
                     ViewState.HAS_RESULTS -> {
                         progressBar.isVisible = false
-                        if (listAdapter.itemCount > 0) {
+
+                        if (size ?: 0 > 0) {
                             emptyView.isVisible = false
                             listView.isVisible = true
                         } else {

@@ -28,4 +28,7 @@ interface CollectionsDao : BaseDao<HymnCollection> {
 
     @Query("DELETE FROM collectionHymnsRef WHERE collectionId = :collectionId AND hymnId = :hymnId")
     suspend fun deleteRef(hymnId: Int, collectionId: Int)
+
+    @Query("DELETE FROM collections WHERE collectionId = :id")
+    suspend fun deleteCollection(id: Int)
 }

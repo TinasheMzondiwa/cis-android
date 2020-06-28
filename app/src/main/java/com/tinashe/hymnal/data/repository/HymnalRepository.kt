@@ -115,4 +115,12 @@ class HymnalRepository(
             Resource.success(it)
         } ?: Resource.error(IllegalArgumentException("Invalid Collection Id"))
     }
+
+    suspend fun deleteCollection(collection: CollectionHymns) {
+        val collectionId = collection.collection.collectionId
+        collection.hymns.forEach {
+            collectionsDao.deleteRef(it.hymnId, collectionId)
+        }
+        collectionsDao.deleteCollection(collectionId)
+    }
 }

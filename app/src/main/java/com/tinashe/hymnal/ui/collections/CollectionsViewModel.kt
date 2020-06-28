@@ -24,6 +24,8 @@ class CollectionsViewModel @ViewModelInject constructor(
     private val mutableCollections = MutableLiveData<List<CollectionHymns>>()
     val collectionsLiveData: LiveData<List<CollectionHymns>> = mutableCollections.asLiveData()
 
+    private var collectionToDelete: Pair<Int, CollectionHymns>? = null
+
     fun loadData() {
         mutableViewState.postValue(ViewState.LOADING)
         viewModelScope.launch {
@@ -56,6 +58,31 @@ class CollectionsViewModel @ViewModelInject constructor(
     fun updateHymnCollections(hymnId: Int, collection: HymnCollection, add: Boolean) {
         viewModelScope.launch {
             repository.updateHymnCollections(hymnId, collection.collectionId, add)
+        }
+    }
+
+    fun onIntentToDelete(position: Int) {
+        val data = mutableCollections.value?.toMutableList() ?: return
+        collectionToDelete = position to data.removeAt(position)
+        mutableCollections.postValue(data)
+        mutableViewState.postValue(ViewState.HAS_RESULTS)
+    }
+
+    fun undoDelete() {
+        val data = mutableCollections.value?.toMutableList() ?: return
+        val pair = collectionToDelete ?: return
+        data.add(pair.first, pair.second)
+        mutableCollections.postValue(data)
+        mutableViewState.postValue(ViewState.HAS_RESULTS)
+        collectionToDelete = null
+    }
+
+    fun deleteConfirmed() {
+        collectionToDelete?.let {
+            viewModelScope.launch {
+                repository.deleteCollection(it.second)
+                collectionToDelete = null
+            }
         }
     }
 }
