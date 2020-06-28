@@ -76,12 +76,12 @@ class SingHymnsActivity : AppCompatActivity() {
                         true
                     }
                     R.id.action_add_to_list -> {
-                        val hymnNumber = pagerAdapter?.hymns?.get(
+                        val hymnId = pagerAdapter?.hymns?.get(
                             viewPager.currentItem
-                        )?.number
+                        )?.hymnId
                             ?: return@setOnMenuItemClickListener false
 
-                        val fragment = AddToCollectionFragment.newInstance(hymnNumber)
+                        val fragment = AddToCollectionFragment.newInstance(hymnId)
                         fragment.show(supportFragmentManager, fragment.tag)
                         true
                     }

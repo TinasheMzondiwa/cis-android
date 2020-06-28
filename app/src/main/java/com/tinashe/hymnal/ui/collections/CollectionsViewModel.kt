@@ -53,9 +53,9 @@ class CollectionsViewModel @ViewModelInject constructor(
         }
     }
 
-    fun updateHymnCollections(hymnNumber: Int, collection: HymnCollection, add: Boolean) {
+    fun updateHymnCollections(hymnId: Int, collection: HymnCollection, add: Boolean) {
         viewModelScope.launch {
-            repository.updateHymnCollections(hymnNumber, collection.collectionId, add)
+            repository.updateHymnCollections(hymnId, collection.collectionId, add)
         }
     }
 }

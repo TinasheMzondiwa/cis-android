@@ -102,13 +102,11 @@ class HymnalRepository(
         collectionsDao.insert(collection)
     }
 
-    suspend fun updateHymnCollections(hymnNumber: Int, collectionId: Int, add: Boolean) {
-        hymnsDao.findByNumber(hymnNumber, selectedCode)?.let { hymn ->
-            if (add) {
-                collectionsDao.insertRef(CollectionHymnCrossRef(collectionId, hymn.hymnId))
-            } else {
-                collectionsDao.deleteRef(collectionId, hymn.hymnId)
-            }
+    suspend fun updateHymnCollections(hymnId: Int, collectionId: Int, add: Boolean) {
+        if (add) {
+            collectionsDao.insertRef(CollectionHymnCrossRef(collectionId, hymnId))
+        } else {
+            collectionsDao.deleteRef(collectionId, hymnId)
         }
     }
 }

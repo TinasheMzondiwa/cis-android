@@ -23,10 +23,10 @@ class ListCollectionsFragment : Fragment() {
 
     private var binding: FragmentCollectionListBinding? = null
 
-    private val hymnNumber: Int? get() = arguments?.getInt(ARG_HYMN_NUMBER)
+    private val hymnId: Int? get() = arguments?.getInt(ARG_HYMN_Id)
 
     private val listAdapter = CollectionTitlesListAdapter { pair ->
-        hymnNumber?.let {
+        hymnId?.let {
             viewModel.updateHymnCollections(it, pair.first.collection, pair.second)
         }
     }
@@ -74,7 +74,7 @@ class ListCollectionsFragment : Fragment() {
                 collectionSelectionMap.apply {
                     clear()
                     models.forEach { model ->
-                        put(model.collection.collectionId, model.hymns.find { it.number == hymnNumber } != null)
+                        put(model.collection.collectionId, model.hymns.find { it.hymnId == hymnId } != null)
                     }
                 }
                 submitList(ArrayList(models))
@@ -85,11 +85,11 @@ class ListCollectionsFragment : Fragment() {
     }
 
     companion object {
-        private const val ARG_HYMN_NUMBER = "arg:hymn_number"
+        private const val ARG_HYMN_Id = "arg:hymn_id"
 
-        fun newInstance(hymnNumber: Int): ListCollectionsFragment =
+        fun newInstance(hymnId: Int): ListCollectionsFragment =
             ListCollectionsFragment().apply {
-                arguments = bundleOf(ARG_HYMN_NUMBER to hymnNumber)
+                arguments = bundleOf(ARG_HYMN_Id to hymnId)
             }
     }
 }

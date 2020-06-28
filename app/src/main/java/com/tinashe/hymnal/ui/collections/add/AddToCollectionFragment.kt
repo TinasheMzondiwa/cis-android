@@ -72,14 +72,14 @@ class AddToCollectionFragment : BottomSheetDialogFragment() {
     }
 
     private fun showListFragment() {
-        val number = arguments?.getInt(ARG_HYMN_NUMBER) ?: return
+        val id = arguments?.getInt(ARG_HYMN_ID) ?: return
         binding?.apply {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_down)
             toolbar.setTitle(R.string.add_to_collection)
             btnNew.setText(R.string.title_new)
             btnNew.setIconResource(R.drawable.ic_add)
 
-            showFragment(ListCollectionsFragment.newInstance(number))
+            showFragment(ListCollectionsFragment.newInstance(id))
         }
     }
 
@@ -90,11 +90,11 @@ class AddToCollectionFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        private const val ARG_HYMN_NUMBER = "arg:hymn_number"
+        private const val ARG_HYMN_ID = "arg:hymn_id"
 
-        fun newInstance(hymnNumber: Int): AddToCollectionFragment =
+        fun newInstance(hymnId: Int): AddToCollectionFragment =
             AddToCollectionFragment().apply {
-                arguments = bundleOf(ARG_HYMN_NUMBER to hymnNumber)
+                arguments = bundleOf(ARG_HYMN_ID to hymnId)
             }
     }
 }
