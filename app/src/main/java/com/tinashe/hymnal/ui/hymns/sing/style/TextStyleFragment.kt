@@ -68,7 +68,7 @@ class TextStyleFragment : BottomSheetDialogFragment() {
                         R.id.chipTypefaceAndada -> R.font.andada
                         R.id.chipTypefaceRoboto -> R.font.roboto
                         R.id.chipTypefaceGentium -> R.font.gentium_basic
-                        R.id.chipTypefaceProxima -> R.font.proxima_nova_soft_medium
+                        R.id.chipTypefaceProxima -> R.font.proxima_nova_soft_regular
                         else -> return@setOnCheckedChangeListener
                     }
                     styleChanges?.updateTypeFace(typeface)
@@ -79,6 +79,16 @@ class TextStyleFragment : BottomSheetDialogFragment() {
                     addOnChangeListener { _, value, fromUser ->
                         if (fromUser) {
                             styleChanges?.updateTextSize(value)
+                        }
+                    }
+                    setLabelFormatter {
+                        when (it) {
+                            14f -> "xSmall"
+                            18f -> "Small"
+                            22f -> "Medium"
+                            26f -> "Large"
+                            30f -> "xLarge"
+                            else -> ""
                         }
                     }
                 }

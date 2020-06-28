@@ -1,6 +1,8 @@
 package com.tinashe.hymnal.utils
 
 import android.content.res.Resources
+import androidx.appcompat.app.AppCompatDelegate
+import com.tinashe.hymnal.data.model.constants.UiPref
 import timber.log.Timber
 import java.io.BufferedReader
 import java.io.File
@@ -53,5 +55,20 @@ object Helper {
         }
         reader.close()
         return sb.toString()
+    }
+
+    /**
+     * Switch to theme based on [UiPref] selected by user
+     */
+    @JvmStatic
+    fun switchToTheme(pref: UiPref) {
+        val theme = when (pref) {
+            UiPref.DAY -> AppCompatDelegate.MODE_NIGHT_NO
+            UiPref.NIGHT -> AppCompatDelegate.MODE_NIGHT_YES
+            UiPref.FOLLOW_SYSTEM -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            UiPref.BATTERY_SAVER -> AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+        }
+
+        AppCompatDelegate.setDefaultNightMode(theme)
     }
 }

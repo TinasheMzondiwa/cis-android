@@ -4,13 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
 import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.databinding.FragmentHymnBinding
+import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class HymnFragment : Fragment() {
+
+    @Inject
+    lateinit var prefs: HymnalPrefs
 
     private var binding: FragmentHymnBinding? = null
 
@@ -21,6 +29,10 @@ class HymnFragment : Fragment() {
     ): View? {
         return FragmentHymnBinding.inflate(inflater, container, false).also {
             binding = it
+            binding?.hymnText?.apply {
+                textSize = prefs.getFontSize()
+                typeface = ResourcesCompat.getFont(context, prefs.getFontRes())
+            }
         }.root
     }
 

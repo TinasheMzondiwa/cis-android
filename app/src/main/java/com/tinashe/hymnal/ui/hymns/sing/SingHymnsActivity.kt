@@ -9,19 +9,27 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.TextStyleModel
 import com.tinashe.hymnal.data.model.constants.UiPref
 import com.tinashe.hymnal.databinding.ActivitySingBinding
 import com.tinashe.hymnal.extensions.activity.applyMaterialTransform
 import com.tinashe.hymnal.extensions.arch.observeNonNull
+import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import com.tinashe.hymnal.ui.collections.add.AddToCollectionFragment
 import com.tinashe.hymnal.ui.hymns.sing.style.TextStyleChanges
 import com.tinashe.hymnal.ui.hymns.sing.style.TextStyleFragment
+import com.tinashe.hymnal.utils.Helper
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
+
+    @Inject
+    lateinit var prefs: HymnalPrefs
 
     private val viewModel: SingHymnsViewModel by viewModels()
 
@@ -87,7 +95,7 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                 return@setOnMenuItemClickListener when (it.itemId) {
                     R.id.action_text_format -> {
                         val fragment = TextStyleFragment.newInstance(
-                            TextStyleModel(),
+                            prefs.getTextStyleModel(),
                             this@SingHymnsActivity
                         )
                         fragment.show(supportFragmentManager, fragment.tag)
@@ -143,12 +151,35 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
     }
 
     override fun updateTheme(pref: UiPref) {
+        prefs.setUiPref(pref)
+        Helper.switchToTheme(pref)
     }
 
     override fun updateTypeFace(fontRes: Int) {
+        prefs.setFontRes(fontRes)
+        updateHymnUi()
     }
 
     override fun updateTextSize(size: Float) {
+        prefs.setFontSize(size)
+        updateHymnUi()
+    }
+
+    private fun updateHymnUi() {
+        lifecycleScope.launch {
+            binding.viewPager.apply {
+                val pagePosition = currentItem
+                adapter?.apply {
+                    notifyItemChanged(pagePosition - 1)
+                    notifyItemChanged(pagePosition)
+                    notifyItemChanged(pagePosition + 1)
+
+                    setCurrentItem(pagePosition + 2, false)
+                    delay(200)
+                    setCurrentItem(pagePosition, false)
+                }
+            }
+        }
     }
 
     companion object {
