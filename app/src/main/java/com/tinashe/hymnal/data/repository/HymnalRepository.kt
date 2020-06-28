@@ -109,4 +109,10 @@ class HymnalRepository(
             collectionsDao.deleteRef(collectionId, hymnId)
         }
     }
+
+    suspend fun getCollection(id: Int): Resource<CollectionHymns> {
+        return collectionsDao.findById(id)?.let {
+            Resource.success(it)
+        } ?: Resource.error(IllegalArgumentException("Invalid Collection Id"))
+    }
 }

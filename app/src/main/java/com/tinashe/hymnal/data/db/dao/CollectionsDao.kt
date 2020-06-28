@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface CollectionsDao : BaseDao<HymnCollection> {
 
-    @Query("SELECT * FROM collections ORDER BY title")
-    fun listAll(): Flow<List<HymnCollection>>
+    @Query("SELECT * FROM collections WHERE collectionId = :id LIMIT 1")
+    suspend fun findById(id: Int): CollectionHymns?
 
     @Query("SELECT * FROM collections WHERE title LIKE :query OR description LIKE :query")
     suspend fun searchFor(query: String): List<CollectionHymns>
@@ -22,9 +22,6 @@ interface CollectionsDao : BaseDao<HymnCollection> {
     @Transaction
     @Query("SELECT * FROM collections")
     fun getCollectionsWithHymns(): Flow<List<CollectionHymns>>
-
-    @Query("SELECT * FROM collectionHymnsRef WHERE collectionId = :collectionId AND hymnId = :hymnId LIMIT 1")
-    fun findHymnRef(hymnId: Int, collectionId: Int): CollectionHymnCrossRef?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRef(ref: CollectionHymnCrossRef)

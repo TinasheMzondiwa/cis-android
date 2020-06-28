@@ -4,6 +4,7 @@
     <string name="blank"/>
     <string name="created_label">Created: </string>
     <string name="error_required">Required</string>
+    <string name="error_invalid_number">Hymn %1$d is unavailable</string>
     <string name="hint_description">Description (Optional)</string>
     <string name="hint_title">Title</string>
     <string name="hymn_count_one">One Hymn</string>

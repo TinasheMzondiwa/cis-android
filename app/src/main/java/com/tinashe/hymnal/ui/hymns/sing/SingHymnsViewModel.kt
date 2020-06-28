@@ -23,18 +23,27 @@ class SingHymnsViewModel @ViewModelInject constructor(
     private val mutableHymnal = MutableLiveData<String>()
     val hymnalTitleLiveData: LiveData<String> = mutableHymnal.asLiveData()
 
-    private val mutableHymnsList: MutableLiveData<List<Hymn>> by lazy {
-        MutableLiveData<List<Hymn>>().also {
-            viewModelScope.launch {
+    private val mutableHymnsList = MutableLiveData<List<Hymn>>()
+    val hymnListLiveData: LiveData<List<Hymn>> get() = mutableHymnsList.asLiveData()
+
+    fun loadData(collectionId: Int) {
+        viewModelScope.launch {
+            if (collectionId == -1) {
                 repository.getHymns().collectLatest { resource ->
                     mutableViewState.postValue(resource.status)
-                    mutableHymnsList.postValue(resource.data?.hymns ?: emptyList())
-                    resource.data?.title?.let {
-                        mutableHymnal.postValue(it)
+                    resource.data?.let {
+                        mutableHymnsList.postValue(it.hymns)
+                        mutableHymnal.postValue(it.title)
                     }
+                }
+            } else {
+                val resource = repository.getCollection(collectionId)
+                mutableViewState.postValue(resource.status)
+                resource.data?.let {
+                    mutableHymnsList.postValue(it.hymns)
+                    mutableHymnal.postValue(it.collection.title)
                 }
             }
         }
     }
-    val hymnListLiveData: LiveData<List<Hymn>> get() = mutableHymnsList.asLiveData()
 }

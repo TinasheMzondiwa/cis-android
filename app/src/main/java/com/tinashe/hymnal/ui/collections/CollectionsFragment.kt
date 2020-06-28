@@ -1,5 +1,6 @@
 package com.tinashe.hymnal.ui.collections
 
+import android.app.ActivityOptions
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.tinashe.hymnal.databinding.FragmentCollectionsBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.AppBarBehaviour
 import com.tinashe.hymnal.ui.collections.adapter.CollectionListAdapter
+import com.tinashe.hymnal.ui.hymns.sing.SingHymnsActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,7 +30,17 @@ class CollectionsFragment : Fragment() {
     private var appBarBehaviour: AppBarBehaviour? = null
 
     private var binding: FragmentCollectionsBinding? = null
-    private val listAdapter = CollectionListAdapter { }
+    private val listAdapter = CollectionListAdapter { pair ->
+        val intent = SingHymnsActivity.singCollectionIntent(
+            requireContext(), pair.first.collection.collectionId
+        )
+        val options = ActivityOptions.makeSceneTransitionAnimation(
+            requireActivity(),
+            pair.second,
+            getString(R.string.transition_shared_element)
+        )
+        requireActivity().startActivity(intent, options.toBundle())
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
