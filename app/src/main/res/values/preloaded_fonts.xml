@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/andada</item>
+        <item>@font/gentium_basic</item>
+        <item>@font/lato</item>
+        <item>@font/roboto</item>
+    </array>
+</resources>

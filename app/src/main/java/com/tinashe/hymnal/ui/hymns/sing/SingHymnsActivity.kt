@@ -10,14 +10,18 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.tinashe.hymnal.R
+import com.tinashe.hymnal.data.model.TextStyleModel
+import com.tinashe.hymnal.data.model.constants.UiPref
 import com.tinashe.hymnal.databinding.ActivitySingBinding
 import com.tinashe.hymnal.extensions.activity.applyMaterialTransform
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.collections.add.AddToCollectionFragment
+import com.tinashe.hymnal.ui.hymns.sing.style.TextStyleChanges
+import com.tinashe.hymnal.ui.hymns.sing.style.TextStyleFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SingHymnsActivity : AppCompatActivity() {
+class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
 
     private val viewModel: SingHymnsViewModel by viewModels()
 
@@ -82,6 +86,11 @@ class SingHymnsActivity : AppCompatActivity() {
             bottomAppBar.setOnMenuItemClickListener {
                 return@setOnMenuItemClickListener when (it.itemId) {
                     R.id.action_text_format -> {
+                        val fragment = TextStyleFragment.newInstance(
+                            TextStyleModel(),
+                            this@SingHymnsActivity
+                        )
+                        fragment.show(supportFragmentManager, fragment.tag)
                         true
                     }
                     R.id.action_edit -> {
@@ -131,6 +140,15 @@ class SingHymnsActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun updateTheme(pref: UiPref) {
+    }
+
+    override fun updateTypeFace(fontRes: Int) {
+    }
+
+    override fun updateTextSize(size: Float) {
     }
 
     companion object {
