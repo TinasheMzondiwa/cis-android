@@ -9,12 +9,14 @@ import com.tinashe.hymnal.data.db.dao.HymnsDao
 import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.data.model.HymnCollection
 import com.tinashe.hymnal.data.model.Hymnal
+import com.tinashe.hymnal.data.model.collections.CollectionHymnCrossRef
 
 @Database(
     entities = [
         Hymnal::class,
         Hymn::class,
-        HymnCollection::class
+        HymnCollection::class,
+        CollectionHymnCrossRef::class
     ],
     version = 1, exportSchema = true
 )

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_medium"
+        android:background="@drawable/fading_snackbar_background"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <TextView
+            android:id="@+id/snackbar_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:padding="@dimen/spacing_medium"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/TextAppearance.Design.Snackbar.Message" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/snackbar_action"
+            style="@style/Widget.CIS.Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|end"
+            android:paddingHorizontal="@dimen/spacing_medium"
+            android:textAllCaps="true"
+            android:textColor="@color/cis_gold"
+            android:visibility="gone"
+            tools:targetApi="o"
+            tools:text="@string/title_undo"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+
+</merge>

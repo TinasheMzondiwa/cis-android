@@ -9,6 +9,7 @@
 
     <style name="CIS.TextAppearance.Medium" parent="TextAppearance.AppCompat.Medium">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="fontFamily">@font/proxima_nova_soft_medium</item>
     </style>
 
     <style name="CIS.TextAppearance.Medium.Secondary">

@@ -1,5 +1,6 @@
 package com.tinashe.hymnal.ui.hymns
 
+import android.app.ActivityOptions
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -23,6 +24,7 @@ import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.AppBarBehaviour
 import com.tinashe.hymnal.ui.hymns.adapter.HymnListAdapter
 import com.tinashe.hymnal.ui.hymns.hymnals.HymnalListFragment.Companion.SELECTED_HYMNAL_KEY
+import com.tinashe.hymnal.ui.hymns.sing.SingHymnsActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,15 +34,22 @@ class HymnsFragment : Fragment() {
 
     private var binding: FragmentHymnsBinding? = null
 
-    private val listAdapter: HymnListAdapter = HymnListAdapter()
+    private val listAdapter: HymnListAdapter = HymnListAdapter { pair ->
+        val intent = SingHymnsActivity.singIntent(requireContext(), pair.first.number)
+        val options = ActivityOptions.makeSceneTransitionAnimation(
+            requireActivity(),
+            pair.second,
+            getString(R.string.transition_shared_element)
+        )
+        requireActivity().startActivity(intent, options.toBundle())
+    }
 
     private var appBarBehaviour: AppBarBehaviour? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is AppBarBehaviour) {
-            appBarBehaviour = context
-        }
+        appBarBehaviour = context as? AppBarBehaviour
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -49,7 +58,6 @@ class HymnsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return FragmentHymnsBinding.inflate(inflater, container, false).also {
-            setHasOptionsMenu(true)
             binding = it
             binding?.hymnsListView?.apply {
                 addItemDecoration(DividerItemDecoration(context, VERTICAL))

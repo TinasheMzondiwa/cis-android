@@ -1,11 +1,11 @@
 package com.tinashe.hymnal.data.di
 
 import android.content.Context
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.squareup.moshi.Moshi
+import com.tinashe.hymnal.data.db.dao.CollectionsDao
 import com.tinashe.hymnal.data.db.dao.HymnalsDao
 import com.tinashe.hymnal.data.db.dao.HymnsDao
 import com.tinashe.hymnal.data.repository.HymnalRepository
@@ -26,21 +26,25 @@ object RepositoryModule {
     fun provideRepository(
         hymnalsDao: HymnalsDao,
         hymnsDao: HymnsDao,
+        collectionsDao: CollectionsDao,
         hymnalPrefs: HymnalPrefs,
         remoteHymnsRepository: RemoteHymnsRepository
     ): HymnalRepository = HymnalRepository(
-        hymnalsDao, hymnsDao, hymnalPrefs, remoteHymnsRepository
+        hymnalsDao, hymnsDao, collectionsDao, hymnalPrefs, remoteHymnsRepository
     )
 
     @Provides
     @ActivityRetainedScoped
     fun provideRemoteRepository(
+        database: FirebaseDatabase,
+        auth: FirebaseAuth,
+        storage: FirebaseStorage,
         moshi: Moshi,
         context: Context
     ): RemoteHymnsRepository = RemoteHymnsRepository(
-        Firebase.database.also { it.setPersistenceEnabled(true) },
-        Firebase.auth,
-        Firebase.storage,
+        database,
+        auth,
+        storage,
         moshi,
         context
     )

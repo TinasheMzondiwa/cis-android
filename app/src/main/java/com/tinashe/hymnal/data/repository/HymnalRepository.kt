@@ -1,14 +1,20 @@
 package com.tinashe.hymnal.data.repository
 
+import com.tinashe.hymnal.data.db.dao.CollectionsDao
 import com.tinashe.hymnal.data.db.dao.HymnalsDao
 import com.tinashe.hymnal.data.db.dao.HymnsDao
 import com.tinashe.hymnal.data.model.Hymn
+import com.tinashe.hymnal.data.model.HymnCollection
 import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.data.model.HymnalHymns
+import com.tinashe.hymnal.data.model.TitleBody
+import com.tinashe.hymnal.data.model.collections.CollectionHymnCrossRef
+import com.tinashe.hymnal.data.model.collections.CollectionHymns
 import com.tinashe.hymnal.data.model.remote.RemoteHymnal
 import com.tinashe.hymnal.data.model.response.Resource
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -18,6 +24,7 @@ import kotlin.coroutines.CoroutineContext
 class HymnalRepository(
     private val hymnalsDao: HymnalsDao,
     private val hymnsDao: HymnsDao,
+    private val collectionsDao: CollectionsDao,
     private val prefs: HymnalPrefs,
     private val remoteHymnsRepository: RemoteHymnsRepository,
     private val backgroundContext: CoroutineContext = Dispatchers.IO
@@ -48,7 +55,13 @@ class HymnalRepository(
 
                 if (resource.isSuccessFul) {
                     resource.data?.let { json ->
-                        hymnalsDao.insert(Hymnal(selectedHymnal.key, selectedHymnal.title, selectedHymnal.language))
+                        hymnalsDao.insert(
+                            Hymnal(
+                                selectedHymnal.key,
+                                selectedHymnal.title,
+                                selectedHymnal.language
+                            )
+                        )
                         hymnsDao.insertAll(json.map { it.toHymn(selectedHymnal.key) })
                         prefs.setSelectedHymnal(selectedHymnal.key)
                     }
@@ -73,5 +86,41 @@ class HymnalRepository(
 
     suspend fun searchHymns(query: String?): List<Hymn> {
         return hymnsDao.search(selectedCode, "%${query ?: ""}%")
+    }
+
+    fun getCollectionHymns(): Flow<List<CollectionHymns>> = collectionsDao.getCollectionsWithHymns()
+
+    suspend fun searchCollections(query: String?): List<CollectionHymns> =
+        collectionsDao.searchFor("%${query ?: ""}%")
+
+    suspend fun addCollection(content: TitleBody) {
+        val collection = HymnCollection(
+            title = content.title,
+            description = content.body,
+            created = System.currentTimeMillis()
+        )
+        collectionsDao.insert(collection)
+    }
+
+    suspend fun updateHymnCollections(hymnId: Int, collectionId: Int, add: Boolean) {
+        if (add) {
+            collectionsDao.insertRef(CollectionHymnCrossRef(collectionId, hymnId))
+        } else {
+            collectionsDao.deleteRef(collectionId, hymnId)
+        }
+    }
+
+    suspend fun getCollection(id: Int): Resource<CollectionHymns> {
+        return collectionsDao.findById(id)?.let {
+            Resource.success(it)
+        } ?: Resource.error(IllegalArgumentException("Invalid Collection Id"))
+    }
+
+    suspend fun deleteCollection(collection: CollectionHymns) {
+        val collectionId = collection.collection.collectionId
+        collection.hymns.forEach {
+            collectionsDao.deleteRef(it.hymnId, collectionId)
+        }
+        collectionsDao.deleteCollection(collectionId)
     }
 }

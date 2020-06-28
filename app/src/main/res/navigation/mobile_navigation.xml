@@ -8,15 +8,15 @@
     <fragment
         android:id="@+id/navigation_hymns"
         android:name="com.tinashe.hymnal.ui.hymns.HymnsFragment"
-        android:label="@string/title_hymns"
-        tools:layout="@layout/fragment_hymns" >
+        android:label="@string/blank"
+        tools:layout="@layout/fragment_hymns">
         <action
             android:id="@+id/action_navigation_hymns_to_hymnalListFragment"
             app:destination="@id/hymnalListFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -32,10 +32,10 @@
         tools:layout="@layout/fragment_collections" />
 
     <fragment
-        android:id="@+id/navigation_search"
-        android:name="com.tinashe.hymnal.ui.search.SearchFragment"
-        android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" />
+        android:id="@+id/navigation_support"
+        android:name="com.tinashe.hymnal.ui.support.SupportFragment"
+        android:label="@string/title_support"
+        tools:layout="@layout/fragment_support" />
 
     <fragment
         android:id="@+id/navigation_info"

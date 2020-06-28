@@ -23,6 +23,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.hymns.sing.SingHymnsActivity"
+            android:label="@string/blank"
+            android:theme="@style/Theme.CIS.Sing"/>
+
         <!-- Initializers -->
         <provider
             android:name="androidx.startup.InitializationProvider"
