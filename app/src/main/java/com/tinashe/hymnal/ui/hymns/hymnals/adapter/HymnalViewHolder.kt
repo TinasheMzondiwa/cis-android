@@ -16,7 +16,7 @@ class HymnalViewHolder(private val containerView: View) : RecyclerView.ViewHolde
 
     fun bind(hymnal: RemoteHymnal) {
         binding.apply {
-            icon.background.tint(COLORS.random().toColor())
+            icon.background.tint(COLORS[absoluteAdapterPosition % COLORS.size].toColor())
             hymnalTitle.text = hymnal.title
             hymnalLanguage.text = hymnal.language
         }
