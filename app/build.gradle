@@ -5,6 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'com.github.triplet.play'
 apply from: "$rootDir/gradle/helpers/common-methods.gradle"
 
 Properties semver = new Properties()
@@ -45,7 +46,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -120,4 +121,11 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$versions.androidx_junit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso"
 
+}
+
+play {
+    serviceAccountCredentials = file("keys/play-key.json")
+    track = "alpha"
+    defaultToAppBundles = true
+    resolutionStrategy = "auto"
 }
