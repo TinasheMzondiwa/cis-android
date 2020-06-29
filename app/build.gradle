@@ -55,7 +55,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:${versions.appcompat}"
     implementation "com.google.android.material:material:${versions.material}"
     implementation "androidx.constraintlayout:constraintlayout:${versions.const_layout}"
-    implementation "androidx.recyclerview:recyclerview:1.2.0-alpha03"
+    implementation "androidx.recyclerview:recyclerview:1.2.0-alpha04"
     implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
@@ -68,6 +68,7 @@ dependencies {
     implementation "androidx.startup:startup-runtime:${versions.startup}"
     implementation "androidx.paging:paging-runtime:${versions.paging}"
     implementation "androidx.preference:preference-ktx:${versions.preference}"
+    implementation "androidx.browser:browser:${versions.browser}"
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}"

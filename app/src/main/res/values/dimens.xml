@@ -41,7 +41,7 @@
 
     <dimen name="app_bar_height_main">120dp</dimen>
     <dimen name="app_bar_anchor_width">48dp</dimen>
-    <dimen name="app_bar_divider_height">0dp</dimen>
+    <dimen name="app_bar_divider_height">1dp</dimen>
 
     <!-- per android.view.ViewGroup.LayoutParams -->
     <item name="match_parent" format="integer" type="dimen">-1</item>

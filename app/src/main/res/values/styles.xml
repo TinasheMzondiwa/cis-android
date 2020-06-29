@@ -103,4 +103,15 @@
         <item name="android:background">@drawable/primary_ripple</item>
     </style>
 
+    <style name="InfoLine">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/spacing_medium</item>
+        <item name="android:drawablePadding">@dimen/spacing_large</item>
+        <item name="fontFamily">@font/proxima_nova_soft_medium</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
 </resources>
