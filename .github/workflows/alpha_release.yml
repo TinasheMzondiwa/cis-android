@@ -25,9 +25,9 @@ jobs:
         run: echo $FIREBASE_CONFIG > app/google-services.json
 
       - name: Decode Playstore key
-          env:
-            $PLAY_KEY: ${{ secrets.PLAY_KEY }}
-          run: echo $PLAY_KEY > app/keys/play-key.json
+        env:
+          PLAY_KEY: ${{ secrets.PLAY_KEY }}
+        run: echo $PLAY_KEY > app/keys/play-key.json
 
       - name: Run ktlint
         run: ./gradlew ktlint
