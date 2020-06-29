@@ -46,5 +46,16 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
+
+      - name: Decode Firebase google-services.json
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+        run: echo $FIREBASE_CONFIG > app/google-services.json
+
+      - name: Decode Playstore key
+        env:
+          PLAY_KEY: ${{ secrets.PLAY_KEY }}
+        run: echo $PLAY_KEY > app/play-key.json
+
       - name: Upload Release
         run: bash ./gradlew publishReleaseBundle
