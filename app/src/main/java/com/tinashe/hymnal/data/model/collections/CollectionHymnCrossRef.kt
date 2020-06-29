@@ -3,10 +3,12 @@ package com.tinashe.hymnal.data.model.collections
 import androidx.room.Entity
 import androidx.room.Index
 
-@Entity(tableName = "collectionHymnsRef",
-        primaryKeys = ["collectionId", "hymnId"],
-        indices = [Index("hymnId", unique = true)])
+@Entity(
+    tableName = "collectionHymnsRef",
+    primaryKeys = ["collectionId", "hymnId"],
+    indices = [Index("hymnId", unique = true)]
+)
 class CollectionHymnCrossRef(
-        val collectionId: Int,
-        val hymnId: Int
+    val collectionId: Int,
+    val hymnId: Int
 )
