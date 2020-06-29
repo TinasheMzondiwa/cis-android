@@ -31,8 +31,7 @@ jobs:
           PLAY_KEY: ${{ secrets.PLAY_KEY }}
         run: echo $PLAY_KEY > app/play-key.json
 
-      - name: Decode Release keystore file
-      - uses: actions/checkout@v2
+      - name: Decypt Release keystore file
         env:
           PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
         run: ./.github/scripts/decrypt_secret.sh
