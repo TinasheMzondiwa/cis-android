@@ -19,8 +19,8 @@ class EditHymnViewModel @ViewModelInject constructor(
     private val mutableViewState = SingleLiveEvent<Status>()
     val statusLiveData: LiveData<Status> = mutableViewState.asLiveData()
 
-    private val mutableEditContent = MutableLiveData<String>()
-    val editContentLiveData: LiveData<String> = mutableEditContent.asLiveData()
+    private val mutableEditContent = MutableLiveData<Pair<String, Boolean>>()
+    val editContentLiveData: LiveData<Pair<String, Boolean>> = mutableEditContent.asLiveData()
 
     private var editHymn: Hymn? = null
 
@@ -28,9 +28,9 @@ class EditHymnViewModel @ViewModelInject constructor(
         this.editHymn = hymn
 
         val content = if (hymn.editedContent.isNullOrEmpty()) {
-            hymn.content
+            hymn.content to false
         } else {
-            hymn.editedContent
+            (hymn.editedContent ?: "") to true
         }
         mutableEditContent.postValue(content)
     }
@@ -55,6 +55,17 @@ class EditHymnViewModel @ViewModelInject constructor(
             }
         } else {
             mutableViewState.postValue(Status.ERROR)
+        }
+    }
+
+    fun undoChanges() {
+        editHymn?.let { hymn ->
+            viewModelScope.launch {
+                hymn.editedContent = null
+                repository.updateHymn(hymn)
+
+                mutableViewState.postValue(Status.SUCCESS)
+            }
         }
     }
 }

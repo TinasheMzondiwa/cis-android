@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -67,9 +68,10 @@ class EditHymnActivity : AppCompatActivity(), IAztecToolbarClickListener {
         viewModel.editContentLiveData.observeNonNull(this) { content ->
             binding.edtHymn.apply {
                 removeTextChangedListener(contentWatcher)
-                fromHtml(content)
+                fromHtml(content.first)
                 addTextChangedListener(contentWatcher)
             }
+            invalidateOptionsMenu()
         }
 
         viewModel.setHymn(hymn)
@@ -95,10 +97,31 @@ class EditHymnActivity : AppCompatActivity(), IAztecToolbarClickListener {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.edit_hymn, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        val visible = viewModel.editContentLiveData.value?.second ?: false
+        menu?.findItem(R.id.action_undo)?.isVisible = visible
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 finishAfterTransition()
+                true
+            }
+            R.id.action_undo -> {
+                MaterialAlertDialogBuilder(this@EditHymnActivity)
+                    .setMessage(R.string.undo_changes_confirm)
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setPositiveButton(R.string.title_undo) { _, _ ->
+                        viewModel.undoChanges()
+                    }
+                    .show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
