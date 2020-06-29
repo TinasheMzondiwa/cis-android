@@ -32,5 +32,6 @@ ext.versions = [
         'androidx_testing'  : '2.1.0',
         'androidx_junit'    : '1.1.1',
         'kfluent'           : '1.61',
-        'robolectric'       : '4.3.1'
+        'robolectric'       : '4.3.1',
+        'espresso'          : '3.2.0'
 ]
