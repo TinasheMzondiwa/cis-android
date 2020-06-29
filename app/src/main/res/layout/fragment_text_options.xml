@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:paddingVertical="@dimen/spacing_medium"
+    android:paddingTop="@dimen/spacing_medium">
+
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="6dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/spacing_medium"
+        android:contentDescription="@string/blank"
+        android:src="@drawable/drag_handle" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:text="@string/theme"
+        android:textAppearance="?attr/textAppearanceOverline" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingHorizontal="@dimen/spacing_medium"
+        app:checkedChip="@id/chipThemeSystem"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipThemeSystem"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/theme_follow_system" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipThemeLight"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/theme_light" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipThemeDark"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/theme_dark" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="@dimen/spacing_medium"
+        android:background="@drawable/list_divider" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:text="@string/typeface"
+        android:textAppearance="?attr/textAppearanceOverline" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:scrollbars="none">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupTypeface"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:checkedChip="@id/chipTypefaceProxima"
+            app:selectionRequired="true"
+            app:singleLine="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipTypefaceProxima"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Proxima"
+                app:fontFamily="@font/proxima_nova_soft_regular"
+                tools:ignore="HardcodedText" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipTypefaceLato"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lato"
+                app:fontFamily="@font/lato"
+                tools:ignore="HardcodedText" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipTypefaceAndada"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Andada"
+                app:fontFamily="@font/andada"
+                tools:ignore="HardcodedText" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipTypefaceRoboto"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Roboto"
+                app:fontFamily="@font/roboto"
+                tools:ignore="HardcodedText" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipTypefaceGentium"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gentium"
+                app:fontFamily="@font/gentium_basic"
+                tools:ignore="HardcodedText" />
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="@dimen/spacing_medium"
+        android:background="@drawable/list_divider" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:text="@string/text_size"
+        android:textAppearance="?attr/textAppearanceOverline" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sizeRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingHorizontal="@dimen/spacing_medium">
+
+        <TextView
+            android:id="@+id/sizeSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aa"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textSize="@dimen/text_size_14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sizeSlider"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:stepSize="4"
+            android:value="18"
+            android:valueFrom="14"
+            android:valueTo="30"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/sizeBig"
+            app:layout_constraintStart_toEndOf="@id/sizeSmall"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/sizeBig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aa"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textSize="@dimen/text_size_30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

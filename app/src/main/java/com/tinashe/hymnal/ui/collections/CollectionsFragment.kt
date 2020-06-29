@@ -126,7 +126,10 @@ class CollectionsFragment : Fragment() {
         viewModel.collectionsLiveData.observeNonNull(viewLifecycleOwner) {
             listAdapter.submitList(ArrayList(it))
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
         viewModel.loadData()
     }
 

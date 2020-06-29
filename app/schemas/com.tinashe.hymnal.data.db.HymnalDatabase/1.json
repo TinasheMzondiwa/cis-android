@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "97543aef46925b8ef5f882c65002957c",
+    "identityHash": "e2d33027b9ebf639fa1728c97e7f2d42",
     "entities": [
       {
         "tableName": "hymnals",
@@ -148,14 +148,23 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_collectionHymnsRef_hymnId",
+            "unique": true,
+            "columnNames": [
+              "hymnId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_collectionHymnsRef_hymnId` ON `${TABLE_NAME}` (`hymnId`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '97543aef46925b8ef5f882c65002957c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e2d33027b9ebf639fa1728c97e7f2d42')"
     ]
   }
 }
