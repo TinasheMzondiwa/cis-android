@@ -38,7 +38,7 @@ jobs:
       - name: Decode Release keystore file
         env:
           PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
-        run: gpg -g --passphrase $PASSPHRASE --batch app/Christ_key.asc > app/Christ_key
+        run: gpg -d --passphrase $PASSPHRASE --batch app/Christ_key.asc > app/Christ_key
 
       - name: Decode Keystore properties file
         env:
