@@ -32,9 +32,13 @@ jobs:
         run: echo $PLAY_KEY > app/play-key.json
 
       - name: Decode Release keystore base64
-        run: echo ${{ secrets.RELEASE_KEYSTORE }} > ../app/Christ_key.asc
+        env:
+          RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
+        run: echo $RELEASE_KEYSTORE > app/Christ_key.asc
       - name: Decode Release keystore file
-        run: gpg -g --passphrase ${{ secrets.KEY_PASSPHRASE }} --batch ../app/Christ_key.asc > ../app/Christ_key
+        env:
+          PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
+        run: gpg -g --passphrase $PASSPHRASE --batch app/Christ_key.asc > app/Christ_key
 
       - name: Decode Keystore properties file
         env:
