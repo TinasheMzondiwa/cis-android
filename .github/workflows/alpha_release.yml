@@ -60,7 +60,7 @@ jobs:
       - name: Decode Release keystore base64
         run: echo ${{ secrets.RELEASE_KEYSTORE }} > Christ_key.asc
       - name: Decode Release keystore file
-        run: gpg -g --passphrase ${{ secrets.KEY_PASSPHRASE }} --batch Christ_key.asc > app/Christ_key
+        run: gpg -g --passphrase ${{ secrets.KEY_PASSPHRASE }} --batch app/Christ_key.asc > app/Christ_key
 
       - name: Decode Keystore properties file
         env:
