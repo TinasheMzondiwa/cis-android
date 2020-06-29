@@ -1,14 +1,13 @@
 package com.tinashe.hymnal.ui.widget
 
 import android.text.Editable
-import android.text.TextWatcher
 import android.widget.EditText
 import androidx.core.text.isDigitsOnly
 
 class NumPadWatcher(
     private val editText: EditText,
     private val callbacks: Callbacks
-) : TextWatcher {
+) : SimpleTextWatcher() {
 
     interface Callbacks {
         fun displayValidNumber(number: String)
@@ -40,13 +39,5 @@ class NumPadWatcher(
         editText.removeTextChangedListener(this)
         editText.setText("")
         editText.addTextChangedListener(this)
-    }
-
-    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        // no op
-    }
-
-    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        // no op
     }
 }
