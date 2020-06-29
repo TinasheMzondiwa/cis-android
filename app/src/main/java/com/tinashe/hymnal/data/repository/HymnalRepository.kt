@@ -88,6 +88,10 @@ class HymnalRepository(
         return hymnsDao.search(selectedCode, "%${query ?: ""}%")
     }
 
+    suspend fun updateHymn(hymn: Hymn) {
+        hymnsDao.update(hymn)
+    }
+
     fun getCollectionHymns(): Flow<List<CollectionHymns>> = collectionsDao.getCollectionsWithHymns()
 
     suspend fun searchCollections(query: String?): List<CollectionHymns> =

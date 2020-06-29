@@ -1,6 +1,7 @@
 package com.tinashe.hymnal.ui.hymns.sing
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -17,6 +18,7 @@ import com.tinashe.hymnal.extensions.activity.applyMaterialTransform
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import com.tinashe.hymnal.ui.collections.add.AddToCollectionFragment
+import com.tinashe.hymnal.ui.hymns.sing.edit.EditHymnActivity
 import com.tinashe.hymnal.ui.hymns.sing.style.TextStyleChanges
 import com.tinashe.hymnal.ui.hymns.sing.style.TextStyleFragment
 import com.tinashe.hymnal.utils.Helper
@@ -35,6 +37,8 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
 
     private var pagerAdapter: SingFragmentsAdapter? = null
     private lateinit var binding: ActivitySingBinding
+
+    private var currentPosition: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         applyMaterialTransform(getString(R.string.transition_shared_element))
@@ -55,7 +59,9 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
             pagerAdapter = SingFragmentsAdapter(this, it)
             binding.viewPager.apply {
                 adapter = pagerAdapter
-                setCurrentItem(number - 1, false)
+                val position = currentPosition ?: number.minus(1)
+                setCurrentItem(position, false)
+                currentPosition = null
             }
         }
 
@@ -102,6 +108,14 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                         true
                     }
                     R.id.action_edit -> {
+                        if (pagerAdapter?.hymns?.isNotEmpty() == true) {
+                            val hymn = pagerAdapter?.hymns
+                                ?.get(viewPager.currentItem)
+                                ?: return@setOnMenuItemClickListener false
+
+                            val intent = EditHymnActivity.editIntent(this@SingHymnsActivity, hymn)
+                            startActivityForResult(intent, RC_EDIT_HYMN)
+                        }
                         true
                     }
                     R.id.action_add_to_list -> {
@@ -182,9 +196,20 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_EDIT_HYMN && resultCode == Activity.RESULT_OK) {
+            currentPosition = binding.viewPager.currentItem
+
+            val collectionId = intent.getIntExtra(ARG_COLLECTION_ID, -1)
+            viewModel.loadData(collectionId)
+        }
+    }
+
     companion object {
         private const val ARG_SELECTED = "arg:selected_number"
         private const val ARG_COLLECTION_ID = "arg:collection_id"
+        private const val RC_EDIT_HYMN = 23
 
         fun singIntent(context: Context, number: Int): Intent =
             Intent(context, SingHymnsActivity::class.java).apply {

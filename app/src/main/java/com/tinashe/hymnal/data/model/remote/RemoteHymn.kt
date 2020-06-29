@@ -18,6 +18,7 @@ data class RemoteHymn(
         number = number,
         title = title,
         content = content,
-        majorKey = ""
+        majorKey = "",
+        editedContent = null
     )
 }

@@ -26,7 +26,12 @@
         <activity
             android:name=".ui.hymns.sing.SingHymnsActivity"
             android:label="@string/blank"
-            android:theme="@style/Theme.CIS.Sing"/>
+            android:theme="@style/Theme.CIS.Sing" />
+
+        <activity
+            android:name=".ui.hymns.sing.edit.EditHymnActivity"
+            android:label="@string/title_edit_hymn"
+            android:theme="@style/Theme.CIS.Sing" />
 
         <!-- Initializers -->
         <provider

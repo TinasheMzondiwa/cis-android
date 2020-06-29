@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e2d33027b9ebf639fa1728c97e7f2d42",
+    "identityHash": "0d54e6f3aad5e4124593d2937c15e86e",
     "entities": [
       {
         "tableName": "hymnals",
@@ -38,7 +38,7 @@
       },
       {
         "tableName": "hymns",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`hymnId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `book` TEXT NOT NULL, `number` INTEGER NOT NULL, `title` TEXT NOT NULL, `content` TEXT NOT NULL, `majorKey` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`hymnId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `book` TEXT NOT NULL, `number` INTEGER NOT NULL, `title` TEXT NOT NULL, `content` TEXT NOT NULL, `majorKey` TEXT, `editedContent` TEXT)",
         "fields": [
           {
             "fieldPath": "hymnId",
@@ -73,6 +73,12 @@
           {
             "fieldPath": "majorKey",
             "columnName": "majorKey",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "editedContent",
+            "columnName": "editedContent",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -164,7 +170,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e2d33027b9ebf639fa1728c97e7f2d42')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0d54e6f3aad5e4124593d2937c15e86e')"
     ]
   }
 }

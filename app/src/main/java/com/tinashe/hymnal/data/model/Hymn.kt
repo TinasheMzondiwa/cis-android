@@ -14,5 +14,6 @@ data class Hymn(
     val number: Int,
     val title: String,
     val content: String,
-    val majorKey: String?
+    val majorKey: String?,
+    var editedContent: String?
 ) : Parcelable

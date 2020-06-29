@@ -39,7 +39,11 @@ class HymnFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val hymn: Hymn = arguments?.get(ARG_HYMN) as? Hymn ?: return
-        binding?.hymnText?.text = hymn.content.parseAsHtml()
+        binding?.hymnText?.text = if (hymn.editedContent.isNullOrEmpty()) {
+            hymn.content.parseAsHtml()
+        } else {
+            hymn.editedContent?.parseAsHtml()
+        }
     }
 
     companion object {
