@@ -113,5 +113,9 @@
         <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
+    
+    <style name="ToolbarDivider">
+        <item name="layout_collapseMode">parallax</item>
+    </style>
 
 </resources>
