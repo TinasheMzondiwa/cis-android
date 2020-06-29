@@ -24,6 +24,7 @@ ext.versions = [
         'fb_auth'           : '19.3.1',
         'ktlint'            : '0.37.1',
         'aztec'             : 'v1.3.43',
+        'billing'           : '3.0.0',
 
         // testing
         'junit'             : '4.13',

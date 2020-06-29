@@ -89,7 +89,7 @@ dependencies {
     kapt "com.squareup.moshi:moshi-kotlin-codegen:${versions.moshi}"
 
     implementation "com.jakewharton.timber:timber:${versions.timber}"
-
+    implementation "com.android.billingclient:billing-ktx:${versions.billing}"
     implementation "com.github.wordpress-mobile.WordPress-Aztec-Android:aztec:${versions.aztec}"
 
     testImplementation "junit:junit:$versions.junit"
