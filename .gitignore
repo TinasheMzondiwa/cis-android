@@ -10,4 +10,4 @@
 
 app/google-services.json
 version.properties
-/app/keys/*
+/app/play-key.json

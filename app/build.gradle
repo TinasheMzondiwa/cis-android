@@ -124,7 +124,7 @@ dependencies {
 }
 
 play {
-    serviceAccountCredentials = file("keys/play-key.json")
+    serviceAccountCredentials = file("play-key.json")
     track = "alpha"
     defaultToAppBundles = true
     resolutionStrategy = "auto"
