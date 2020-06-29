@@ -44,10 +44,23 @@ android {
         }
     }
 
+    Properties keyProps = new Properties()
+    keyProps.load(new FileInputStream(file("../app/keystore.properties")))
+
+    signingConfigs {
+        release {
+            storeFile file(keyProps['release.keystore'])
+            storePassword keyProps['release.keystore.password']
+            keyAlias keyProps['key.alias']
+            keyPassword keyProps['key.password']
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {

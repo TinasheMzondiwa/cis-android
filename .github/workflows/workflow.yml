@@ -31,6 +31,16 @@ jobs:
           PLAY_KEY: ${{ secrets.PLAY_KEY }}
         run: echo $PLAY_KEY > app/play-key.json
 
+      - name: Decode Release keystore base64
+        run: echo ${{ secrets.RELEASE_KEYSTORE }} > Christ_key.asc
+      - name: Decode Release keystore file
+        run: gpg -g --passphrase ${{ secrets.KEY_PASSPHRASE }} --batch Christ_key.asc > app/Christ_key
+
+      - name: Decode Keystore properties file
+        env:
+          KEY_PROPERTIES: ${{ secrets.KEY_STORE_PROPERTIES }}
+        run: echo $KEY_PROPERTIES > app/keystore.properties
+
       - name: Run ktlint
         run: ./gradlew ktlint
 
