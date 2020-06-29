@@ -5,6 +5,23 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: "androidx.navigation.safeargs.kotlin"
+apply from: "$rootDir/gradle/helpers/common-methods.gradle"
+
+Properties semver = new Properties()
+semver.load(new FileInputStream(file("semver.properties")))
+
+def buildTimeMillis = System.currentTimeMillis()
+def buildVersionCode = computeVersionCode(semver['major'], semver['minor'], semver['patch'], semver['build'])
+def buildVersionName = computeVersionName(semver['major'], semver['minor'], semver['patch'])
+def buildTime = computeBuildTimeFormatted(buildTimeMillis)
+def buildRevision = computeRevision()
+
+ant.propertyfile(file: "version.properties") {
+    entry(key: "version", value: buildVersionName)
+    entry(key: "versionCode", value: buildVersionCode)
+    entry(key: "rev", value: buildRevision)
+    entry(key: "buildTime", value: buildTime)
+}
 
 android {
     compileSdkVersion 29
@@ -13,8 +30,8 @@ android {
         applicationId "com.tinashe.christInSong"
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
-        versionCode 1
-        versionName "1.0"
+        versionCode buildVersionCode
+        versionName buildVersionName
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
