@@ -10,7 +10,7 @@ jobs:
   testing:
     name: Lint and unit test
 
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
@@ -31,14 +31,10 @@ jobs:
           PLAY_KEY: ${{ secrets.PLAY_KEY }}
         run: echo $PLAY_KEY > app/play-key.json
 
-      - name: Decode Release keystore base64
-        env:
-          RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
-        run: echo $RELEASE_KEYSTORE > app/Christ_key.asc
       - name: Decode Release keystore file
         env:
           PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
-        run: gpg -d --passphrase "$PASSPHRASE" --batch app/Christ_key.asc > app/Christ_key
+        run: ./.github/scripts/decrypt_secret.sh
 
       - name: Decode Keystore properties file
         env:
