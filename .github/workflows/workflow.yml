@@ -29,7 +29,7 @@ jobs:
       - name: Decode Playstore key
         env:
           PLAY_KEY: ${{ secrets.PLAY_KEY }}
-        run: echo $PLAY_KEY > app/keys/play-key.json
+        run: echo $PLAY_KEY > app/play-key.json
 
       - name: Run ktlint
         run: ./gradlew ktlint
