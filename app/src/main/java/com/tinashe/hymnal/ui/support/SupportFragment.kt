@@ -4,9 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.tinashe.hymnal.BuildConfig
 import com.tinashe.hymnal.R
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,5 +30,20 @@ class SupportFragment : Fragment(R.layout.fragment_support) {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.support_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_help -> {
+                ShareCompat.IntentBuilder.from(requireActivity())
+                    .setType("message/rfc822")
+                    .addEmailTo(getString(R.string.app_email))
+                    .setSubject("${getString(R.string.app_full_name)} v${BuildConfig.VERSION_NAME}")
+                    .setChooserTitle(R.string.send_with)
+                    .startChooser()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

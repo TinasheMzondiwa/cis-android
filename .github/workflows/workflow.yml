@@ -21,10 +21,15 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Decode google-services.json
+      - name: Decode Firebase google-services.json
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
         run: echo $FIREBASE_CONFIG > app/google-services.json
+
+      - name: Decode Keystore properties file
+        env:
+          KEY_PROPERTIES: ${{ secrets.KEY_STORE_PROPERTIES }}
+        run: echo $KEY_PROPERTIES > app/keystore.properties
 
       - name: Run ktlint
         run: ./gradlew ktlint

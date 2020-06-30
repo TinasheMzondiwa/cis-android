@@ -9,3 +9,7 @@
 .cxx
 
 app/google-services.json
+version.properties
+/app/play-key.json
+/app/Christ_key
+/app/keystore.properties

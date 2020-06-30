@@ -1,0 +1,52 @@
+import java.text.SimpleDateFormat
+
+static def toIntOrZero(value) {
+    return value?.isInteger() ? value.toInteger() : 0
+}
+
+def computeVersionName(major, minor, patch) {
+    int vMajor = toIntOrZero(major)
+    int vMinor = toIntOrZero(minor)
+    int vPatch = toIntOrZero(patch)
+    return String.format('%d.%d.%d', vMajor, vMinor, vPatch)
+}
+
+static def computeVersionCode(dateTimeMillis) {
+    // This will change every minute. Manual increment version in method below.
+    // Benefit : Android won't complain if an old branch is run on device with a newer versionCode.
+    def df = new SimpleDateFormat("yyDDDHHmm")
+    df.setTimeZone(TimeZone.getTimeZone("UTC"))
+    return Integer.parseInt(df.format(new Date(dateTimeMillis)))
+}
+
+
+def computeVersionCode(major, minor, patch, build) {
+    // hybrid of :
+    // http://tools.android.com/tech-docs/new-build-system/tips
+    // https://plus.google.com/+JakeWharton/posts/6f5TcVPRZij
+    // https://youtu.be/AYoAEoOoYFE?t=35m14s
+    int vMajor = toIntOrZero(major)
+    int vMinor = toIntOrZero(minor)
+    int vPatch = toIntOrZero(patch)
+    int vBuild = toIntOrZero(build)
+    // Up to 210 majors w/ <=1000 minors, <=100 patches, <=99 dogfood builds per version
+    // MAX 2100000000
+    return (vMajor * 1000) + (vMinor * 100) + (vPatch * 10) + vBuild
+}
+
+static def computeRevision() {
+    return 'git rev-parse --short HEAD'.execute().text.trim()
+}
+
+static def computeBuildTimeFormatted(dateTimeMillis) {
+    def df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'")
+    df.setTimeZone(TimeZone.getTimeZone("UTC"))
+    return df.format(new Date(dateTimeMillis))
+}
+
+ext {
+    computeVersionName = this.&computeVersionName
+    computeVersionCode = this.&computeVersionCode
+    computeRevision = this.&computeRevision
+    computeBuildTimeFormatted = this.&computeBuildTimeFormatted
+}
