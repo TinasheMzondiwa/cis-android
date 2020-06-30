@@ -5,9 +5,8 @@ on:
     branches: [ master ]
 
 jobs:
-  unitTest:
-    name: Lint and unit test
-
+  release:
+    name: Upload Alpha Release
     runs-on: ubuntu-latest
 
     steps:
@@ -29,42 +28,10 @@ jobs:
           PLAY_KEY: ${{ secrets.PLAY_KEY }}
         run: echo $PLAY_KEY > app/play-key.json
 
-      - name: Run ktlint
-        run: ./gradlew ktlint
-
-      - name: Run Android lint
-        run: ./gradlew lintDebug
-
-      - name: Run unit tests
-        run: ./gradlew testDebugUnitTest
-      
-      
-  release:
-    name: Upload Alpha Release
-    needs: [unitTest]
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Decode Firebase google-services.json
-        env:
-          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
-        run: echo $FIREBASE_CONFIG > app/google-services.json
-
-      - name: Decode Playstore key
-        env:
-          PLAY_KEY: ${{ secrets.PLAY_KEY }}
-        run: echo $PLAY_KEY > app/play-key.json
-
-      - name: Decode Release keystore base64
-        env:
-          RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
-        run: echo $RELEASE_KEYSTORE > app/Christ_key.asc
-      - name: Decode Release keystore file
+      - name: Decypt Release keystore file
         env:
           PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
-        run: gpg -d --passphrase "$PASSPHRASE" --batch app/Christ_key.asc > app/Christ_key
+        run: ./.github/scripts/decrypt_secret.sh
 
       - name: Decode Keystore properties file
         env:
