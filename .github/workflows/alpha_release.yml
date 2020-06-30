@@ -28,15 +28,15 @@ jobs:
           PLAY_KEY: ${{ secrets.PLAY_KEY }}
         run: echo $PLAY_KEY > app/play-key.json
 
-      - name: Decypt Release keystore file
-        env:
-          PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
-        run: ./.github/scripts/decrypt_secret.sh
-
       - name: Decode Keystore properties file
         env:
           KEY_PROPERTIES: ${{ secrets.KEY_STORE_PROPERTIES }}
         run: echo $KEY_PROPERTIES > app/keystore.properties
+
+      - name: Decrypt Release keystore file
+        env:
+          PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
+        run: ./.github/scripts/decrypt_secret.sh
 
       - name: List dir
         run: ls
