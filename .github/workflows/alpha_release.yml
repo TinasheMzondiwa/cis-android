@@ -38,8 +38,15 @@ jobs:
           PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
         run: ./.github/scripts/decrypt_secret.sh
 
-      - name: List dir
-        run: ls
-
      # - name: Upload Release
      #   run: bash ./gradlew publishReleaseBundle
+
+  printOut:
+    name: Print output gathered
+    needs: [release]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Print dirs
+        run: ls
