@@ -38,5 +38,8 @@ jobs:
           KEY_PROPERTIES: ${{ secrets.KEY_STORE_PROPERTIES }}
         run: echo $KEY_PROPERTIES > app/keystore.properties
 
-      - name: Upload Release
-        run: bash ./gradlew publishReleaseBundle
+      - name: List dir
+        run: ls
+
+     # - name: Upload Release
+     #   run: bash ./gradlew publishReleaseBundle
