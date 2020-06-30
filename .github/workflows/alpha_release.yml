@@ -37,6 +37,8 @@ jobs:
         run: ./.github/scripts/decrypt_secret.sh
         env:
           PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
+      - name: Test printing file
+          run: cat $HOME/secrets/Christ_key
 
       - name: List dir
         run: ls -lR
