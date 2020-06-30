@@ -26,21 +26,6 @@ jobs:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
         run: echo $FIREBASE_CONFIG > app/google-services.json
 
-      - name: Decode Playstore key
-        env:
-          PLAY_KEY: ${{ secrets.PLAY_KEY }}
-        run: echo $PLAY_KEY > app/play-key.json
-
-      - name: Decypt Release keystore file
-        env:
-          PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
-        run: ./.github/scripts/decrypt_secret.sh
-
-      - name: Decode Keystore properties file
-        env:
-          KEY_PROPERTIES: ${{ secrets.KEY_STORE_PROPERTIES }}
-        run: echo $KEY_PROPERTIES > app/keystore.properties
-
       - name: Run ktlint
         run: ./gradlew ktlint
 

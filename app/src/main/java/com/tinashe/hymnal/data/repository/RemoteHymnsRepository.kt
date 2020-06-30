@@ -15,6 +15,7 @@ import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.TitleLanguage
 import com.tinashe.hymnal.data.model.remote.RemoteHymn
 import com.tinashe.hymnal.data.model.remote.RemoteHymnal
+import com.tinashe.hymnal.data.model.remote.RemoteHymnalJsonAdapter
 import com.tinashe.hymnal.data.model.response.Resource
 import com.tinashe.hymnal.utils.Helper
 import kotlinx.coroutines.tasks.await
@@ -34,7 +35,7 @@ class RemoteHymnsRepository(
 
     fun getSample(): RemoteHymnal? {
         val jsonString = Helper.getJson(context.resources, R.raw.english)
-        val adapter: JsonAdapter<RemoteHymnal> = moshi.adapter(RemoteHymnal::class.java)
+        val adapter: JsonAdapter<RemoteHymnal> = RemoteHymnalJsonAdapter(moshi)
         return adapter.fromJson(jsonString)
     }
 

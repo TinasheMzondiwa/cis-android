@@ -28,6 +28,11 @@
 }
 
 -keep @com.squareup.moshi.JsonQualifier interface *
+-keep class kotlin.reflect.jvm.internal.impl.builtins.BuiltInsLoaderImpl
+
+-keepclassmembers class kotlin.Metadata {
+    public <methods>;
+}
 
 # Enum field names are used by the integrated EnumJsonAdapter.
 # values() is synthesized by the Kotlin compiler and is used by EnumJsonAdapter indirectly
@@ -57,6 +62,7 @@
 
 # Application model classes
 -keep class com.tinashe.hymnal.data.model.** { *; }
+-keep class com.tinashe.hymnal.initializer.TimberInitializer
 
 # Ignore annotation used for build tooling.
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
