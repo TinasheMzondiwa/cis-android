@@ -122,7 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_large"
             android:lineSpacingExtra="@dimen/spacing_micro"
-            android:paddingHorizontal="@dimen/spacing_medium"
+            android:paddingHorizontal="@dimen/spacing_medium_large"
             android:text="@string/in_app_purchases_disclaimer"
             android:textAlignment="center"
             android:textAppearance="?attr/textAppearanceCaption" />
