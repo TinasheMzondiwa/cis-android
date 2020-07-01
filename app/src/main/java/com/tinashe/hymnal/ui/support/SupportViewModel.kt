@@ -98,7 +98,7 @@ class SupportViewModel @ViewModelInject constructor() :
         viewModelScope.launch(Dispatchers.IO) {
             val result = billingClient?.querySkuDetails(params)
             if (result?.billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
-                mutableInAppProducts.postValue(result.skuDetailsList)
+                mutableInAppProducts.postValue(result.skuDetailsList?.sortedBy { it.priceAmountMicros })
             } else {
                 Timber.e(result?.billingResult?.debugMessage)
             }
