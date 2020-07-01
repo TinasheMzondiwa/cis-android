@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.tinashe.hymnal.BuildConfig
 import com.tinashe.hymnal.R
+import com.tinashe.hymnal.extensions.arch.observeNonNull
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SupportFragment : Fragment(R.layout.fragment_support) {
@@ -25,6 +27,15 @@ class SupportFragment : Fragment(R.layout.fragment_support) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.inAppProductsLiveData.observeNonNull(viewLifecycleOwner) {
+            Timber.d("IN-APP: ${it.size}")
+        }
+        viewModel.subscriptionsLiveData.observeNonNull(viewLifecycleOwner) {
+            Timber.d("SUBS: ${it.size}")
+        }
+
+        viewModel.loadData(requireActivity())
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
