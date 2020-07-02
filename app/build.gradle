@@ -5,6 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.github.triplet.play'
 apply from: "$rootDir/gradle/helpers/common-methods.gradle"
 
@@ -115,6 +116,8 @@ dependencies {
     implementation "com.google.firebase:firebase-storage-ktx:${versions.fb_storage}"
     implementation "com.google.firebase:firebase-auth-ktx:${versions.fb_auth}"
     implementation "com.google.firebase:firebase-database-ktx:${versions.fb_database}"
+    implementation "com.google.firebase:firebase-analytics-ktx:${versions.fb_analytics}"
+    implementation "com.google.firebase:firebase-crashlytics:${versions.fb_crashytics}"
 
     implementation "com.squareup.moshi:moshi-kotlin:${versions.moshi}"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:${versions.moshi}"
