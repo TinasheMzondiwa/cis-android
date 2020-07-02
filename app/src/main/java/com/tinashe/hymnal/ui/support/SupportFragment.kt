@@ -66,6 +66,10 @@ class SupportFragment : Fragment() {
                 .show()
         }
         viewModel.deepLinkLiveData.observeNonNull(viewLifecycleOwner) {
+            binding?.apply {
+                chipGroupInApp.clearCheck()
+                chipGroupSubs.clearCheck()
+            }
             launchWebUrl(it)
         }
         viewModel.inAppProductsLiveData.observeNonNull(viewLifecycleOwner) { products ->
