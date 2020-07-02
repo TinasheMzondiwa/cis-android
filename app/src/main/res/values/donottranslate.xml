@@ -12,4 +12,7 @@
     <string name="app_source">https://github.com/TinasheMzondiwa/cis-android</string>
     <string name="app_twitter">https://twitter.com/christinsongapp</string>
     <string name="app_share_message">Get the Christ In Song App!\n\n%1$s</string>
+    <string name="app_privacy_policy">https://christ-in-song.web.app/policy/</string>
+    <string name="app_terms">https://christ-in-song.web.app/terms/</string>
+    <string name="subscriptions_url">https://play.google.com/store/account/subscriptions</string>
 </resources>

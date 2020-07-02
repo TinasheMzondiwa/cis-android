@@ -21,4 +21,9 @@
         <item name="fontFamily">@font/proxima_nova_soft_medium</item>
     </style>
 
+    <style name="TextAppearance.CIS.Chip.Amount">
+        <item name="fontFamily">@font/proxima_nova_soft_semibold</item>
+        <item name="android:textSize">@dimen/text_size_22sp</item>
+    </style>
+
 </resources>

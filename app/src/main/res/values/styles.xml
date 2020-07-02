@@ -29,6 +29,12 @@
         <item name="chipIconTint">?attr/colorOnSurface</item>
     </style>
 
+    <style name="Widget.CIS.Chip.Amount" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipBackgroundColor">@color/color_chip_bg</item>
+        <item name="android:textColor">@color/color_chip_text</item>
+        <item name="android:textAppearance">@style/TextAppearance.CIS.Chip.Amount</item>
+    </style>
+
     <style name="Widget.CIS.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
