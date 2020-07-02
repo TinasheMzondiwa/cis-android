@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tinashe.hymnal.BuildConfig
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentSupportBinding
@@ -24,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class SupportFragment : Fragment(R.layout.fragment_support) {
+class SupportFragment : Fragment() {
 
     private val viewModel: SupportViewModel by viewModels()
 
@@ -51,6 +52,22 @@ class SupportFragment : Fragment(R.layout.fragment_support) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.purchaseResultLiveData.observeNonNull(viewLifecycleOwner) { pair ->
+            binding?.apply {
+                chipGroupInApp.clearCheck()
+                chipGroupSubs.clearCheck()
+            }
+            val message = pair.second?.let {
+                getString(it)
+            } ?: return@observeNonNull
+            MaterialAlertDialogBuilder(requireContext())
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, null)
+                .show()
+        }
+        viewModel.deepLinkLiveData.observeNonNull(viewLifecycleOwner) {
+            launchWebUrl(it)
+        }
         viewModel.inAppProductsLiveData.observeNonNull(viewLifecycleOwner) { products ->
             binding?.chipGroupInApp?.apply {
                 removeAllViews()
@@ -141,5 +158,10 @@ class SupportFragment : Fragment(R.layout.fragment_support) {
         } catch (ex: Exception) {
             Timber.e(ex)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.viewResumed()
     }
 }

@@ -7,10 +7,12 @@
     <string name="created_label">Created: </string>
     <string name="empty_collections">Your Collection of hymns will appear here</string>
     <string name="empty_collections_add">Create your first Collection</string>
+    <string name="error_billing_client_unavailable">Purchases are unavailable at the moment.\nPlease check back later.</string>
     <string name="error_empty_collection">Add hymns to Collection</string>
     <string name="error_required">Required</string>
     <string name="error_invalid_content">Invalid content</string>
     <string name="error_invalid_number">Hymn %1$d is unavailable</string>
+    <string name="error_item_already_owned">You have already purchased this item.\nPlease select a different amount.</string>
     <string name="hint_description">Description (Optional)</string>
     <string name="hint_title">Title</string>
     <string name="hymn_count_one">One Hymn</string>
@@ -25,6 +27,7 @@
     <string name="send_with">Send with:</string>
     <string name="share_this_app">Share this app…</string>
     <string name="subscription_period">%1$s/month</string>
+    <string name="success_purchase">Thank you for your contribution!</string>
     <string name="support_headline">Support us with a Donation!</string>
     <string name="support_message">If you find this app useful please consider supporting us with a donation.</string>
     <string name="support_or_feedback">Help or Feedback</string>
