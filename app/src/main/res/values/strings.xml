@@ -16,10 +16,19 @@
     <string name="hymn_count_one">One Hymn</string>
     <string name="hymn_count_other">%1$d Hymns</string>
     <string name="hymn_count_zero">No Hymns</string>
+    <string name="in_app_purchases_disclaimer">A One-time Donation (In-App Purchase) or a Monthly Donation (Subscription) is not required to access any feature of this app, All features are available for free and will always be. The subscription renews automatically each month. You can cancel your subscription at any time through your Google Play Store account settings and your subscription will stay active until the end of your subscription period. Subscriptions must be cancelled at least 24 hours before the end of the subscription period to avoid being charged for another month.</string>
+    <string name="manage_subscriptions">Manage Subscriptions</string>
+    <string name="monthly_donations">Monthly Donations</string>
     <string name="new_collection">New Collection</string>
+    <string name="one_tine_donation">One-time Donation</string>
+    <string name="privacy_policy"><u>Privacy Policy</u></string>
     <string name="send_with">Send with:</string>
+    <string name="share_this_app">Share this app…</string>
+    <string name="subscription_period">%1$s/month</string>
     <string name="support_headline">Support us with a Donation!</string>
     <string name="support_message">If you find this app useful please consider supporting us with a donation.</string>
+    <string name="support_or_feedback">Help or Feedback</string>
+    <string name="terms_of_use"><u>Terms of Use</u></string>
     <string name="text_size">Text Size</string>
     <string name="theme">Theme</string>
     <string name="theme_light">Light</string>
@@ -42,12 +51,4 @@
     <string name="undo_changes">Undo Changes</string>
     <string name="undo_changes_confirm">Undo all your changes and reset to the original content?</string>
     <string name="view_source_code">View source code</string>
-    <string name="share_this_app">Share this app…</string>
-    <string name="support_or_feedback">Help or Feedback</string>
-    <string name="one_tine_donation">One-time Donation</string>
-    <string name="monthly_donations">Monthly Donations</string>
-    <string name="in_app_purchases_disclaimer">A One-time Donation (In-App Purchase) or a Monthly Donation (Subscription) is not required to access any feature of this app, All features are available for free and will always be. The subscription renews automatically each month. You can cancel your subscription at any time through your Google Play Store account settings and your subscription will stay active until the end of your subscription period. Subscriptions must be cancelled at least 24 hours before the end of the subscription period to avoid being charged for another month.</string>
-    <string name="privacy_policy"><u>Privacy Policy</u></string>
-    <string name="terms_of_use"><u>Terms of Use</u></string>
-    <string name="manage_subscriptions">Manage Subscriptions</string>
 </resources>

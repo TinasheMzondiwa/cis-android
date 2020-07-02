@@ -87,7 +87,7 @@ class SupportFragment : Fragment(R.layout.fragment_support) {
                     ) as Chip
                     chip.apply {
                         id = product.sku.hashCode()
-                        text = product.price
+                        text = getString(R.string.subscription_period, product.price)
                     }
                     addView(chip)
                 }
