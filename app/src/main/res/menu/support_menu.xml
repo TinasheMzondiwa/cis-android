@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_account_settings"
+        android:icon="@drawable/ic_admin_panel_settings"
+        android:title="@string/manage_subscriptions"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/action_help"
         android:icon="@drawable/ic_help"
         android:title="@string/title_help"

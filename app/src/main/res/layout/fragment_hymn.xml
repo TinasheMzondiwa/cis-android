@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:fillViewport="true"
+    android:keepScreenOn="true"
     android:paddingVertical="@dimen/spacing_large"
     android:scrollbarStyle="outsideOverlay"
     android:scrollbars="vertical">
