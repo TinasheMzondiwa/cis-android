@@ -1,4 +1,4 @@
-package com.tinashe.hymnal.data.model
+package com.tinashe.hymnal.data.model.collections
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0d54e6f3aad5e4124593d2937c15e86e",
+    "identityHash": "f78200367d85134c9fd8c2b1ccf6440c",
     "entities": [
       {
         "tableName": "hymnals",
@@ -132,7 +132,7 @@
       },
       {
         "tableName": "collectionHymnsRef",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`collectionId` INTEGER NOT NULL, `hymnId` INTEGER NOT NULL, PRIMARY KEY(`collectionId`, `hymnId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`collectionId` INTEGER NOT NULL, `hymnId` INTEGER NOT NULL, PRIMARY KEY(`collectionId`))",
         "fields": [
           {
             "fieldPath": "collectionId",
@@ -149,8 +149,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "collectionId",
-            "hymnId"
+            "collectionId"
           ],
           "autoGenerate": false
         },
@@ -170,7 +169,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0d54e6f3aad5e4124593d2937c15e86e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f78200367d85134c9fd8c2b1ccf6440c')"
     ]
   }
 }

@@ -4,12 +4,12 @@ import com.tinashe.hymnal.data.db.dao.CollectionsDao
 import com.tinashe.hymnal.data.db.dao.HymnalsDao
 import com.tinashe.hymnal.data.db.dao.HymnsDao
 import com.tinashe.hymnal.data.model.Hymn
-import com.tinashe.hymnal.data.model.HymnCollection
 import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.data.model.HymnalHymns
 import com.tinashe.hymnal.data.model.TitleBody
 import com.tinashe.hymnal.data.model.collections.CollectionHymnCrossRef
 import com.tinashe.hymnal.data.model.collections.CollectionHymns
+import com.tinashe.hymnal.data.model.collections.HymnCollection
 import com.tinashe.hymnal.data.model.remote.RemoteHymnal
 import com.tinashe.hymnal.data.model.response.Resource
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
@@ -98,11 +98,12 @@ class HymnalRepository(
         collectionsDao.searchFor("%${query ?: ""}%")
 
     suspend fun addCollection(content: TitleBody) {
-        val collection = HymnCollection(
-            title = content.title,
-            description = content.body,
-            created = System.currentTimeMillis()
-        )
+        val collection =
+            HymnCollection(
+                title = content.title,
+                description = content.body,
+                created = System.currentTimeMillis()
+            )
         collectionsDao.insert(collection)
     }
 
