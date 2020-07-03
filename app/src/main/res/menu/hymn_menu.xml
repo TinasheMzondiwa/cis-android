@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_tune"
         android:icon="@drawable/ic_play_circle"
-        android:title="@string/blank"
+        android:title="@string/tune"
         app:showAsAction="ifRoom"
         android:visible="false"/>
 </menu>
