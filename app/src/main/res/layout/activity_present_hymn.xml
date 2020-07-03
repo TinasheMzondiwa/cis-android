@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:keepScreenOn="true">
@@ -13,8 +14,8 @@
         android:id="@+id/contentOverLay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="@color/scrim"/>
+        android:background="@color/scrim"
+        android:visibility="gone" />
 
     <ImageButton
         android:id="@+id/btnExit"
@@ -24,5 +25,5 @@
         android:layout_margin="@dimen/spacing_large"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/blank"
-        android:src="@drawable/ic_present_exit" />
+        app:srcCompat="@drawable/ic_present_exit" />
 </FrameLayout>

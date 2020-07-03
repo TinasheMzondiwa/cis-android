@@ -68,7 +68,7 @@
             android:layout_height="1dp"
             android:background="@drawable/list_divider" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvShareApp"
             style="@style/InfoLine"
             android:text="@string/share_this_app"
@@ -79,7 +79,7 @@
             android:layout_height="1dp"
             android:background="@drawable/list_divider" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvFeedback"
             style="@style/InfoLine"
             android:text="@string/support_or_feedback"
@@ -90,7 +90,7 @@
             android:layout_height="1dp"
             android:background="@drawable/list_divider" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvViewSource"
             style="@style/InfoLine"
             android:text="@string/view_source_code"
@@ -101,7 +101,7 @@
             android:layout_height="1dp"
             android:background="@drawable/list_divider" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTwitter"
             style="@style/InfoLine"
             android:text="@string/twitter"
