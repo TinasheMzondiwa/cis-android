@@ -6,9 +6,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.tinashe.hymnal.data.model.HymnCollection
 import com.tinashe.hymnal.data.model.collections.CollectionHymnCrossRef
 import com.tinashe.hymnal.data.model.collections.CollectionHymns
+import com.tinashe.hymnal.data.model.collections.HymnCollection
 import kotlinx.coroutines.flow.Flow
 
 @Dao

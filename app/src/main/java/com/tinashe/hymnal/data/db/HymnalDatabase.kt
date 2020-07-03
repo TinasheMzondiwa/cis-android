@@ -7,9 +7,9 @@ import com.tinashe.hymnal.data.db.dao.CollectionsDao
 import com.tinashe.hymnal.data.db.dao.HymnalsDao
 import com.tinashe.hymnal.data.db.dao.HymnsDao
 import com.tinashe.hymnal.data.model.Hymn
-import com.tinashe.hymnal.data.model.HymnCollection
 import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.data.model.collections.CollectionHymnCrossRef
+import com.tinashe.hymnal.data.model.collections.HymnCollection
 
 @Database(
     entities = [
@@ -18,7 +18,7 @@ import com.tinashe.hymnal.data.model.collections.CollectionHymnCrossRef
         HymnCollection::class,
         CollectionHymnCrossRef::class
     ],
-    version = 1, exportSchema = true
+    version = 2, exportSchema = true
 )
 @TypeConverters(DataTypeConverters::class)
 abstract class HymnalDatabase : RoomDatabase() {

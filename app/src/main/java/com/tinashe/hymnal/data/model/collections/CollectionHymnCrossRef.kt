@@ -6,7 +6,7 @@ import androidx.room.Index
 @Entity(
     tableName = "collectionHymnsRef",
     primaryKeys = ["collectionId", "hymnId"],
-    indices = [Index("hymnId", unique = true)]
+    indices = [Index("hymnId", unique = false)]
 )
 class CollectionHymnCrossRef(
     val collectionId: Int,
