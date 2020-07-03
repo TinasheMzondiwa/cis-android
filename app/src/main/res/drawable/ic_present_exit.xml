@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#fff">
+    <item>
+        <layer-list>
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="@color/scrim" />
+                    <padding
+                        android:bottom="@dimen/spacing_normal"
+                        android:left="@dimen/spacing_normal"
+                        android:right="@dimen/spacing_normal"
+                        android:top="@dimen/spacing_normal" />
+                </shape>
+            </item>
+            <item android:drawable="@drawable/ic_fullscreen_exit_white" />
+        </layer-list>
+    </item>
+
+</ripple>

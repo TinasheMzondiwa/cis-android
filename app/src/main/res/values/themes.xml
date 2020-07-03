@@ -66,6 +66,10 @@
         </item>
     </style>
 
+    <style name="Theme.CIS.Present">
+
+    </style>
+
     <style name="ThemeOverlay.CIS.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowSoftInputMode">adjustResize</item>

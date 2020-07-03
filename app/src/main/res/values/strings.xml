@@ -13,6 +13,7 @@
     <string name="error_invalid_content">Invalid content</string>
     <string name="error_invalid_number">Hymn %1$d is unavailable</string>
     <string name="error_item_already_owned">You have already purchased this item.\nPlease select a different amount.</string>
+    <string name="full_screen">Fullscreen</string>
     <string name="hint_description">Description (Optional)</string>
     <string name="hint_title">Title</string>
     <string name="hymn_count_one">One Hymn</string>

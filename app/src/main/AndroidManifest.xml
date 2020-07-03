@@ -33,6 +33,11 @@
             android:label="@string/title_edit_hymn"
             android:theme="@style/Theme.CIS.Sing" />
 
+        <activity
+            android:name=".ui.hymns.sing.present.PresentHymnActivity"
+            android:label="@string/blank"
+            android:screenOrientation="userLandscape" />
+
         <!-- Initializers -->
         <provider
             android:name="androidx.startup.InitializationProvider"

@@ -7,4 +7,10 @@
         android:title="@string/tune"
         app:showAsAction="ifRoom"
         android:visible="false"/>
+
+    <item
+        android:id="@+id/action_fullscreen"
+        android:icon="@drawable/ic_fullscreen"
+        android:title="@string/full_screen"
+        app:showAsAction="ifRoom" />
 </menu>

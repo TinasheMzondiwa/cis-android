@@ -23,6 +23,7 @@ import com.tinashe.hymnal.ui.collections.add.AddToCollectionFragment
 import com.tinashe.hymnal.ui.hymns.sing.edit.EditHymnActivity
 import com.tinashe.hymnal.ui.hymns.sing.player.PlaybackState
 import com.tinashe.hymnal.ui.hymns.sing.player.SimpleTunePlayer
+import com.tinashe.hymnal.ui.hymns.sing.present.PresentHymnActivity
 import com.tinashe.hymnal.ui.hymns.sing.style.TextStyleChanges
 import com.tinashe.hymnal.ui.hymns.sing.style.TextStyleFragment
 import com.tinashe.hymnal.utils.Helper
@@ -180,10 +181,20 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                 true
             }
             R.id.action_tune -> {
-                val number = pagerAdapter?.hymns?.get(
+                pagerAdapter?.hymns?.get(
                     binding.viewPager.currentItem
-                )?.number ?: return true
-                tunePlayer.togglePlayTune(number)
+                )?.number?.let {
+                    tunePlayer.togglePlayTune(it)
+                }
+                true
+            }
+            R.id.action_fullscreen -> {
+                pagerAdapter?.hymns
+                    ?.get(binding.viewPager.currentItem)?.let {
+                    val intent = PresentHymnActivity.launchIntent(this, it)
+                    startActivity(intent)
+                }
+
                 true
             }
             else -> super.onOptionsItemSelected(item)
