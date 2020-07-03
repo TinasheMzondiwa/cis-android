@@ -15,7 +15,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/spacing_medium"
         android:contentDescription="@string/blank"
-        android:src="@drawable/drag_handle" />
+        app:srcCompat="@drawable/drag_handle" />
 
     <TextView
         android:layout_width="match_parent"

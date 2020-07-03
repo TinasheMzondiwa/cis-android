@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/blank"
-            android:src="@drawable/ic_undraw_air_support" />
+            app:srcCompat="@drawable/ic_undraw_air_support" />
 
         <TextView
             android:id="@+id/text_support_headline"

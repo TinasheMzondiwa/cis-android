@@ -63,7 +63,7 @@
         android:id="@+id/fabNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_dialpad"
+        app:srcCompat="@drawable/ic_dialpad"
         app:backgroundTint="@color/cis_gold"
         app:layout_anchor="@id/bottomAppBar"
         app:layout_behavior="com.tinashe.hymnal.ui.widget.ScrollAwareFABBehavior" />
