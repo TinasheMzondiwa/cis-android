@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.tinashe.hymnal.BuildConfig
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentInfoBinding
+import com.tinashe.hymnal.utils.Helper
 import timber.log.Timber
 
 class InfoFragment : Fragment() {
@@ -33,12 +34,7 @@ class InfoFragment : Fragment() {
                         .startChooser()
                 }
                 tvFeedback.setOnClickListener {
-                    ShareCompat.IntentBuilder.from(requireActivity())
-                        .setType("message/rfc822")
-                        .addEmailTo(getString(R.string.app_email))
-                        .setSubject("${getString(R.string.app_full_name)} v${BuildConfig.VERSION_NAME}")
-                        .setChooserTitle(R.string.send_with)
-                        .startChooser()
+                    Helper.sendFeedback(requireActivity())
                 }
                 tvViewSource.setOnClickListener { launchWebUrl(getString(R.string.app_source)) }
                 tvTwitter.setOnClickListener { launchWebUrl(getString(R.string.app_twitter)) }

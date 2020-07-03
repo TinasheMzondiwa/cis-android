@@ -10,17 +10,16 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.tinashe.hymnal.BuildConfig
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentSupportBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.extensions.view.inflateView
+import com.tinashe.hymnal.utils.Helper
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -138,12 +137,7 @@ class SupportFragment : Fragment() {
                 true
             }
             R.id.action_help -> {
-                ShareCompat.IntentBuilder.from(requireActivity())
-                    .setType("message/rfc822")
-                    .addEmailTo(getString(R.string.app_email))
-                    .setSubject("${getString(R.string.app_full_name)} v${BuildConfig.VERSION_NAME}")
-                    .setChooserTitle(R.string.send_with)
-                    .startChooser()
+                Helper.sendFeedback(requireActivity())
                 true
             }
             else -> super.onOptionsItemSelected(item)
