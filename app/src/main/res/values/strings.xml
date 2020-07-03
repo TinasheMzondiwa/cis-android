@@ -50,6 +50,7 @@
     <string name="title_text_format">Text Format</string>
     <string name="title_undo">Undo</string>
     <string name="title_new">New</string>
+    <string name="tune">Tune</string>
     <string name="typeface">Typeface</string>
     <string name="undo_changes">Undo Changes</string>
     <string name="undo_changes_confirm">Undo all your changes and reset to the original content?</string>

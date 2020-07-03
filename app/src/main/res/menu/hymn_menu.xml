@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_share"
-        android:icon="@drawable/ic_share"
+        android:id="@+id/action_tune"
+        android:icon="@drawable/ic_play_circle"
         android:title="@string/blank"
         app:showAsAction="ifRoom"
         android:visible="false"/>
