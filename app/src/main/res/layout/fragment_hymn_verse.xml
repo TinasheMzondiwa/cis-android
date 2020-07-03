@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:paddingVertical="@dimen/spacing_medium"
+    android:scrollbars="none">
+
+    <androidx.appcompat.widget.AppCompatCheckedTextView
+        android:id="@+id/verseText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/spacing_micro"
+        android:paddingHorizontal="@dimen/spacing_medium"
+        android:paddingVertical="@dimen/spacing_large"
+        android:textAlignment="center"
+        android:textAppearance="@style/CIS.TextAppearance.Medium"
+        android:textSize="@dimen/text_size_30sp"
+        android:textStyle="bold"
+        tools:text="@tools:sample/lorem" />
+</androidx.core.widget.NestedScrollView>
