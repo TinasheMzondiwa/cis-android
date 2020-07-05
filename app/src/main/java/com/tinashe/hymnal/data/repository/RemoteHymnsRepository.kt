@@ -73,7 +73,7 @@ class RemoteHymnsRepository(
             Resource.success(data)
         } catch (ex: Exception) {
             Timber.e(ex)
-            Resource.error(ex)
+            Resource.success(listOf(defaultHymnal))
         }
     }
 
@@ -102,7 +102,8 @@ class RemoteHymnsRepository(
     private fun createFile(code: String): File = File.createTempFile(code, FILE_SUFFIX)
 
     private fun parseJson(jsonString: String): List<RemoteHymn>? {
-        val listDataType: Type = Types.newParameterizedType(List::class.java, RemoteHymn::class.java)
+        val listDataType: Type =
+            Types.newParameterizedType(List::class.java, RemoteHymn::class.java)
         val adapter: JsonAdapter<List<RemoteHymn>> = moshi.adapter(listDataType)
         return adapter.fromJson(jsonString)
     }
@@ -110,5 +111,10 @@ class RemoteHymnsRepository(
     companion object {
         private const val FOLDER = "cis"
         private const val FILE_SUFFIX = "json"
+        private val defaultHymnal = RemoteHymnal(
+            "english",
+            "Christ In Song",
+            "English"
+        )
     }
 }
