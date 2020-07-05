@@ -55,6 +55,7 @@
             android:paddingVertical="@dimen/spacing_medium">
 
             <TextView
+                android:id="@+id/tvOneTimeDonation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/spacing_medium"
@@ -90,6 +91,7 @@
             android:paddingVertical="@dimen/spacing_medium">
 
             <TextView
+                android:id="@+id/tvMonthlyDonation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/spacing_medium"

@@ -117,11 +117,13 @@ class SupportViewModel @ViewModelInject constructor() :
 
         viewModelScope.launch(Dispatchers.IO) {
             val result = billingClient?.querySkuDetails(params)
-            if (result?.billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
-                mutableInAppProducts.postValue(result.skuDetailsList?.sortedBy { it.priceAmountMicros })
+            val products = if (result?.billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
+                result.skuDetailsList?.sortedBy { it.priceAmountMicros }
             } else {
                 Timber.e(result?.billingResult?.debugMessage)
+                emptyList()
             }
+            mutableInAppProducts.postValue(products)
         }
     }
 
@@ -133,11 +135,13 @@ class SupportViewModel @ViewModelInject constructor() :
 
         viewModelScope.launch(Dispatchers.IO) {
             val result = billingClient?.querySkuDetails(params)
-            if (result?.billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
-                mutableSubscriptions.postValue(result.skuDetailsList)
+            val subs = if (result?.billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
+                result.skuDetailsList
             } else {
                 Timber.e(result?.billingResult?.debugMessage)
+                emptyList()
             }
+            mutableSubscriptions.postValue(subs)
         }
     }
 
