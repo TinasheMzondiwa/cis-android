@@ -35,7 +35,11 @@ class SupportFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return FragmentSupportBinding.inflate(inflater, container, false).also {
             binding = it
             binding?.apply {
@@ -72,6 +76,12 @@ class SupportFragment : Fragment() {
             launchWebUrl(it)
         }
         viewModel.inAppProductsLiveData.observeNonNull(viewLifecycleOwner) { products ->
+            if (products.isEmpty()) {
+                binding?.tvOneTimeDonation?.setText(R.string.error_un_available)
+                return@observeNonNull
+            } else {
+                binding?.tvOneTimeDonation?.setText(R.string.one_tine_donation)
+            }
             binding?.chipGroupInApp?.apply {
                 removeAllViews()
                 products.forEach { product ->
@@ -97,6 +107,12 @@ class SupportFragment : Fragment() {
             }
         }
         viewModel.subscriptionsLiveData.observeNonNull(viewLifecycleOwner) { subs ->
+            if (subs.isEmpty()) {
+                binding?.tvMonthlyDonation?.setText(R.string.blank)
+                return@observeNonNull
+            } else {
+                binding?.tvOneTimeDonation?.setText(R.string.monthly_donations)
+            }
             binding?.chipGroupSubs?.apply {
                 removeAllViews()
                 subs.forEach { product ->
