@@ -12,6 +12,7 @@ import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.databinding.FragmentHymnBinding
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -30,8 +31,13 @@ class HymnFragment : Fragment() {
         return FragmentHymnBinding.inflate(inflater, container, false).also {
             binding = it
             binding?.hymnText?.apply {
-                textSize = prefs.getFontSize()
-                typeface = ResourcesCompat.getFont(context, prefs.getFontRes())
+                try {
+                    textSize = prefs.getFontSize()
+                    typeface = ResourcesCompat.getFont(context, prefs.getFontRes())
+                } catch (ex: Exception) {
+                    // Some devices failing to resolve resources files
+                    Timber.e(ex)
+                }
             }
         }.root
     }
