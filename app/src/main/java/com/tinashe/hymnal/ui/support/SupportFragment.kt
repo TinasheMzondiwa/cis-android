@@ -36,9 +36,9 @@ class SupportFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return FragmentSupportBinding.inflate(inflater, container, false).also {
             binding = it
@@ -86,9 +86,9 @@ class SupportFragment : Fragment() {
                 removeAllViews()
                 products.forEach { product ->
                     val chip: Chip = inflateView(
-                            R.layout.chip_amount,
-                            this,
-                            false
+                        R.layout.chip_amount,
+                        this,
+                        false
                     ) as Chip
                     chip.apply {
                         id = product.sku.hashCode()
@@ -117,9 +117,9 @@ class SupportFragment : Fragment() {
                 removeAllViews()
                 subs.forEach { product ->
                     val chip: Chip = inflateView(
-                            R.layout.chip_amount,
-                            this,
-                            false
+                        R.layout.chip_amount,
+                        this,
+                        false
                     ) as Chip
                     chip.apply {
                         id = product.sku.hashCode()
