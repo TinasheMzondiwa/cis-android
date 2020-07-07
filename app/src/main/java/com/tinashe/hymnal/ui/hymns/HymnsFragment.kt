@@ -97,6 +97,7 @@ class HymnsFragment : Fragment() {
 
         val searchItem = menu.findItem(R.id.action_search)
         val searchView: SearchView = searchItem.actionView as SearchView
+        searchView.queryHint = getString(R.string.hint_search_hymns)
         searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 appBarBehaviour?.setAppBarExpanded(false)

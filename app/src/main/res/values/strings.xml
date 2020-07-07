@@ -16,6 +16,7 @@
     <string name="error_un_available">Unavailable</string>
     <string name="full_screen">Fullscreen</string>
     <string name="hint_description">Description (Optional)</string>
+    <string name="hint_search_hymns">Search Title, Number, Content…</string>
     <string name="hint_title">Title</string>
     <string name="hymn_count_one">One Hymn</string>
     <string name="hymn_count_other">%1$d Hymns</string>
