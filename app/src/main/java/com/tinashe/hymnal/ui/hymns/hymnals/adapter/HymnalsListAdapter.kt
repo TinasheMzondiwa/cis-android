@@ -2,12 +2,12 @@ package com.tinashe.hymnal.ui.hymns.hymnals.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.tinashe.hymnal.data.model.remote.RemoteHymnal
+import com.tinashe.hymnal.data.model.Hymnal
 
-class HymnalsListAdapter(private val hymnalSelected: (RemoteHymnal) -> Unit) :
+class HymnalsListAdapter(private val hymnalSelected: (Hymnal) -> Unit) :
     RecyclerView.Adapter<HymnalViewHolder>() {
 
-    var hymnals: List<RemoteHymnal> = emptyList()
+    var hymnals: List<Hymnal> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()

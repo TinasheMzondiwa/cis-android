@@ -10,7 +10,6 @@ import com.tinashe.hymnal.data.model.TitleBody
 import com.tinashe.hymnal.data.model.collections.CollectionHymnCrossRef
 import com.tinashe.hymnal.data.model.collections.CollectionHymns
 import com.tinashe.hymnal.data.model.collections.HymnCollection
-import com.tinashe.hymnal.data.model.remote.RemoteHymnal
 import com.tinashe.hymnal.data.model.response.Resource
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import kotlinx.coroutines.Dispatchers
@@ -32,8 +31,10 @@ class HymnalRepository(
 
     private val selectedCode: String get() = prefs.getSelectedHymnal()
 
-    fun getHymns(selectedHymnal: RemoteHymnal? = null) = flow {
-        val hymnal = hymnalsDao.findByCode(selectedHymnal?.key ?: selectedCode)
+    suspend fun getHymnals(): Resource<List<Hymnal>> = Resource.success(hymnalsDao.listAll())
+
+    fun getHymns(selectedHymnal: Hymnal? = null) = flow {
+        val hymnal = hymnalsDao.findByCode(selectedHymnal?.code ?: selectedCode)
 
         when {
             hymnal == null && hymnalsDao.findByCode(selectedCode) == null -> {
@@ -46,24 +47,24 @@ class HymnalRepository(
                     prefs.setSelectedHymnal(json.key)
                 }
             }
-            selectedHymnal != null && hymnalsDao.findByCode(selectedHymnal.key) == null -> {
+            selectedHymnal != null && hymnalsDao.findByCode(selectedHymnal.code) == null -> {
                 emit(Resource.loading())
                 // fetch remote hymnal
                 val resource = remoteHymnsRepository.downloadHymns(
-                    selectedHymnal.key
+                    selectedHymnal.code
                 )
 
                 if (resource.isSuccessFul) {
                     resource.data?.let { json ->
                         hymnalsDao.insert(
                             Hymnal(
-                                selectedHymnal.key,
+                                selectedHymnal.code,
                                 selectedHymnal.title,
                                 selectedHymnal.language
                             )
                         )
-                        hymnsDao.insertAll(json.map { it.toHymn(selectedHymnal.key) })
-                        prefs.setSelectedHymnal(selectedHymnal.key)
+                        hymnsDao.insertAll(json.map { it.toHymn(selectedHymnal.code) })
+                        prefs.setSelectedHymnal(selectedHymnal.code)
                     }
                 } else {
                     emit(Resource.error(Exception("Error downloading hymnal file")))
