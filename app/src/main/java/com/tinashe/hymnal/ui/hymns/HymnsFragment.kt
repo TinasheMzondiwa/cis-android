@@ -17,8 +17,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import com.tinashe.hymnal.R
+import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.data.model.constants.Status
-import com.tinashe.hymnal.data.model.remote.RemoteHymnal
 import com.tinashe.hymnal.databinding.FragmentHymnsBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.AppBarBehaviour
@@ -85,7 +85,7 @@ class HymnsFragment : Fragment() {
         findNavController()
             .currentBackStackEntry
             ?.savedStateHandle
-            ?.getLiveData<RemoteHymnal>(SELECTED_HYMNAL_KEY)
+            ?.getLiveData<Hymnal>(SELECTED_HYMNAL_KEY)
             ?.observeNonNull(viewLifecycleOwner) {
                 viewModel.hymnalSelected(it)
             }

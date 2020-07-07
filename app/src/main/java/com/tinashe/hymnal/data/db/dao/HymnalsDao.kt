@@ -8,7 +8,7 @@ import com.tinashe.hymnal.data.model.Hymnal
 interface HymnalsDao : BaseDao<Hymnal> {
 
     @Query("SELECT * FROM hymnals ORDER BY title")
-    fun listAll(): List<Hymnal>
+    suspend fun listAll(): List<Hymnal>
 
     @Query("SELECT * FROM hymnals WHERE code =:code")
     fun findByCode(code: String): Hymnal?

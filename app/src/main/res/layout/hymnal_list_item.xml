@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:foreground="?attr/selectableItemBackground"
+    android:background="?attr/selectableItemBackground"
     android:padding="@dimen/spacing_medium">
 
     <FrameLayout
@@ -20,12 +20,12 @@
         android:id="@+id/hymnalTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_medium"
         android:ellipsize="end"
         android:maxLines="1"
+        android:paddingHorizontal="@dimen/spacing_medium"
         android:textAppearance="?attr/textAppearanceHeadline6"
         app:layout_constraintBottom_toTopOf="@id/hymnalLanguage"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imgHymnalState"
         app:layout_constraintStart_toEndOf="@id/icon"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Christ In Song" />
@@ -34,15 +34,25 @@
         android:id="@+id/hymnalLanguage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_medium"
         android:ellipsize="end"
         android:maxLines="1"
+        android:paddingHorizontal="@dimen/spacing_medium"
         android:textAppearance="?attr/textAppearanceBody2"
         android:textColor="?android:attr/textColorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imgHymnalState"
         app:layout_constraintStart_toEndOf="@id/icon"
         app:layout_constraintTop_toBottomOf="@id/hymnalTitle"
         tools:text="English" />
+
+    <ImageView
+        android:id="@+id/imgHymnalState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/blank"
+        android:src="@drawable/ic_download"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

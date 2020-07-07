@@ -73,7 +73,7 @@ class RemoteHymnsRepository(
             Resource.success(data)
         } catch (ex: Exception) {
             Timber.e(ex)
-            Resource.success(listOf(defaultHymnal))
+            Resource.error(ex)
         }
     }
 
@@ -111,10 +111,5 @@ class RemoteHymnsRepository(
     companion object {
         private const val FOLDER = "cis"
         private const val FILE_SUFFIX = "json"
-        private val defaultHymnal = RemoteHymnal(
-            "english",
-            "Christ In Song",
-            "English"
-        )
     }
 }
