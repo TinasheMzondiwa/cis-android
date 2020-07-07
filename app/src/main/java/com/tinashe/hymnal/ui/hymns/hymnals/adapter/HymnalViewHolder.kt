@@ -2,6 +2,7 @@ package com.tinashe.hymnal.ui.hymns.hymnals.adapter
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.Hymnal
@@ -17,6 +18,7 @@ class HymnalViewHolder(private val containerView: View) : RecyclerView.ViewHolde
     fun bind(hymnal: Hymnal) {
         binding.apply {
             icon.background.tint(COLORS[absoluteAdapterPosition % COLORS.size].toColor())
+            iconCheck.isVisible = hymnal.selected
             hymnalTitle.text = hymnal.title
             hymnalLanguage.text = hymnal.language
             imgHymnalState.setImageResource(

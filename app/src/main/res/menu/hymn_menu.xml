@@ -13,4 +13,10 @@
         android:icon="@drawable/ic_fullscreen"
         android:title="@string/full_screen"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/actions_hymnals"
+        android:icon="@drawable/ic_bookshelf"
+        android:title="@string/title_hymnals"
+        app:showAsAction="ifRoom" />
 </menu>

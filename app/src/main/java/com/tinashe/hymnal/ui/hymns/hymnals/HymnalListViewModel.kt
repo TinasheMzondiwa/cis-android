@@ -11,12 +11,14 @@ import com.tinashe.hymnal.data.repository.HymnalRepository
 import com.tinashe.hymnal.data.repository.RemoteHymnsRepository
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import com.tinashe.hymnal.extensions.connectivity.isConnected
+import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import kotlinx.coroutines.launch
 
 class HymnalListViewModel @ViewModelInject constructor(
     private val remoteHymnsRepository: RemoteHymnsRepository,
     private val repository: HymnalRepository,
-    private val connectivityManager: ConnectivityManager
+    private val connectivityManager: ConnectivityManager,
+    private val prefs: HymnalPrefs
 ) : ViewModel() {
 
     private val mutableHymnalList = MutableLiveData<List<Hymnal>>()
@@ -33,6 +35,9 @@ class HymnalListViewModel @ViewModelInject constructor(
     private fun loadLocalHymnals() {
         viewModelScope.launch {
             val resource = repository.getHymnals()
+            resource.data?.forEach {
+                it.selected = it.code == prefs.getSelectedHymnal()
+            }
             mutableHymnalList.postValue(resource.data ?: emptyList())
         }
     }
@@ -49,8 +54,9 @@ class HymnalListViewModel @ViewModelInject constructor(
                             remote.key,
                             remote.title,
                             remote.language
-                        ).also { hymnals ->
-                            hymnals.offline = localHymnals.find { it.code == remote.key } != null
+                        ).also { hymnal ->
+                            hymnal.offline = localHymnals.find { it.code == remote.key } != null
+                            hymnal.selected = hymnal.code == prefs.getSelectedHymnal()
                         }
                     }
                 )

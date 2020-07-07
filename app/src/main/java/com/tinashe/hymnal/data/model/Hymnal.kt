@@ -18,4 +18,8 @@ data class Hymnal(
     @Ignore
     @IgnoredOnParcel
     var offline: Boolean = true
+
+    @Ignore
+    @IgnoredOnParcel
+    var selected: Boolean = false
 }

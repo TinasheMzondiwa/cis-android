@@ -20,6 +20,7 @@ import com.tinashe.hymnal.extensions.activity.applyMaterialTransform
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import com.tinashe.hymnal.ui.collections.add.AddToCollectionFragment
+import com.tinashe.hymnal.ui.hymns.hymnals.HymnalListBottomSheetFragment
 import com.tinashe.hymnal.ui.hymns.sing.edit.EditHymnActivity
 import com.tinashe.hymnal.ui.hymns.sing.player.PlaybackState
 import com.tinashe.hymnal.ui.hymns.sing.player.SimpleTunePlayer
@@ -197,6 +198,15 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
 
                 true
             }
+            R.id.actions_hymnals -> {
+                val fragment = HymnalListBottomSheetFragment
+                    .newInstance {
+                        currentPosition = binding.viewPager.currentItem
+                        viewModel.switchHymnal(it)
+                    }
+                fragment.show(supportFragmentManager, fragment.tag)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -228,6 +238,7 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                 }
             }
         }
+        menu.findItem(R.id.actions_hymnals).isVisible = !intent.hasExtra(ARG_COLLECTION_ID)
         return super.onPrepareOptionsMenu(menu)
     }
 

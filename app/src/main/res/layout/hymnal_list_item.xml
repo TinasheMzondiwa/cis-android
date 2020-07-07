@@ -14,7 +14,17 @@
         android:background="@drawable/bg_hymnal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iconCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:contentDescription="@string/blank"
+            app:srcCompat="@drawable/ic_check" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/hymnalTitle"
