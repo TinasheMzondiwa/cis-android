@@ -11,12 +11,19 @@ import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.data.repository.HymnalRepository
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
+import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HymnsViewModel @ViewModelInject constructor(
-    private val repository: HymnalRepository
+    private val repository: HymnalRepository,
+    private val prefs: HymnalPrefs
 ) : ViewModel() {
+
+    private val mutableShowHymnalsPrompt = SingleLiveEvent<Any>()
+    val showHymnalsPromptLiveData: LiveData<Any> = mutableShowHymnalsPrompt.asLiveData()
 
     private val mutableViewState = SingleLiveEvent<Status>()
     val statusLiveData: LiveData<Status> = mutableViewState.asLiveData()
@@ -42,6 +49,13 @@ class HymnsViewModel @ViewModelInject constructor(
                 mutableHymnsList.postValue(resource.data?.hymns ?: emptyList())
                 resource.data?.title?.let {
                     mutableHymnal.postValue(it)
+
+                    if (!prefs.isHymnalPromptSeen()) {
+                        prefs.setHymnalPromptSeen()
+                        withContext(Dispatchers.Main) {
+                            mutableShowHymnalsPrompt.call()
+                        }
+                    }
                 }
             }
         }

@@ -24,4 +24,8 @@ interface HymnalPrefs {
     fun getFontSize(): Float
 
     fun getTextStyleModel(): TextStyleModel
+
+    fun isHymnalPromptSeen(): Boolean
+
+    fun setHymnalPromptSeen()
 }

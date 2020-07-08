@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.databinding.HymnalListBottomSheetFragmentBinding
@@ -38,24 +39,50 @@ class HymnalListBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun getTheme(): Int = R.style.ThemeOverlay_CIS_BottomSheetDialog
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return HymnalListBottomSheetFragmentBinding.inflate(inflater, container, false).also {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return HymnalListBottomSheetFragmentBinding.inflate(
+            inflater,
+            container,
+            false
+        ).also {
             binding = it
-            binding?.toolbar?.setNavigationOnClickListener {
-                dismiss()
-            }
-            binding?.hymnalsListView?.apply {
-                addOnScrollListener(appBarElevation)
-                adapter = listAdapter
-            }
         }.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.hymnalListLiveData.observeNonNull(viewLifecycleOwner) {
             binding?.progressBar?.isVisible = false
             listAdapter.hymnals = it
+        }
+
+        binding?.apply {
+            toolbar.apply {
+                setNavigationOnClickListener {
+                    dismiss()
+                }
+                inflateMenu(R.menu.hymnals_list)
+                setOnMenuItemClickListener {
+                    return@setOnMenuItemClickListener when (it.itemId) {
+                        R.id.action_info -> {
+                            MaterialAlertDialogBuilder(requireContext())
+                                .setMessage(R.string.switch_between_help)
+                                .setPositiveButton(android.R.string.ok, null)
+                                .show()
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            }
+            hymnalsListView.apply {
+                addOnScrollListener(appBarElevation)
+                adapter = listAdapter
+            }
         }
 
         viewModel.loadData()

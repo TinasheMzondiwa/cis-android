@@ -125,6 +125,7 @@ dependencies {
     implementation "com.jakewharton.timber:timber:${versions.timber}"
     implementation "com.android.billingclient:billing-ktx:${versions.billing}"
     implementation "com.github.wordpress-mobile.WordPress-Aztec-Android:aztec:${versions.aztec}"
+    implementation "uk.co.samuelwall:material-tap-target-prompt:${versions.material_tap}"
 
     testImplementation "junit:junit:$versions.junit"
     testImplementation "org.mockito:mockito-core:$versions.mockito"
