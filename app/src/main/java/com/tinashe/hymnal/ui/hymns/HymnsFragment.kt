@@ -148,5 +148,7 @@ class HymnsFragment : Fragment() {
             .setPrimaryText(R.string.switch_between_hymnals)
             .setSecondaryText(R.string.switch_between_hymnals_message)
             .show()
+
+        viewModel.hymnalsPromptShown()
     }
 }

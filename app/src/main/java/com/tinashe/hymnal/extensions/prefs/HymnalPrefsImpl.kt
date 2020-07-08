@@ -59,6 +59,6 @@ class HymnalPrefsImpl(private val prefs: SharedPreferences) : HymnalPrefs {
         private const val KEY_UI_PREF = "pref:app_theme"
         private const val KEY_FONT_STYLE = "pref:font_res"
         private const val KEY_FONT_SIZE = "pref:font_size"
-        private const val KEY_HYMNALS_PROMPT = "pref:hymnals_prompt"
+        private const val KEY_HYMNALS_PROMPT = "pref:hymnals_list_prompt"
     }
 }
