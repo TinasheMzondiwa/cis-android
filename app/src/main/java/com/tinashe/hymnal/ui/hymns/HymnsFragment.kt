@@ -13,6 +13,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
@@ -21,11 +22,13 @@ import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.databinding.FragmentHymnsBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
+import com.tinashe.hymnal.extensions.context.getColorPrimary
 import com.tinashe.hymnal.ui.AppBarBehaviour
 import com.tinashe.hymnal.ui.hymns.adapter.HymnListAdapter
 import com.tinashe.hymnal.ui.hymns.hymnals.HymnalListFragment.Companion.SELECTED_HYMNAL_KEY
 import com.tinashe.hymnal.ui.hymns.sing.SingHymnsActivity
 import dagger.hilt.android.AndroidEntryPoint
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 
 @AndroidEntryPoint
 class HymnsFragment : Fragment() {
@@ -69,6 +72,12 @@ class HymnsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.showHymnalsPromptLiveData.observe(
+            viewLifecycleOwner,
+            Observer {
+                showHymnalsTargetPrompt()
+            }
+        )
         viewModel.statusLiveData.observeNonNull(viewLifecycleOwner) {
             binding?.apply {
                 hymnsListView.isVisible = it != Status.LOADING
@@ -129,5 +138,15 @@ class HymnsFragment : Fragment() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showHymnalsTargetPrompt() {
+        MaterialTapTargetPrompt.Builder(requireActivity())
+            .setTarget(R.id.actions_hymnals)
+            .setIcon(R.drawable.ic_bookshelf_prompt)
+            .setBackgroundColour(requireContext().getColorPrimary())
+            .setPrimaryText(R.string.switch_between_hymnals)
+            .setSecondaryText(R.string.switch_between_hymnals_message)
+            .show()
     }
 }

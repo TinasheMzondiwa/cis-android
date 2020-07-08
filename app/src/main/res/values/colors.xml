@@ -21,6 +21,7 @@
     <color name="color_stroke">@color/color_on_background_alpha_8</color>
     <color name="color_fill">@color/color_on_background_alpha_4</color>
     <color name="color_on_background_secondary">#232f3b</color>
+    <color name="color_focal">@color/cis_gold</color>
 
     <integer-array name="colors_swipe_refresh">
         <item>@color/color_primary</item>

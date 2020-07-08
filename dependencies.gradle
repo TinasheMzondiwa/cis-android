@@ -21,12 +21,13 @@ ext.versions = [
         'moshi'             : '1.9.3',
         'fb_storage'        : '19.1.1',
         'fb_database'       : '19.3.1',
-        'fb_auth'           : '19.3.1',
-        'fb_analytics'      : '17.4.3',
-        'fb_crashytics'     : '17.1.0',
+        'fb_auth'           : '19.3.2',
+        'fb_analytics'      : '17.4.4',
+        'fb_crashytics'     : '17.1.1',
         'ktlint'            : '0.37.1',
         'aztec'             : 'v1.3.43',
         'billing'           : '3.0.0',
+        'material_tap'      : '3.0.0',
 
         // testing
         'junit'             : '4.13',
