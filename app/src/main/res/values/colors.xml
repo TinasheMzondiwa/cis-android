@@ -35,6 +35,7 @@
     <color name="cis_gold">#CD9B1D</color>
     <color name="cis_gold_dark">#a47c17</color>
     <color name="cis_red">#CF141E</color>
+    <color name="cis_red_ripple">#66D0021B</color>
     <color name="village_black">#070b0e</color>
     <color name="village_grey">#a8b7c6</color>
     <color name="white">#ffffff</color>

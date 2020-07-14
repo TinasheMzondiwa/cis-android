@@ -38,7 +38,7 @@ class HymnsFragment : Fragment() {
     private var binding: FragmentHymnsBinding? = null
 
     private val listAdapter: HymnListAdapter = HymnListAdapter { pair ->
-        val intent = SingHymnsActivity.singIntent(requireContext(), pair.first.number)
+        val intent = SingHymnsActivity.singIntent(requireContext(), pair.first.hymnId)
         val options = ActivityOptions.makeSceneTransitionAnimation(
             requireActivity(),
             pair.second,
@@ -133,7 +133,11 @@ class HymnsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.actions_hymnals -> {
-                findNavController().navigate(R.id.action_navigation_hymns_to_hymnalListFragment)
+                with(findNavController()) {
+                    if (currentDestination?.id == R.id.navigation_hymns) {
+                        navigate(R.id.action_navigate_to_hymnalListFragment)
+                    }
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)

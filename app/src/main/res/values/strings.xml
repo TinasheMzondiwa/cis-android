@@ -5,6 +5,8 @@
     <string name="collection_deleted">Collection Deleted</string>
     <string name="confirm_save">Confirm Save your changes?</string>
     <string name="created_label">Created: </string>
+    <string name="delete_collection">Delete this collection?</string>
+    <string name="delete_collection_message">This action cannot be undone.</string>
     <string name="empty_collections">Your Collection of hymns will appear here</string>
     <string name="empty_collections_add">Create your first Collection</string>
     <string name="error_billing_client_unavailable">Purchases are unavailable at the moment.\nPlease check back later.</string>
@@ -21,6 +23,7 @@
     <string name="hymn_count_one">One Hymn</string>
     <string name="hymn_count_other">%1$d Hymns</string>
     <string name="hymn_count_zero">No Hymns</string>
+    <string name="hymn_deleted">Hymn Deleted</string>
     <string name="in_app_purchases_disclaimer">A One-time Donation (In-App Purchase) or a Monthly Donation (Subscription) is not required to access any feature of this app, All features are available for free and will always be. The subscription renews automatically each month. You can cancel your subscription at any time through your Google Play Store account settings and your subscription will stay active until the end of your subscription period. Subscriptions must be cancelled at least 24 hours before the end of the subscription period to avoid being charged for another month.</string>
     <string name="manage_subscriptions">Manage Subscriptions</string>
     <string name="monthly_donations">Monthly Donations</string>
@@ -44,8 +47,10 @@
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_follow_system">Follow System</string>
+    <string name="title_delete">Delete</string>
     <string name="title_edit_hymn">Edit Hymn</string>
     <string name="title_hymnals">Hymnals</string>
+    <string name="title_collection">Collection</string>
     <string name="title_collections">Collections</string>
     <string name="title_help">Help</string>
     <string name="title_hymns">Hymns</string>
@@ -62,4 +67,10 @@
     <string name="undo_changes">Undo Changes</string>
     <string name="undo_changes_confirm">Undo all your changes and reset to the original content?</string>
     <string name="view_source_code">View source code</string>
+    <string name="tap_to_change">Tap to change</string>
+    <string name="tap_to_close">Tap to close</string>
+    <string name="sort_language">Language</string>
+    <string name="sort_title">Title</string>
+    <string name="sort_offline">Downloaded</string>
+    <string name="ordered_by">Ordered by %1$s</string>
 </resources>

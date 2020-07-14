@@ -2,6 +2,7 @@ package com.tinashe.hymnal.extensions.prefs
 
 import androidx.annotation.FontRes
 import com.tinashe.hymnal.data.model.TextStyleModel
+import com.tinashe.hymnal.data.model.constants.HymnalSort
 import com.tinashe.hymnal.data.model.constants.UiPref
 
 interface HymnalPrefs {
@@ -28,4 +29,8 @@ interface HymnalPrefs {
     fun isHymnalPromptSeen(): Boolean
 
     fun setHymnalPromptSeen()
+
+    fun getHymnalSort(): HymnalSort
+
+    fun setHymnalSort(sort: HymnalSort)
 }

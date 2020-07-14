@@ -57,18 +57,18 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
 
         initUi()
 
-        val number = intent.getIntExtra(ARG_SELECTED, 1)
+        val hymnId = intent.getIntExtra(ARG_SELECTED, 1)
 
         viewModel.statusLiveData.observeNonNull(this) {
         }
         viewModel.hymnalTitleLiveData.observeNonNull(this) {
             title = it
         }
-        viewModel.hymnListLiveData.observeNonNull(this) {
-            pagerAdapter = SingFragmentsAdapter(this, it)
+        viewModel.hymnListLiveData.observeNonNull(this) { hymns ->
+            pagerAdapter = SingFragmentsAdapter(this, hymns)
             binding.viewPager.apply {
                 adapter = pagerAdapter
-                val position = currentPosition ?: number.minus(1)
+                val position = currentPosition ?: hymns.indexOfFirst { it.hymnId == hymnId }
                 setCurrentItem(position, false)
                 currentPosition = null
             }
@@ -289,14 +289,19 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
         private const val ARG_COLLECTION_ID = "arg:collection_id"
         private const val RC_EDIT_HYMN = 23
 
-        fun singIntent(context: Context, number: Int): Intent =
+        fun singIntent(context: Context, hymnId: Int): Intent =
             Intent(context, SingHymnsActivity::class.java).apply {
-                putExtra(ARG_SELECTED, number)
+                putExtra(ARG_SELECTED, hymnId)
             }
 
-        fun singCollectionIntent(context: Context, id: Int): Intent =
+        fun singCollectionIntent(
+            context: Context,
+            collectionId: Int,
+            hymnId: Int
+        ): Intent =
             Intent(context, SingHymnsActivity::class.java).apply {
-                putExtra(ARG_COLLECTION_ID, id)
+                putExtra(ARG_COLLECTION_ID, collectionId)
+                putExtra(ARG_SELECTED, hymnId)
             }
     }
 }

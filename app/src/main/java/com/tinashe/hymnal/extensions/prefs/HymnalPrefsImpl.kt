@@ -5,6 +5,7 @@ import androidx.annotation.FontRes
 import androidx.core.content.edit
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.TextStyleModel
+import com.tinashe.hymnal.data.model.constants.HymnalSort
 import com.tinashe.hymnal.data.model.constants.UiPref
 
 class HymnalPrefsImpl(private val prefs: SharedPreferences) : HymnalPrefs {
@@ -52,6 +53,19 @@ class HymnalPrefsImpl(private val prefs: SharedPreferences) : HymnalPrefs {
         }
     }
 
+    override fun getHymnalSort(): HymnalSort {
+        val name = prefs.getString(KEY_HYMNAL_SORT, null)
+        return name?.let {
+            HymnalSort.fromString(it)
+        } ?: HymnalSort.TITLE
+    }
+
+    override fun setHymnalSort(sort: HymnalSort) {
+        prefs.edit {
+            putString(KEY_HYMNAL_SORT, sort.name)
+        }
+    }
+
     companion object {
         private const val DEFAULT_CODE = "english"
 
@@ -60,5 +74,6 @@ class HymnalPrefsImpl(private val prefs: SharedPreferences) : HymnalPrefs {
         private const val KEY_FONT_STYLE = "pref:font_res"
         private const val KEY_FONT_SIZE = "pref:font_size"
         private const val KEY_HYMNALS_PROMPT = "pref:hymnals_list_prompt"
+        private const val KEY_HYMNAL_SORT = "pref:hymnal_sort"
     }
 }

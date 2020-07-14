@@ -57,7 +57,7 @@ class HymnalListBottomSheetFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.hymnalListLiveData.observeNonNull(viewLifecycleOwner) {
             binding?.progressBar?.isVisible = false
-            listAdapter.hymnals = it
+            listAdapter.submitList(ArrayList(it))
         }
 
         binding?.apply {
