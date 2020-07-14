@@ -26,4 +26,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.tinashe.hymnal.ui.widget.FadingSnackbar
+        android:id="@+id/snackbar"
+        android:layout_width="@dimen/snackbar_width"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/snackbar_margin_end_fab"
+        android:layout_marginBottom="@dimen/snackbar_margin_bottom"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

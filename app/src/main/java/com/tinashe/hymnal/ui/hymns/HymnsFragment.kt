@@ -38,7 +38,7 @@ class HymnsFragment : Fragment() {
     private var binding: FragmentHymnsBinding? = null
 
     private val listAdapter: HymnListAdapter = HymnListAdapter { pair ->
-        val intent = SingHymnsActivity.singIntent(requireContext(), pair.first.number)
+        val intent = SingHymnsActivity.singIntent(requireContext(), pair.first.hymnId)
         val options = ActivityOptions.makeSceneTransitionAnimation(
             requireActivity(),
             pair.second,

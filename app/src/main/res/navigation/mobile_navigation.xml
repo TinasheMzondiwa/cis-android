@@ -29,7 +29,25 @@
         android:id="@+id/navigation_collections"
         android:name="com.tinashe.hymnal.ui.collections.CollectionsFragment"
         android:label="@string/title_collections"
-        tools:layout="@layout/fragment_collections" />
+        tools:layout="@layout/fragment_collections">
+        <action
+            android:id="@+id/action_collection_hymns"
+            app:destination="@id/collectionHymns"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                android:name="collectionId"
+                app:argType="integer" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/collectionHymns"
+        android:name="com.tinashe.hymnal.ui.collections.list.CollectionHymnsFragment"
+        android:label="@string/title_collection"
+        tools:layout="@layout/fragment_hymns" />
 
     <fragment
         android:id="@+id/navigation_support"
