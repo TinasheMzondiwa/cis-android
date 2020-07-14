@@ -11,7 +11,7 @@
         android:label="@string/blank"
         tools:layout="@layout/fragment_hymns">
         <action
-            android:id="@+id/action_navigation_hymns_to_hymnalListFragment"
+            android:id="@+id/action_navigate_to_hymnalListFragment"
             app:destination="@id/hymnalListFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"

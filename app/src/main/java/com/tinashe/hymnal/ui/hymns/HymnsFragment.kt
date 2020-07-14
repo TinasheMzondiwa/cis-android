@@ -133,7 +133,11 @@ class HymnsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.actions_hymnals -> {
-                findNavController().navigate(R.id.action_navigation_hymns_to_hymnalListFragment)
+                with(findNavController()) {
+                    if (currentDestination?.id == R.id.navigation_hymns) {
+                        navigate(R.id.action_navigate_to_hymnalListFragment)
+                    }
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
