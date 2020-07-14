@@ -51,7 +51,6 @@ class HymnsViewModel @ViewModelInject constructor(
                     mutableHymnal.postValue(it)
 
                     if (!prefs.isHymnalPromptSeen()) {
-                        prefs.setHymnalPromptSeen()
                         withContext(Dispatchers.Main) {
                             mutableShowHymnalsPrompt.call()
                         }
@@ -66,5 +65,9 @@ class HymnsViewModel @ViewModelInject constructor(
             val results = repository.searchHymns(query)
             mutableHymnsList.postValue(results)
         }
+    }
+
+    fun hymnalsPromptShown() {
+        prefs.setHymnalPromptSeen()
     }
 }
