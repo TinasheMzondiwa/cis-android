@@ -23,7 +23,7 @@ interface CollectionsDao : BaseDao<HymnCollection> {
     suspend fun searchFor(query: String): List<CollectionHymns>
 
     @Transaction
-    @Query("SELECT * FROM collections")
+    @Query("SELECT * FROM collections ORDER BY created DESC")
     fun getCollectionsWithHymns(): Flow<List<CollectionHymns>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

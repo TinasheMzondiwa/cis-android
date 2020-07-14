@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tinashe.hymnal.data.model.Hymnal
+import com.tinashe.hymnal.data.model.constants.HymnalSort
 import com.tinashe.hymnal.data.repository.HymnalRepository
 import com.tinashe.hymnal.data.repository.RemoteHymnsRepository
 import com.tinashe.hymnal.extensions.arch.asLiveData
@@ -38,7 +39,8 @@ class HymnalListViewModel @ViewModelInject constructor(
             resource.data?.forEach {
                 it.selected = it.code == prefs.getSelectedHymnal()
             }
-            mutableHymnalList.postValue(resource.data ?: emptyList())
+            val sorted = sortData(resource.data ?: emptyList(), prefs.getHymnalSort())
+            mutableHymnalList.postValue(sorted)
         }
     }
 
@@ -47,22 +49,35 @@ class HymnalListViewModel @ViewModelInject constructor(
             val resource = remoteHymnsRepository.listHymnals()
             if (resource.isSuccessFul) {
                 val localHymnals = repository.getHymnals().data ?: emptyList()
-                val hymnals = resource.data?.sortedBy { it.title } ?: emptyList()
-                mutableHymnalList.postValue(
-                    hymnals.map { remote ->
-                        Hymnal(
-                            remote.key,
-                            remote.title,
-                            remote.language
-                        ).also { hymnal ->
-                            hymnal.offline = localHymnals.find { it.code == remote.key } != null
-                            hymnal.selected = hymnal.code == prefs.getSelectedHymnal()
-                        }
+                val hymnals = resource.data ?: emptyList()
+                val data = hymnals.map { remote ->
+                    Hymnal(
+                        remote.key,
+                        remote.title,
+                        remote.language
+                    ).also { hymnal ->
+                        hymnal.offline = localHymnals.find { it.code == remote.key } != null
+                        hymnal.selected = hymnal.code == prefs.getSelectedHymnal()
                     }
-                )
+                }
+                mutableHymnalList.postValue(sortData(data, prefs.getHymnalSort()))
             } else {
                 loadLocalHymnals()
             }
+        }
+    }
+
+    fun sortOrderChanged() {
+        val data = mutableHymnalList.value ?: return
+        val sorted = sortData(data, prefs.getHymnalSort())
+        mutableHymnalList.postValue(sorted)
+    }
+
+    private fun sortData(data: List<Hymnal>, order: HymnalSort): List<Hymnal> {
+        return when (order) {
+            HymnalSort.TITLE -> data.sortedBy { it.title }
+            HymnalSort.LANGUAGE -> data.sortedBy { it.language }
+            HymnalSort.OFFLINE -> data.sortedByDescending { it.offline }
         }
     }
 }

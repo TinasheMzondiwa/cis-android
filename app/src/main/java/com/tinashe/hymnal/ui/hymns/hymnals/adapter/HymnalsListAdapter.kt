@@ -1,25 +1,17 @@
 package com.tinashe.hymnal.ui.hymns.hymnals.adapter
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import com.tinashe.hymnal.data.model.Hymnal
 
 class HymnalsListAdapter(private val hymnalSelected: (Hymnal) -> Unit) :
-    RecyclerView.Adapter<HymnalViewHolder>() {
-
-    var hymnals: List<Hymnal> = emptyList()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    ListAdapter<Hymnal, HymnalViewHolder>(HymnalsDiff) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HymnalViewHolder =
         HymnalViewHolder.create(parent)
 
-    override fun getItemCount(): Int = hymnals.size
-
     override fun onBindViewHolder(holder: HymnalViewHolder, position: Int) {
-        val hymnal = hymnals[position]
+        val hymnal = getItem(position)
         holder.bind(hymnal)
 
         holder.itemView.setOnClickListener {
