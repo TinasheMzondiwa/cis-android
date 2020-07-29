@@ -6,7 +6,17 @@
 ## Screenshots
 <img src="art/1.png" width="25%" /><img src="art/2.png" width="25%" /><img src="art/3.png" width="25%" /><img src="art/4.png" width="25%" />
 
-**[Install on Google Play](https://play.google.com/store/apps/details?id=com.tinashe.christInSong)**
+## Development
+Written entirely in Kotlin & uses latest Android libraries like
+- [Architecture Components](https://developer.android.com/topic/libraries/architecture) (Room, Navigation & Lifecycle)
+- [Coroutines](https://kotlinlang.org/docs/reference/coroutines/coroutines-guide.html)
+- [Dagger Hilt](https://dagger.dev/hilt/) for DI
+
+## Setup
+Requires [Android Studio](https://developer.android.com/studio/) 4.0.0 or above
+
+## Links
+<a href='https://play.google.com/store/apps/details?id=com.tinashe.christInSong'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="200px"/></a>
 
 ## License
 
