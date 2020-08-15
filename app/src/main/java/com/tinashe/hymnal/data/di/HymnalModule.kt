@@ -16,12 +16,11 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import timber.log.Timber
-import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object HymnalModule {
 
     @Provides
@@ -33,7 +32,6 @@ object HymnalModule {
         .build()
 
     @Provides
-    @Singleton
     fun provideFirebaseDatabase(): FirebaseDatabase = Firebase.database.also {
         try {
             it.setPersistenceEnabled(true)
@@ -43,11 +41,9 @@ object HymnalModule {
     }
 
     @Provides
-    @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = Firebase.auth
 
     @Provides
-    @Singleton
     fun provideFirebaseStorage(): FirebaseStorage = Firebase.storage
 
     @Provides
