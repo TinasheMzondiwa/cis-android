@@ -1,7 +1,6 @@
 package com.tinashe.hymnal.ui.support
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -9,7 +8,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
@@ -21,7 +19,6 @@ import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.extensions.view.inflateView
 import com.tinashe.hymnal.utils.Helper
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class SupportFragment : Fragment() {
@@ -44,10 +41,10 @@ class SupportFragment : Fragment() {
             binding = it
             binding?.apply {
                 tvPolicy.setOnClickListener {
-                    launchWebUrl(getString(R.string.app_privacy_policy))
+                    Helper.launchWebUrl(requireContext(), getString(R.string.app_privacy_policy))
                 }
                 tvTerms.setOnClickListener {
-                    launchWebUrl(getString(R.string.app_terms))
+                    Helper.launchWebUrl(requireContext(), getString(R.string.app_terms))
                 }
             }
         }.root
@@ -73,7 +70,7 @@ class SupportFragment : Fragment() {
                 chipGroupInApp.clearCheck()
                 chipGroupSubs.clearCheck()
             }
-            launchWebUrl(it)
+            Helper.launchWebUrl(requireContext(), it)
         }
         viewModel.inAppProductsLiveData.observeNonNull(viewLifecycleOwner) { products ->
             if (products.isEmpty()) {
@@ -111,7 +108,7 @@ class SupportFragment : Fragment() {
                 binding?.tvMonthlyDonation?.setText(R.string.blank)
                 return@observeNonNull
             } else {
-                binding?.tvOneTimeDonation?.setText(R.string.monthly_donations)
+                binding?.tvMonthlyDonation?.setText(R.string.monthly_donations)
             }
             binding?.chipGroupSubs?.apply {
                 removeAllViews()
@@ -149,7 +146,7 @@ class SupportFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_account_settings -> {
-                launchWebUrl(getString(R.string.subscriptions_url))
+                Helper.launchWebUrl(requireContext(), getString(R.string.subscriptions_url))
                 true
             }
             R.id.action_help -> {
@@ -157,20 +154,6 @@ class SupportFragment : Fragment() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun launchWebUrl(url: String) {
-        val builder = CustomTabsIntent.Builder()
-            .setShowTitle(true)
-            .enableUrlBarHiding()
-            .setStartAnimations(requireContext(), R.anim.slide_up, android.R.anim.fade_out)
-            .setExitAnimations(requireContext(), android.R.anim.fade_in, R.anim.slide_down)
-        try {
-            val intent = builder.build()
-            intent.launchUrl(requireContext(), Uri.parse(url))
-        } catch (ex: Exception) {
-            Timber.e(ex)
         }
     }
 

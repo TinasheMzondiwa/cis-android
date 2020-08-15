@@ -1,10 +1,12 @@
 package com.tinashe.hymnal.utils
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.browser.customtabs.CustomTabsIntent
 import com.tinashe.hymnal.BuildConfig
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.constants.UiPref
@@ -90,6 +92,20 @@ object Helper {
             activity.startActivity(
                 Intent.createChooser(intent, activity.getString(R.string.send_with))
             )
+        }
+    }
+
+    fun launchWebUrl(context: Context, url: String) {
+        val builder = CustomTabsIntent.Builder()
+            .setShowTitle(true)
+            .enableUrlBarHiding()
+            .setStartAnimations(context, R.anim.slide_up, android.R.anim.fade_out)
+            .setExitAnimations(context, android.R.anim.fade_in, R.anim.slide_down)
+        try {
+            val intent = builder.build()
+            intent.launchUrl(context, Uri.parse(url))
+        } catch (ex: Exception) {
+            Timber.e(ex)
         }
     }
 }
