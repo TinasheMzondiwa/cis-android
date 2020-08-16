@@ -28,6 +28,8 @@ ext.versions = [
         'aztec'             : 'v1.3.43',
         'billing'           : '3.0.0',
         'material_tap'      : '3.0.0',
+        'play_core'         : '1.8.0',
+        'play_core_ktx'     : '1.8.1',
 
         // testing
         'junit'             : '4.13',

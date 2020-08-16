@@ -3,6 +3,8 @@ package com.tinashe.hymnal.data.di
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
+import com.google.android.play.core.review.ReviewManager
+import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseException
@@ -49,4 +51,7 @@ object HymnalModule {
     @Provides
     fun provideConnectivityManager(context: Context): ConnectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    @Provides
+    fun provideReviewManager(context: Context): ReviewManager = ReviewManagerFactory.create(context)
 }
