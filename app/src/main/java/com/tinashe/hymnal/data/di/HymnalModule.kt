@@ -3,6 +3,8 @@ package com.tinashe.hymnal.data.di
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
+import com.google.android.play.core.review.ReviewManager
+import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseException
@@ -16,12 +18,11 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import timber.log.Timber
-import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object HymnalModule {
 
     @Provides
@@ -33,7 +34,6 @@ object HymnalModule {
         .build()
 
     @Provides
-    @Singleton
     fun provideFirebaseDatabase(): FirebaseDatabase = Firebase.database.also {
         try {
             it.setPersistenceEnabled(true)
@@ -43,14 +43,15 @@ object HymnalModule {
     }
 
     @Provides
-    @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = Firebase.auth
 
     @Provides
-    @Singleton
     fun provideFirebaseStorage(): FirebaseStorage = Firebase.storage
 
     @Provides
     fun provideConnectivityManager(context: Context): ConnectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    @Provides
+    fun provideReviewManager(context: Context): ReviewManager = ReviewManagerFactory.create(context)
 }

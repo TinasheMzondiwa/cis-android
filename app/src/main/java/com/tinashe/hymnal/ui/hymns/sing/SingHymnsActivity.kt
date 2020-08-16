@@ -195,7 +195,6 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                     val intent = PresentHymnActivity.launchIntent(this, it)
                     startActivity(intent)
                 }
-
                 true
             }
             R.id.actions_hymnals -> {
@@ -226,10 +225,12 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
             PlaybackState.ON_COMPLETE,
             PlaybackState.ON_STOP,
             null -> {
-                val number = pagerAdapter?.hymns?.get(
-                    binding.viewPager.currentItem
-                )?.number
-                val canPlay = number?.let { tunePlayer.canPlayTune(it) } ?: false
+                val hymns = pagerAdapter?.hymns
+                if (hymns.isNullOrEmpty()) {
+                    return false
+                }
+                val number = hymns[binding.viewPager.currentItem].number
+                val canPlay = number.let { tunePlayer.canPlayTune(it) }
                 mediaItem.apply {
                     isVisible = canPlay
                     icon = ContextCompat.getDrawable(
