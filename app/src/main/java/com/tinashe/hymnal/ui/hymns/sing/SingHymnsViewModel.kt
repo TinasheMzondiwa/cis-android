@@ -1,10 +1,12 @@
 package com.tinashe.hymnal.ui.hymns.sing
 
+import androidx.core.os.bundleOf
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.data.model.constants.Status
@@ -15,7 +17,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class SingHymnsViewModel @ViewModelInject constructor(
-    private val repository: HymnalRepository
+    private val repository: HymnalRepository,
+    private val firebaseAnalytics: FirebaseAnalytics
 ) : ViewModel() {
 
     private val mutableViewState = SingleLiveEvent<Status>()
@@ -61,5 +64,15 @@ class SingHymnsViewModel @ViewModelInject constructor(
                 }
             }
         }
+    }
+
+    fun hymnViewed(hymn: Hymn) {
+        firebaseAnalytics.logEvent(
+            "HYMN_VIEW",
+            bundleOf(
+                "title" to hymn.title,
+                "hymnal" to hymn.book
+            )
+        )
     }
 }
