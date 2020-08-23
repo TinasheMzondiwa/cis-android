@@ -21,8 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="invisible"
             android:contentDescription="@string/blank"
+            android:visibility="invisible"
             app:srcCompat="@drawable/ic_check" />
     </FrameLayout>
 
@@ -35,7 +35,7 @@
         android:paddingHorizontal="@dimen/spacing_medium"
         android:textAppearance="?attr/textAppearanceHeadline6"
         app:layout_constraintBottom_toTopOf="@id/hymnalLanguage"
-        app:layout_constraintEnd_toStartOf="@id/imgHymnalState"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/icon"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Christ In Song" />
@@ -50,19 +50,9 @@
         android:textAppearance="?attr/textAppearanceBody2"
         android:textColor="?android:attr/textColorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/imgHymnalState"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/icon"
         app:layout_constraintTop_toBottomOf="@id/hymnalTitle"
         tools:text="English" />
-
-    <ImageView
-        android:id="@+id/imgHymnalState"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/blank"
-        android:src="@drawable/ic_download"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

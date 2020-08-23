@@ -64,10 +64,6 @@ class SortHolder(
                     sort = HymnalSort.LANGUAGE
                     labelRes = R.string.sort_language
                 }
-                R.id.chipSortOffline -> {
-                    sort = HymnalSort.OFFLINE
-                    labelRes = R.string.sort_offline
-                }
                 else -> return@OnCheckedChangeListener
             }
             val resources = containerView.resources
@@ -98,7 +94,6 @@ class SortHolder(
         val labelRes = when (sort) {
             HymnalSort.TITLE -> R.string.sort_title
             HymnalSort.LANGUAGE -> R.string.sort_language
-            HymnalSort.OFFLINE -> R.string.sort_offline
         }
         binding.sortLabel.apply {
             text = resources.getString(R.string.ordered_by, resources.getString(labelRes))
@@ -109,7 +104,6 @@ class SortHolder(
                 when (sort) {
                     HymnalSort.TITLE -> R.id.chipSortTitle
                     HymnalSort.LANGUAGE -> R.id.chipSortLanguage
-                    HymnalSort.OFFLINE -> R.id.chipSortOffline
                 }
             )
             setOnCheckedChangeListener(changeListener)

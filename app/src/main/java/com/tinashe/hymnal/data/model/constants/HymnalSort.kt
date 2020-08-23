@@ -2,8 +2,7 @@ package com.tinashe.hymnal.data.model.constants
 
 enum class HymnalSort {
     TITLE,
-    LANGUAGE,
-    OFFLINE;
+    LANGUAGE;
 
     companion object {
         private val map = values().associateBy(HymnalSort::name)

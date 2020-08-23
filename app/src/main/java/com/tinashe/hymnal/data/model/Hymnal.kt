@@ -15,9 +15,6 @@ data class Hymnal(
     val title: String,
     val language: String
 ) : Parcelable {
-    @Ignore
-    @IgnoredOnParcel
-    var offline: Boolean = true
 
     @Ignore
     @IgnoredOnParcel

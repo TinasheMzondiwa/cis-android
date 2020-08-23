@@ -13,6 +13,7 @@
 
     <item
         android:id="@+id/navigation_support"
+        android:visible="false"
         android:icon="@drawable/ic_support"
         android:title="@string/title_support" />
 

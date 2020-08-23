@@ -1,7 +1,11 @@
 package com.tinashe.hymnal.data.repository
 
+import android.content.Context
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.db.dao.CollectionsDao
-import com.tinashe.hymnal.data.db.dao.HymnalsDao
 import com.tinashe.hymnal.data.db.dao.HymnsDao
 import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.data.model.Hymnal
@@ -10,80 +14,117 @@ import com.tinashe.hymnal.data.model.TitleBody
 import com.tinashe.hymnal.data.model.collections.CollectionHymnCrossRef
 import com.tinashe.hymnal.data.model.collections.CollectionHymns
 import com.tinashe.hymnal.data.model.collections.HymnCollection
+import com.tinashe.hymnal.data.model.constants.Hymnals
+import com.tinashe.hymnal.data.model.constants.Hymnals.CHICHEWA
+import com.tinashe.hymnal.data.model.constants.Hymnals.ENGLISH
+import com.tinashe.hymnal.data.model.constants.Hymnals.NDEBELE
+import com.tinashe.hymnal.data.model.constants.Hymnals.SHONA
+import com.tinashe.hymnal.data.model.constants.Hymnals.SOTHO
+import com.tinashe.hymnal.data.model.constants.Hymnals.SWAHILI
+import com.tinashe.hymnal.data.model.constants.Hymnals.TONGA
+import com.tinashe.hymnal.data.model.constants.Hymnals.TSWANA
+import com.tinashe.hymnal.data.model.constants.Hymnals.VENDA
+import com.tinashe.hymnal.data.model.constants.Hymnals.XHOSA
+import com.tinashe.hymnal.data.model.remote.RemoteHymn
 import com.tinashe.hymnal.data.model.response.Resource
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
+import com.tinashe.hymnal.utils.Helper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import timber.log.Timber
+import java.lang.reflect.Type
 import kotlin.coroutines.CoroutineContext
 
 class HymnalRepository(
-    private val hymnalsDao: HymnalsDao,
+    private val context: Context,
+    private val moshi: Moshi,
     private val hymnsDao: HymnsDao,
     private val collectionsDao: CollectionsDao,
     private val prefs: HymnalPrefs,
-    private val remoteHymnsRepository: RemoteHymnsRepository,
     private val backgroundContext: CoroutineContext = Dispatchers.IO
 ) {
 
     private val selectedCode: String get() = prefs.getSelectedHymnal()
 
-    suspend fun getHymnals(): Resource<List<Hymnal>> = Resource.success(hymnalsDao.listAll())
+    fun getHymnals(): Resource<List<Hymnal>> {
+        return Resource.success(
+            listOf(
+                getHymnal(ENGLISH.key),
+                getHymnal(TSWANA.key),
+                getHymnal(SOTHO.key),
+                getHymnal(CHICHEWA.key),
+                getHymnal(TONGA.key),
+                getHymnal(SHONA.key),
+                getHymnal(VENDA.key),
+                getHymnal(SWAHILI.key),
+                getHymnal(NDEBELE.key),
+                getHymnal(XHOSA.key),
+            )
+        )
+    }
 
     fun getHymns(selectedHymnal: Hymnal? = null) = flow {
-        val hymnal = hymnalsDao.findByCode(selectedHymnal?.code ?: selectedCode)
-
-        when {
-            hymnal == null && hymnalsDao.findByCode(selectedCode) == null -> {
-                emit(Resource.loading())
-
-                val sample = remoteHymnsRepository.getSample()
-                sample?.let { json ->
-                    hymnalsDao.insert(Hymnal(json.key, json.title, json.language))
-                    hymnsDao.insertAll(json.hymns.map { it.toHymn(json.key) })
-                    prefs.setSelectedHymnal(json.key)
-                }
-            }
-            selectedHymnal != null && hymnalsDao.findByCode(selectedHymnal.code) == null -> {
-                emit(Resource.loading())
-                // fetch remote hymnal
-                val resource = remoteHymnsRepository.downloadHymns(
-                    selectedHymnal.code
-                )
-
-                if (resource.isSuccessFul) {
-                    resource.data?.let { json ->
-                        hymnalsDao.insert(
-                            Hymnal(
-                                selectedHymnal.code,
-                                selectedHymnal.title,
-                                selectedHymnal.language
-                            )
-                        )
-                        hymnsDao.insertAll(json.map { it.toHymn(selectedHymnal.code) })
-                        prefs.setSelectedHymnal(selectedHymnal.code)
-                    }
-                } else {
-                    emit(Resource.error(Exception("Error downloading hymnal file")))
-                    return@flow
-                }
-            }
-            hymnal != null -> {
-                prefs.setSelectedHymnal(hymnal.code)
-            }
+        val code = selectedHymnal?.code ?: selectedCode
+        if (hymnsDao.listAll(code).isEmpty()) {
+            emit(Resource.loading())
+            loadHymns(code)
         }
 
-        hymnalsDao.findByCode(selectedCode)?.let {
-            val hymns = hymnsDao.listAll(selectedCode)
-            emit(Resource.success(HymnalHymns(it, hymns)))
-        }
+        prefs.setSelectedHymnal(code)
+
+        val hymnal = getHymnal(code)
+        val hymns = hymnsDao.listAll(code)
+        emit(Resource.success(HymnalHymns(hymnal, hymns)))
     }.catch {
         Timber.e(it)
         emit(Resource.error(it))
     }.flowOn(backgroundContext)
+
+    private fun getHymnal(code: String): Hymnal {
+        return when (Hymnals.fromString(code)) {
+            ENGLISH -> Hymnal(code, "Christ In Song", "English")
+            TSWANA -> Hymnal(code, "Keresete Mo Kopelong", "Tswana")
+            SOTHO -> Hymnal(code, "Keresete Pineng", "Sotho")
+            CHICHEWA -> Hymnal(code, "Khristu Mu Nyimbo", "Chichewa")
+            TONGA -> Hymnal(code, "Kristu Mu Nyimbo", "Tonga")
+            SHONA -> Hymnal(code, "Kristu MuNzwiyo", "Shona")
+            VENDA -> Hymnal(code, "Ngosha YaDzingosha", "Venda")
+            SWAHILI -> Hymnal(code, "Nyimbo Za Kristo", "Swahili")
+            NDEBELE -> Hymnal(code, "UKrestu Esihlabelelweni", "Ndebele/IsiZulu")
+            XHOSA -> Hymnal(code, "UKristu Engomeni", "IsiXhosa")
+            null -> throw IllegalArgumentException("Invalid Hymnal code")
+        }
+    }
+
+    private suspend fun loadHymns(code: String) {
+        val res = when (Hymnals.fromString(code)) {
+            ENGLISH -> R.raw.english
+            TSWANA -> R.raw.tswana
+            SOTHO -> R.raw.sotho
+            CHICHEWA -> R.raw.chichewa
+            TONGA -> R.raw.tonga
+            SHONA -> R.raw.shona
+            VENDA -> R.raw.venda
+            SWAHILI -> R.raw.swahili
+            NDEBELE -> R.raw.ndebele
+            XHOSA -> R.raw.xhosa
+            null -> return
+        }
+
+        val jsonString = Helper.getJson(context.resources, res)
+        val hymns = parseJson(jsonString) ?: emptyList()
+        hymnsDao.insertAll(hymns.map { it.toHymn(code) })
+    }
+
+    private fun parseJson(jsonString: String): List<RemoteHymn>? {
+        val listDataType: Type =
+            Types.newParameterizedType(List::class.java, RemoteHymn::class.java)
+        val adapter: JsonAdapter<List<RemoteHymn>> = moshi.adapter(listDataType)
+        return adapter.fromJson(jsonString)
+    }
 
     suspend fun searchHymns(query: String?): List<Hymn> {
         return hymnsDao.search(selectedCode, "%${query ?: ""}%")
