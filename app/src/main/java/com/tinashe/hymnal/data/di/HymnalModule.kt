@@ -34,7 +34,11 @@ object HymnalModule {
     fun provideFirebaseAnalytics(): FirebaseAnalytics = Firebase.analytics
 
     @Provides
-    fun provideFirebaseConfig(): FirebaseRemoteConfig = Firebase.remoteConfig
+    fun provideFirebaseConfig(): FirebaseRemoteConfig {
+        return Firebase.remoteConfig.also {
+            it.fetchAndActivate()
+        }
+    }
 
     @Provides
     fun provideReviewManager(context: Context): ReviewManager = ReviewManagerFactory.create(context)
