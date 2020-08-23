@@ -12,6 +12,7 @@ import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.ConsumeParams
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchaseHistoryRecord
 import com.android.billingclient.api.PurchaseHistoryResponseListener
@@ -19,6 +20,7 @@ import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.SkuDetails
 import com.android.billingclient.api.SkuDetailsParams
 import com.android.billingclient.api.acknowledgePurchase
+import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.querySkuDetails
 import com.tinashe.hymnal.BuildConfig
 import com.tinashe.hymnal.R
@@ -85,8 +87,13 @@ class SupportViewModel @ViewModelInject constructor() :
                 val params = AcknowledgePurchaseParams.newBuilder()
                     .setPurchaseToken(purchase.purchaseToken)
                     .build()
+                val consumeParams =
+                    ConsumeParams.newBuilder()
+                        .setPurchaseToken(purchase.purchaseToken)
+                        .build()
                 viewModelScope.launch(Dispatchers.IO) {
                     billingClient?.acknowledgePurchase(params)
+                    billingClient?.consumePurchase(consumeParams)
                 }
             }
         }

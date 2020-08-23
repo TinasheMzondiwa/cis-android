@@ -18,6 +18,7 @@ import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.utils.Helper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -70,8 +71,12 @@ class InfoFragment : Fragment() {
         viewModel.reviewInfoLiveData.observeNonNull(viewLifecycleOwner) {
             val reviewInfo = it ?: return@observeNonNull
             lifecycleScope.launch {
-                reviewManager.launchReview(requireActivity(), reviewInfo)
-                viewModel.reviewLaunched()
+                try {
+                    reviewManager.launchReview(requireActivity(), reviewInfo)
+                    viewModel.reviewLaunched()
+                } catch (ex: Exception) {
+                    Timber.e(ex)
+                }
             }
         }
     }

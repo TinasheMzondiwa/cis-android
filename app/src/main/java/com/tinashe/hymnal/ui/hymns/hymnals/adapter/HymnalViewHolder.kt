@@ -21,13 +21,6 @@ class HymnalViewHolder(private val containerView: View) : RecyclerView.ViewHolde
             iconCheck.isVisible = hymnal.selected
             hymnalTitle.text = hymnal.title
             hymnalLanguage.text = hymnal.language
-            imgHymnalState.setImageResource(
-                if (hymnal.offline) {
-                    R.drawable.ic_offline_pin
-                } else {
-                    R.drawable.ic_download
-                }
-            )
         }
     }
 

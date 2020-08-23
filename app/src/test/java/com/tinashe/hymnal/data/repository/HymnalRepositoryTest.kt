@@ -1,17 +1,14 @@
 package com.tinashe.hymnal.data.repository
 
+import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.squareup.moshi.Moshi
 import com.tinashe.hymnal.data.db.dao.CollectionsDao
-import com.tinashe.hymnal.data.db.dao.HymnalsDao
 import com.tinashe.hymnal.data.db.dao.HymnsDao
 import com.tinashe.hymnal.data.model.Hymn
-import com.tinashe.hymnal.data.model.Hymnal
-import com.tinashe.hymnal.data.model.constants.Status
-import com.tinashe.hymnal.data.model.remote.RemoteHymnal
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import com.tinashe.hymnal.utils.CoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.amshove.kluent.mock
@@ -22,7 +19,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
 
@@ -37,7 +33,10 @@ internal class HymnalRepositoryTest {
     var coroutinesTestRule = CoroutineRule()
 
     @Mock
-    private lateinit var mockHymnalsDao: HymnalsDao
+    private lateinit var mockContext: Context
+
+    @Mock
+    private lateinit var mockMoshi: Moshi
 
     @Mock
     private lateinit var mockHymnsDao: HymnsDao
@@ -48,43 +47,19 @@ internal class HymnalRepositoryTest {
     @Mock
     private lateinit var mockPrefs: HymnalPrefs
 
-    @Mock
-    private lateinit var mockRemoteHymnsRepository: RemoteHymnsRepository
-
     private lateinit var repository: HymnalRepository
 
     @ExperimentalCoroutinesApi
     @Before
     fun setup() {
         repository = HymnalRepository(
-            mockHymnalsDao, mockHymnsDao, mockCollectionsDao, mockPrefs, mockRemoteHymnsRepository, TestCoroutineDispatcher()
+            mockContext,
+            mockMoshi,
+            mockHymnsDao,
+            mockCollectionsDao,
+            mockPrefs,
+            TestCoroutineDispatcher()
         )
-    }
-
-    @ExperimentalCoroutinesApi
-    @Test
-    fun `should load sample hymnal on first launch`() = runBlockingTest {
-        // given
-        val code = "english"
-        val title = "Christ In Song"
-        val language = "English"
-        val hymns = emptyList<Hymn>()
-        val mockHymnal = mock<RemoteHymnal>().also {
-            `when`(it.key).thenReturn(code)
-            `when`(it.title).thenReturn(title)
-            `when`(it.language).thenReturn(language)
-            `when`(it.hymns).thenReturn(emptyList())
-        }
-        `when`(mockRemoteHymnsRepository.getSample()).thenReturn(mockHymnal)
-
-        // when
-        repository.getHymns().collect {
-            if (it.status == Status.SUCCESS) {
-                verify(mockHymnalsDao.insert(Hymnal(code, title, language)))
-                verify(mockHymnsDao.insertAll(hymns))
-                verify(mockPrefs.setSelectedHymnal(code))
-            }
-        }
     }
 
     @ExperimentalCoroutinesApi

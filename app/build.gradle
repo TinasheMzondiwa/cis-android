@@ -75,6 +75,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
     }
     buildFeatures {
         viewBinding = true
@@ -118,11 +119,9 @@ dependencies {
     kapt "androidx.hilt:hilt-compiler:$versions.hilt_androidx"
 
     // Firebase
-    implementation "com.google.firebase:firebase-storage-ktx:${versions.fb_storage}"
-    implementation "com.google.firebase:firebase-auth-ktx:${versions.fb_auth}"
-    implementation "com.google.firebase:firebase-database-ktx:${versions.fb_database}"
     implementation "com.google.firebase:firebase-analytics-ktx:${versions.fb_analytics}"
     implementation "com.google.firebase:firebase-crashlytics:${versions.fb_crashytics}"
+    implementation "com.google.firebase:firebase-config-ktx:${versions.fb_config}"
 
     // Play Services
     implementation "com.google.android.play:core:${versions.play_core}"

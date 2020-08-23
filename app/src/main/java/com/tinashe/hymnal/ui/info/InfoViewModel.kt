@@ -10,6 +10,7 @@ import com.google.android.play.core.review.ReviewManager
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class InfoViewModel @ViewModelInject constructor(
     private val reviewManager: ReviewManager
@@ -20,8 +21,12 @@ class InfoViewModel @ViewModelInject constructor(
 
     init {
         viewModelScope.launch {
-            val info = reviewManager.requestReview()
-            mutableReviewInfo.postValue(info)
+            try {
+                val info = reviewManager.requestReview()
+                mutableReviewInfo.postValue(info)
+            } catch (ex: Exception) {
+                Timber.e(ex)
+            }
         }
     }
 
