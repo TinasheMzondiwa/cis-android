@@ -46,7 +46,12 @@ object HymnalModule {
     @Provides
     fun provideConfig(remoteConfig: FirebaseRemoteConfig, moshi: Moshi): DonationsConfig {
         val jsonString = remoteConfig.getString("cfg_donations")
-        val jsonAdapter: JsonAdapter<DonationsConfig> = moshi.adapter(DonationsConfig::class.java)
-        return jsonAdapter.fromJson(jsonString) ?: DonationsConfig()
+        return if (jsonString.isEmpty()) {
+            DonationsConfig()
+        } else {
+            val jsonAdapter: JsonAdapter<DonationsConfig> =
+                moshi.adapter(DonationsConfig::class.java)
+            jsonAdapter.fromJson(jsonString) ?: DonationsConfig()
+        }
     }
 }
