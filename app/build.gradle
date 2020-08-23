@@ -121,6 +121,7 @@ dependencies {
     // Firebase
     implementation "com.google.firebase:firebase-analytics-ktx:${versions.fb_analytics}"
     implementation "com.google.firebase:firebase-crashlytics:${versions.fb_crashytics}"
+    implementation "com.google.firebase:firebase-config-ktx:${versions.fb_config}"
 
     // Play Services
     implementation "com.google.android.play:core:${versions.play_core}"

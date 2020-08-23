@@ -6,12 +6,17 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.tinashe.hymnal.R
+import com.tinashe.hymnal.data.model.cfg.DonationsConfig
 import com.tinashe.hymnal.databinding.ActivityMainBinding
 import com.tinashe.hymnal.extensions.activity.applyExitMaterialTransform
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), AppBarBehaviour {
+
+    @Inject
+    lateinit var config: DonationsConfig
 
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
@@ -31,6 +36,7 @@ class MainActivity : AppCompatActivity(), AppBarBehaviour {
                     R.id.navigation_info
                 )
             )
+            navView.menu.findItem(R.id.navigation_support).isVisible = config.enabled
             navView.setupWithNavController(navController)
             toolbarLayout.setupWithNavController(
                 toolbar,
