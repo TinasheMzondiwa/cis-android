@@ -38,7 +38,6 @@
     <string name="support_message">If you find this app useful please consider supporting us with a donation.</string>
     <string name="support_or_feedback">Help or Feedback</string>
     <string name="switch_between_hymnals">Switch Between Hymnals</string>
-    <string name="switch_between_help">When you are online all hymnals will be shown, including those available for download.\n\nWhen you are offline only downloaded hymnals will be shown.</string>
     <string name="switch_between_hymnals_message">Tap here to see a list of all available hymnals</string>
     <string name="switch_hymnal">Switch Hymnal</string>
     <string name="terms_of_use"><u>Terms of Use</u></string>
