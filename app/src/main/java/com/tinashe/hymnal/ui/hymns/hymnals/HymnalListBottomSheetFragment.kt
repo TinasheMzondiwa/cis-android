@@ -8,7 +8,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.databinding.HymnalListBottomSheetFragmentBinding
@@ -61,24 +60,10 @@ class HymnalListBottomSheetFragment : BottomSheetDialogFragment() {
         }
 
         binding?.apply {
-            toolbar.apply {
-                setNavigationOnClickListener {
-                    dismiss()
-                }
-                inflateMenu(R.menu.hymnals_list)
-                setOnMenuItemClickListener {
-                    return@setOnMenuItemClickListener when (it.itemId) {
-                        R.id.action_info -> {
-                            MaterialAlertDialogBuilder(requireContext())
-                                .setMessage(R.string.switch_between_help)
-                                .setPositiveButton(android.R.string.ok, null)
-                                .show()
-                            true
-                        }
-                        else -> false
-                    }
-                }
+            toolbar.setNavigationOnClickListener {
+                dismiss()
             }
+
             hymnalsListView.apply {
                 addOnScrollListener(appBarElevation)
                 adapter = listAdapter
