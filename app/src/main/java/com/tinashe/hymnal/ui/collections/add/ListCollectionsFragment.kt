@@ -1,14 +1,13 @@
 package com.tinashe.hymnal.ui.collections.add
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentCollectionListBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.collections.CollectionsViewModel
@@ -17,7 +16,7 @@ import com.tinashe.hymnal.ui.collections.adapter.title.CollectionTitlesListAdapt
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ListCollectionsFragment : Fragment() {
+class ListCollectionsFragment : Fragment(R.layout.fragment_collection_list) {
 
     private val viewModel: CollectionsViewModel by viewModels()
 
@@ -31,18 +30,14 @@ class ListCollectionsFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return FragmentCollectionListBinding.inflate(inflater, container, false).also {
-            binding = it
-            binding?.listView?.apply {
-                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-                adapter = listAdapter
-            }
-        }.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentCollectionListBinding.bind(view)
+        binding?.listView?.apply {
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            adapter = listAdapter
+        }
+
         viewModel.viewStateLiveData.observeNonNull(viewLifecycleOwner) {
             binding?.apply {
                 when (it) {
@@ -74,7 +69,10 @@ class ListCollectionsFragment : Fragment() {
                 collectionSelectionMap.apply {
                     clear()
                     models.forEach { model ->
-                        put(model.collection.collectionId, model.hymns.find { it.hymnId == hymnId } != null)
+                        put(
+                            model.collection.collectionId,
+                            model.hymns.find { it.hymnId == hymnId } != null
+                        )
                     }
                 }
                 submitList(ArrayList(models))

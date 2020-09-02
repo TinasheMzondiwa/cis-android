@@ -32,42 +32,41 @@ class AddToCollectionFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return FragmentAddToCollectionBinding.inflate(inflater, container, false).also { it ->
-            binding = it
-            binding?.apply {
-                toolbar.setNavigationOnClickListener {
-                    if (showingAdding) {
-                        showListFragment()
-                    } else {
-                        dismiss()
-                    }
-                }
-                btnNew.setOnClickListener {
-                    if (showingAdding) {
-                        val fragment = childFragmentManager.findFragmentById(
-                            R.id.fragment_container
-                        )
-                        if (fragment is NewCollectionFragment) {
-                            fragment.getTitleBody()?.let {
-                                viewModel.addCollection(it)
-                                showListFragment()
-                            }
-                        }
-                    } else {
-                        toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
-                        toolbar.setTitle(R.string.new_collection)
-                        btnNew.setText(R.string.title_save)
-                        btnNew.setIconResource(R.drawable.ic_done)
-
-                        showFragment(NewCollectionFragment())
-                    }
-                }
-            }
-        }.root
+        return inflater.inflate(R.layout.fragment_add_to_collection, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentAddToCollectionBinding.bind(view)
+        binding?.toolbar?.setNavigationOnClickListener {
+            if (showingAdding) {
+                showListFragment()
+            } else {
+                dismiss()
+            }
+        }
+        binding?.btnNew?.setOnClickListener {
+            if (showingAdding) {
+                val fragment = childFragmentManager.findFragmentById(
+                    R.id.fragment_container
+                )
+                if (fragment is NewCollectionFragment) {
+                    fragment.getTitleBody()?.let {
+                        viewModel.addCollection(it)
+                        showListFragment()
+                    }
+                }
+            } else {
+                binding?.apply {
+                    toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+                    toolbar.setTitle(R.string.new_collection)
+                    btnNew.setText(R.string.title_save)
+                    btnNew.setIconResource(R.drawable.ic_done)
+                }
+                showFragment(NewCollectionFragment())
+            }
+        }
+
         showListFragment()
     }
 
