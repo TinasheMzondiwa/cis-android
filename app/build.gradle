@@ -26,7 +26,7 @@ ant.propertyfile(file: "version.properties") {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion versions.compileSdk
 
     defaultConfig {
         applicationId "com.tinashe.christInSong"
