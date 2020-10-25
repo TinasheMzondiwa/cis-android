@@ -2,12 +2,10 @@ package com.tinashe.hymnal.ui.collections
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -25,7 +23,7 @@ import com.tinashe.hymnal.ui.widget.SwipeToDeleteCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CollectionsFragment : Fragment() {
+class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private val viewModel: CollectionsViewModel by viewModels()
 
@@ -76,20 +74,16 @@ class CollectionsFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return FragmentCollectionsBinding.inflate(inflater, container, false).also {
-            binding = it
-            binding?.listView?.apply {
-                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-                val itemTouchHelper = ItemTouchHelper(swipeHandler)
-                itemTouchHelper.attachToRecyclerView(this)
-                adapter = listAdapter
-            }
-        }.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentCollectionsBinding.bind(view)
+        binding?.listView?.apply {
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            val itemTouchHelper = ItemTouchHelper(swipeHandler)
+            itemTouchHelper.attachToRecyclerView(this)
+            adapter = listAdapter
+        }
+
         viewModel.viewStateLiveData.observeNonNull(viewLifecycleOwner) {
             binding?.apply {
                 val size = viewModel.collectionsLiveData.value?.size

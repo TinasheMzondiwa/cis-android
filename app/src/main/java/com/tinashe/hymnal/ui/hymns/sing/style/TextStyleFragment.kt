@@ -20,13 +20,13 @@ class TextStyleFragment : BottomSheetDialogFragment() {
     override fun getTheme(): Int = R.style.ThemeOverlay_CIS_BottomSheetDialog
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return FragmentTextOptionsBinding.inflate(inflater, container, false).also {
-            binding = it
-        }.root
+        return inflater.inflate(R.layout.fragment_text_options, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentTextOptionsBinding.bind(view)
+
         val model = arguments?.get(ARG_MODEL) as? TextStyleModel
             ?: return
 

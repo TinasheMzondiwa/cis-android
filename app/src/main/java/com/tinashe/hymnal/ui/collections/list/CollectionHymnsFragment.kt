@@ -3,12 +3,10 @@ package com.tinashe.hymnal.ui.collections.list
 import android.app.ActivityOptions
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,7 +26,7 @@ import com.tinashe.hymnal.ui.widget.SwipeToDeleteCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CollectionHymnsFragment : Fragment() {
+class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns) {
 
     private val viewModel: CollectionHymnsViewModel by viewModels()
     private var binding: FragmentHymnsBinding? = null
@@ -79,24 +77,16 @@ class CollectionHymnsFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return FragmentHymnsBinding.inflate(inflater, container, false).also {
-            binding = it
-            binding?.hymnsListView?.apply {
-                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-                val itemTouchHelper = ItemTouchHelper(swipeHandler)
-                itemTouchHelper.attachToRecyclerView(this)
-                adapter = listAdapter
-            }
-        }.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentHymnsBinding.bind(view)
+        binding?.hymnsListView?.apply {
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            val itemTouchHelper = ItemTouchHelper(swipeHandler)
+            itemTouchHelper.attachToRecyclerView(this)
+            adapter = listAdapter
+        }
+
         viewModel.statusLiveData.observeNonNull(viewLifecycleOwner) {
             binding?.apply {
                 hymnsListView.isVisible = it != Status.LOADING

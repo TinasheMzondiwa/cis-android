@@ -5,14 +5,20 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.transition.TransitionManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.transition.doOnEnd
+import androidx.core.transition.doOnStart
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.transition.platform.MaterialArcMotion
+import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.constants.UiPref
 import com.tinashe.hymnal.databinding.ActivitySingBinding
@@ -48,6 +54,8 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
     private lateinit var binding: ActivitySingBinding
 
     private var currentPosition: Int? = null
+
+    private val themeContainerColor: Int by lazy { ContextCompat.getColor(this, R.color.cis_gold) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         applyMaterialTransform(getString(R.string.transition_shared_element))
@@ -114,12 +122,10 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
             }
 
             fabNumber.setOnClickListener {
-                numberPadView.onShown()
-                fabNumber.isExpanded = true
-                scrimOverLay.isVisible = true
+                showNumPad()
             }
             scrimOverLay.setOnTouchListener { _, _ ->
-                if (fabNumber.isExpanded) {
+                if (numberPadView.isVisible) {
                     hideNumPad()
                 }
                 true
@@ -162,15 +168,42 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
         }
     }
 
+    private fun showNumPad() {
+        binding.apply {
+            numberPadView.onShown()
+
+            val transform = MaterialContainerTransform().apply {
+                startView = fabNumber
+                endView = numberPadView
+                addTarget(endView)
+                pathMotion = MaterialArcMotion()
+                containerColor = themeContainerColor
+                doOnEnd { scrimOverLay.visibility = View.VISIBLE }
+            }
+            TransitionManager.beginDelayedTransition(coordinator, transform)
+            fabNumber.visibility = View.GONE
+            numberPadView.visibility = View.VISIBLE
+        }
+    }
+
     private fun hideNumPad() {
         binding.apply {
-            scrimOverLay.isVisible = false
-            fabNumber.isExpanded = false
+            val transform = MaterialContainerTransform().apply {
+                startView = numberPadView
+                endView = fabNumber
+                addTarget(endView)
+                pathMotion = MaterialArcMotion()
+                containerColor = themeContainerColor
+                doOnStart { scrimOverLay.visibility = View.GONE }
+            }
+            TransitionManager.beginDelayedTransition(coordinator, transform)
+            fabNumber.visibility = View.VISIBLE
+            numberPadView.visibility = View.GONE
         }
     }
 
     override fun onBackPressed() {
-        if (binding.fabNumber.isExpanded) {
+        if (binding.numberPadView.isVisible) {
             hideNumPad()
             return
         }

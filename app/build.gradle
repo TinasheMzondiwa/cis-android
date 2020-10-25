@@ -26,7 +26,7 @@ ant.propertyfile(file: "version.properties") {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion versions.compileSdk
 
     defaultConfig {
         applicationId "com.tinashe.christInSong"
@@ -119,9 +119,10 @@ dependencies {
     kapt "androidx.hilt:hilt-compiler:$versions.hilt_androidx"
 
     // Firebase
-    implementation "com.google.firebase:firebase-analytics-ktx:${versions.fb_analytics}"
-    implementation "com.google.firebase:firebase-crashlytics:${versions.fb_crashytics}"
-    implementation "com.google.firebase:firebase-config-ktx:${versions.fb_config}"
+    implementation platform("com.google.firebase:firebase-bom:${versions.firebase_bom}")
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-config-ktx'
 
     // Play Services
     implementation "com.google.android.play:core:${versions.play_core}"
@@ -149,10 +150,10 @@ dependencies {
 }
 
 play {
-    serviceAccountCredentials = file("play-key.json")
-    track = "alpha"
-    fromTrack = "alpha"
-    promoteTrack = "beta"
-    defaultToAppBundles = true
-    resolutionStrategy = "auto"
+    serviceAccountCredentials.set(file("play-key.json"))
+    track.set("alpha")
+    fromTrack.set("alpha")
+    promoteTrack.set("beta")
+    defaultToAppBundles.set(true)
+    //resolutionStrategy.set(ResolutionStrategy.AUTO)
 }

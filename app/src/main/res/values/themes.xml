@@ -61,13 +61,14 @@
 
     <style name="Theme.CIS.Sing" parent="Theme.CIS.Main">
         <item name="android:navigationBarColor">@color/color_navigation_bar_sing</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">
-            @bool/window_light_system_bar
-        </item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">false</item>
     </style>
 
-    <style name="Theme.CIS.Present">
+    <style name="Theme.CIS.Present"/>
 
+    <style name="Theme.CIS.Picker">
+        <item name="colorPrimary">@color/color_background</item>
+        <item name="colorOnPrimary">@color/color_on_surface</item>
     </style>
 
     <style name="ThemeOverlay.CIS.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.Light.BottomSheetDialog">
