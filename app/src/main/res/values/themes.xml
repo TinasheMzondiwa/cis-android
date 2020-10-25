@@ -66,6 +66,11 @@
 
     <style name="Theme.CIS.Present"/>
 
+    <style name="Theme.CIS.Picker">
+        <item name="colorPrimary">@color/color_background</item>
+        <item name="colorOnPrimary">@color/color_on_surface</item>
+    </style>
+
     <style name="ThemeOverlay.CIS.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowSoftInputMode">adjustResize</item>

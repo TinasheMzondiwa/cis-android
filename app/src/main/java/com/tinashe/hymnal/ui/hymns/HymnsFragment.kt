@@ -13,7 +13,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
@@ -38,13 +37,7 @@ class HymnsFragment : Fragment() {
     private var binding: FragmentHymnsBinding? = null
 
     private val listAdapter: HymnListAdapter = HymnListAdapter { pair ->
-        val intent = SingHymnsActivity.singIntent(requireContext(), pair.first.hymnId)
-        val options = ActivityOptions.makeSceneTransitionAnimation(
-            requireActivity(),
-            pair.second,
-            getString(R.string.transition_shared_element)
-        )
-        requireActivity().startActivity(intent, options.toBundle())
+        openSelectedHymn(pair.first.hymnId, pair.second)
     }
 
     private var appBarBehaviour: AppBarBehaviour? = null
@@ -74,7 +67,7 @@ class HymnsFragment : Fragment() {
 
         viewModel.showHymnalsPromptLiveData.observe(
             viewLifecycleOwner,
-            Observer {
+            {
                 showHymnalsTargetPrompt()
             }
         )
@@ -84,8 +77,14 @@ class HymnsFragment : Fragment() {
                 progressBar.isVisible = it == Status.LOADING
             }
         }
+        viewModel.messageLiveData.observeNonNull(viewLifecycleOwner) {
+            binding?.snackbar?.show(messageText = it)
+        }
         viewModel.hymnalTitleLiveData.observeNonNull(viewLifecycleOwner) {
             appBarBehaviour?.setAppBarTitle(it)
+        }
+        viewModel.selectedHymnIdLiveData.observeNonNull(viewLifecycleOwner) {
+            openSelectedHymn(it)
         }
         viewModel.hymnListLiveData.observeNonNull(viewLifecycleOwner) { hymns ->
             listAdapter.submitList(ArrayList(hymns))
@@ -98,6 +97,18 @@ class HymnsFragment : Fragment() {
             ?.observeNonNull(viewLifecycleOwner) {
                 viewModel.hymnalSelected(it)
             }
+    }
+
+    private fun openSelectedHymn(hymnId: Int, animView: View? = null) {
+        val intent = SingHymnsActivity.singIntent(requireContext(), hymnId)
+        animView?.let {
+            val options = ActivityOptions.makeSceneTransitionAnimation(
+                requireActivity(),
+                it,
+                getString(R.string.transition_shared_element)
+            )
+            requireActivity().startActivity(intent, options.toBundle())
+        } ?: startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -132,6 +143,13 @@ class HymnsFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.actions_number -> {
+                val fragment = PickHymnFragment.newInstance { number ->
+                    viewModel.hymnNumberSelected(requireContext(), number)
+                }
+                fragment.show(childFragmentManager, fragment.tag)
+                true
+            }
             R.id.actions_hymnals -> {
                 with(findNavController()) {
                     if (currentDestination?.id == R.id.navigation_hymns) {

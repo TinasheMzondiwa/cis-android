@@ -1,10 +1,12 @@
 package com.tinashe.hymnal.ui.hymns
 
+import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.data.model.constants.Status
@@ -28,8 +30,14 @@ class HymnsViewModel @ViewModelInject constructor(
     private val mutableViewState = SingleLiveEvent<Status>()
     val statusLiveData: LiveData<Status> = mutableViewState.asLiveData()
 
+    private val mutableMessage = SingleLiveEvent<String>()
+    val messageLiveData: LiveData<String> = mutableMessage.asLiveData()
+
     private val mutableHymnal = MutableLiveData<String>()
     val hymnalTitleLiveData: LiveData<String> = mutableHymnal.asLiveData()
+
+    private val mutableSelectedHymnId = SingleLiveEvent<Int>()
+    val selectedHymnIdLiveData: LiveData<Int> = mutableSelectedHymnId.asLiveData()
 
     private val mutableHymnsList: MutableLiveData<List<Hymn>> by lazy {
         MutableLiveData<List<Hymn>>().also {
@@ -40,6 +48,14 @@ class HymnsViewModel @ViewModelInject constructor(
 
     fun hymnalSelected(hymnal: Hymnal) {
         fetchData(hymnal)
+    }
+
+    fun hymnNumberSelected(context: Context, number: Int) {
+        val hymns = mutableHymnsList.value ?: return
+
+        hymns.firstOrNull { it.number == number }?.let {
+            mutableSelectedHymnId.postValue(it.hymnId)
+        } ?: mutableMessage.postValue(context.getString(R.string.error_invalid_number, number))
     }
 
     private fun fetchData(hymnal: Hymnal? = null) {

@@ -8,6 +8,11 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="collapseActionView|ifRoom" />
     <item
+        android:id="@+id/actions_number"
+        android:icon="@drawable/ic_menu_dialpad"
+        android:title="@string/title_number"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/actions_hymnals"
         android:icon="@drawable/ic_bookshelf"
         android:title="@string/title_hymnals"
