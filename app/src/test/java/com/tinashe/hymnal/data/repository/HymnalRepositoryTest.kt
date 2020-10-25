@@ -1,7 +1,6 @@
 package com.tinashe.hymnal.data.repository
 
 import android.content.Context
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.squareup.moshi.Moshi
 import com.tinashe.hymnal.data.db.dao.CollectionsDao
 import com.tinashe.hymnal.data.db.dao.HymnsDao
@@ -16,13 +15,11 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
 
-@RunWith(AndroidJUnit4::class)
 internal class HymnalRepositoryTest {
 
     @get:Rule

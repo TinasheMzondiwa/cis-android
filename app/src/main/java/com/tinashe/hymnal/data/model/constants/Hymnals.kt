@@ -1,17 +1,25 @@
 package com.tinashe.hymnal.data.model.constants
 
-enum class Hymnals(val key: String) {
+import androidx.annotation.RawRes
+import com.tinashe.hymnal.R
 
-    ENGLISH("english"),
-    TSWANA("tswana"),
-    SOTHO("sotho"),
-    CHICHEWA("chichewa"),
-    TONGA("tonga"),
-    SHONA("shona"),
-    VENDA("venda"),
-    SWAHILI("swahili"),
-    NDEBELE("ndebele"),
-    XHOSA("xhosa");
+enum class Hymnals(
+    val key: String,
+    val title: String,
+    val language: String,
+    @RawRes val resId: Int
+) {
+
+    ENGLISH("english", "Christ In Song", "English", R.raw.english),
+    TSWANA("tswana", "Keresete Mo Kopelong", "Tswana", R.raw.tswana),
+    SOTHO("sotho", "Keresete Pineng", "Sotho", R.raw.sotho),
+    CHICHEWA("chichewa", "Khristu Mu Nyimbo", "Chichewa", R.raw.chichewa),
+    TONGA("tonga", "Kristu Mu Nyimbo", "Tonga", R.raw.tonga),
+    SHONA("shona", "Kristu MuNzwiyo", "Shona", R.raw.shona),
+    VENDA("venda", "Ngosha YaDzingosha", "Venda", R.raw.venda),
+    SWAHILI("swahili", "Nyimbo Za Kristo", "Swahili", R.raw.swahili),
+    NDEBELE("ndebele", "UKrestu Esihlabelelweni", "Ndebele/IsiZulu", R.raw.ndebele),
+    XHOSA("xhosa", "UKristu Engomeni", "IsiXhosa", R.raw.xhosa);
 
     companion object {
         private val map = values().associateBy(Hymnals::key)
