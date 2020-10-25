@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentPickerBinding
 
 class PickHymnFragment : BottomSheetDialogFragment() {
@@ -17,14 +18,12 @@ class PickHymnFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return FragmentPickerBinding.inflate(inflater, container, false)
-            .also {
-                binding = it
-            }.root
+        return inflater.inflate(R.layout.fragment_picker, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentPickerBinding.bind(view)
         binding?.numberPadView?.setOnNumSelectedCallback {
             hymnCallback?.invoke(it)
             dismiss()

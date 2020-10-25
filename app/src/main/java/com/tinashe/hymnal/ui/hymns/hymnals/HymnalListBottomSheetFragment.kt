@@ -43,17 +43,13 @@ class HymnalListBottomSheetFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return HymnalListBottomSheetFragmentBinding.inflate(
-            inflater,
-            container,
-            false
-        ).also {
-            binding = it
-        }.root
+        return inflater.inflate(R.layout.hymnal_list_bottom_sheet_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = HymnalListBottomSheetFragmentBinding.bind(view)
+
         viewModel.hymnalListLiveData.observeNonNull(viewLifecycleOwner) {
             binding?.progressBar?.isVisible = false
             listAdapter.submitList(ArrayList(it))

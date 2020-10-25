@@ -2,12 +2,10 @@ package com.tinashe.hymnal.ui.support
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
@@ -21,7 +19,7 @@ import com.tinashe.hymnal.utils.Helper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SupportFragment : Fragment() {
+class SupportFragment : Fragment(R.layout.fragment_support) {
 
     private val viewModel: SupportViewModel by viewModels()
 
@@ -32,26 +30,19 @@ class SupportFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return FragmentSupportBinding.inflate(inflater, container, false).also {
-            binding = it
-            binding?.apply {
-                tvPolicy.setOnClickListener {
-                    Helper.launchWebUrl(requireContext(), getString(R.string.app_privacy_policy))
-                }
-                tvTerms.setOnClickListener {
-                    Helper.launchWebUrl(requireContext(), getString(R.string.app_terms))
-                }
-            }
-        }.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding = FragmentSupportBinding.bind(view)
+        binding?.apply {
+            tvPolicy.setOnClickListener {
+                Helper.launchWebUrl(requireContext(), getString(R.string.app_privacy_policy))
+            }
+            tvTerms.setOnClickListener {
+                Helper.launchWebUrl(requireContext(), getString(R.string.app_terms))
+            }
+        }
+
         viewModel.purchaseResultLiveData.observeNonNull(viewLifecycleOwner) { pair ->
             binding?.apply {
                 chipGroupInApp.clearCheck()

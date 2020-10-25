@@ -3,12 +3,10 @@ package com.tinashe.hymnal.ui.hymns
 import android.app.ActivityOptions
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -30,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 
 @AndroidEntryPoint
-class HymnsFragment : Fragment() {
+class HymnsFragment : Fragment(R.layout.fragment_hymns) {
 
     private val viewModel: HymnsViewModel by viewModels()
 
@@ -48,22 +46,14 @@ class HymnsFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return FragmentHymnsBinding.inflate(inflater, container, false).also {
-            binding = it
-            binding?.hymnsListView?.apply {
-                addItemDecoration(DividerItemDecoration(context, VERTICAL))
-                adapter = listAdapter
-            }
-        }.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding = FragmentHymnsBinding.bind(view)
+        binding?.hymnsListView?.apply {
+            addItemDecoration(DividerItemDecoration(context, VERTICAL))
+            adapter = listAdapter
+        }
 
         viewModel.showHymnalsPromptLiveData.observe(
             viewLifecycleOwner,
