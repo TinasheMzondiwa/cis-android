@@ -17,7 +17,7 @@ data class RemoteHymn(
         book = book,
         number = number,
         title = title,
-        content = content,
+        content = if (content.contains(title)) content else "<h3>$title</h3>$content",
         majorKey = "",
         editedContent = null
     )
