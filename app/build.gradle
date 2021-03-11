@@ -1,12 +1,15 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'dagger.hilt.android.plugin'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: "androidx.navigation.safeargs.kotlin"
-apply plugin: 'com.google.firebase.crashlytics'
-apply plugin: 'com.github.triplet.play'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
+    id "androidx.navigation.safeargs.kotlin"
+    id 'com.google.firebase.crashlytics'
+    id 'com.github.triplet.play'
+}
+
 apply from: "$rootDir/gradle/helpers/common-methods.gradle"
 
 Properties semver = new Properties()
