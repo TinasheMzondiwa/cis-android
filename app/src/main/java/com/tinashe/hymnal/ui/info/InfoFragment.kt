@@ -23,7 +23,7 @@ class InfoFragment : Fragment(R.layout.fragment_info) {
             }
             tvBuildVersion.text = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
             tvShareApp.setOnClickListener {
-                ShareCompat.IntentBuilder.from(requireActivity())
+                ShareCompat.IntentBuilder(requireActivity())
                     .setType("text/plain")
                     .setText(
                         getString(
@@ -41,6 +41,9 @@ class InfoFragment : Fragment(R.layout.fragment_info) {
             }
             tvTwitter.setOnClickListener {
                 Helper.launchWebUrl(requireContext(), getString(R.string.app_twitter))
+            }
+            tvReview.setOnClickListener {
+                Helper.launchWebUrl(requireContext(), getString(R.string.app_link))
             }
         }
     }
