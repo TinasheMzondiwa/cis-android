@@ -36,7 +36,7 @@ buildscript {
     versions.play_core_ktx = '1.8.1'
 
     // testing
-    versions.junit = '4.13.1'
+    versions.junit = '4.13.2'
     versions.mockito = '3.8.0'
     versions.androidx_testing = '2.1.0'
     versions.androidx_junit = '1.1.2'
