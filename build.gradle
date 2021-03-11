@@ -10,7 +10,7 @@ buildscript {
     versions.targetSdk = 30
     versions.compileSdk = 30
     versions.kotlin = '1.4.10'
-    versions.material = '1.3.0-alpha03'
+    versions.material = '1.4.0-alpha01'
     versions.ktx = '1.3.2'
     versions.appcompat = '1.3.0-alpha02'
     versions.lifecycle = '2.2.0'
