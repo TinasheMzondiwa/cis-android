@@ -97,7 +97,7 @@ dependencies {
     implementation "com.google.android.material:material:${versions.material}"
     implementation "androidx.constraintlayout:constraintlayout:${versions.const_layout}"
     implementation "androidx.recyclerview:recyclerview:${versions.recyclerview}"
-    implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle_ext}"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
     implementation "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}"
@@ -117,19 +117,13 @@ dependencies {
 
     // Dagger
     implementation "com.google.dagger:hilt-android:${versions.hilt}"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$versions.hilt_androidx"
     kapt "com.google.dagger:hilt-android-compiler:${versions.hilt}"
-    kapt "androidx.hilt:hilt-compiler:$versions.hilt_androidx"
 
     // Firebase
     implementation platform("com.google.firebase:firebase-bom:${versions.firebase_bom}")
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-config-ktx'
-
-    // Play Services
-    implementation "com.google.android.play:core:${versions.play_core}"
-    implementation "com.google.android.play:core-ktx:${versions.play_core_ktx}"
 
     implementation "com.squareup.moshi:moshi-kotlin:${versions.moshi}"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:${versions.moshi}"
@@ -143,7 +137,7 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$versions.mockito"
     testImplementation "org.mockito:mockito-inline:$versions.mockito"
     testImplementation "androidx.arch.core:core-testing:$versions.androidx_testing"
-    testImplementation "org.amshove.kluent:kluent-android:$versions.kfluent"
+    testImplementation "org.amshove.kluent:kluent-android:$versions.kluent"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutines}"
     testImplementation "androidx.test.ext:junit:$versions.androidx_junit"
     testImplementation "org.robolectric:robolectric:$versions.robolectric"
