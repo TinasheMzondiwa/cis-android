@@ -1,7 +1,6 @@
 package com.tinashe.hymnal.ui.hymns.sing
 
 import androidx.core.os.bundleOf
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,10 +12,13 @@ import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.data.repository.HymnalRepository
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SingHymnsViewModel @ViewModelInject constructor(
+@HiltViewModel
+class SingHymnsViewModel @Inject constructor(
     private val repository: HymnalRepository,
     private val firebaseAnalytics: FirebaseAnalytics
 ) : ViewModel() {
@@ -30,23 +32,21 @@ class SingHymnsViewModel @ViewModelInject constructor(
     private val mutableHymnsList = MutableLiveData<List<Hymn>>()
     val hymnListLiveData: LiveData<List<Hymn>> get() = mutableHymnsList.asLiveData()
 
-    fun loadData(collectionId: Int) {
-        viewModelScope.launch {
-            if (collectionId == -1) {
-                repository.getHymns().collectLatest { resource ->
-                    mutableViewState.postValue(resource.status)
-                    resource.data?.let {
-                        mutableHymnsList.postValue(it.hymns)
-                        mutableHymnal.postValue(it.title)
-                    }
-                }
-            } else {
-                val resource = repository.getCollection(collectionId)
+    fun loadData(collectionId: Int) = viewModelScope.launch {
+        if (collectionId == -1) {
+            repository.getHymns().collectLatest { resource ->
                 mutableViewState.postValue(resource.status)
                 resource.data?.let {
                     mutableHymnsList.postValue(it.hymns)
-                    mutableHymnal.postValue(it.collection.title)
+                    mutableHymnal.postValue(it.title)
                 }
+            }
+        } else {
+            val resource = repository.getCollection(collectionId)
+            mutableViewState.postValue(resource.status)
+            resource.data?.let {
+                mutableHymnsList.postValue(it.hymns)
+                mutableHymnal.postValue(it.collection.title)
             }
         }
     }

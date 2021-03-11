@@ -2,7 +2,6 @@ package com.tinashe.hymnal.ui.support
 
 import android.app.Activity
 import androidx.annotation.StringRes
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,11 +26,14 @@ import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-class SupportViewModel @ViewModelInject constructor() :
+@HiltViewModel
+class SupportViewModel @Inject constructor() :
     ViewModel(),
     PurchasesUpdatedListener,
     BillingClientStateListener {
@@ -71,7 +73,9 @@ class SupportViewModel @ViewModelInject constructor() :
     override fun onPurchasesUpdated(result: BillingResult, purchases: MutableList<Purchase>?) {
         if (result.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
             purchases.forEach { purchase ->
-                handlePurchase(purchase)
+                if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
+                    handlePurchase(purchase)
+                }
                 mutablePurchaseResult.postValue(Status.SUCCESS to R.string.success_purchase)
             }
         } else if (result.responseCode == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
@@ -82,19 +86,17 @@ class SupportViewModel @ViewModelInject constructor() :
     }
 
     private fun handlePurchase(purchase: Purchase) {
-        if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
-            if (!purchase.isAcknowledged) {
-                val params = AcknowledgePurchaseParams.newBuilder()
+        if (!purchase.isAcknowledged) {
+            val params = AcknowledgePurchaseParams.newBuilder()
+                .setPurchaseToken(purchase.purchaseToken)
+                .build()
+            val consumeParams =
+                ConsumeParams.newBuilder()
                     .setPurchaseToken(purchase.purchaseToken)
                     .build()
-                val consumeParams =
-                    ConsumeParams.newBuilder()
-                        .setPurchaseToken(purchase.purchaseToken)
-                        .build()
-                viewModelScope.launch(Dispatchers.IO) {
-                    billingClient?.acknowledgePurchase(params)
-                    billingClient?.consumePurchase(consumeParams)
-                }
+            viewModelScope.launch(Dispatchers.IO) {
+                billingClient?.acknowledgePurchase(params)
+                billingClient?.consumePurchase(consumeParams)
             }
         }
     }
@@ -124,32 +126,32 @@ class SupportViewModel @ViewModelInject constructor() :
 
         viewModelScope.launch(Dispatchers.IO) {
             val result = billingClient?.querySkuDetails(params)
-            val products = if (result?.billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
-                result.skuDetailsList?.sortedBy { it.priceAmountMicros }
-            } else {
-                Timber.e(result?.billingResult?.debugMessage)
-                emptyList()
-            }
+            val products =
+                if (result?.billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
+                    result.skuDetailsList?.sortedBy { it.priceAmountMicros }
+                } else {
+                    Timber.e(result?.billingResult?.debugMessage)
+                    emptyList()
+                }
             mutableInAppProducts.postValue(products)
         }
     }
 
-    private fun queryRecurringDonations() {
+    private fun queryRecurringDonations() = viewModelScope.launch(Dispatchers.IO) {
         val params = SkuDetailsParams.newBuilder()
             .setSkusList(subscriptions)
             .setType(BillingClient.SkuType.SUBS)
             .build()
 
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = billingClient?.querySkuDetails(params)
-            val subs = if (result?.billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
+        val result = billingClient?.querySkuDetails(params)
+        val subs =
+            if (result?.billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
                 result.skuDetailsList
             } else {
                 Timber.e(result?.billingResult?.debugMessage)
                 emptyList()
             }
-            mutableSubscriptions.postValue(subs)
-        }
+        mutableSubscriptions.postValue(subs)
     }
 
     private fun queryPurchases() {

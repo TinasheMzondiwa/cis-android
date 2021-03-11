@@ -1,6 +1,5 @@
 package com.tinashe.hymnal.ui.collections.list
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,9 +10,12 @@ import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.data.repository.HymnalRepository
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CollectionHymnsViewModel @ViewModelInject constructor(
+@HiltViewModel
+class CollectionHymnsViewModel @Inject constructor(
     private val repository: HymnalRepository
 ) : ViewModel() {
 
@@ -29,15 +31,13 @@ class CollectionHymnsViewModel @ViewModelInject constructor(
     private var collectionHymns: CollectionHymns? = null
     private var hymnToDelete: Pair<Int, Hymn>? = null
 
-    fun loadData(collectionId: Int) {
-        viewModelScope.launch {
-            val resource = repository.getCollection(collectionId)
-            mutableViewState.postValue(resource.status)
-            resource.data?.let {
-                mutableHymnsList.postValue(it.hymns)
-                mutableCollection.postValue(it.collection.title)
-                collectionHymns = it
-            }
+    fun loadData(collectionId: Int) = viewModelScope.launch {
+        val resource = repository.getCollection(collectionId)
+        mutableViewState.postValue(resource.status)
+        resource.data?.let {
+            mutableHymnsList.postValue(it.hymns)
+            mutableCollection.postValue(it.collection.title)
+            collectionHymns = it
         }
     }
 
