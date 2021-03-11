@@ -2,8 +2,6 @@ package com.tinashe.hymnal.data.di
 
 import android.app.Application
 import android.content.Context
-import com.google.android.play.core.review.ReviewManager
-import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
@@ -39,9 +37,6 @@ object HymnalModule {
             it.fetchAndActivate()
         }
     }
-
-    @Provides
-    fun provideReviewManager(context: Context): ReviewManager = ReviewManagerFactory.create(context)
 
     @Provides
     fun provideConfig(remoteConfig: FirebaseRemoteConfig, moshi: Moshi): DonationsConfig {
