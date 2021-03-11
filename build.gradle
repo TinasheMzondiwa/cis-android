@@ -24,7 +24,7 @@ buildscript {
     versions.coroutines = '1.3.9'
     versions.timber = '4.7.1'
     versions.room = '2.3.0-alpha03'
-    versions.hilt = '2.29.1-alpha'
+    versions.hilt = '2.33-beta'
     versions.hilt_androidx = '1.0.0-alpha02'
     versions.moshi = '1.9.3'
     versions.firebase_bom = '25.12.0'
