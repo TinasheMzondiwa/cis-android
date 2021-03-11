@@ -51,4 +51,6 @@
     <dimen name="snackbar_margin_end_fab">0dp</dimen>
     <dimen name="snackbar_margin_bottom">128dp</dimen>
 
+    <dimen name="info_content_horizontal_margin">@dimen/spacing_medium_large</dimen>
+
 </resources>
