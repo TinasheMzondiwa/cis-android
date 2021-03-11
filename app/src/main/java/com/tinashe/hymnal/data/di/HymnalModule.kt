@@ -11,6 +11,7 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tinashe.hymnal.data.model.cfg.DonationsConfig
+import com.tinashe.hymnal.extensions.coroutines.SchedulerProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,4 +50,7 @@ object HymnalModule {
             jsonAdapter.fromJson(jsonString) ?: DonationsConfig()
         }
     }
+
+    @Provides
+    fun provideSchedulers(): SchedulerProvider = SchedulerProvider()
 }
