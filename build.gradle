@@ -25,7 +25,7 @@ buildscript {
     versions.timber = '4.7.1'
     versions.room = '2.3.0-beta03'
     versions.hilt = '2.33-beta'
-    versions.hilt_androidx = '1.0.0-alpha02'
+    versions.hilt_androidx = '1.0.0-alpha03'
     versions.moshi = '1.9.3'
     versions.firebase_bom = '26.6.0'
     versions.ktlint = '0.37.1'
