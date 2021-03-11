@@ -37,7 +37,7 @@ buildscript {
 
     // testing
     versions.junit = '4.13.1'
-    versions.mockito = '3.5.13'
+    versions.mockito = '3.8.0'
     versions.androidx_testing = '2.1.0'
     versions.androidx_junit = '1.1.2'
     versions.kfluent = '1.61'
