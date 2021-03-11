@@ -1,0 +1,14 @@
+ci:
+  - '.github/*'
+core:
+  - 'app/src/main/java/*'
+hymnals:
+  - 'app/src/main/res/raw/*'
+dependencies:
+  - 'buildSrc/src/main/kotlin/dependencies/*'
+test:
+  - any: ['*/src/test/*','*/src/androidTest/*']
+gradle:
+  - all: ['*.gradle.kts', '*.gradle']
+layouts:
+  - any: ['*.xml']
