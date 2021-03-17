@@ -18,15 +18,12 @@ class PresentHymnActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPresentHymnBinding
 
-    private val pagerAdapter: PresentPagerAdapter by lazy { PresentPagerAdapter(this) }
-
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPresentHymnBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.viewPager.adapter = pagerAdapter
         binding.btnExit.setOnClickListener { finish() }
 
         toggleHideyBar()
@@ -36,7 +33,8 @@ class PresentHymnActivity : AppCompatActivity() {
             finish()
             return
         }
-        pagerAdapter.presentHymn(hymn)
+        val pagerAdapter = PresentPagerAdapter(this, hymn)
+        binding.viewPager.adapter = pagerAdapter
     }
 
     /**

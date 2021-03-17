@@ -6,22 +6,21 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.tinashe.hymnal.data.model.Hymn
 
-class PresentPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
+class PresentPagerAdapter(
+    fragment: FragmentActivity,
+    hymn: Hymn
+) : FragmentStateAdapter(fragment) {
 
-    private var hymnVerses = emptyList<String>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    private val hymnVerses: List<String>
 
-    fun presentHymn(hymn: Hymn) {
+    init {
         val verses = ((hymn.editedContent ?: hymn.content).parseAsHtml()).split("\n\n")
         val chorus = verses.find { it.contains("CHORUS", true) }
         val parsed = arrayListOf<String>()
         verses.forEachIndexed { index, verse ->
             if (verse.isEmpty()) return@forEachIndexed
             parsed.add(verse)
-            if (index > 2 && !chorus.isNullOrEmpty()) {
+            if (index > 2 && !chorus.isNullOrEmpty() && verse != chorus) {
                 parsed.add(chorus)
             }
         }
