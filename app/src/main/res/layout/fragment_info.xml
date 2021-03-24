@@ -21,96 +21,126 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingHorizontal="@dimen/spacing_medium"
             android:paddingVertical="@dimen/spacing_list">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@string/blank"
-                android:src="@mipmap/ic_launcher_round" />
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="@dimen/spacing_normal"
+                app:cardElevation="@dimen/spacing_micro">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/blank"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/cis" />
+            </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_large"
-                android:layout_weight="1"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="@string/app_full_name"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     app:fontFamily="@font/proxima_nova_soft_bold" />
 
                 <TextView
                     android:id="@+id/tvBuildVersion"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:paddingVertical="@dimen/spacing_micro"
                     android:textAppearance="?attr/textAppearanceCaption"
                     tools:text="v3.0.0(300)" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_developer"
-                    android:textAppearance="?attr/textAppearanceBody2" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <View
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@drawable/list_divider" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/info_content_horizontal_margin"
+            android:layout_marginVertical="@dimen/spacing_medium_large">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvViewSource"
+                    style="@style/InfoLine"
+                    android:text="@string/view_source_code"
+                    app:drawableStartCompat="@drawable/github" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@drawable/list_divider" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTwitter"
+                    style="@style/InfoLine"
+                    android:text="@string/twitter"
+                    app:drawableStartCompat="@drawable/twitter" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@drawable/list_divider" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvFeedback"
+                    style="@style/InfoLine"
+                    android:text="@string/support_or_feedback"
+                    app:drawableStartCompat="@drawable/ic_help" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@drawable/list_divider" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvShareApp"
+                    style="@style/InfoLine"
+                    android:text="@string/share_this_app"
+                    app:drawableStartCompat="@drawable/ic_share" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@drawable/list_divider" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvReview"
+                    style="@style/InfoLine"
+                    android:text="@string/write_review"
+                    app:drawableStartCompat="@drawable/google_play" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvShareApp"
-            style="@style/InfoLine"
-            android:text="@string/share_this_app"
-            app:drawableStartCompat="@drawable/ic_share" />
-
-        <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@drawable/list_divider" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvFeedback"
-            style="@style/InfoLine"
-            android:text="@string/support_or_feedback"
-            app:drawableStartCompat="@drawable/ic_help" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@drawable/list_divider" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvViewSource"
-            style="@style/InfoLine"
-            android:text="@string/view_source_code"
-            app:drawableStartCompat="@drawable/github" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@drawable/list_divider" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTwitter"
-            style="@style/InfoLine"
-            android:text="@string/twitter"
-            app:drawableStartCompat="@drawable/twitter" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@drawable/list_divider" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:lineSpacingExtra="@dimen/spacing_micro"
+            android:paddingHorizontal="@dimen/spacing_xlarge"
+            android:text="@string/app_info"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceCaption" />
 
     </LinearLayout>
 

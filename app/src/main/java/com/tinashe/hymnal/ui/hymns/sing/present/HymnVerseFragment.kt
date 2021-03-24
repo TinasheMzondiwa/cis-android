@@ -9,13 +9,11 @@ import com.tinashe.hymnal.databinding.FragmentHymnVerseBinding
 
 class HymnVerseFragment : Fragment(R.layout.fragment_hymn_verse) {
 
-    private var binding: FragmentHymnVerseBinding? = null
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentHymnVerseBinding.bind(view)
+        val binding = FragmentHymnVerseBinding.bind(view)
         val verse = arguments?.getString(ARG_VERSE)
-        binding?.verseText?.text = verse
+        binding.verseText.text = verse
     }
 
     companion object {

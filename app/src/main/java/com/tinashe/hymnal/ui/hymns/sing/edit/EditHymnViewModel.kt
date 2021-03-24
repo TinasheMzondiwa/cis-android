@@ -1,6 +1,5 @@
 package com.tinashe.hymnal.ui.hymns.sing.edit
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,9 +9,12 @@ import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.data.repository.HymnalRepository
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EditHymnViewModel @ViewModelInject constructor(
+@HiltViewModel
+class EditHymnViewModel @Inject constructor(
     private val repository: HymnalRepository
 ) : ViewModel() {
 

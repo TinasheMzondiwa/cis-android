@@ -1,6 +1,5 @@
 package com.tinashe.hymnal.ui.hymns.hymnals
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,8 +8,11 @@ import com.tinashe.hymnal.data.model.constants.HymnalSort
 import com.tinashe.hymnal.data.repository.HymnalRepository
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HymnalListViewModel @ViewModelInject constructor(
+@HiltViewModel
+class HymnalListViewModel @Inject constructor(
     private val repository: HymnalRepository,
     private val prefs: HymnalPrefs
 ) : ViewModel() {

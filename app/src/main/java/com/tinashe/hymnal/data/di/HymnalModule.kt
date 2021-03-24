@@ -2,8 +2,6 @@ package com.tinashe.hymnal.data.di
 
 import android.app.Application
 import android.content.Context
-import com.google.android.play.core.review.ReviewManager
-import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
@@ -13,6 +11,7 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tinashe.hymnal.data.model.cfg.DonationsConfig
+import com.tinashe.hymnal.extensions.coroutines.SchedulerProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,9 +40,6 @@ object HymnalModule {
     }
 
     @Provides
-    fun provideReviewManager(context: Context): ReviewManager = ReviewManagerFactory.create(context)
-
-    @Provides
     fun provideConfig(remoteConfig: FirebaseRemoteConfig, moshi: Moshi): DonationsConfig {
         val jsonString = remoteConfig.getString("cfg_donations")
         return if (jsonString.isEmpty()) {
@@ -54,4 +50,7 @@ object HymnalModule {
             jsonAdapter.fromJson(jsonString) ?: DonationsConfig()
         }
     }
+
+    @Provides
+    fun provideSchedulers(): SchedulerProvider = SchedulerProvider()
 }

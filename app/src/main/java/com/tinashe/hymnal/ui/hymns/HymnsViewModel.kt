@@ -1,7 +1,6 @@
 package com.tinashe.hymnal.ui.hymns
 
 import android.content.Context
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,12 +13,15 @@ import com.tinashe.hymnal.data.repository.HymnalRepository
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class HymnsViewModel @ViewModelInject constructor(
+@HiltViewModel
+class HymnsViewModel @Inject constructor(
     private val repository: HymnalRepository,
     private val prefs: HymnalPrefs
 ) : ViewModel() {
@@ -58,29 +60,25 @@ class HymnsViewModel @ViewModelInject constructor(
         } ?: mutableMessage.postValue(context.getString(R.string.error_invalid_number, number))
     }
 
-    private fun fetchData(hymnal: Hymnal? = null) {
-        viewModelScope.launch {
-            repository.getHymns(hymnal).collectLatest { resource ->
-                mutableViewState.postValue(resource.status)
-                mutableHymnsList.postValue(resource.data?.hymns ?: emptyList())
-                resource.data?.title?.let {
-                    mutableHymnal.postValue(it)
+    private fun fetchData(hymnal: Hymnal? = null) = viewModelScope.launch {
+        repository.getHymns(hymnal).collectLatest { resource ->
+            mutableViewState.postValue(resource.status)
+            mutableHymnsList.postValue(resource.data?.hymns ?: emptyList())
+            resource.data?.title?.let {
+                mutableHymnal.postValue(it)
 
-                    if (!prefs.isHymnalPromptSeen()) {
-                        withContext(Dispatchers.Main) {
-                            mutableShowHymnalsPrompt.call()
-                        }
+                if (!prefs.isHymnalPromptSeen()) {
+                    withContext(Dispatchers.Main) {
+                        mutableShowHymnalsPrompt.call()
                     }
                 }
             }
         }
     }
 
-    fun performSearch(query: String?) {
-        viewModelScope.launch {
-            val results = repository.searchHymns(query)
-            mutableHymnsList.postValue(results)
-        }
+    fun performSearch(query: String?) = viewModelScope.launch {
+        val results = repository.searchHymns(query)
+        mutableHymnsList.postValue(results)
     }
 
     fun hymnalsPromptShown() {

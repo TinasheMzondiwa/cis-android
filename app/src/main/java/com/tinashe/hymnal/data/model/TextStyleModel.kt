@@ -4,7 +4,7 @@ import android.os.Parcelable
 import androidx.annotation.FontRes
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.constants.UiPref
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class TextStyleModel(

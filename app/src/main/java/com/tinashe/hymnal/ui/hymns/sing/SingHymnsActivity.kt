@@ -232,9 +232,9 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
             R.id.action_fullscreen -> {
                 pagerAdapter?.hymns
                     ?.get(binding.viewPager.currentItem)?.let {
-                    val intent = PresentHymnActivity.launchIntent(this, it)
-                    startActivity(intent)
-                }
+                        val intent = PresentHymnActivity.launchIntent(this, it)
+                        startActivity(intent)
+                    }
                 true
             }
             R.id.actions_hymnals -> {

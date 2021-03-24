@@ -32,11 +32,19 @@ class ScrollAwareFABBehavior(context: Context, attrs: AttributeSet) :
         dyConsumed: Int,
         dxUnconsumed: Int,
         dyUnconsumed: Int,
-        type: Int
+        type: Int,
+        consumed: IntArray
     ) {
         super.onNestedScroll(
-            coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed,
-            dyUnconsumed, type
+            coordinatorLayout,
+            child,
+            target,
+            dxConsumed,
+            dyConsumed,
+            dxUnconsumed,
+            dyUnconsumed,
+            type,
+            consumed
         )
 
         if (dyConsumed > 0 && child.visibility == View.VISIBLE) {

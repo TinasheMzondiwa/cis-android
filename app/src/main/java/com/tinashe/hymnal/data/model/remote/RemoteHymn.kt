@@ -3,7 +3,7 @@ package com.tinashe.hymnal.data.model.remote
 import android.os.Parcelable
 import com.squareup.moshi.JsonClass
 import com.tinashe.hymnal.data.model.Hymn
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 @Parcelize
@@ -17,7 +17,7 @@ data class RemoteHymn(
         book = book,
         number = number,
         title = title,
-        content = content,
+        content = if (content.contains(title)) content else "<h3>$title</h3>$content",
         majorKey = "",
         editedContent = null
     )
