@@ -7,7 +7,6 @@ plugins {
     id 'com.google.gms.google-services'
     id "androidx.navigation.safeargs.kotlin"
     id 'com.google.firebase.crashlytics'
-    id 'com.github.triplet.play'
 }
 
 apply from: "$rootDir/gradle/helpers/common-methods.gradle"
@@ -87,8 +86,6 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
-
     // Androidx
     implementation "androidx.core:core-ktx:${versions.ktx}"
     implementation "androidx.appcompat:appcompat:${versions.appcompat}"
@@ -142,13 +139,4 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$versions.androidx_junit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso"
 
-}
-
-play {
-    serviceAccountCredentials.set(file("play-key.json"))
-    track.set("alpha")
-    fromTrack.set("alpha")
-    promoteTrack.set("beta")
-    defaultToAppBundles.set(true)
-    //resolutionStrategy.set(ResolutionStrategy.AUTO)
 }
