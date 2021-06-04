@@ -20,7 +20,11 @@ enum class Hymnals(
     SWAHILI("swahili", "Nyimbo Za Kristo", "Swahili", R.raw.swahili),
     NDEBELE("ndebele", "UKrestu Esihlabelelweni", "Ndebele/IsiZulu", R.raw.ndebele),
     XHOSA("xhosa", "UKristu Engomeni", "IsiXhosa", R.raw.xhosa),
-    XITSONGA("xitsonga", "Risima Ra Vuyimbeleri", "Xitsonga", R.raw.xitsonga);
+    XITSONGA("xitsonga", "Risima Ra Vuyimbeleri", "Xitsonga", R.raw.xitsonga),
+    GIKUYU("gikuyu", "Nyimbo cia Agendi", "Kikuyu", R.raw.gikuyu),
+    ABAGUSII("abagusii", "Ogotera kw'ogotogia Nyasae", "Abagusii", R.raw.abagusii),
+    DHOLUO("dholuo", "Wende Nyasaye", "Dholuo", R.raw.dholuo),
+    ENGLISH1("english1", "SDA Hymnal", "English", R.raw.sdah);
 
     companion object {
         private val map = values().associateBy(Hymnals::key)
