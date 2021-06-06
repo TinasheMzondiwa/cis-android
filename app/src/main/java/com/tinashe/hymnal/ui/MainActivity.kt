@@ -9,6 +9,7 @@ import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.cfg.DonationsConfig
 import com.tinashe.hymnal.databinding.ActivityMainBinding
 import com.tinashe.hymnal.extensions.activity.applyExitMaterialTransform
+import com.tinashe.hymnal.extensions.view.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity(), AppBarBehaviour {
     @Inject
     lateinit var config: DonationsConfig
 
-    private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val binding by viewBinding(ActivityMainBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         applyExitMaterialTransform()

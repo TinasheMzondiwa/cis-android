@@ -1,27 +1,21 @@
 package com.tinashe.hymnal.ui.collections.add
 
-import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.TitleBody
 import com.tinashe.hymnal.databinding.FragmentNewCollectionBinding
+import com.tinashe.hymnal.extensions.view.viewBinding
 
 class NewCollectionFragment : Fragment(R.layout.fragment_new_collection) {
 
-    private var binding: FragmentNewCollectionBinding? = null
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding = FragmentNewCollectionBinding.bind(view)
-    }
+    private val binding by viewBinding(FragmentNewCollectionBinding::bind)
 
     fun getTitleBody(): TitleBody? {
-        val title = binding?.edtTitle?.text?.toString()
-        val description = binding?.edtDescription?.text?.toString()
+        val title = binding.edtTitle.text?.toString()
+        val description = binding.edtDescription.text?.toString()
 
         return if (title.isNullOrEmpty()) {
-            binding?.tilTitle?.error = getString(R.string.error_required)
+            binding.tilTitle.error = getString(R.string.error_required)
             null
         } else {
             TitleBody(title, description)

@@ -15,6 +15,7 @@ import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentSupportBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.extensions.view.inflateView
+import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.utils.Helper
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,8 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SupportFragment : Fragment(R.layout.fragment_support) {
 
     private val viewModel: SupportViewModel by viewModels()
-
-    private var binding: FragmentSupportBinding? = null
+    private val binding by viewBinding(FragmentSupportBinding::bind)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -33,8 +33,7 @@ class SupportFragment : Fragment(R.layout.fragment_support) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentSupportBinding.bind(view)
-        binding?.apply {
+        binding.apply {
             tvPolicy.setOnClickListener {
                 Helper.launchWebUrl(requireContext(), getString(R.string.app_privacy_policy))
             }
@@ -44,7 +43,7 @@ class SupportFragment : Fragment(R.layout.fragment_support) {
         }
 
         viewModel.purchaseResultLiveData.observeNonNull(viewLifecycleOwner) { pair ->
-            binding?.apply {
+            binding.apply {
                 chipGroupInApp.clearCheck()
                 chipGroupSubs.clearCheck()
             }
@@ -57,7 +56,7 @@ class SupportFragment : Fragment(R.layout.fragment_support) {
                 .show()
         }
         viewModel.deepLinkLiveData.observeNonNull(viewLifecycleOwner) {
-            binding?.apply {
+            binding.apply {
                 chipGroupInApp.clearCheck()
                 chipGroupSubs.clearCheck()
             }
@@ -65,12 +64,12 @@ class SupportFragment : Fragment(R.layout.fragment_support) {
         }
         viewModel.inAppProductsLiveData.observeNonNull(viewLifecycleOwner) { products ->
             if (products.isEmpty()) {
-                binding?.tvOneTimeDonation?.setText(R.string.error_un_available)
+                binding.tvOneTimeDonation.setText(R.string.error_un_available)
                 return@observeNonNull
             } else {
-                binding?.tvOneTimeDonation?.setText(R.string.one_tine_donation)
+                binding.tvOneTimeDonation.setText(R.string.one_tine_donation)
             }
-            binding?.chipGroupInApp?.apply {
+            binding.chipGroupInApp.apply {
                 removeAllViews()
                 products.forEach { product ->
                     val chip: Chip = inflateView(
@@ -96,12 +95,12 @@ class SupportFragment : Fragment(R.layout.fragment_support) {
         }
         viewModel.subscriptionsLiveData.observeNonNull(viewLifecycleOwner) { subs ->
             if (subs.isEmpty()) {
-                binding?.tvMonthlyDonation?.setText(R.string.blank)
+                binding.tvMonthlyDonation.setText(R.string.blank)
                 return@observeNonNull
             } else {
-                binding?.tvMonthlyDonation?.setText(R.string.monthly_donations)
+                binding.tvMonthlyDonation.setText(R.string.monthly_donations)
             }
-            binding?.chipGroupSubs?.apply {
+            binding.chipGroupSubs.apply {
                 removeAllViews()
                 subs.forEach { product ->
                     val chip: Chip = inflateView(

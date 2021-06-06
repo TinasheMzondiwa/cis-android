@@ -25,6 +25,7 @@ import com.tinashe.hymnal.databinding.ActivitySingBinding
 import com.tinashe.hymnal.extensions.activity.applyMaterialTransform
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
+import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.collections.add.AddToCollectionFragment
 import com.tinashe.hymnal.ui.hymns.hymnals.HymnalListBottomSheetFragment
 import com.tinashe.hymnal.ui.hymns.sing.edit.EditHymnActivity
@@ -49,9 +50,9 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
     lateinit var tunePlayer: SimpleTunePlayer
 
     private val viewModel: SingHymnsViewModel by viewModels()
+    private val binding by viewBinding(ActivitySingBinding::inflate)
 
     private var pagerAdapter: SingFragmentsAdapter? = null
-    private lateinit var binding: ActivitySingBinding
 
     private var currentPosition: Int? = null
 
@@ -60,7 +61,6 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
     override fun onCreate(savedInstanceState: Bundle?) {
         applyMaterialTransform(getString(R.string.transition_shared_element))
         super.onCreate(savedInstanceState)
-        binding = ActivitySingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initUi()

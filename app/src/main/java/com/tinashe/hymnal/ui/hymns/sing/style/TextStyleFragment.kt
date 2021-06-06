@@ -10,27 +10,31 @@ import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.TextStyleModel
 import com.tinashe.hymnal.data.model.constants.UiPref
 import com.tinashe.hymnal.databinding.FragmentTextOptionsBinding
+import com.tinashe.hymnal.extensions.view.viewBinding
 
 class TextStyleFragment : BottomSheetDialogFragment() {
 
     private var styleChanges: TextStyleChanges? = null
 
-    private var binding: FragmentTextOptionsBinding? = null
+    private val binding by viewBinding(FragmentTextOptionsBinding::bind)
 
     override fun getTheme(): Int = R.style.ThemeOverlay_CIS_BottomSheetDialog
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_text_options, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentTextOptionsBinding.bind(view)
 
         val model = arguments?.get(ARG_MODEL) as? TextStyleModel
             ?: return
 
-        binding?.apply {
+        binding.apply {
             chipGroupTheme.apply {
                 check(
                     when (model.pref) {
