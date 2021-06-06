@@ -19,6 +19,7 @@ import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.databinding.FragmentHymnsBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
+import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.AppBarBehaviour
 import com.tinashe.hymnal.ui.hymns.adapter.HymnListAdapter
 import com.tinashe.hymnal.ui.hymns.sing.SingHymnsActivity
@@ -29,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns) {
 
     private val viewModel: CollectionHymnsViewModel by viewModels()
-    private var binding: FragmentHymnsBinding? = null
+    private val binding by viewBinding(FragmentHymnsBinding::bind)
     private var appBarBehaviour: AppBarBehaviour? = null
 
     private val listAdapter: HymnListAdapter = HymnListAdapter { pair ->
@@ -53,7 +54,7 @@ class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns) {
                 val position = viewHolder.absoluteAdapterPosition
                 viewModel.onIntentToDeleteHymn(position)
 
-                binding?.snackbar?.apply {
+                binding.snackbar.apply {
                     show(
                         messageId = R.string.hymn_deleted,
                         actionId = R.string.title_undo,
@@ -79,8 +80,7 @@ class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentHymnsBinding.bind(view)
-        binding?.hymnsListView?.apply {
+        binding.hymnsListView.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             val itemTouchHelper = ItemTouchHelper(swipeHandler)
             itemTouchHelper.attachToRecyclerView(this)
@@ -88,7 +88,7 @@ class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns) {
         }
 
         viewModel.statusLiveData.observeNonNull(viewLifecycleOwner) {
-            binding?.apply {
+            binding.apply {
                 hymnsListView.isVisible = it != Status.LOADING
                 progressBar.isVisible = it == Status.LOADING
             }

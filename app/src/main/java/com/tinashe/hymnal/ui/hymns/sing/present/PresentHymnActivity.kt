@@ -1,6 +1,5 @@
 package com.tinashe.hymnal.ui.hymns.sing.present
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -12,16 +11,15 @@ import androidx.core.view.isVisible
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.databinding.ActivityPresentHymnBinding
+import com.tinashe.hymnal.extensions.view.viewBinding
 import timber.log.Timber
 
 class PresentHymnActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityPresentHymnBinding
+    private val binding by viewBinding(ActivityPresentHymnBinding::inflate)
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPresentHymnBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.btnExit.setOnClickListener { finish() }
