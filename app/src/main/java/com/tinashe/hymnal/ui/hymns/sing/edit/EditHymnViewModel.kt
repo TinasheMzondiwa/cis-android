@@ -2,6 +2,7 @@ package com.tinashe.hymnal.ui.hymns.sing.edit
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tinashe.hymnal.data.model.Hymn
@@ -9,13 +10,15 @@ import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.data.repository.HymnalRepository
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
+import com.tinashe.hymnal.utils.IntentExtras
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class EditHymnViewModel @Inject constructor(
-    private val repository: HymnalRepository
+    private val repository: HymnalRepository,
+    val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val mutableViewState = SingleLiveEvent<Status>()
@@ -26,15 +29,17 @@ class EditHymnViewModel @Inject constructor(
 
     private var editHymn: Hymn? = null
 
-    fun setHymn(hymn: Hymn) {
-        this.editHymn = hymn
+    init {
+        savedStateHandle.get<Hymn?>(IntentExtras.HYMN)?.let { hymn ->
+            editHymn = hymn
 
-        val content = if (hymn.editedContent.isNullOrEmpty()) {
-            hymn.content to false
-        } else {
-            (hymn.editedContent ?: "") to true
+            val content = if (hymn.editedContent.isNullOrEmpty()) {
+                hymn.content to false
+            } else {
+                (hymn.editedContent ?: "") to true
+            }
+            mutableEditContent.postValue(content)
         }
-        mutableEditContent.postValue(content)
     }
 
     fun saveContent(content: String) {
