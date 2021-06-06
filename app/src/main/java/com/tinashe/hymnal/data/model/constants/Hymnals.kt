@@ -24,7 +24,7 @@ enum class Hymnals(
     GIKUYU("gikuyu", "Nyimbo cia Agendi", "Kikuyu", R.raw.gikuyu),
     ABAGUSII("abagusii", "Ogotera kw'ogotogia Nyasae", "Abagusii", R.raw.abagusii),
     DHOLUO("dholuo", "Wende Nyasaye", "Dholuo", R.raw.dholuo),
-    ENGLISH1("english1", "SDA Hymnal", "English", R.raw.sdah);
+    SDAH("sdah", "SDA Hymnal", "English", R.raw.sdah);
 
     companion object {
         private val map = values().associateBy(Hymnals::key)
