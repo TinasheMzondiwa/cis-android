@@ -19,7 +19,7 @@ buildscript {
     versions.recyclerview = '1.2.0'
     versions.preference = '1.1.1'
     versions.browser = '1.3.0'
-    versions.coroutines = '1.4.3'
+    versions.coroutines = '1.5.0-native-mt'
     versions.timber = '4.7.1'
     versions.room = '2.3.0'
     versions.hilt = '2.36'
