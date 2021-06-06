@@ -6,12 +6,15 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentHymnVerseBinding
+import com.tinashe.hymnal.extensions.view.viewBinding
 
 class HymnVerseFragment : Fragment(R.layout.fragment_hymn_verse) {
 
+    private val binding by viewBinding(FragmentHymnVerseBinding::bind)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentHymnVerseBinding.bind(view)
+
         val verse = arguments?.getString(ARG_VERSE)
         binding.verseText.text = verse
     }

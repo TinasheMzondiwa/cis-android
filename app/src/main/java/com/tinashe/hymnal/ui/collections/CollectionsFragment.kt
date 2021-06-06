@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentCollectionsBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
+import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.AppBarBehaviour
 import com.tinashe.hymnal.ui.collections.adapter.CollectionListAdapter
 import com.tinashe.hymnal.ui.widget.SwipeToDeleteCallback
@@ -26,15 +27,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private val viewModel: CollectionsViewModel by viewModels()
+    private val binding by viewBinding(FragmentCollectionsBinding::bind)
 
     private var appBarBehaviour: AppBarBehaviour? = null
-
-    private var binding: FragmentCollectionsBinding? = null
     private val listAdapter by lazy {
         CollectionListAdapter { pair ->
             val collection = pair.first
             if (collection.hymns.isEmpty()) {
-                binding?.snackbar?.show(messageId = R.string.error_empty_collection)
+                binding.snackbar.show(messageId = R.string.error_empty_collection)
                 return@CollectionListAdapter
             }
 
@@ -50,7 +50,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
                 val position = viewHolder.absoluteAdapterPosition
                 viewModel.onIntentToDelete(position)
 
-                binding?.snackbar?.apply {
+                binding.snackbar.apply {
                     show(
                         messageId = R.string.collection_deleted,
                         actionId = R.string.title_undo,
@@ -76,8 +76,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentCollectionsBinding.bind(view)
-        binding?.listView?.apply {
+        binding.listView.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             val itemTouchHelper = ItemTouchHelper(swipeHandler)
             itemTouchHelper.attachToRecyclerView(this)
@@ -85,7 +84,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         }
 
         viewModel.viewStateLiveData.observeNonNull(viewLifecycleOwner) {
-            binding?.apply {
+            binding.apply {
                 val size = viewModel.collectionsLiveData.value?.size
                 when (it) {
                     ViewState.LOADING -> {

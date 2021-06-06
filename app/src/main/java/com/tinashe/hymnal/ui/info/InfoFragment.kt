@@ -8,15 +8,17 @@ import androidx.fragment.app.Fragment
 import com.tinashe.hymnal.BuildConfig
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentInfoBinding
+import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.utils.Helper
 
 class InfoFragment : Fragment(R.layout.fragment_info) {
+
+    private val binding by viewBinding(FragmentInfoBinding::bind)
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentInfoBinding.bind(view)
         binding.apply {
             buildInfo.setOnClickListener {
                 Helper.launchWebUrl(requireContext(), getString(R.string.app_link))

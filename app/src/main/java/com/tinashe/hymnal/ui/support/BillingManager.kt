@@ -243,3 +243,8 @@ class BillingManagerImpl(
         )
     }
 }
+
+/**
+ * Get the [PurchaseHistoryRecord]s sku the old way
+ */
+val PurchaseHistoryRecord.sku: String? get() = skus.firstOrNull()

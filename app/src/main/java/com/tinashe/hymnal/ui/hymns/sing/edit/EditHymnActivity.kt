@@ -10,14 +10,15 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.databinding.ActivityEditHymnBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
+import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.widget.SimpleTextWatcher
+import com.tinashe.hymnal.utils.IntentExtras
 import dagger.hilt.android.AndroidEntryPoint
 import org.wordpress.aztec.Aztec
 import org.wordpress.aztec.ITextFormat
@@ -27,8 +28,7 @@ import org.wordpress.aztec.toolbar.IAztecToolbarClickListener
 class EditHymnActivity : AppCompatActivity(), IAztecToolbarClickListener {
 
     private val viewModel: EditHymnViewModel by viewModels()
-
-    private lateinit var binding: ActivityEditHymnBinding
+    private val binding by viewBinding(ActivityEditHymnBinding::inflate)
 
     private val contentWatcher = object : SimpleTextWatcher() {
         override fun afterTextChanged(editable: Editable?) {
@@ -39,16 +39,9 @@ class EditHymnActivity : AppCompatActivity(), IAztecToolbarClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityEditHymnBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initUi()
-
-        val hymn = intent.getParcelableExtra<Hymn?>(ARG_HYMN)
-        if (hymn == null) {
-            finish()
-            return
-        }
 
         viewModel.statusLiveData.observeNonNull(this) { status ->
             when (status) {
@@ -74,8 +67,6 @@ class EditHymnActivity : AppCompatActivity(), IAztecToolbarClickListener {
             }
             invalidateOptionsMenu()
         }
-
-        viewModel.setHymn(hymn)
     }
 
     private fun initUi() {
@@ -150,12 +141,10 @@ class EditHymnActivity : AppCompatActivity(), IAztecToolbarClickListener {
     override fun onToolbarMediaButtonClicked(): Boolean = false
 
     companion object {
-        private const val ARG_HYMN = "arg:hymn"
-
         fun editIntent(context: Context, hymn: Hymn): Intent = Intent(
             context, EditHymnActivity::class.java
         ).apply {
-            putExtra(ARG_HYMN, hymn)
+            putExtra(IntentExtras.HYMN, hymn)
         }
     }
 }
