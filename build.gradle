@@ -32,7 +32,7 @@ buildscript {
 
     // testing
     versions.junit = '4.13.2'
-    versions.mockito = '3.8.0'
+    versions.mockk = '1.11.0'
     versions.androidx_testing = '2.1.0'
     versions.androidx_junit = '1.1.2'
     versions.kluent = '1.65'
