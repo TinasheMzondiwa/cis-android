@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.databinding.HymnListItemBinding
-import com.tinashe.hymnal.extensions.view.inflateView
+import com.tinashe.hymnal.extensions.view.inflate
 
 class HymnListAdapter(
     private val hymnSelected: (Pair<Hymn, View>) -> Unit
@@ -25,9 +25,9 @@ class HymnListAdapter(
         }
     }
 
-    class TitleHolder(private val containerView: View) : RecyclerView.ViewHolder(containerView) {
-
-        private val binding: HymnListItemBinding by lazy { HymnListItemBinding.bind(containerView) }
+    class TitleHolder(
+        private val binding: HymnListItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(hymn: Hymn) {
             binding.titleView.text = hymn.title
@@ -35,7 +35,7 @@ class HymnListAdapter(
 
         companion object {
             fun create(parent: ViewGroup): TitleHolder = TitleHolder(
-                inflateView(R.layout.hymn_list_item, parent, false)
+                HymnListItemBinding.bind(parent.inflate(R.layout.hymn_list_item))
             )
         }
     }

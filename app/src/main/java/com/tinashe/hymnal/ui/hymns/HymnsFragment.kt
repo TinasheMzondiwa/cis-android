@@ -83,8 +83,8 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns) {
             .currentBackStackEntry
             ?.savedStateHandle
             ?.getLiveData<Hymnal>(SELECTED_HYMNAL_KEY)
-            ?.observeNonNull(viewLifecycleOwner) {
-                viewModel.hymnalSelected(it)
+            ?.observeNonNull(viewLifecycleOwner) { hymnal ->
+                viewModel.hymnalSelected(hymnal)
             }
     }
 

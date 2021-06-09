@@ -32,11 +32,11 @@ class HymnalListFragment : Fragment(R.layout.hymnal_list_fragment) {
             viewModel.sortOrderChanged()
         }
     }
-    private val listAdapter: HymnalsListAdapter = HymnalsListAdapter {
+    private val listAdapter: HymnalsListAdapter = HymnalsListAdapter { model ->
         with(findNavController()) {
             previousBackStackEntry
                 ?.savedStateHandle
-                ?.set(SELECTED_HYMNAL_KEY, it)
+                ?.set(SELECTED_HYMNAL_KEY, model.toHymnal())
             popBackStack()
         }
     }

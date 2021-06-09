@@ -25,8 +25,8 @@ class HymnalListBottomSheetFragment : BottomSheetDialogFragment() {
 
     private var hymnalSelected: ((Hymnal) -> Unit)? = null
 
-    private val listAdapter: HymnalsListAdapter = HymnalsListAdapter {
-        hymnalSelected?.invoke(it)
+    private val listAdapter: HymnalsListAdapter = HymnalsListAdapter { model ->
+        hymnalSelected?.invoke(model.toHymnal())
         dismiss()
     }
 
