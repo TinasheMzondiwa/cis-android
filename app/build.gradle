@@ -87,7 +87,7 @@ android {
 
 dependencies {
     // Androidx
-    implementation "androidx.core:core-ktx:${versions.ktx}"
+    implementation "androidx.core:core-ktx:${versions.core_ktx}"
     implementation "androidx.appcompat:appcompat:${versions.appcompat}"
     implementation "com.google.android.material:material:${versions.material}"
     implementation "androidx.constraintlayout:constraintlayout:${versions.const_layout}"
@@ -125,7 +125,7 @@ dependencies {
 
     implementation "com.jakewharton.timber:timber:${versions.timber}"
     implementation "com.android.billingclient:billing-ktx:${versions.billing}"
-    implementation "com.github.wordpress-mobile.WordPress-Aztec-Android:aztec:${versions.aztec}"
+    implementation "org.wordpress:aztec:${versions.aztec}"
     implementation "uk.co.samuelwall:material-tap-target-prompt:${versions.material_tap}"
 
     testImplementation "junit:junit:$versions.junit"

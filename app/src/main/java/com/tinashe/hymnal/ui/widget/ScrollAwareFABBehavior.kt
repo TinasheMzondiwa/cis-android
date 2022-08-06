@@ -20,7 +20,11 @@ class ScrollAwareFABBehavior(context: Context, attrs: AttributeSet) :
     ): Boolean {
         return axes == ViewCompat.SCROLL_AXIS_VERTICAL || super.onStartNestedScroll(
             coordinatorLayout,
-            child, directTargetChild, target, axes, type
+            child,
+            directTargetChild,
+            target,
+            axes,
+            type
         )
     }
 

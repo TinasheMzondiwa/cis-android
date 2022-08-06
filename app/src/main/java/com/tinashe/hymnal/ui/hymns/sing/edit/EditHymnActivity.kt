@@ -142,7 +142,8 @@ class EditHymnActivity : AppCompatActivity(), IAztecToolbarClickListener {
 
     companion object {
         fun editIntent(context: Context, hymn: Hymn): Intent = Intent(
-            context, EditHymnActivity::class.java
+            context,
+            EditHymnActivity::class.java
         ).apply {
             putExtra(IntentExtras.HYMN, hymn)
         }
