@@ -315,6 +315,7 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_EDIT_HYMN && resultCode == Activity.RESULT_OK) {
