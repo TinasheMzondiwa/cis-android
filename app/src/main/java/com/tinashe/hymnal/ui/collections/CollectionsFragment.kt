@@ -120,6 +120,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         viewModel.loadData()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.collections_menu, menu)

@@ -274,7 +274,8 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                 mediaItem.apply {
                     isVisible = canPlay
                     icon = ContextCompat.getDrawable(
-                        this@SingHymnsActivity, R.drawable.ic_play_circle
+                        this@SingHymnsActivity,
+                        R.drawable.ic_play_circle
                     )
                 }
             }
@@ -315,6 +316,7 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_EDIT_HYMN && resultCode == Activity.RESULT_OK) {

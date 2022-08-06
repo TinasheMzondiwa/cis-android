@@ -23,8 +23,12 @@ object RepositoryModule {
         moshi: Moshi,
         hymnsDao: HymnsDao,
         collectionsDao: CollectionsDao,
-        hymnalPrefs: HymnalPrefs,
+        hymnalPrefs: HymnalPrefs
     ): HymnalRepository = HymnalRepository(
-        context, moshi, hymnsDao, collectionsDao, hymnalPrefs
+        context,
+        moshi,
+        hymnsDao,
+        collectionsDao,
+        hymnalPrefs
     )
 }

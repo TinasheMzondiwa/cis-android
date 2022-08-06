@@ -100,6 +100,7 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns) {
         } ?: startActivity(intent)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.hymns_list, menu)
@@ -130,6 +131,7 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns) {
         })
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.actions_number -> {

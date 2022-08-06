@@ -17,7 +17,8 @@ import com.tinashe.hymnal.data.model.collections.HymnCollection
         HymnCollection::class,
         CollectionHymnCrossRef::class
     ],
-    version = 2, exportSchema = true
+    version = 2,
+    exportSchema = true
 )
 abstract class HymnalDatabase : RoomDatabase() {
 

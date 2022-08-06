@@ -84,7 +84,8 @@ class BillingManagerImpl(
                 } else {
                     billingDataChannel.send(
                         BillingData.Message(
-                            Status.ERROR, R.string.error_item_already_owned
+                            Status.ERROR,
+                            R.string.error_item_already_owned
                         )
                     )
                 }
@@ -130,14 +131,16 @@ class BillingManagerImpl(
                     }
                     billingDataChannel.send(
                         BillingData.Message(
-                            Status.SUCCESS, R.string.success_purchase
+                            Status.SUCCESS,
+                            R.string.success_purchase
                         )
                     )
                 }
             } else if (result.responseCode == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
                 billingDataChannel.send(
                     BillingData.Message(
-                        Status.ERROR, R.string.error_item_already_owned
+                        Status.ERROR,
+                        R.string.error_item_already_owned
                     )
                 )
             } else {

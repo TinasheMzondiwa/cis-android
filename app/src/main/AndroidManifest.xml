@@ -21,12 +21,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CIS">
+        android:theme="@style/Theme.CIS"
+        tools:ignore="DataExtractionRules">
         <activity
             android:name="com.tinashe.hymnal.ui.MainActivity"
-            android:label="@string/app_name"
             android:theme="@style/Theme.CIS.Main"
-            android:windowSoftInputMode="adjustNothing">
+            android:windowSoftInputMode="adjustNothing"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
