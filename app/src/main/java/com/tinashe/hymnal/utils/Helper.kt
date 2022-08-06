@@ -22,7 +22,6 @@ import java.io.StringWriter
 object Helper {
 
     fun getJson(resources: Resources, resId: Int): String {
-
         val resourceReader = resources.openRawResource(resId)
         val writer = StringWriter()
 

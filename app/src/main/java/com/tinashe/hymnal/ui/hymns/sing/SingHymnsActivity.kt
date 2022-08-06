@@ -274,7 +274,8 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                 mediaItem.apply {
                     isVisible = canPlay
                     icon = ContextCompat.getDrawable(
-                        this@SingHymnsActivity, R.drawable.ic_play_circle
+                        this@SingHymnsActivity,
+                        R.drawable.ic_play_circle
                     )
                 }
             }
