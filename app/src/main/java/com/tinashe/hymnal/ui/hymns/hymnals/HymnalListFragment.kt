@@ -11,7 +11,6 @@ import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.HymnalListFragmentBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
-import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.hymns.hymnals.adapter.HymnalsListAdapter
 import com.tinashe.hymnal.ui.hymns.hymnals.adapter.SortOptionsAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,7 +24,7 @@ class HymnalListFragment : Fragment(R.layout.hymnal_list_fragment) {
 
     private val viewModel: HymnalListViewModel by activityViewModels()
 
-    private val binding by viewBinding(HymnalListFragmentBinding::bind)
+    private lateinit var binding: HymnalListFragmentBinding
 
     private val sortOptionsAdapter: SortOptionsAdapter by lazy {
         SortOptionsAdapter(hymnalPrefs) {
@@ -43,6 +42,8 @@ class HymnalListFragment : Fragment(R.layout.hymnal_list_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = HymnalListFragmentBinding.bind(view)
+
         binding.hymnalsListView.adapter = ConcatAdapter(sortOptionsAdapter, listAdapter)
 
         viewModel.hymnalListLiveData.observeNonNull(viewLifecycleOwner) { hymnals ->

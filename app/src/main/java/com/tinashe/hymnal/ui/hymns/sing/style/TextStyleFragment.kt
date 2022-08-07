@@ -10,13 +10,12 @@ import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.TextStyleModel
 import com.tinashe.hymnal.data.model.constants.UiPref
 import com.tinashe.hymnal.databinding.FragmentTextOptionsBinding
-import com.tinashe.hymnal.extensions.view.viewBinding
 
 class TextStyleFragment : BottomSheetDialogFragment() {
 
     private var styleChanges: TextStyleChanges? = null
 
-    private val binding by viewBinding(FragmentTextOptionsBinding::bind)
+    private lateinit var binding: FragmentTextOptionsBinding
 
     override fun getTheme(): Int = R.style.ThemeOverlay_CIS_BottomSheetDialog
 
@@ -30,6 +29,7 @@ class TextStyleFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentTextOptionsBinding.bind(view)
 
         val model = arguments?.get(ARG_MODEL) as? TextStyleModel
             ?: return
@@ -43,15 +43,18 @@ class TextStyleFragment : BottomSheetDialogFragment() {
                         else -> R.id.chipThemeSystem
                     }
                 )
-                setOnCheckedChangeListener { _, checkedId ->
-                    val pref = when (checkedId) {
-                        R.id.chipThemeLight -> UiPref.DAY
-                        R.id.chipThemeDark -> UiPref.NIGHT
-                        R.id.chipThemeSystem -> UiPref.FOLLOW_SYSTEM
-                        else -> return@setOnCheckedChangeListener
+                setOnCheckedStateChangeListener { _, checkedIds ->
+                    checkedIds.forEach { checkedId ->
+                        when (checkedId) {
+                            R.id.chipThemeLight -> UiPref.DAY
+                            R.id.chipThemeDark -> UiPref.NIGHT
+                            R.id.chipThemeSystem -> UiPref.FOLLOW_SYSTEM
+                            else -> null
+                        }?.let {
+                            styleChanges?.updateTheme(it)
+                            dismiss()
+                        }
                     }
-                    styleChanges?.updateTheme(pref)
-                    dismiss()
                 }
             }
 
@@ -66,16 +69,19 @@ class TextStyleFragment : BottomSheetDialogFragment() {
                     }
                 )
 
-                setOnCheckedChangeListener { _, checkedId ->
-                    val typeface = when (checkedId) {
-                        R.id.chipTypefaceLato -> R.font.lato
-                        R.id.chipTypefaceAndada -> R.font.andada
-                        R.id.chipTypefaceRoboto -> R.font.roboto
-                        R.id.chipTypefaceGentium -> R.font.gentium_basic
-                        R.id.chipTypefaceProxima -> R.font.proxima_nova_soft_regular
-                        else -> return@setOnCheckedChangeListener
+                setOnCheckedStateChangeListener { _, checkedIds ->
+                    checkedIds.forEach { checkedId ->
+                        when (checkedId) {
+                            R.id.chipTypefaceLato -> R.font.lato
+                            R.id.chipTypefaceAndada -> R.font.andada
+                            R.id.chipTypefaceRoboto -> R.font.roboto
+                            R.id.chipTypefaceGentium -> R.font.gentium_basic
+                            R.id.chipTypefaceProxima -> R.font.proxima_nova_soft_regular
+                            else -> null
+                        }?.let { typeface ->
+                            styleChanges?.updateTypeFace(typeface)
+                        }
                     }
-                    styleChanges?.updateTypeFace(typeface)
                 }
 
                 sizeSlider.apply {

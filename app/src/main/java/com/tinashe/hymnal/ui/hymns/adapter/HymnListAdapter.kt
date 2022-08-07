@@ -13,16 +13,19 @@ class HymnListAdapter(
     private val hymnSelected: (Pair<Hymn, View>) -> Unit
 ) : ListAdapter<Hymn, HymnListAdapter.TitleHolder>(HymnsDiff) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TitleHolder =
-        TitleHolder.create(parent)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): TitleHolder = TitleHolder.create(parent).also { holder ->
+        holder.itemView.setOnClickListener { view ->
+            val hymn = getItem(holder.absoluteAdapterPosition)
+            hymnSelected(hymn to view)
+        }
+    }
 
     override fun onBindViewHolder(holder: TitleHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item)
-
-        holder.itemView.setOnClickListener {
-            hymnSelected(item to it)
-        }
     }
 
     class TitleHolder(

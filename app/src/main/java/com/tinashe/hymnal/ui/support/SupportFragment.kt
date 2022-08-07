@@ -9,13 +9,11 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentSupportBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.extensions.view.inflateView
-import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.utils.Helper
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SupportFragment : Fragment(R.layout.fragment_support) {
 
     private val viewModel: SupportViewModel by viewModels()
-    private val binding by viewBinding(FragmentSupportBinding::bind)
+    private lateinit var binding: FragmentSupportBinding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -32,6 +30,7 @@ class SupportFragment : Fragment(R.layout.fragment_support) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentSupportBinding.bind(view)
 
         binding.apply {
             tvPolicy.setOnClickListener {
@@ -84,8 +83,8 @@ class SupportFragment : Fragment(R.layout.fragment_support) {
                     addView(chip)
                 }
 
-                setOnCheckedChangeListener { _: ChipGroup?, checkedId: Int ->
-                    if (checkedId != -1) {
+                setOnCheckedStateChangeListener { _, checkedIds ->
+                    checkedIds.forEach { checkedId ->
                         products.find { it.sku.hashCode() == checkedId }?.let {
                             viewModel.initiatePurchase(it, requireActivity())
                         }
@@ -115,9 +114,9 @@ class SupportFragment : Fragment(R.layout.fragment_support) {
                     addView(chip)
                 }
 
-                setOnCheckedChangeListener { _: ChipGroup?, checkedId: Int ->
-                    if (checkedId != -1) {
-                        subs.find { it.sku.hashCode() == checkedId }?.let {
+                setOnCheckedStateChangeListener { _, checkedIds ->
+                    checkedIds.forEach { id ->
+                        subs.find { it.sku.hashCode() == id }?.let {
                             viewModel.initiatePurchase(it, requireActivity())
                         }
                     }
