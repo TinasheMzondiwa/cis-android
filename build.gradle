@@ -6,7 +6,7 @@ buildscript {
             compileSdk: 31
     ]
 
-    versions.kotlin = '1.7.0'
+    versions.kotlin = '1.7.10'
     versions.material = '1.6.1'
     versions.core_ktx = '1.8.0'
     versions.appcompat = '1.4.2'
