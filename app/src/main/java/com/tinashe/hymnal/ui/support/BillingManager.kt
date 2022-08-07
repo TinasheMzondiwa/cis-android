@@ -7,33 +7,34 @@ import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ConsumeParams
+import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchaseHistoryRecord
 import com.android.billingclient.api.PurchasesUpdatedListener
-import com.android.billingclient.api.SkuDetails
-import com.android.billingclient.api.SkuDetailsParams
+import com.android.billingclient.api.QueryProductDetailsParams
+import com.android.billingclient.api.QueryPurchaseHistoryParams
 import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.consumePurchase
+import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchaseHistory
-import com.android.billingclient.api.querySkuDetails
 import com.tinashe.hymnal.BuildConfig
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.extensions.coroutines.SchedulerProvider
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
+import javax.inject.Singleton
 
 sealed class BillingData {
     data class Message(val status: Status, val errorRes: Int? = null) : BillingData()
     data class InAppProducts(val products: List<DonateProduct>) : BillingData()
     data class SubscriptionProducts(val products: List<DonateProduct>) : BillingData()
     data class DeepLink(val url: String) : BillingData()
+    object None : BillingData()
 }
 
 interface BillingManager {
@@ -42,16 +43,17 @@ interface BillingManager {
     fun initiatePurchase(product: DonateProduct, activity: Activity)
 }
 
-class BillingManagerImpl(
+@Singleton
+internal class BillingManagerImpl @Inject constructor(
     private val schedulerProvider: SchedulerProvider
 ) : BillingManager, PurchasesUpdatedListener, BillingClientStateListener {
 
     private var coroutineScope: CoroutineScope? = null
     private var billingClient: BillingClient? = null
     private var purchaseHistory = emptySet<PurchaseHistoryRecord>()
-    private var skuDetailsList = mutableSetOf<SkuDetails>()
+    private var productDetailsList = mutableSetOf<ProductDetails>()
 
-    private val billingDataChannel = BroadcastChannel<BillingData>(Channel.CONFLATED)
+    private val billingData = MutableStateFlow<BillingData>(BillingData.None)
 
     override fun setup(coroutineScope: CoroutineScope, activity: Activity): Flow<BillingData> {
         this.coroutineScope = coroutineScope
@@ -65,8 +67,7 @@ class BillingManagerImpl(
             billingClient?.startConnection(this)
         }
 
-        return billingDataChannel.asFlow()
-            .catch { Timber.e(it) }
+        return billingData
     }
 
     override fun sync() {
@@ -78,11 +79,11 @@ class BillingManagerImpl(
     override fun initiatePurchase(product: DonateProduct, activity: Activity) {
         if (purchaseHistory.find { it.sku == product.sku } != null) {
             coroutineScope?.launch {
-                if (product.type == BillingClient.SkuType.SUBS) {
+                if (product.type == BillingClient.ProductType.SUBS) {
                     val url = "$SUBS_BASE_URL?${product.sku}&package=${BuildConfig.APPLICATION_ID}"
-                    billingDataChannel.send(BillingData.DeepLink(url))
+                    billingData.emit(BillingData.DeepLink(url))
                 } else {
-                    billingDataChannel.send(
+                    billingData.emit(
                         BillingData.Message(
                             Status.ERROR,
                             R.string.error_item_already_owned
@@ -93,15 +94,28 @@ class BillingManagerImpl(
             return
         }
 
-        val skuDetails = skuDetailsList.find { it.sku == product.sku } ?: return
-        val flowParams = BillingFlowParams.newBuilder()
-            .setSkuDetails(skuDetails)
-            .build()
-        val result = billingClient?.launchBillingFlow(activity, flowParams)
+        val productDetails = productDetailsList.find { it.productId == product.sku } ?: return
+        val offerToken = productDetails.subscriptionOfferDetails?.firstOrNull()
+            ?.offerToken
 
-        if (result?.responseCode != BillingClient.BillingResponseCode.OK) {
+        val flowBuilder = BillingFlowParams.ProductDetailsParams.newBuilder()
+            .setProductDetails(productDetails)
+        offerToken?.let { flowBuilder.setOfferToken(it) }
+
+        val flowParams = BillingFlowParams.newBuilder()
+            .setProductDetailsParamsList(listOf(flowBuilder.build()))
+            .build()
+
+        val responseCode = try {
+            billingClient?.launchBillingFlow(activity, flowParams)?.responseCode
+        } catch (e: Exception) {
+            Timber.e(e)
+            BillingClient.BillingResponseCode.ERROR
+        }
+
+        if (responseCode != BillingClient.BillingResponseCode.OK) {
             coroutineScope?.launch {
-                billingDataChannel.send(
+                billingData.emit(
                     BillingData.Message(
                         Status.ERROR,
                         R.string.error_billing_client_unavailable
@@ -112,10 +126,19 @@ class BillingManagerImpl(
     }
 
     private suspend fun queryPurchases() {
-        val inAppHistory = billingClient?.queryPurchaseHistory(BillingClient.SkuType.INAPP)?.let {
+        val inAppHistory = billingClient?.queryPurchaseHistory(
+            QueryPurchaseHistoryParams.newBuilder()
+                .setProductType(BillingClient.ProductType.INAPP)
+                .build()
+        )?.let {
             it.purchaseHistoryRecordList ?: emptyList()
         } ?: emptyList()
-        val subsHistory = billingClient?.queryPurchaseHistory(BillingClient.SkuType.SUBS)?.let {
+
+        val subsHistory = billingClient?.queryPurchaseHistory(
+            QueryPurchaseHistoryParams.newBuilder()
+                .setProductType(BillingClient.ProductType.SUBS)
+                .build()
+        )?.let {
             it.purchaseHistoryRecordList ?: emptyList()
         } ?: emptyList()
 
@@ -129,7 +152,7 @@ class BillingManagerImpl(
                     if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
                         handlePurchase(purchase)
                     }
-                    billingDataChannel.send(
+                    billingData.emit(
                         BillingData.Message(
                             Status.SUCCESS,
                             R.string.success_purchase
@@ -137,14 +160,14 @@ class BillingManagerImpl(
                     )
                 }
             } else if (result.responseCode == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
-                billingDataChannel.send(
+                billingData.emit(
                     BillingData.Message(
                         Status.ERROR,
                         R.string.error_item_already_owned
                     )
                 )
             } else {
-                billingDataChannel.send(BillingData.Message(Status.ERROR))
+                billingData.emit(BillingData.Message(Status.ERROR))
             }
         }
     }
@@ -173,7 +196,7 @@ class BillingManagerImpl(
                 queryPurchases()
             } else {
                 Timber.e(result.debugMessage)
-                billingDataChannel.send(
+                billingData.emit(
                     BillingData.Message(
                         Status.ERROR,
                         R.string.error_billing_client_unavailable
@@ -184,46 +207,53 @@ class BillingManagerImpl(
     }
 
     private suspend fun queryOneTimeDonations() {
-        val params = SkuDetailsParams.newBuilder()
-            .setSkusList(inAppDonations)
-            .setType(BillingClient.SkuType.INAPP)
+        val params = QueryProductDetailsParams.newBuilder()
+            .setProductList(inAppDonations)
             .build()
 
-        val result = billingClient?.querySkuDetails(params)
+        val result = billingClient?.queryProductDetails(params)
         val products =
             if (result?.billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
-                result.skuDetailsList?.sortedBy { it.priceAmountMicros } ?: emptyList()
+                result.productDetailsList?.sortedBy { it.productId } ?: emptyList()
             } else {
                 Timber.e(result?.billingResult?.debugMessage)
                 emptyList()
             }
-        skuDetailsList.addAll(products)
+        productDetailsList.addAll(products)
         val donateProducts = products.map {
-            DonateProduct(it.sku, it.type, it.price)
+            DonateProduct(
+                it.productId,
+                it.productType,
+                it.formattedPrice(BillingClient.ProductType.INAPP)
+            )
         }
-        billingDataChannel.send(BillingData.InAppProducts(donateProducts))
+        billingData.emit(BillingData.InAppProducts(donateProducts))
     }
 
     private suspend fun queryRecurringDonations() {
-        val params = SkuDetailsParams.newBuilder()
-            .setSkusList(subscriptions)
-            .setType(BillingClient.SkuType.SUBS)
+        val params = QueryProductDetailsParams.newBuilder()
+            .setProductList(subscriptions)
             .build()
 
-        val result = billingClient?.querySkuDetails(params)
+        val result = billingClient?.queryProductDetails(params)
         val subs =
             if (result?.billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
-                result.skuDetailsList ?: emptyList()
+                result.productDetailsList ?: emptyList()
             } else {
                 Timber.e(result?.billingResult?.debugMessage)
                 emptyList()
             }
-        skuDetailsList.addAll(subs)
+        productDetailsList.addAll(subs)
+
         val donateProducts = subs.map {
-            DonateProduct(it.sku, it.type, it.price)
+            DonateProduct(
+                it.productId,
+                it.productType,
+                it.formattedPrice(BillingClient.ProductType.SUBS)
+            )
         }
 
-        billingDataChannel.send(BillingData.SubscriptionProducts(donateProducts))
+        billingData.emit(BillingData.SubscriptionProducts(donateProducts))
     }
 
     override fun onBillingServiceDisconnected() {
@@ -239,15 +269,40 @@ class BillingManagerImpl(
             "donate_25",
             "donate_50",
             "donate_100"
-        )
+        ).map {
+            QueryProductDetailsParams.Product.newBuilder()
+                .setProductId(it)
+                .setProductType(BillingClient.ProductType.INAPP)
+                .build()
+        }
         private val subscriptions = listOf(
             "subscription_1",
             "subscription_3"
-        )
+        ).map {
+            QueryProductDetailsParams.Product.newBuilder()
+                .setProductId(it)
+                .setProductType(BillingClient.ProductType.SUBS)
+                .build()
+        }
     }
 }
 
 /**
- * Get the [PurchaseHistoryRecord]s sku the old way
+ * Get the [PurchaseHistoryRecord]'s product sku.
  */
-val PurchaseHistoryRecord.sku: String? get() = skus.firstOrNull()
+private val PurchaseHistoryRecord.sku: String? get() = products.firstOrNull()
+
+/**
+ * Get the [ProductDetails]'s formatted price.
+ */
+private fun ProductDetails.formattedPrice(
+    productType: String
+): String = when (productType) {
+    BillingClient.ProductType.INAPP -> oneTimePurchaseOfferDetails?.formattedPrice ?: ""
+    BillingClient.ProductType.SUBS -> subscriptionOfferDetails?.firstOrNull()
+        ?.pricingPhases
+        ?.pricingPhaseList
+        ?.firstOrNull()
+        ?.formattedPrice ?: ""
+    else -> ""
+}
