@@ -46,6 +46,9 @@ class SupportViewModel @Inject constructor(
                 is BillingData.SubscriptionProducts -> {
                     mutableSubscriptions.postValue(billingData.products)
                 }
+                BillingData.None -> {
+                    // no op
+                }
             }
         }
     }
