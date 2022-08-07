@@ -10,7 +10,6 @@ import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.databinding.FragmentHymnBinding
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
-import com.tinashe.hymnal.extensions.view.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -21,10 +20,12 @@ class HymnFragment : Fragment(R.layout.fragment_hymn) {
     @Inject
     lateinit var prefs: HymnalPrefs
 
-    private val binding by viewBinding(FragmentHymnBinding::bind)
+    private lateinit var binding: FragmentHymnBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentHymnBinding.bind(view)
+
         binding.hymnText.apply {
             try {
                 textSize = prefs.getFontSize()

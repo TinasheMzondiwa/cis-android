@@ -20,7 +20,6 @@ import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.databinding.FragmentHymnsBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.extensions.context.getColorPrimary
-import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.AppBarBehaviour
 import com.tinashe.hymnal.ui.hymns.adapter.HymnListAdapter
 import com.tinashe.hymnal.ui.hymns.hymnals.HymnalListFragment.Companion.SELECTED_HYMNAL_KEY
@@ -32,7 +31,7 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 class HymnsFragment : Fragment(R.layout.fragment_hymns) {
 
     private val viewModel: HymnsViewModel by viewModels()
-    private val binding by viewBinding(FragmentHymnsBinding::bind)
+    private lateinit var binding: FragmentHymnsBinding
 
     private val listAdapter: HymnListAdapter = HymnListAdapter { pair ->
         openSelectedHymn(pair.first.hymnId, pair.second)
@@ -48,18 +47,16 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentHymnsBinding.bind(view)
 
         binding.hymnsListView.apply {
             addItemDecoration(DividerItemDecoration(context, VERTICAL))
             adapter = listAdapter
         }
 
-        viewModel.showHymnalsPromptLiveData.observe(
-            viewLifecycleOwner,
-            {
-                showHymnalsTargetPrompt()
-            }
-        )
+        viewModel.showHymnalsPromptLiveData.observe(viewLifecycleOwner) {
+            showHymnalsTargetPrompt()
+        }
         viewModel.statusLiveData.observeNonNull(viewLifecycleOwner) {
             binding.apply {
                 hymnsListView.isVisible = it != Status.LOADING
@@ -83,8 +80,8 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns) {
             .currentBackStackEntry
             ?.savedStateHandle
             ?.getLiveData<Hymnal>(SELECTED_HYMNAL_KEY)
-            ?.observeNonNull(viewLifecycleOwner) {
-                viewModel.hymnalSelected(it)
+            ?.observeNonNull(viewLifecycleOwner) { hymnal ->
+                viewModel.hymnalSelected(hymnal)
             }
     }
 

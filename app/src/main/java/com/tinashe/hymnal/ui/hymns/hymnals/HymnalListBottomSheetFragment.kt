@@ -12,7 +12,6 @@ import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.databinding.HymnalListBottomSheetFragmentBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
-import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.hymns.hymnals.adapter.HymnalsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,12 +20,12 @@ class HymnalListBottomSheetFragment : BottomSheetDialogFragment() {
 
     private val viewModel: HymnalListViewModel by activityViewModels()
 
-    private val binding by viewBinding(HymnalListBottomSheetFragmentBinding::bind)
+    private lateinit var binding: HymnalListBottomSheetFragmentBinding
 
     private var hymnalSelected: ((Hymnal) -> Unit)? = null
 
-    private val listAdapter: HymnalsListAdapter = HymnalsListAdapter {
-        hymnalSelected?.invoke(it)
+    private val listAdapter: HymnalsListAdapter = HymnalsListAdapter { model ->
+        hymnalSelected?.invoke(model.toHymnal())
         dismiss()
     }
 
@@ -49,6 +48,7 @@ class HymnalListBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = HymnalListBottomSheetFragmentBinding.bind(view)
 
         viewModel.hymnalListLiveData.observeNonNull(viewLifecycleOwner) {
             binding.progressBar.isVisible = false

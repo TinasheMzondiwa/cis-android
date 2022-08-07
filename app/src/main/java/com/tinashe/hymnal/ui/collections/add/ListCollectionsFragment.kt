@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentCollectionListBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
-import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.collections.CollectionsViewModel
 import com.tinashe.hymnal.ui.collections.ViewState
 import com.tinashe.hymnal.ui.collections.adapter.title.CollectionTitlesListAdapter
@@ -20,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ListCollectionsFragment : Fragment(R.layout.fragment_collection_list) {
 
     private val viewModel: CollectionsViewModel by viewModels()
-    private val binding by viewBinding(FragmentCollectionListBinding::bind)
+    private lateinit var binding: FragmentCollectionListBinding
 
     private val hymnId: Int? get() = arguments?.getInt(ARG_HYMN_Id)
 
@@ -32,14 +31,16 @@ class ListCollectionsFragment : Fragment(R.layout.fragment_collection_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentCollectionListBinding.bind(view)
+
         binding.listView.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             adapter = listAdapter
         }
 
-        viewModel.viewStateLiveData.observeNonNull(viewLifecycleOwner) {
+        viewModel.viewStateLiveData.observeNonNull(viewLifecycleOwner) { state ->
             binding.apply {
-                when (it) {
+                when (state) {
                     ViewState.LOADING -> {
                         listView.isVisible = false
                         emptyView.isVisible = false
@@ -75,7 +76,6 @@ class ListCollectionsFragment : Fragment(R.layout.fragment_collection_list) {
                     }
                 }
                 submitList(ArrayList(models))
-                notifyDataSetChanged()
             }
         }
         viewModel.loadData()

@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentAddToCollectionBinding
-import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.collections.CollectionsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddToCollectionFragment : BottomSheetDialogFragment() {
 
     private val viewModel: CollectionsViewModel by viewModels()
-    private val binding by viewBinding(FragmentAddToCollectionBinding::bind)
+    private lateinit var binding: FragmentAddToCollectionBinding
 
     private val showingAdding: Boolean
         get() = childFragmentManager.findFragmentById(
@@ -37,6 +36,8 @@ class AddToCollectionFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentAddToCollectionBinding.bind(view)
+
         binding.toolbar.setNavigationOnClickListener {
             if (showingAdding) {
                 showListFragment()

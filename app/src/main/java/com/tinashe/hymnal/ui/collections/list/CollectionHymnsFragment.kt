@@ -19,7 +19,6 @@ import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.databinding.FragmentHymnsBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
-import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.AppBarBehaviour
 import com.tinashe.hymnal.ui.hymns.adapter.HymnListAdapter
 import com.tinashe.hymnal.ui.hymns.sing.SingHymnsActivity
@@ -30,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns) {
 
     private val viewModel: CollectionHymnsViewModel by viewModels()
-    private val binding by viewBinding(FragmentHymnsBinding::bind)
+    private lateinit var binding: FragmentHymnsBinding
     private var appBarBehaviour: AppBarBehaviour? = null
 
     private val listAdapter: HymnListAdapter = HymnListAdapter { pair ->
@@ -80,6 +79,8 @@ class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentHymnsBinding.bind(view)
+
         binding.hymnsListView.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             val itemTouchHelper = ItemTouchHelper(swipeHandler)

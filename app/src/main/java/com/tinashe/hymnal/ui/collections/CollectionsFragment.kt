@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentCollectionsBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
-import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.AppBarBehaviour
 import com.tinashe.hymnal.ui.collections.adapter.CollectionListAdapter
 import com.tinashe.hymnal.ui.widget.SwipeToDeleteCallback
@@ -27,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private val viewModel: CollectionsViewModel by viewModels()
-    private val binding by viewBinding(FragmentCollectionsBinding::bind)
+    private lateinit var binding: FragmentCollectionsBinding
 
     private var appBarBehaviour: AppBarBehaviour? = null
     private val listAdapter by lazy {
@@ -76,6 +75,8 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentCollectionsBinding.bind(view)
+
         binding.listView.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             val itemTouchHelper = ItemTouchHelper(swipeHandler)
@@ -83,10 +84,9 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             adapter = listAdapter
         }
 
-        viewModel.viewStateLiveData.observeNonNull(viewLifecycleOwner) {
+        viewModel.viewStateLiveData.observeNonNull(viewLifecycleOwner) { state ->
             binding.apply {
-                val size = viewModel.collectionsLiveData.value?.size
-                when (it) {
+                when (state) {
                     ViewState.LOADING -> {
                         listView.isVisible = false
                         emptyView.isVisible = false
@@ -99,7 +99,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
                     ViewState.HAS_RESULTS -> {
                         progressBar.isVisible = false
 
-                        if (size ?: 0 > 0) {
+                        if ((viewModel.collectionsLiveData.value?.size ?: 0) > 0) {
                             emptyView.isVisible = false
                             listView.isVisible = true
                         } else {
