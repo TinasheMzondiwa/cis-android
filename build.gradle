@@ -26,7 +26,7 @@ buildscript {
     versions.moshi = '1.13.0'
     versions.firebase_bom = '26.7.0'
     versions.ktlint = '0.46.1'
-    versions.aztec = 'v1.6.0'
+    versions.aztec = '995-342de5f91d3f2e13e6491ad745903c08514d8639'
     versions.billing = '5.0.0'
     versions.material_tap = '3.3.2'
 
