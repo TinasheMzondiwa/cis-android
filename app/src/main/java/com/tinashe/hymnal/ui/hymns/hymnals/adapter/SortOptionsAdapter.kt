@@ -51,20 +51,20 @@ class SortHolder(
         HymnsSortOrderBinding.bind(containerView)
     }
 
-    private val changeListener: ChipGroup.OnCheckedChangeListener =
-        ChipGroup.OnCheckedChangeListener { _, checkedId ->
+    private val changeListener: ChipGroup.OnCheckedStateChangeListener =
+        ChipGroup.OnCheckedStateChangeListener { _, checkedIds ->
             val labelRes: Int
             val sort: HymnalSort
-            when (checkedId) {
-                R.id.chipSortTitle -> {
+            when {
+                checkedIds.contains(R.id.chipSortTitle) -> {
                     sort = HymnalSort.TITLE
                     labelRes = R.string.sort_title
                 }
-                R.id.chipSortLanguage -> {
+                checkedIds.contains(R.id.chipSortLanguage) -> {
                     sort = HymnalSort.LANGUAGE
                     labelRes = R.string.sort_language
                 }
-                else -> return@OnCheckedChangeListener
+                else -> return@OnCheckedStateChangeListener
             }
             val resources = containerView.resources
             binding.sortLabel.text = resources.getString(
@@ -99,14 +99,14 @@ class SortHolder(
             text = resources.getString(R.string.ordered_by, resources.getString(labelRes))
         }
         binding.sortGroup.apply {
-            setOnCheckedChangeListener(null)
+            setOnCheckedStateChangeListener(null)
             check(
                 when (sort) {
                     HymnalSort.TITLE -> R.id.chipSortTitle
                     HymnalSort.LANGUAGE -> R.id.chipSortLanguage
                 }
             )
-            setOnCheckedChangeListener(changeListener)
+            setOnCheckedStateChangeListener(changeListener)
         }
     }
 
