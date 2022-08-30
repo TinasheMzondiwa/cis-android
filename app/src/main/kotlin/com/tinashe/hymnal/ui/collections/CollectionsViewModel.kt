@@ -7,11 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.tinashe.hymnal.data.model.TitleBody
 import com.tinashe.hymnal.data.model.collections.CollectionHymns
 import com.tinashe.hymnal.data.model.collections.HymnCollection
-import com.tinashe.hymnal.data.repository.HymnalRepository
+import com.tinashe.hymnal.repository.HymnalRepository
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

@@ -4,7 +4,7 @@ import android.content.Context
 import com.squareup.moshi.Moshi
 import com.tinashe.hymnal.data.db.dao.CollectionsDao
 import com.tinashe.hymnal.data.db.dao.HymnsDao
-import com.tinashe.hymnal.data.repository.HymnalRepository
+import com.tinashe.hymnal.repository.HymnalRepository
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import dagger.Module
 import dagger.Provides

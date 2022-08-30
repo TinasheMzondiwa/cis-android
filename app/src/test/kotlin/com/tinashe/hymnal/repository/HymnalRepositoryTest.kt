@@ -1,4 +1,4 @@
-package com.tinashe.hymnal.data.repository
+package com.tinashe.hymnal.repository
 
 import android.content.Context
 import com.squareup.moshi.Moshi
