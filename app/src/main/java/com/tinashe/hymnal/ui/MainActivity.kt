@@ -2,7 +2,7 @@ package com.tinashe.hymnal.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.tinashe.hymnal.R
@@ -27,16 +27,18 @@ class MainActivity : AppCompatActivity(), AppBarBehaviour {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        binding.apply {
-            val navController = findNavController(R.id.nav_host_fragment)
-            val appBarConfiguration = AppBarConfiguration(
-                setOf(
-                    R.id.navigation_hymns,
-                    R.id.navigation_collections,
-                    R.id.navigation_support,
-                    R.id.navigation_info
-                )
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_hymns,
+                R.id.navigation_collections,
+                R.id.navigation_support,
+                R.id.navigation_info
             )
+        )
+        binding.apply {
             navView.menu.findItem(R.id.navigation_support).isVisible = config.enabled
             navView.setupWithNavController(navController)
             toolbarLayout.setupWithNavController(
