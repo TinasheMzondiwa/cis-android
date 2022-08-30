@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tinashe.hymnal.data.model.constants.HymnalSort
-import com.tinashe.hymnal.repository.HymnalRepository
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
+import com.tinashe.hymnal.repository.HymnalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
