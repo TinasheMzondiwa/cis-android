@@ -1,4 +1,4 @@
-name: CI
+name: Android CI
 
 on:
   push:
@@ -8,7 +8,6 @@ jobs:
     name: Lint and unit test
 
     runs-on: ubuntu-latest
-    
 
     steps:
       - name: Checkout repo
