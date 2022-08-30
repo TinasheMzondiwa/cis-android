@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.LiveData
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
-import com.tinashe.hymnal.utils.observeAll
 import io.mockk.every
 import io.mockk.mockk
 import org.amshove.kluent.shouldBeEqualTo
@@ -191,7 +191,7 @@ internal class SimpleTunePlayerTest {
 
         // when
         tunePlayer.togglePlayTune(5)
-        tunePlayer.onPause()
+        tunePlayer.onPause(mockk())
 
         // then
         states shouldBeEqualTo listOf(
@@ -262,4 +262,8 @@ internal class SimpleTunePlayerTest {
             PlaybackState.ON_STOP
         )
     }
+}
+
+private fun <T> LiveData<T>.observeAll(): List<T> = mutableListOf<T>().apply {
+    observeForever { add(it) }
 }

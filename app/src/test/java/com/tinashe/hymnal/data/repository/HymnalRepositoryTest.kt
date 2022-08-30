@@ -11,8 +11,8 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Before
 import org.junit.Rule
@@ -41,13 +41,13 @@ internal class HymnalRepositoryTest {
             mockHymnsDao,
             mockCollectionsDao,
             mockPrefs,
-            TestCoroutineDispatcher()
+            UnconfinedTestDispatcher()
         )
     }
 
     @ExperimentalCoroutinesApi
     @Test
-    fun `should query hymns for selected code`() = runBlockingTest {
+    fun `should query hymns for selected code`() = runTest {
         // given
         val code = "english"
         val query = "again and again"
