@@ -3,10 +3,10 @@ package com.tinashe.hymnal.ui.hymns.sing.player
 import android.content.Context
 import android.media.MediaPlayer
 import androidx.annotation.VisibleForTesting
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.OnLifecycleEvent
+import com.tinashe.hymnal.data.model.constants.Hymnals
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
@@ -17,7 +17,7 @@ import javax.inject.Inject
 class SimpleTunePlayer @Inject constructor(
     private val context: Context,
     private val prefs: HymnalPrefs
-) : LifecycleObserver {
+) : DefaultLifecycleObserver {
 
     private val mutablePlaybackState = SingleLiveEvent<PlaybackState>()
     val playbackLiveData: LiveData<PlaybackState> = mutablePlaybackState.asLiveData()
@@ -75,15 +75,24 @@ class SimpleTunePlayer @Inject constructor(
         mutablePlaybackState.postValue(PlaybackState.ON_STOP)
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    fun onPause() {
+    override fun onPause(owner: LifecycleOwner) {
         stopMedia()
+        super.onPause(owner)
     }
 
     companion object {
         private const val FOLDER = "midis"
         private const val EXTENSION = ".mid"
 
-        private val unavailableCodes = listOf("swahili")
+        /**
+         * Add here [Hymnals] that do not have audio matching the original [Hymnals.ENGLISH].
+         */
+        private val unavailableCodes = listOf(
+            Hymnals.SWAHILI,
+            Hymnals.ABAGUSII,
+            Hymnals.GIKUYU,
+            Hymnals.DHOLUO,
+            Hymnals.SDAH
+        ).map { it.key }
     }
 }
