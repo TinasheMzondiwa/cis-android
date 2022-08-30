@@ -7,9 +7,12 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -23,7 +26,7 @@ import com.tinashe.hymnal.ui.widget.SwipeToDeleteCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CollectionsFragment : Fragment(R.layout.fragment_collections) {
+class CollectionsFragment : Fragment(R.layout.fragment_collections), MenuProvider {
 
     private val viewModel: CollectionsViewModel by viewModels()
     private lateinit var binding: FragmentCollectionsBinding
@@ -70,12 +73,14 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         appBarBehaviour = context as? AppBarBehaviour
-        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCollectionsBinding.bind(view)
+
+        (requireActivity() as MenuHost)
+            .addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         binding.listView.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
@@ -120,19 +125,17 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         viewModel.loadData()
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.collections_menu, menu)
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.collections_menu, menu)
         val searchItem = menu.findItem(R.id.action_search)
         val searchView: SearchView = searchItem.actionView as SearchView
         searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                 appBarBehaviour?.setAppBarExpanded(false)
                 return true
             }
 
-            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                 appBarBehaviour?.setAppBarExpanded(true)
                 return true
             }
@@ -148,4 +151,6 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             }
         })
     }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean = true
 }

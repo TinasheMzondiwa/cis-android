@@ -1,7 +1,6 @@
 package com.tinashe.hymnal.ui.hymns.sing
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +8,7 @@ import android.transition.TransitionManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -57,6 +57,17 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
     private var currentPosition: Int? = null
 
     private val themeContainerColor: Int by lazy { ContextCompat.getColor(this, R.color.cis_gold) }
+
+    private val editHymnLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            currentPosition = binding.viewPager.currentItem
+
+            val collectionId = intent.getIntExtra(ARG_COLLECTION_ID, -1)
+            viewModel.loadData(collectionId)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         applyMaterialTransform(getString(R.string.transition_shared_element))
@@ -148,7 +159,7 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                                 ?: return@setOnMenuItemClickListener false
 
                             val intent = EditHymnActivity.editIntent(this@SingHymnsActivity, hymn)
-                            startActivityForResult(intent, RC_EDIT_HYMN)
+                            editHymnLauncher.launch(intent)
                         }
                         true
                     }
@@ -316,21 +327,9 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
         }
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_EDIT_HYMN && resultCode == Activity.RESULT_OK) {
-            currentPosition = binding.viewPager.currentItem
-
-            val collectionId = intent.getIntExtra(ARG_COLLECTION_ID, -1)
-            viewModel.loadData(collectionId)
-        }
-    }
-
     companion object {
         private const val ARG_SELECTED = "arg:selected_number"
         private const val ARG_COLLECTION_ID = "arg:collection_id"
-        private const val RC_EDIT_HYMN = 23
 
         fun singIntent(context: Context, hymnId: Int): Intent =
             Intent(context, SingHymnsActivity::class.java).apply {

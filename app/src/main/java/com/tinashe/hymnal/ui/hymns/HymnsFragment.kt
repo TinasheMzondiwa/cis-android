@@ -8,9 +8,12 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
@@ -28,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 
 @AndroidEntryPoint
-class HymnsFragment : Fragment(R.layout.fragment_hymns) {
+class HymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider {
 
     private val viewModel: HymnsViewModel by viewModels()
     private lateinit var binding: FragmentHymnsBinding
@@ -42,12 +45,14 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns) {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         appBarBehaviour = context as? AppBarBehaviour
-        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHymnsBinding.bind(view)
+
+        (requireActivity() as MenuHost)
+            .addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         binding.hymnsListView.apply {
             addItemDecoration(DividerItemDecoration(context, VERTICAL))
@@ -97,21 +102,19 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns) {
         } ?: startActivity(intent)
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.hymns_list, menu)
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.hymns_list, menu)
 
         val searchItem = menu.findItem(R.id.action_search)
         val searchView: SearchView = searchItem.actionView as SearchView
         searchView.queryHint = getString(R.string.hint_search_hymns)
         searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                 appBarBehaviour?.setAppBarExpanded(false)
                 return true
             }
 
-            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                 appBarBehaviour?.setAppBarExpanded(true)
                 return true
             }
@@ -128,9 +131,8 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns) {
         })
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
             R.id.actions_number -> {
                 val fragment = PickHymnFragment.newInstance { number ->
                     viewModel.hymnNumberSelected(requireContext(), number)
@@ -146,7 +148,7 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns) {
                 }
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> false
         }
     }
 

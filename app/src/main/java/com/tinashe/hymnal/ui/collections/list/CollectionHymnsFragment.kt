@@ -7,9 +7,12 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -26,7 +29,7 @@ import com.tinashe.hymnal.ui.widget.SwipeToDeleteCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns) {
+class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider {
 
     private val viewModel: CollectionHymnsViewModel by viewModels()
     private lateinit var binding: FragmentHymnsBinding
@@ -74,7 +77,8 @@ class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns) {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         appBarBehaviour = context as? AppBarBehaviour
-        setHasOptionsMenu(true)
+        (requireActivity() as MenuHost)
+            .addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -108,15 +112,12 @@ class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns) {
         viewModel.loadData(collectionId)
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.collection_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.collection_menu, menu)
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
             R.id.action_delete -> {
                 MaterialAlertDialogBuilder(requireContext(), R.style.Theme_CIS_AlertDialog_Warning)
                     .setTitle(R.string.delete_collection)
@@ -129,7 +130,7 @@ class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns) {
                     .show()
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> false
         }
     }
 

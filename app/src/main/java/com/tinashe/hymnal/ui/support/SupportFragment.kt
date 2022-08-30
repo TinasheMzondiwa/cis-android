@@ -1,13 +1,15 @@
 package com.tinashe.hymnal.ui.support
 
-import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tinashe.hymnal.R
@@ -18,19 +20,17 @@ import com.tinashe.hymnal.utils.Helper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SupportFragment : Fragment(R.layout.fragment_support) {
+class SupportFragment : Fragment(R.layout.fragment_support), MenuProvider {
 
     private val viewModel: SupportViewModel by viewModels()
     private lateinit var binding: FragmentSupportBinding
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        setHasOptionsMenu(true)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSupportBinding.bind(view)
+
+        (requireActivity() as MenuHost)
+            .addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         binding.apply {
             tvPolicy.setOnClickListener {
@@ -127,15 +127,12 @@ class SupportFragment : Fragment(R.layout.fragment_support) {
         viewModel.loadData(requireActivity())
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.support_menu, menu)
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.support_menu, menu)
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
             R.id.action_account_settings -> {
                 Helper.launchWebUrl(requireContext(), getString(R.string.subscriptions_url))
                 true
@@ -144,7 +141,7 @@ class SupportFragment : Fragment(R.layout.fragment_support) {
                 Helper.sendFeedback(requireActivity())
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> false
         }
     }
 
