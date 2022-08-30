@@ -1,5 +1,6 @@
 repositories {
-    jcenter()
+    google()
+    mavenCentral()
 }
 
 configurations {
@@ -22,4 +23,16 @@ task ktlintFormat(type: JavaExec, group: "formatting") {
     classpath = configurations.ktlint
     main = "com.pinterest.ktlint.Main"
     args "-F", "src/**/*.kt"
+}
+
+configurations.named("ktlint").configure {
+    resolutionStrategy {
+        dependencySubstitution {
+            substitute module("com.pinterest:ktlint") with variant(module("com.pinterest:ktlint:${versions.ktlint}")) {
+                attributes {
+                    attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling, Bundling.EXTERNAL))
+                }
+            }
+        }
+    }
 }

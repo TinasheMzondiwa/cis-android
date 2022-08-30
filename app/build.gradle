@@ -7,7 +7,6 @@ plugins {
     id 'com.google.gms.google-services'
     id "androidx.navigation.safeargs.kotlin"
     id 'com.google.firebase.crashlytics'
-    id 'com.github.triplet.play'
 }
 
 apply from: "$rootDir/gradle/helpers/common-methods.gradle"
@@ -79,7 +78,6 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
         freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
-        freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
     }
     buildFeatures {
         viewBinding = true
@@ -87,10 +85,8 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
-
     // Androidx
-    implementation "androidx.core:core-ktx:${versions.ktx}"
+    implementation "androidx.core:core-ktx:${versions.core_ktx}"
     implementation "androidx.appcompat:appcompat:${versions.appcompat}"
     implementation "com.google.android.material:material:${versions.material}"
     implementation "androidx.constraintlayout:constraintlayout:${versions.const_layout}"
@@ -128,12 +124,11 @@ dependencies {
 
     implementation "com.jakewharton.timber:timber:${versions.timber}"
     implementation "com.android.billingclient:billing-ktx:${versions.billing}"
-    implementation "com.github.wordpress-mobile.WordPress-Aztec-Android:aztec:${versions.aztec}"
+    implementation "org.wordpress:aztec:${versions.aztec}"
     implementation "uk.co.samuelwall:material-tap-target-prompt:${versions.material_tap}"
 
     testImplementation "junit:junit:$versions.junit"
-    testImplementation "org.mockito:mockito-core:$versions.mockito"
-    testImplementation "org.mockito:mockito-inline:$versions.mockito"
+    testImplementation "io.mockk:mockk:${versions.mockk}"
     testImplementation "androidx.arch.core:core-testing:$versions.androidx_testing"
     testImplementation "org.amshove.kluent:kluent-android:$versions.kluent"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutines}"
@@ -142,13 +137,4 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$versions.androidx_junit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso"
 
-}
-
-play {
-    serviceAccountCredentials.set(file("play-key.json"))
-    track.set("alpha")
-    fromTrack.set("alpha")
-    promoteTrack.set("beta")
-    defaultToAppBundles.set(true)
-    //resolutionStrategy.set(ResolutionStrategy.AUTO)
 }
