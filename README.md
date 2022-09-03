@@ -1,6 +1,6 @@
 # Christ In Song Android App
 
-[![GitHub Actions](https://github.com/TinasheMzondiwa/cis-android/workflows/workflow/badge.svg)](.github/workflows/workflow.yml)
+[![GitHub Actions](https://github.com/TinasheMzondiwa/cis-android/actions/workflows/android.yml/badge.svg)](https://github.com/TinasheMzondiwa/cis-android/actions/workflows/android.yml)
 [![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
 
 ## Screenshots
@@ -8,7 +8,8 @@
 
 ## Development
 Written entirely in Kotlin & uses latest Android libraries like
-- [Architecture Components](https://developer.android.com/topic/libraries/architecture) (Room, Navigation & Lifecycle)
+- [Architecture Components](https://developer.android.com/topic/libraries/architecture) (Room,
+  Navigation & Lifecycle)
 - [Coroutines](https://kotlinlang.org/docs/reference/coroutines/coroutines-guide.html)
 - [Dagger Hilt](https://dagger.dev/hilt/) for DI
 
@@ -20,7 +21,7 @@ Requires [Android Studio](https://developer.android.com/studio/) 4.0.0 or above
 
 ## License
 
-    Copyright 2020 Tinashe Mzondiwa
+    Copyright 2022 Tinashe Mzondiwa
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

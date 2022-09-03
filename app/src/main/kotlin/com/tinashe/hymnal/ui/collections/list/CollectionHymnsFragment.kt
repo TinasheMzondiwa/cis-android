@@ -77,13 +77,14 @@ class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         appBarBehaviour = context as? AppBarBehaviour
-        (requireActivity() as MenuHost)
-            .addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHymnsBinding.bind(view)
+
+        (requireActivity() as MenuHost)
+            .addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         binding.hymnsListView.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
