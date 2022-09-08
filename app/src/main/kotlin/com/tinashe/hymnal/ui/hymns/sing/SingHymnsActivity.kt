@@ -78,8 +78,6 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
 
         val hymnId = intent.getIntExtra(ARG_SELECTED, 1)
 
-        viewModel.statusLiveData.observeNonNull(this) {
-        }
         viewModel.hymnalTitleLiveData.observeNonNull(this) {
             title = it
         }
@@ -87,7 +85,9 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
             pagerAdapter = SingFragmentsAdapter(this, hymns)
             binding.viewPager.apply {
                 adapter = pagerAdapter
-                val position = currentPosition ?: hymns.indexOfFirst { it.hymnId == hymnId }
+                val position = (currentPosition ?: hymns.indexOfFirst { it.hymnId == hymnId })
+                    .takeUnless { it == -1 } ?: return@apply
+
                 setCurrentItem(position, false)
                 currentPosition = null
             }
@@ -114,10 +114,7 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                     tunePlayer.stopMedia()
 
                     val hymns = pagerAdapter?.hymns
-                    if (hymns.isNullOrEmpty()) {
-                        return
-                    }
-                    val hymn = hymns[position]
+                    val hymn = hymns?.getOrNull(position) ?: return
                     viewModel.hymnViewed(hymn)
                 }
             })
