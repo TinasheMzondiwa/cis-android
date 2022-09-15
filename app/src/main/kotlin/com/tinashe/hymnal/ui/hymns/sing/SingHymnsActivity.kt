@@ -112,10 +112,6 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     tunePlayer.stopMedia()
-
-                    val hymns = pagerAdapter?.hymns
-                    val hymn = hymns?.getOrNull(position) ?: return
-                    viewModel.hymnViewed(hymn)
                 }
             })
 
