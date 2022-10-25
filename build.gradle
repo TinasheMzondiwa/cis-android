@@ -7,7 +7,7 @@ buildscript {
     ]
 
     versions.kotlin = '1.7.20'
-    versions.material = '1.6.1'
+    versions.material = '1.7.0'
     versions.core_ktx = '1.9.0'
     versions.appcompat = '1.5.1'
     versions.lifecycle = '2.5.1'
