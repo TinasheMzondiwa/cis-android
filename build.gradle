@@ -27,7 +27,7 @@ buildscript {
     versions.firebase_bom = '31.0.2'
     versions.ktlint = '0.46.1'
     versions.aztec = 'v1.6.2'
-    versions.billing = '5.0.0'
+    versions.billing = '5.1.0'
     versions.material_tap = '3.3.2'
 
     // testing
