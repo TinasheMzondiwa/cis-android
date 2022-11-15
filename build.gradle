@@ -34,7 +34,7 @@ buildscript {
     versions.junit = '4.13.2'
     versions.mockk = '1.13.2'
     versions.androidx_testing = '2.1.0'
-    versions.androidx_junit = '1.1.3'
+    versions.androidx_junit = '1.1.4'
     versions.kluent = '1.72'
     versions.robolectric = '4.9'
     versions.espresso = '3.5.0'
