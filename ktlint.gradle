@@ -1,34 +1,29 @@
-repositories {
-    google()
-    mavenCentral()
-}
-
 configurations {
     ktlint
 }
 
 dependencies {
-    ktlint "com.pinterest:ktlint:${versions.ktlint}"
+    ktlint "com.pinterest:ktlint:0.46.1"
 }
 
 task ktlint(type: JavaExec, group: "verification") {
     description = "Check Kotlin code style."
     classpath = configurations.ktlint
-    main = "com.pinterest.ktlint.Main"
+    mainClass.set("com.pinterest.ktlint.Main")
     args "src/**/*.kt"
 }
 
 task ktlintFormat(type: JavaExec, group: "formatting") {
     description = "Fix Kotlin code style deviations."
     classpath = configurations.ktlint
-    main = "com.pinterest.ktlint.Main"
+    mainClass.set("com.pinterest.ktlint.Main")
     args "-F", "src/**/*.kt"
 }
 
 configurations.named("ktlint").configure {
     resolutionStrategy {
         dependencySubstitution {
-            substitute module("com.pinterest:ktlint") with variant(module("com.pinterest:ktlint:${versions.ktlint}")) {
+            substitute module("com.pinterest:ktlint") with variant(module("com.pinterest:ktlint:0.46.1")) {
                 attributes {
                     attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling, Bundling.EXTERNAL))
                 }
