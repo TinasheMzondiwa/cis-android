@@ -3,7 +3,7 @@ configurations {
 }
 
 dependencies {
-    ktlint "com.pinterest:ktlint:0.46.1"
+    ktlint libs.ktlint
 }
 
 task ktlint(type: JavaExec, group: "verification") {
@@ -23,7 +23,7 @@ task ktlintFormat(type: JavaExec, group: "formatting") {
 configurations.named("ktlint").configure {
     resolutionStrategy {
         dependencySubstitution {
-            substitute module("com.pinterest:ktlint") with variant(module("com.pinterest:ktlint:0.46.1")) {
+            substitute module("com.pinterest:ktlint") with variant(module("com.pinterest:ktlint:${libs.versions.ktlint.get()}")) {
                 attributes {
                     attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling, Bundling.EXTERNAL))
                 }

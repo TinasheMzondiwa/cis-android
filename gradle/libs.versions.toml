@@ -36,7 +36,7 @@ google-services = "4.3.14"
 jvmTarget = "11"
 kotlin = "1.7.21"
 kotlin-coroutines = "1.6.4"
-ktlint = "11.0.0"
+ktlint = "0.46.1"
 square-moshi = "1.14.0"
 tapTarget = "3.3.2"
 test-androidx = "1.5.0"
@@ -113,7 +113,7 @@ kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", 
 kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
 kotlin-coroutines-playservices = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlin-coroutines" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-ktlint = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint" }
+ktlint = { module = "com.pinterest:ktlint", version.ref = "ktlint" }
 square-moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "square-moshi" }
 square-moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "square-moshi" }
 tapTarget = { module = "uk.co.samuelwall:material-tap-target-prompt", version.ref = "tapTarget" }
@@ -189,4 +189,3 @@ google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "google-hilt" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
