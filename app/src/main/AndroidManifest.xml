@@ -22,6 +22,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CIS"
         tools:ignore="DataExtractionRules">
+
+        <profileable
+            android:shell="true"
+            tools:targetApi="29" />
+
         <activity
             android:name="com.tinashe.hymnal.ui.MainActivity"
             android:theme="@style/Theme.CIS.Main"

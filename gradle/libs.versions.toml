@@ -18,6 +18,7 @@ androidx-lifecyle = "2.6.0-alpha03"
 androidx-lifecyle-ext = "2.2.0"
 androidx-navigation = "2.5.3"
 androidx-preference = "1.2.0"
+androidx-profileinstaller = "1.2.0"
 androidx-recyclerview = "1.2.1"
 androidx-room = "2.4.3"
 androidx-savedstate = "1.2.0"
@@ -41,8 +42,10 @@ square-moshi = "1.14.0"
 tapTarget = "3.3.2"
 test-androidx = "1.5.0"
 test-androidx-archcore = "2.1.0"
+test-androidx-benchmark-macro = "1.1.1"
 test-androidx-espresso = "3.5.0"
 test-androidx-ext = "1.1.4"
+test-androidx-uiautomator = "2.2.0"
 test-junit = "4.13.2"
 test-kluent = "1.72"
 test-mockk = "1.13.3"
@@ -87,6 +90,7 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation" }
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx-navigation" }
 androidx-preference = { module = "androidx.preference:preference-ktx", version.ref = "androidx-preference" }
+androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "androidx-profileinstaller" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidx-recyclerview" }
 androidx-room = { module = "androidx.room:room-ktx", version.ref = "androidx-room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
@@ -102,7 +106,7 @@ google-accompanist-navigation-material = { module = "com.google.accompanist:acco
 google-accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "google-accompanist" }
 google-accompanist-systemUiController = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "google-accompanist" }
 google-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "google-firebase-bom" }
-google-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+google-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 google-firebase-config = { module = "com.google.firebase:firebase-config-ktx" }
 google-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "google-hilt" }
 google-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "google-hilt" }
@@ -118,6 +122,7 @@ square-moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", ver
 square-moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "square-moshi" }
 tapTarget = { module = "uk.co.samuelwall:material-tap-target-prompt", version.ref = "tapTarget" }
 test-androidx-archcore = { module = "androidx.arch.core:core-testing", version.ref = "test-androidx-archcore" }
+test-androidx-benchmark-macro = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "test-androidx-benchmark-macro" }
 test-androidx-core = { module = "androidx.test:core", version.ref = "test-androidx" }
 test-androidx-espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "test-androidx-espresso" }
 test-androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "test-androidx-espresso" }
@@ -125,6 +130,7 @@ test-androidx-espresso-intents = { module = "androidx.test.espresso:espresso-int
 test-androidx-ext = { module = "androidx.test.ext:junit", version.ref = "test-androidx-ext" }
 test-androidx-rules = { module = "androidx.test:rules", version.ref = "test-androidx" }
 test-androidx-runner = { module = "androidx.test:runner", version.ref = "test-androidx" }
+test-androidx-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "test-androidx-uiautomator" }
 test-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-coroutines" }
 test-google-hilt = { module = "com.google.dagger:hilt-android-testing", version.ref = "google-hilt" }
 test-junit = { module = "junit:junit", version.ref = "test-junit" }

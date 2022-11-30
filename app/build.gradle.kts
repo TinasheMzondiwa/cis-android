@@ -68,6 +68,13 @@ android {
         val debug by getting {
             manifestPlaceholders["enableReporting"] = false
         }
+
+        val benchmark by creating {
+            initWith(release)
+            matchingFallbacks.add("release")
+            signingConfig = signingConfigs.getByName("debug")
+            proguardFiles("benchmark-rules.pro")
+        }
     }
 
     compileOptions {
@@ -98,6 +105,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+    implementation(libs.androidx.profileinstaller)
     implementation(libs.androidx.room)
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)

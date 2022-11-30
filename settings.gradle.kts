@@ -15,6 +15,9 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "cis-android"
-include(":app")
+include(
+    ":app",
+    ":benchmark"
+)
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
