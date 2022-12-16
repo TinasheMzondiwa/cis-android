@@ -23,7 +23,7 @@ android {
         applicationId = "com.tinashe.christInSong"
         minSdk = 21
         targetSdk = 33
-        versionCode = 3431
+        versionCode = 3432
         versionName = libs.versions.app.get()
         vectorDrawables.useSupportLibrary = true
 
