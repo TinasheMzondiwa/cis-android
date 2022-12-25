@@ -5,7 +5,7 @@ core:
 hymnals:
   - 'app/src/main/res/raw/*'
 dependencies:
-  - 'buildSrc/src/main/kotlin/dependencies/*'
+  - 'gradle/libs.versions.toml'
 test:
   - any: ['*/src/test/*','*/src/androidTest/*']
 gradle:
