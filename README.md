@@ -21,7 +21,7 @@ Requires [Android Studio](https://developer.android.com/studio/) 4.0.0 or above
 
 ## License
 
-    Copyright 2022 Tinashe Mzondiwa
+    Copyright 2023 Tinashe Mzondiwa
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
