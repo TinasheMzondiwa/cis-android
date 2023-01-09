@@ -552,8 +552,6 @@ HSPLandroidx/arch/core/internal/FastSafeIterableMap;->get(Ljava/lang/Object;)Lan
 HSPLandroidx/arch/core/internal/FastSafeIterableMap;->putIfAbsent(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 HSPLandroidx/arch/core/internal/FastSafeIterableMap;->remove(Ljava/lang/Object;)Ljava/lang/Object;
 HSPLandroidx/arch/core/internal/SafeIterableMap$AscendingIterator;-><init>(Landroidx/arch/core/internal/SafeIterableMap$Entry;Landroidx/arch/core/internal/SafeIterableMap$Entry;)V
-HSPLandroidx/arch/core/internal/SafeIterableMap$DescendingIterator;-><init>(Landroidx/arch/core/internal/SafeIterableMap$Entry;Landroidx/arch/core/internal/SafeIterableMap$Entry;)V
-HSPLandroidx/arch/core/internal/SafeIterableMap$DescendingIterator;->forward(Landroidx/arch/core/internal/SafeIterableMap$Entry;)Landroidx/arch/core/internal/SafeIterableMap$Entry;
 HSPLandroidx/arch/core/internal/SafeIterableMap$Entry;-><init>(Ljava/lang/Object;Ljava/lang/Object;)V
 HSPLandroidx/arch/core/internal/SafeIterableMap$Entry;->getKey()Ljava/lang/Object;
 HSPLandroidx/arch/core/internal/SafeIterableMap$Entry;->getValue()Ljava/lang/Object;
@@ -565,7 +563,6 @@ HSPLandroidx/arch/core/internal/SafeIterableMap$ListIterator;-><init>(Landroidx/
 HSPLandroidx/arch/core/internal/SafeIterableMap$ListIterator;->hasNext()Z
 HSPLandroidx/arch/core/internal/SafeIterableMap$ListIterator;->next()Ljava/lang/Object;
 HSPLandroidx/arch/core/internal/SafeIterableMap;-><init>()V
-HSPLandroidx/arch/core/internal/SafeIterableMap;->descendingIterator()Ljava/util/Iterator;
 HSPLandroidx/arch/core/internal/SafeIterableMap;->eldest()Ljava/util/Map$Entry;
 HSPLandroidx/arch/core/internal/SafeIterableMap;->get(Ljava/lang/Object;)Landroidx/arch/core/internal/SafeIterableMap$Entry;
 HSPLandroidx/arch/core/internal/SafeIterableMap;->iterator()Ljava/util/Iterator;
@@ -1252,7 +1249,6 @@ HSPLandroidx/fragment/app/Fragment;->performActivityCreated(Landroid/os/Bundle;)
 HSPLandroidx/fragment/app/Fragment;->performAttach()V
 HSPLandroidx/fragment/app/Fragment;->performCreate(Landroid/os/Bundle;)V
 HSPLandroidx/fragment/app/Fragment;->performCreateView(Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Landroid/os/Bundle;)V
-HSPLandroidx/fragment/app/Fragment;->performPause()V
 HSPLandroidx/fragment/app/Fragment;->performPrimaryNavigationFragmentChanged()V
 HSPLandroidx/fragment/app/Fragment;->performResume()V
 HSPLandroidx/fragment/app/Fragment;->performStart()V
@@ -1291,7 +1287,6 @@ HSPLandroidx/fragment/app/FragmentActivity;->getSupportFragmentManager()Landroid
 HSPLandroidx/fragment/app/FragmentActivity;->onCreate(Landroid/os/Bundle;)V
 HSPLandroidx/fragment/app/FragmentActivity;->onCreateView(Landroid/view/View;Ljava/lang/String;Landroid/content/Context;Landroid/util/AttributeSet;)Landroid/view/View;
 HSPLandroidx/fragment/app/FragmentActivity;->onCreateView(Ljava/lang/String;Landroid/content/Context;Landroid/util/AttributeSet;)Landroid/view/View;
-HSPLandroidx/fragment/app/FragmentActivity;->onPause()V
 HSPLandroidx/fragment/app/FragmentActivity;->onPostResume()V
 HSPLandroidx/fragment/app/FragmentActivity;->onResume()V
 HSPLandroidx/fragment/app/FragmentActivity;->onStart()V
@@ -1308,7 +1303,6 @@ HSPLandroidx/fragment/app/FragmentController;->attachHost()V
 HSPLandroidx/fragment/app/FragmentController;->createController(Landroidx/fragment/app/FragmentHostCallback;)Landroidx/fragment/app/FragmentController;
 HSPLandroidx/fragment/app/FragmentController;->dispatchActivityCreated()V
 HSPLandroidx/fragment/app/FragmentController;->dispatchCreate()V
-HSPLandroidx/fragment/app/FragmentController;->dispatchPause()V
 HSPLandroidx/fragment/app/FragmentController;->dispatchResume()V
 HSPLandroidx/fragment/app/FragmentController;->dispatchStart()V
 HSPLandroidx/fragment/app/FragmentController;->execPendingActions()V
@@ -1329,7 +1323,6 @@ HSPLandroidx/fragment/app/FragmentLifecycleCallbacksDispatcher;-><init>(Landroid
 HSPLandroidx/fragment/app/FragmentLifecycleCallbacksDispatcher;->dispatchOnFragmentActivityCreated(Z)V
 HSPLandroidx/fragment/app/FragmentLifecycleCallbacksDispatcher;->dispatchOnFragmentAttached(Z)V
 HSPLandroidx/fragment/app/FragmentLifecycleCallbacksDispatcher;->dispatchOnFragmentCreated(Z)V
-HSPLandroidx/fragment/app/FragmentLifecycleCallbacksDispatcher;->dispatchOnFragmentPaused(Z)V
 HSPLandroidx/fragment/app/FragmentLifecycleCallbacksDispatcher;->dispatchOnFragmentPreAttached(Z)V
 HSPLandroidx/fragment/app/FragmentLifecycleCallbacksDispatcher;->dispatchOnFragmentPreCreated(Z)V
 HSPLandroidx/fragment/app/FragmentLifecycleCallbacksDispatcher;->dispatchOnFragmentResumed(Z)V
@@ -1368,7 +1361,6 @@ HSPLandroidx/fragment/app/FragmentManager;->dispatchCreate()V
 HSPLandroidx/fragment/app/FragmentManager;->dispatchCreateOptionsMenu()Z
 HSPLandroidx/fragment/app/FragmentManager;->dispatchOnAttachFragment(Landroidx/fragment/app/Fragment;)V
 HSPLandroidx/fragment/app/FragmentManager;->dispatchParentPrimaryNavigationFragmentChanged(Landroidx/fragment/app/Fragment;)V
-HSPLandroidx/fragment/app/FragmentManager;->dispatchPause()V
 HSPLandroidx/fragment/app/FragmentManager;->dispatchPrepareOptionsMenu()Z
 HSPLandroidx/fragment/app/FragmentManager;->dispatchPrimaryNavigationFragmentChanged()V
 HSPLandroidx/fragment/app/FragmentManager;->dispatchResume()V
@@ -1428,7 +1420,6 @@ HSPLandroidx/fragment/app/FragmentStateManager;->createView()V
 HSPLandroidx/fragment/app/FragmentStateManager;->ensureInflatedView()V
 HSPLandroidx/fragment/app/FragmentStateManager;->getFragment()Landroidx/fragment/app/Fragment;
 HSPLandroidx/fragment/app/FragmentStateManager;->moveToExpectedState()V
-HSPLandroidx/fragment/app/FragmentStateManager;->pause()V
 HSPLandroidx/fragment/app/FragmentStateManager;->restoreState(Ljava/lang/ClassLoader;)V
 HSPLandroidx/fragment/app/FragmentStateManager;->resume()V
 HSPLandroidx/fragment/app/FragmentStateManager;->setFragmentManagerState(I)V
@@ -1508,7 +1499,6 @@ HSPLandroidx/lifecycle/CloseableCoroutineScope;-><init>(Lkotlin/coroutines/Corou
 HSPLandroidx/lifecycle/CloseableCoroutineScope;->getCoroutineContext()Lkotlin/coroutines/CoroutineContext;
 HSPLandroidx/lifecycle/EmptyActivityLifecycleCallbacks;-><init>()V
 HSPLandroidx/lifecycle/EmptyActivityLifecycleCallbacks;->onActivityCreated(Landroid/app/Activity;Landroid/os/Bundle;)V
-HSPLandroidx/lifecycle/EmptyActivityLifecycleCallbacks;->onActivityPaused(Landroid/app/Activity;)V
 HSPLandroidx/lifecycle/EmptyActivityLifecycleCallbacks;->onActivityResumed(Landroid/app/Activity;)V
 HSPLandroidx/lifecycle/EmptyActivityLifecycleCallbacks;->onActivityStarted(Landroid/app/Activity;)V
 HSPLandroidx/lifecycle/FullLifecycleObserverAdapter$1;-><clinit>()V
@@ -1578,11 +1568,9 @@ HSPLandroidx/lifecycle/ProcessLifecycleOwner$3$1;->onActivityPostResumed(Landroi
 HSPLandroidx/lifecycle/ProcessLifecycleOwner$3$1;->onActivityPostStarted(Landroid/app/Activity;)V
 HSPLandroidx/lifecycle/ProcessLifecycleOwner$3;-><init>(Landroidx/lifecycle/ProcessLifecycleOwner;)V
 HSPLandroidx/lifecycle/ProcessLifecycleOwner$3;->onActivityCreated(Landroid/app/Activity;Landroid/os/Bundle;)V
-HSPLandroidx/lifecycle/ProcessLifecycleOwner$3;->onActivityPaused(Landroid/app/Activity;)V
 HSPLandroidx/lifecycle/ProcessLifecycleOwner$3;->onActivityPreCreated(Landroid/app/Activity;Landroid/os/Bundle;)V
 HSPLandroidx/lifecycle/ProcessLifecycleOwner;-><clinit>()V
 HSPLandroidx/lifecycle/ProcessLifecycleOwner;-><init>()V
-HSPLandroidx/lifecycle/ProcessLifecycleOwner;->activityPaused()V
 HSPLandroidx/lifecycle/ProcessLifecycleOwner;->activityResumed()V
 HSPLandroidx/lifecycle/ProcessLifecycleOwner;->activityStarted()V
 HSPLandroidx/lifecycle/ProcessLifecycleOwner;->get()Landroidx/lifecycle/ProcessLifecycleOwner;
@@ -1590,11 +1578,9 @@ HSPLandroidx/lifecycle/ProcessLifecycleOwner;->getLifecycle()Landroidx/lifecycle
 HSPLandroidx/lifecycle/ProcessLifecycleOwner;->init(Landroid/content/Context;)V
 HSPLandroidx/lifecycle/ReportFragment$LifecycleCallbacks;-><init>()V
 HSPLandroidx/lifecycle/ReportFragment$LifecycleCallbacks;->onActivityCreated(Landroid/app/Activity;Landroid/os/Bundle;)V
-HSPLandroidx/lifecycle/ReportFragment$LifecycleCallbacks;->onActivityPaused(Landroid/app/Activity;)V
 HSPLandroidx/lifecycle/ReportFragment$LifecycleCallbacks;->onActivityPostCreated(Landroid/app/Activity;Landroid/os/Bundle;)V
 HSPLandroidx/lifecycle/ReportFragment$LifecycleCallbacks;->onActivityPostResumed(Landroid/app/Activity;)V
 HSPLandroidx/lifecycle/ReportFragment$LifecycleCallbacks;->onActivityPostStarted(Landroid/app/Activity;)V
-HSPLandroidx/lifecycle/ReportFragment$LifecycleCallbacks;->onActivityPrePaused(Landroid/app/Activity;)V
 HSPLandroidx/lifecycle/ReportFragment$LifecycleCallbacks;->onActivityResumed(Landroid/app/Activity;)V
 HSPLandroidx/lifecycle/ReportFragment$LifecycleCallbacks;->onActivityStarted(Landroid/app/Activity;)V
 HSPLandroidx/lifecycle/ReportFragment$LifecycleCallbacks;->registerIn(Landroid/app/Activity;)V
@@ -1603,7 +1589,6 @@ HSPLandroidx/lifecycle/ReportFragment;->dispatch(Landroid/app/Activity;Landroidx
 HSPLandroidx/lifecycle/ReportFragment;->dispatch(Landroidx/lifecycle/Lifecycle$Event;)V
 HSPLandroidx/lifecycle/ReportFragment;->injectIfNeededIn(Landroid/app/Activity;)V
 HSPLandroidx/lifecycle/ReportFragment;->onActivityCreated(Landroid/os/Bundle;)V
-HSPLandroidx/lifecycle/ReportFragment;->onPause()V
 HSPLandroidx/lifecycle/ReportFragment;->onResume()V
 HSPLandroidx/lifecycle/ReportFragment;->onStart()V
 HSPLandroidx/lifecycle/SavedStateHandle$$ExternalSyntheticLambda0;-><init>(Landroidx/lifecycle/SavedStateHandle;)V
@@ -2165,6 +2150,7 @@ HSPLandroidx/recyclerview/widget/RecyclerView$ViewHolder;->wasReturnedFromScrap(
 HSPLandroidx/recyclerview/widget/RecyclerView;-><clinit>()V
 HSPLandroidx/recyclerview/widget/RecyclerView;-><init>(Landroid/content/Context;Landroid/util/AttributeSet;)V
 HSPLandroidx/recyclerview/widget/RecyclerView;-><init>(Landroid/content/Context;Landroid/util/AttributeSet;I)V
+HSPLandroidx/recyclerview/widget/RecyclerView;->addFocusables(Ljava/util/ArrayList;II)V
 HSPLandroidx/recyclerview/widget/RecyclerView;->addItemDecoration(Landroidx/recyclerview/widget/RecyclerView$ItemDecoration;)V
 HSPLandroidx/recyclerview/widget/RecyclerView;->assertNotInLayoutOrScroll(Ljava/lang/String;)V
 HSPLandroidx/recyclerview/widget/RecyclerView;->checkLayoutParams(Landroid/view/ViewGroup$LayoutParams;)Z
@@ -2571,7 +2557,6 @@ HSPLcom/google/android/gms/common/api/internal/BackgroundDetector;->addListener(
 HSPLcom/google/android/gms/common/api/internal/BackgroundDetector;->getInstance()Lcom/google/android/gms/common/api/internal/BackgroundDetector;
 HSPLcom/google/android/gms/common/api/internal/BackgroundDetector;->initialize(Landroid/app/Application;)V
 HSPLcom/google/android/gms/common/api/internal/BackgroundDetector;->onActivityCreated(Landroid/app/Activity;Landroid/os/Bundle;)V
-HSPLcom/google/android/gms/common/api/internal/BackgroundDetector;->onActivityPaused(Landroid/app/Activity;)V
 HSPLcom/google/android/gms/common/api/internal/BackgroundDetector;->onActivityResumed(Landroid/app/Activity;)V
 HSPLcom/google/android/gms/common/api/internal/BackgroundDetector;->onActivityStarted(Landroid/app/Activity;)V
 HSPLcom/google/android/gms/common/internal/Preconditions;->checkNotEmpty(Ljava/lang/String;Ljava/lang/String;)V
@@ -3346,6 +3331,7 @@ HSPLcom/google/firebase/crashlytics/internal/common/CommonUtils;->isDebuggerAtta
 HSPLcom/google/firebase/crashlytics/internal/common/CommonUtils;->isEmulator()Z
 HSPLcom/google/firebase/crashlytics/internal/common/CommonUtils;->isRooted()Z
 HSPLcom/google/firebase/crashlytics/internal/common/CommonUtils;->sha1(Ljava/lang/String;)Ljava/lang/String;
+HSPLcom/google/firebase/crashlytics/internal/common/CommonUtils;->streamToString(Ljava/io/InputStream;)Ljava/lang/String;
 HSPLcom/google/firebase/crashlytics/internal/common/CrashlyticsBackgroundWorker$1;-><init>(Lcom/google/firebase/crashlytics/internal/common/CrashlyticsBackgroundWorker;)V
 HSPLcom/google/firebase/crashlytics/internal/common/CrashlyticsBackgroundWorker$1;->run()V
 HSPLcom/google/firebase/crashlytics/internal/common/CrashlyticsBackgroundWorker$3;-><init>(Lcom/google/firebase/crashlytics/internal/common/CrashlyticsBackgroundWorker;Ljava/util/concurrent/Callable;)V
@@ -4142,7 +4128,6 @@ HSPLcom/squareup/moshi/JsonUtf8Reader;->endObject()V
 HSPLcom/squareup/moshi/JsonUtf8Reader;->hasNext()Z
 HSPLcom/squareup/moshi/JsonUtf8Reader;->isLiteral(I)Z
 HSPLcom/squareup/moshi/JsonUtf8Reader;->nextInt()I
-HSPLcom/squareup/moshi/JsonUtf8Reader;->nextNonWhitespace(Z)I
 HSPLcom/squareup/moshi/JsonUtf8Reader;->nextQuotedValue(Lokio/ByteString;)Ljava/lang/String;
 HSPLcom/squareup/moshi/JsonUtf8Reader;->nextString()Ljava/lang/String;
 HSPLcom/squareup/moshi/JsonUtf8Reader;->peek()Lcom/squareup/moshi/JsonReader$Token;
@@ -5275,6 +5260,7 @@ HSPLokio/-Util;->checkOffsetAndCount(JJJ)V
 HSPLokio/Buffer;-><init>()V
 HSPLokio/Buffer;->exhausted()Z
 HSPLokio/Buffer;->getByte(J)B
+HSPLokio/Buffer;->indexOfElement(Lokio/ByteString;)J
 HSPLokio/Buffer;->read(Lokio/Buffer;J)J
 HSPLokio/Buffer;->readByteArray(J)[B
 HSPLokio/Buffer;->readByteString()Lokio/ByteString;
@@ -5589,7 +5575,6 @@ Landroidx/arch/core/executor/DefaultTaskExecutor$1;
 Landroidx/arch/core/executor/DefaultTaskExecutor;
 Landroidx/arch/core/internal/FastSafeIterableMap;
 Landroidx/arch/core/internal/SafeIterableMap$AscendingIterator;
-Landroidx/arch/core/internal/SafeIterableMap$DescendingIterator;
 Landroidx/arch/core/internal/SafeIterableMap$Entry;
 Landroidx/arch/core/internal/SafeIterableMap$IteratorWithAdditions;
 Landroidx/arch/core/internal/SafeIterableMap$ListIterator;
@@ -7415,8 +7400,11 @@ PLandroidx/appcompat/widget/ActionMenuView;->dismissPopupMenus()V
 PLandroidx/appcompat/widget/ActionMenuView;->onDetachedFromWindow()V
 PLandroidx/appcompat/widget/ContentFrameLayout;->onDetachedFromWindow()V
 PLandroidx/appcompat/widget/Toolbar;->onDetachedFromWindow()V
+PLandroidx/arch/core/internal/SafeIterableMap$DescendingIterator;-><init>(Landroidx/arch/core/internal/SafeIterableMap$Entry;Landroidx/arch/core/internal/SafeIterableMap$Entry;)V
 PLandroidx/arch/core/internal/SafeIterableMap$DescendingIterator;->backward(Landroidx/arch/core/internal/SafeIterableMap$Entry;)Landroidx/arch/core/internal/SafeIterableMap$Entry;
+PLandroidx/arch/core/internal/SafeIterableMap$DescendingIterator;->forward(Landroidx/arch/core/internal/SafeIterableMap$Entry;)Landroidx/arch/core/internal/SafeIterableMap$Entry;
 PLandroidx/arch/core/internal/SafeIterableMap$ListIterator;->supportRemove(Landroidx/arch/core/internal/SafeIterableMap$Entry;)V
+PLandroidx/arch/core/internal/SafeIterableMap;->descendingIterator()Ljava/util/Iterator;
 PLandroidx/collection/ArraySet$1;->colGetEntry(II)Ljava/lang/Object;
 PLandroidx/collection/ArraySet$1;->colRemoveAt(I)V
 PLandroidx/collection/ArraySet;->removeAt(I)V
@@ -7437,6 +7425,7 @@ PLandroidx/fragment/app/Fragment;->onStop()V
 PLandroidx/fragment/app/Fragment;->performDestroy()V
 PLandroidx/fragment/app/Fragment;->performDestroyView()V
 PLandroidx/fragment/app/Fragment;->performDetach()V
+PLandroidx/fragment/app/Fragment;->performPause()V
 PLandroidx/fragment/app/Fragment;->performStop()V
 PLandroidx/fragment/app/FragmentActivity$HostCallbacks;->removeMenuProvider(Landroidx/core/view/MenuProvider;)V
 PLandroidx/fragment/app/FragmentActivity$HostCallbacks;->removeOnConfigurationChangedListener(Landroidx/fragment/app/FragmentManager$$ExternalSyntheticLambda0;)V
@@ -7446,17 +7435,21 @@ PLandroidx/fragment/app/FragmentActivity$HostCallbacks;->removeOnTrimMemoryListe
 PLandroidx/fragment/app/FragmentActivity;->markFragmentsCreated()V
 PLandroidx/fragment/app/FragmentActivity;->markState(Landroidx/fragment/app/FragmentManager;)Z
 PLandroidx/fragment/app/FragmentActivity;->onDestroy()V
+PLandroidx/fragment/app/FragmentActivity;->onPause()V
 PLandroidx/fragment/app/FragmentActivity;->onStop()V
 PLandroidx/fragment/app/FragmentContainerView;->addDisappearingFragmentView(Landroid/view/View;)V
 PLandroidx/fragment/app/FragmentContainerView;->removeView(Landroid/view/View;)V
 PLandroidx/fragment/app/FragmentController;->dispatchDestroy()V
+PLandroidx/fragment/app/FragmentController;->dispatchPause()V
 PLandroidx/fragment/app/FragmentController;->dispatchStop()V
 PLandroidx/fragment/app/FragmentLifecycleCallbacksDispatcher;->dispatchOnFragmentDestroyed(Z)V
 PLandroidx/fragment/app/FragmentLifecycleCallbacksDispatcher;->dispatchOnFragmentDetached(Z)V
+PLandroidx/fragment/app/FragmentLifecycleCallbacksDispatcher;->dispatchOnFragmentPaused(Z)V
 PLandroidx/fragment/app/FragmentLifecycleCallbacksDispatcher;->dispatchOnFragmentStopped(Z)V
 PLandroidx/fragment/app/FragmentLifecycleCallbacksDispatcher;->dispatchOnFragmentViewDestroyed(Z)V
 PLandroidx/fragment/app/FragmentManager;->dispatchDestroy()V
 PLandroidx/fragment/app/FragmentManager;->dispatchDestroyView()V
+PLandroidx/fragment/app/FragmentManager;->dispatchPause()V
 PLandroidx/fragment/app/FragmentManager;->dispatchStop()V
 PLandroidx/fragment/app/FragmentManager;->getFragments()Ljava/util/List;
 PLandroidx/fragment/app/FragmentManager;->isDestroyed()Z
@@ -7468,6 +7461,7 @@ PLandroidx/fragment/app/FragmentManagerViewModel;->shouldDestroy(Landroidx/fragm
 PLandroidx/fragment/app/FragmentStateManager;->destroy()V
 PLandroidx/fragment/app/FragmentStateManager;->destroyFragmentView()V
 PLandroidx/fragment/app/FragmentStateManager;->detach()V
+PLandroidx/fragment/app/FragmentStateManager;->pause()V
 PLandroidx/fragment/app/FragmentStateManager;->saveViewState()V
 PLandroidx/fragment/app/FragmentStateManager;->stop()V
 PLandroidx/fragment/app/FragmentStore;->getNonConfig()Landroidx/fragment/app/FragmentManagerViewModel;
@@ -7477,19 +7471,25 @@ PLandroidx/fragment/app/FragmentViewLifecycleOwner;->setCurrentState()V
 PLandroidx/fragment/app/SpecialEffectsController;->enqueueRemove(Landroidx/fragment/app/FragmentStateManager;)V
 PLandroidx/lifecycle/CloseableCoroutineScope;->close()V
 PLandroidx/lifecycle/EmptyActivityLifecycleCallbacks;->onActivityDestroyed(Landroid/app/Activity;)V
+PLandroidx/lifecycle/EmptyActivityLifecycleCallbacks;->onActivityPaused(Landroid/app/Activity;)V
 PLandroidx/lifecycle/EmptyActivityLifecycleCallbacks;->onActivityStopped(Landroid/app/Activity;)V
 PLandroidx/lifecycle/LifecycleDispatcher$DispatcherActivityCallback;->onActivityStopped(Landroid/app/Activity;)V
 PLandroidx/lifecycle/LiveData$LifecycleBoundObserver;->detachObserver()V
 PLandroidx/lifecycle/LiveData;->onInactive()V
 PLandroidx/lifecycle/LiveData;->removeObserver(Landroidx/lifecycle/Observer;)V
+PLandroidx/lifecycle/ProcessLifecycleOwner$3;->onActivityPaused(Landroid/app/Activity;)V
 PLandroidx/lifecycle/ProcessLifecycleOwner$3;->onActivityStopped(Landroid/app/Activity;)V
+PLandroidx/lifecycle/ProcessLifecycleOwner;->activityPaused()V
 PLandroidx/lifecycle/ProcessLifecycleOwner;->activityStopped()V
 PLandroidx/lifecycle/ProcessLifecycleOwner;->dispatchStopIfNeeded()V
 PLandroidx/lifecycle/ReportFragment$LifecycleCallbacks;->onActivityDestroyed(Landroid/app/Activity;)V
+PLandroidx/lifecycle/ReportFragment$LifecycleCallbacks;->onActivityPaused(Landroid/app/Activity;)V
 PLandroidx/lifecycle/ReportFragment$LifecycleCallbacks;->onActivityPreDestroyed(Landroid/app/Activity;)V
+PLandroidx/lifecycle/ReportFragment$LifecycleCallbacks;->onActivityPrePaused(Landroid/app/Activity;)V
 PLandroidx/lifecycle/ReportFragment$LifecycleCallbacks;->onActivityPreStopped(Landroid/app/Activity;)V
 PLandroidx/lifecycle/ReportFragment$LifecycleCallbacks;->onActivityStopped(Landroid/app/Activity;)V
 PLandroidx/lifecycle/ReportFragment;->onDestroy()V
+PLandroidx/lifecycle/ReportFragment;->onPause()V
 PLandroidx/lifecycle/ReportFragment;->onStop()V
 PLandroidx/lifecycle/SavedStateHandle$$ExternalSyntheticLambda0;->saveState()Landroid/os/Bundle;
 PLandroidx/lifecycle/SavedStateHandle;->$r8$lambda$aMir0GWwzPQviKVGE0DPm0kayew(Landroidx/lifecycle/SavedStateHandle;)Landroid/os/Bundle;
@@ -7540,10 +7540,13 @@ PLandroidx/recyclerview/widget/RecyclerView;->dispatchSaveInstanceState(Landroid
 PLandroidx/recyclerview/widget/RecyclerView;->onDetachedFromWindow()V
 PLandroidx/recyclerview/widget/RecyclerView;->onSaveInstanceState()Landroid/os/Parcelable;
 PLandroidx/recyclerview/widget/RecyclerView;->stopNestedScroll()V
+PLandroidx/recyclerview/widget/RecyclerViewAccessibilityDelegate$ItemDelegate;->onInitializeAccessibilityEvent(Landroid/view/View;Landroid/view/accessibility/AccessibilityEvent;)V
+PLandroidx/recyclerview/widget/RecyclerViewAccessibilityDelegate$ItemDelegate;->sendAccessibilityEventUnchecked(Landroid/view/View;Landroid/view/accessibility/AccessibilityEvent;)V
 PLandroidx/savedstate/SavedStateRegistry;->performSave(Landroid/os/Bundle;)V
 PLandroidx/savedstate/SavedStateRegistryController;->performSave(Landroid/os/Bundle;)V
 PLcom/android/billingclient/api/zzbb;->ensureMainThread()V
 PLcom/google/android/gms/common/api/internal/BackgroundDetector;->onActivityDestroyed(Landroid/app/Activity;)V
+PLcom/google/android/gms/common/api/internal/BackgroundDetector;->onActivityPaused(Landroid/app/Activity;)V
 PLcom/google/android/gms/common/api/internal/BackgroundDetector;->onActivityStopped(Landroid/app/Activity;)V
 PLcom/google/android/material/appbar/AppBarLayout;->onDetachedFromWindow()V
 PLcom/google/android/material/appbar/AppBarLayout;->removeOnOffsetChangedListener(Lcom/google/android/material/appbar/AppBarLayout$OnOffsetChangedListener;)V
