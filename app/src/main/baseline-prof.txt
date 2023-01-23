@@ -1920,7 +1920,6 @@ HSPLandroidx/navigation/ui/NavigationUI;->matchDestination$navigation_ui_release
 HSPLandroidx/navigation/ui/NavigationUI;->matchDestinations$navigation_ui_release(Landroidx/navigation/NavDestination;Ljava/util/Set;)Z
 HSPLandroidx/navigation/ui/NavigationUI;->setupWithNavController(Lcom/google/android/material/bottomnavigation/BottomNavigationView;Landroidx/navigation/NavHostController;)V
 HSPLandroidx/profileinstaller/ProfileInstallReceiver$$ExternalSyntheticLambda0;-><init>()V
-HSPLandroidx/profileinstaller/ProfileInstallReceiver$$ExternalSyntheticLambda0;->execute(Ljava/lang/Runnable;)V
 HSPLandroidx/profileinstaller/ProfileInstallerInitializer$$ExternalSyntheticLambda0;-><init>(Landroidx/profileinstaller/ProfileInstallerInitializer;Landroid/content/Context;)V
 HSPLandroidx/profileinstaller/ProfileInstallerInitializer$$ExternalSyntheticLambda0;->run()V
 HSPLandroidx/profileinstaller/ProfileInstallerInitializer$$ExternalSyntheticLambda1;-><init>(Landroid/content/Context;)V
@@ -2563,22 +2562,14 @@ HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventS
 HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore_Factory;-><init>(Lcom/google/android/datatransport/runtime/time/TimeModule_EventClockFactory;Lcom/google/android/datatransport/runtime/time/TimeModule_UptimeClockFactory;Lcom/google/android/datatransport/runtime/scheduling/persistence/EventStoreModule_StoreConfigFactory;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
 HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SQLiteEventStore_Factory;->get()Ljava/lang/Object;
 HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager$$ExternalSyntheticLambda0;-><init>()V
-HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager$$ExternalSyntheticLambda0;->upgrade(Landroid/database/sqlite/SQLiteDatabase;)V
 HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager$$ExternalSyntheticLambda1;-><init>()V
-HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager$$ExternalSyntheticLambda1;->upgrade(Landroid/database/sqlite/SQLiteDatabase;)V
 HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager$$ExternalSyntheticLambda2;-><init>()V
-HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager$$ExternalSyntheticLambda2;->upgrade(Landroid/database/sqlite/SQLiteDatabase;)V
 HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager$$ExternalSyntheticLambda3;-><init>()V
-HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager$$ExternalSyntheticLambda3;->upgrade(Landroid/database/sqlite/SQLiteDatabase;)V
 HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager$$ExternalSyntheticLambda4;-><init>()V
-HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager$$ExternalSyntheticLambda4;->upgrade(Landroid/database/sqlite/SQLiteDatabase;)V
-HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager;->$r8$lambda$rGcUdOceFhSffkhz_AHgqHOrsTQ(Landroid/database/sqlite/SQLiteDatabase;)V
 HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager;-><clinit>()V
 HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager;-><init>(ILandroid/content/Context;Ljava/lang/String;)V
 HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager;->onConfigure(Landroid/database/sqlite/SQLiteDatabase;)V
-HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager;->onCreate(Landroid/database/sqlite/SQLiteDatabase;)V
 HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager;->onOpen(Landroid/database/sqlite/SQLiteDatabase;)V
-HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager;->upgrade(Landroid/database/sqlite/SQLiteDatabase;II)V
 HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager_Factory;-><init>(Ljavax/inject/Provider;Lcom/google/android/datatransport/runtime/scheduling/persistence/EventStoreModule_DbNameFactory;Lcom/google/android/datatransport/runtime/scheduling/persistence/EventStoreModule_SchemaVersionFactory;)V
 HSPLcom/google/android/datatransport/runtime/scheduling/persistence/SchemaManager_Factory;->get()Ljava/lang/Object;
 HSPLcom/google/android/datatransport/runtime/time/TimeModule_EventClockFactory$InstanceHolder;-><clinit>()V
@@ -3427,7 +3418,6 @@ HSPLcom/google/firebase/crashlytics/internal/common/CommonUtils;->isDebuggerAtta
 HSPLcom/google/firebase/crashlytics/internal/common/CommonUtils;->isEmulator()Z
 HSPLcom/google/firebase/crashlytics/internal/common/CommonUtils;->isRooted()Z
 HSPLcom/google/firebase/crashlytics/internal/common/CommonUtils;->sha1(Ljava/lang/String;)Ljava/lang/String;
-HSPLcom/google/firebase/crashlytics/internal/common/CommonUtils;->streamToString(Ljava/io/InputStream;)Ljava/lang/String;
 HSPLcom/google/firebase/crashlytics/internal/common/CrashlyticsBackgroundWorker$1;-><init>(Lcom/google/firebase/crashlytics/internal/common/CrashlyticsBackgroundWorker;)V
 HSPLcom/google/firebase/crashlytics/internal/common/CrashlyticsBackgroundWorker$1;->run()V
 HSPLcom/google/firebase/crashlytics/internal/common/CrashlyticsBackgroundWorker$3;-><init>(Lcom/google/firebase/crashlytics/internal/common/CrashlyticsBackgroundWorker;Ljava/util/concurrent/Callable;)V
@@ -3919,9 +3909,6 @@ HSPLcom/google/firebase/encoders/json/JsonValueObjectEncoderContext;->add(Ljava/
 HSPLcom/google/firebase/encoders/json/JsonValueObjectEncoderContext;->add(Ljava/lang/String;)Lcom/google/firebase/encoders/ValueEncoderContext;
 HSPLcom/google/firebase/encoders/json/JsonValueObjectEncoderContext;->close()V
 HSPLcom/google/firebase/encoders/json/JsonValueObjectEncoderContext;->maybeUnNest()V
-HSPLcom/google/firebase/heartbeatinfo/AutoValue_HeartBeatResult;-><init>(Ljava/lang/String;Ljava/util/ArrayList;)V
-HSPLcom/google/firebase/heartbeatinfo/AutoValue_HeartBeatResult;->getUsedDates()Ljava/util/List;
-HSPLcom/google/firebase/heartbeatinfo/AutoValue_HeartBeatResult;->getUserAgent()Ljava/lang/String;
 HSPLcom/google/firebase/heartbeatinfo/DefaultHeartBeatController$$ExternalSyntheticLambda0;-><init>(Lcom/google/firebase/heartbeatinfo/DefaultHeartBeatController;)V
 HSPLcom/google/firebase/heartbeatinfo/DefaultHeartBeatController$$ExternalSyntheticLambda0;->call()Ljava/lang/Object;
 HSPLcom/google/firebase/heartbeatinfo/DefaultHeartBeatController$$ExternalSyntheticLambda1;-><init>(Lcom/google/firebase/heartbeatinfo/DefaultHeartBeatController;)V
@@ -3945,7 +3932,6 @@ HSPLcom/google/firebase/heartbeatinfo/HeartBeatInfoStorage;->getAllHeartBeats()L
 HSPLcom/google/firebase/heartbeatinfo/HeartBeatInfoStorage;->getFormattedDate(J)Ljava/lang/String;
 HSPLcom/google/firebase/heartbeatinfo/HeartBeatInfoStorage;->storeHeartBeat(JLjava/lang/String;)V
 HSPLcom/google/firebase/heartbeatinfo/HeartBeatInfoStorage;->updateGlobalHeartBeat(J)V
-HSPLcom/google/firebase/heartbeatinfo/HeartBeatResult;-><init>()V
 HSPLcom/google/firebase/installations/AutoValue_InstallationTokenResult$Builder;-><init>()V
 HSPLcom/google/firebase/installations/AutoValue_InstallationTokenResult$Builder;->build()Lcom/google/firebase/installations/InstallationTokenResult;
 HSPLcom/google/firebase/installations/AutoValue_InstallationTokenResult$Builder;->setToken(Ljava/lang/String;)Lcom/google/firebase/installations/InstallationTokenResult$Builder;
@@ -4133,14 +4119,10 @@ HSPLcom/google/firebase/remoteconfig/internal/ConfigCacheClient$$ExternalSynthet
 HSPLcom/google/firebase/remoteconfig/internal/ConfigCacheClient$$ExternalSyntheticLambda1;->then(Ljava/lang/Object;)Lcom/google/android/gms/tasks/Task;
 HSPLcom/google/firebase/remoteconfig/internal/ConfigCacheClient$$ExternalSyntheticLambda2;-><init>(Lcom/google/firebase/remoteconfig/internal/ConfigStorageClient;)V
 HSPLcom/google/firebase/remoteconfig/internal/ConfigCacheClient$$ExternalSyntheticLambda2;->call()Ljava/lang/Object;
-HSPLcom/google/firebase/remoteconfig/internal/ConfigCacheClient$AwaitListener;-><init>()V
-HSPLcom/google/firebase/remoteconfig/internal/ConfigCacheClient$AwaitListener;->await(Ljava/util/concurrent/TimeUnit;)Z
-HSPLcom/google/firebase/remoteconfig/internal/ConfigCacheClient$AwaitListener;->onSuccess(Ljava/lang/Object;)V
 HSPLcom/google/firebase/remoteconfig/internal/ConfigCacheClient;->$r8$lambda$7EAedXf22acRtoytbvFMed0YP24(Lcom/google/firebase/remoteconfig/internal/ConfigCacheClient;Lcom/google/firebase/remoteconfig/internal/ConfigContainer;)V
 HSPLcom/google/firebase/remoteconfig/internal/ConfigCacheClient;->$r8$lambda$zbn_3wB-75KiDHEx2HtgkYqzsE0(Lcom/google/firebase/remoteconfig/internal/ConfigCacheClient;ZLcom/google/firebase/remoteconfig/internal/ConfigContainer;)Lcom/google/android/gms/tasks/Task;
 HSPLcom/google/firebase/remoteconfig/internal/ConfigCacheClient;-><clinit>()V
 HSPLcom/google/firebase/remoteconfig/internal/ConfigCacheClient;-><init>(Ljava/util/concurrent/Executor;Lcom/google/firebase/remoteconfig/internal/ConfigStorageClient;)V
-HSPLcom/google/firebase/remoteconfig/internal/ConfigCacheClient;->await(Lcom/google/android/gms/tasks/Task;Ljava/util/concurrent/TimeUnit;)Ljava/lang/Object;
 HSPLcom/google/firebase/remoteconfig/internal/ConfigCacheClient;->clear()V
 HSPLcom/google/firebase/remoteconfig/internal/ConfigCacheClient;->get()Lcom/google/android/gms/tasks/Task;
 HSPLcom/google/firebase/remoteconfig/internal/ConfigCacheClient;->getBlocking()Lcom/google/firebase/remoteconfig/internal/ConfigContainer;
@@ -5402,7 +5384,6 @@ HSPLokio/-Util;->checkOffsetAndCount(JJJ)V
 HSPLokio/Buffer;-><init>()V
 HSPLokio/Buffer;->exhausted()Z
 HSPLokio/Buffer;->getByte(J)B
-HSPLokio/Buffer;->indexOfElement(Lokio/ByteString;)J
 HSPLokio/Buffer;->read(Lokio/Buffer;J)J
 HSPLokio/Buffer;->readByte()B
 HSPLokio/Buffer;->readByteArray(J)[B
@@ -6882,7 +6863,6 @@ Lcom/google/firebase/encoders/json/JsonDataEncoderBuilder;
 Lcom/google/firebase/encoders/json/JsonValueObjectEncoderContext;
 Lcom/google/firebase/events/Publisher;
 Lcom/google/firebase/events/Subscriber;
-Lcom/google/firebase/heartbeatinfo/AutoValue_HeartBeatResult;
 Lcom/google/firebase/heartbeatinfo/DefaultHeartBeatController$$ExternalSyntheticLambda0;
 Lcom/google/firebase/heartbeatinfo/DefaultHeartBeatController$$ExternalSyntheticLambda1;
 Lcom/google/firebase/heartbeatinfo/DefaultHeartBeatController$$ExternalSyntheticLambda2;
@@ -6895,7 +6875,6 @@ Lcom/google/firebase/heartbeatinfo/HeartBeatController;
 Lcom/google/firebase/heartbeatinfo/HeartBeatInfo;
 Lcom/google/firebase/heartbeatinfo/HeartBeatInfoStorage$$ExternalSyntheticApiModelOutline0;
 Lcom/google/firebase/heartbeatinfo/HeartBeatInfoStorage;
-Lcom/google/firebase/heartbeatinfo/HeartBeatResult;
 Lcom/google/firebase/inject/Deferred$DeferredHandler;
 Lcom/google/firebase/inject/Deferred;
 Lcom/google/firebase/inject/Provider;
@@ -6963,7 +6942,6 @@ Lcom/google/firebase/remoteconfig/RemoteConfigRegistrar;
 Lcom/google/firebase/remoteconfig/internal/ConfigCacheClient$$ExternalSyntheticLambda0;
 Lcom/google/firebase/remoteconfig/internal/ConfigCacheClient$$ExternalSyntheticLambda1;
 Lcom/google/firebase/remoteconfig/internal/ConfigCacheClient$$ExternalSyntheticLambda2;
-Lcom/google/firebase/remoteconfig/internal/ConfigCacheClient$AwaitListener;
 Lcom/google/firebase/remoteconfig/internal/ConfigCacheClient;
 Lcom/google/firebase/remoteconfig/internal/ConfigContainer$Builder;
 Lcom/google/firebase/remoteconfig/internal/ConfigContainer;
@@ -7752,6 +7730,8 @@ PLandroidx/recyclerview/widget/RecyclerView;->dispatchSaveInstanceState(Landroid
 PLandroidx/recyclerview/widget/RecyclerView;->onDetachedFromWindow()V
 PLandroidx/recyclerview/widget/RecyclerView;->onSaveInstanceState()Landroid/os/Parcelable;
 PLandroidx/recyclerview/widget/RecyclerView;->stopNestedScroll()V
+PLandroidx/recyclerview/widget/RecyclerViewAccessibilityDelegate$ItemDelegate;->onInitializeAccessibilityEvent(Landroid/view/View;Landroid/view/accessibility/AccessibilityEvent;)V
+PLandroidx/recyclerview/widget/RecyclerViewAccessibilityDelegate$ItemDelegate;->sendAccessibilityEventUnchecked(Landroid/view/View;Landroid/view/accessibility/AccessibilityEvent;)V
 PLandroidx/savedstate/SavedStateRegistry;->performSave(Landroid/os/Bundle;)V
 PLandroidx/savedstate/SavedStateRegistryController;->performSave(Landroid/os/Bundle;)V
 PLcom/google/android/gms/common/api/internal/BackgroundDetector;->onActivityDestroyed(Landroid/app/Activity;)V
