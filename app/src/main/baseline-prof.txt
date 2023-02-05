@@ -2183,9 +2183,6 @@ HSPLandroidx/recyclerview/widget/RecyclerView;->addItemDecoration(Landroidx/recy
 HSPLandroidx/recyclerview/widget/RecyclerView;->assertNotInLayoutOrScroll(Ljava/lang/String;)V
 HSPLandroidx/recyclerview/widget/RecyclerView;->checkLayoutParams(Landroid/view/ViewGroup$LayoutParams;)Z
 HSPLandroidx/recyclerview/widget/RecyclerView;->clearOldPositions()V
-HSPLandroidx/recyclerview/widget/RecyclerView;->computeHorizontalScrollExtent()I
-HSPLandroidx/recyclerview/widget/RecyclerView;->computeHorizontalScrollOffset()I
-HSPLandroidx/recyclerview/widget/RecyclerView;->computeHorizontalScrollRange()I
 HSPLandroidx/recyclerview/widget/RecyclerView;->computeVerticalScrollExtent()I
 HSPLandroidx/recyclerview/widget/RecyclerView;->computeVerticalScrollOffset()I
 HSPLandroidx/recyclerview/widget/RecyclerView;->computeVerticalScrollRange()I
@@ -3454,7 +3451,6 @@ HSPLcom/google/firebase/crashlytics/internal/common/CommonUtils;->isDebuggerAtta
 HSPLcom/google/firebase/crashlytics/internal/common/CommonUtils;->isEmulator()Z
 HSPLcom/google/firebase/crashlytics/internal/common/CommonUtils;->isRooted()Z
 HSPLcom/google/firebase/crashlytics/internal/common/CommonUtils;->sha1(Ljava/lang/String;)Ljava/lang/String;
-HSPLcom/google/firebase/crashlytics/internal/common/CommonUtils;->streamToString(Ljava/io/InputStream;)Ljava/lang/String;
 HSPLcom/google/firebase/crashlytics/internal/common/CrashlyticsBackgroundWorker$1;-><init>(Lcom/google/firebase/crashlytics/internal/common/CrashlyticsBackgroundWorker;)V
 HSPLcom/google/firebase/crashlytics/internal/common/CrashlyticsBackgroundWorker$1;->run()V
 HSPLcom/google/firebase/crashlytics/internal/common/CrashlyticsBackgroundWorker$3;-><init>(Lcom/google/firebase/crashlytics/internal/common/CrashlyticsBackgroundWorker;Ljava/util/concurrent/Callable;)V
@@ -3944,9 +3940,6 @@ HSPLcom/google/firebase/encoders/json/JsonValueObjectEncoderContext;->add(Ljava/
 HSPLcom/google/firebase/encoders/json/JsonValueObjectEncoderContext;->add(Ljava/lang/String;)Lcom/google/firebase/encoders/ValueEncoderContext;
 HSPLcom/google/firebase/encoders/json/JsonValueObjectEncoderContext;->close()V
 HSPLcom/google/firebase/encoders/json/JsonValueObjectEncoderContext;->maybeUnNest()V
-HSPLcom/google/firebase/heartbeatinfo/AutoValue_HeartBeatResult;-><init>(Ljava/lang/String;Ljava/util/ArrayList;)V
-HSPLcom/google/firebase/heartbeatinfo/AutoValue_HeartBeatResult;->getUsedDates()Ljava/util/List;
-HSPLcom/google/firebase/heartbeatinfo/AutoValue_HeartBeatResult;->getUserAgent()Ljava/lang/String;
 HSPLcom/google/firebase/heartbeatinfo/DefaultHeartBeatController$$ExternalSyntheticLambda0;-><init>(Lcom/google/firebase/heartbeatinfo/DefaultHeartBeatController;)V
 HSPLcom/google/firebase/heartbeatinfo/DefaultHeartBeatController$$ExternalSyntheticLambda0;->call()Ljava/lang/Object;
 HSPLcom/google/firebase/heartbeatinfo/DefaultHeartBeatController$$ExternalSyntheticLambda1;-><init>(Lcom/google/firebase/heartbeatinfo/DefaultHeartBeatController;)V
@@ -3974,7 +3967,6 @@ HSPLcom/google/firebase/heartbeatinfo/HeartBeatInfoStorage;->getAllHeartBeats()L
 HSPLcom/google/firebase/heartbeatinfo/HeartBeatInfoStorage;->getFormattedDate(J)Ljava/lang/String;
 HSPLcom/google/firebase/heartbeatinfo/HeartBeatInfoStorage;->storeHeartBeat(JLjava/lang/String;)V
 HSPLcom/google/firebase/heartbeatinfo/HeartBeatInfoStorage;->updateGlobalHeartBeat(J)V
-HSPLcom/google/firebase/heartbeatinfo/HeartBeatResult;-><init>()V
 HSPLcom/google/firebase/installations/AutoValue_InstallationTokenResult$Builder;-><init>()V
 HSPLcom/google/firebase/installations/AutoValue_InstallationTokenResult$Builder;->build()Lcom/google/firebase/installations/InstallationTokenResult;
 HSPLcom/google/firebase/installations/AutoValue_InstallationTokenResult$Builder;->setToken(Ljava/lang/String;)Lcom/google/firebase/installations/InstallationTokenResult$Builder;
@@ -6922,7 +6914,6 @@ Lcom/google/firebase/encoders/json/JsonDataEncoderBuilder;
 Lcom/google/firebase/encoders/json/JsonValueObjectEncoderContext;
 Lcom/google/firebase/events/Publisher;
 Lcom/google/firebase/events/Subscriber;
-Lcom/google/firebase/heartbeatinfo/AutoValue_HeartBeatResult;
 Lcom/google/firebase/heartbeatinfo/DefaultHeartBeatController$$ExternalSyntheticLambda0;
 Lcom/google/firebase/heartbeatinfo/DefaultHeartBeatController$$ExternalSyntheticLambda1;
 Lcom/google/firebase/heartbeatinfo/DefaultHeartBeatController$$ExternalSyntheticLambda2;
@@ -6939,7 +6930,6 @@ Lcom/google/firebase/heartbeatinfo/HeartBeatInfoStorage$$ExternalSyntheticApiMod
 Lcom/google/firebase/heartbeatinfo/HeartBeatInfoStorage$$ExternalSyntheticApiModelOutline3;
 Lcom/google/firebase/heartbeatinfo/HeartBeatInfoStorage$$ExternalSyntheticApiModelOutline4;
 Lcom/google/firebase/heartbeatinfo/HeartBeatInfoStorage;
-Lcom/google/firebase/heartbeatinfo/HeartBeatResult;
 Lcom/google/firebase/inject/Deferred$DeferredHandler;
 Lcom/google/firebase/inject/Deferred;
 Lcom/google/firebase/inject/Provider;
