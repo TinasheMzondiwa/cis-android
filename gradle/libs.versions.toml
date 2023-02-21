@@ -29,15 +29,19 @@ cash-app-turbine = "0.12.1"
 coil = "2.2.2"
 google-accompanist = "0.28.0"
 gradle-android = "7.4.1"
+gradle-cache-fix = "2.6.5"
 google-firebase-bom = "31.2.2"
 google-firebase-crashlytics = "2.9.4"
 google-hilt = "2.45"
 google-material = "1.8.0"
+gradle-retry = "1.5.1"
 google-services = "4.3.15"
-jvmTarget = "11"
+javax-annotation = "1.3.2"
+jdk = "11"
 kotlin = "1.8.10"
 kotlin-coroutines = "1.6.4"
-ktlint = "0.48.2"
+sgp = "0.4.2"
+spotless = "6.15.0"
 square-moshi = "1.14.0"
 tapTarget = "3.3.2"
 test-androidx = "1.5.0"
@@ -45,6 +49,7 @@ test-androidx-archcore = "2.1.0"
 test-androidx-benchmark-macro = "1.1.1"
 test-androidx-espresso = "3.5.1"
 test-androidx-ext = "1.1.5"
+test-androidx-runner = "1.5.2"
 test-androidx-uiautomator = "2.2.0"
 test-junit = "4.13.2"
 test-kluent = "1.72"
@@ -101,6 +106,7 @@ androidx-work = { module = "androidx.work:work-runtime-ktx", version.ref = "andr
 aztec = { module = "org.wordpress:aztec", version.ref = "aztec" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 coil-core = { module = "io.coil-kt:coil", version.ref = "coil" }
+coreLibraryDesugaring = "com.android.tools:desugar_jdk_libs:1.2.2"
 google-accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "google-accompanist" }
 google-accompanist-navigation-material = { module = "com.google.accompanist:accompanist-navigation-material", version.ref = "google-accompanist" }
 google-accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "google-accompanist" }
@@ -113,11 +119,11 @@ google-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", ver
 google-hilt-gradle = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "google-hilt" }
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
 gradle-android = { module = "com.android.tools.build:gradle", version.ref = "gradle-android" }
+javax-annotation = { module = "javax.annotation:javax.annotation-api", version.ref = "javax-annotation" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
 kotlin-coroutines-playservices = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlin-coroutines" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-ktlint = { module = "com.pinterest:ktlint", version.ref = "ktlint" }
 square-moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "square-moshi" }
 square-moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "square-moshi" }
 tapTarget = { module = "uk.co.samuelwall:material-tap-target-prompt", version.ref = "tapTarget" }
@@ -129,7 +135,7 @@ test-androidx-espresso-core = { module = "androidx.test.espresso:espresso-core",
 test-androidx-espresso-intents = { module = "androidx.test.espresso:espresso-intents", version.ref = "test-androidx-espresso" }
 test-androidx-ext = { module = "androidx.test.ext:junit", version.ref = "test-androidx-ext" }
 test-androidx-rules = { module = "androidx.test:rules", version.ref = "test-androidx" }
-test-androidx-runner = { module = "androidx.test:runner", version.ref = "test-androidx" }
+test-androidx-runner = { module = "androidx.test:runner", version.ref = "test-androidx-runner" }
 test-androidx-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "test-androidx-uiautomator" }
 test-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-coroutines" }
 test-google-hilt = { module = "com.google.dagger:hilt-android-testing", version.ref = "google-hilt" }
@@ -193,5 +199,10 @@ android-library = { id = "com.android.library", version.ref = "gradle-android" }
 androidx-navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "androidx-navigation" }
 google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "google-firebase-crashlytics" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+gradle-cache-fix = { id = "org.gradle.android.cache-fix", version.ref = "gradle-cache-fix" }
+gradle-retry = { id = "org.gradle.test-retry", version.ref = "gradle-retry" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "google-hilt" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+sgp-base = { id = "com.slack.gradle.base", version.ref = "sgp" }
+sgp-root = { id = "com.slack.gradle.root", version.ref = "sgp" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

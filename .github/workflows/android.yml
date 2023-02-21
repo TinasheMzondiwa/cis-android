@@ -29,8 +29,8 @@ jobs:
           KEY_PROPERTIES: ${{ secrets.KEY_STORE_PROPERTIES }}
         run: echo $KEY_PROPERTIES > app/keystore.properties
 
-      - name: Run ktlint
-        run: ./gradlew ktlint
+      - name: Run spotless
+        run: ./gradlew spotlessCheck
 
       - name: Run Android lint
         run: ./gradlew lintDebug

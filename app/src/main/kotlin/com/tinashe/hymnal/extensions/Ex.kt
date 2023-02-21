@@ -8,7 +8,7 @@ import java.util.Random
 /**
  * Returns a random element.
  */
-fun <E> List<E>.random(): E? = if (size > 0) get(Random().nextInt(size)) else null
+fun <E> List<E>.random(): E? = if (isNotEmpty()) get(Random().nextInt(size)) else null
 
 fun String.toColor() = Color.parseColor(this)
 

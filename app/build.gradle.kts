@@ -10,31 +10,24 @@ plugins {
     id("com.google.gms.google-services")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.firebase.crashlytics")
+    alias(libs.plugins.sgp.base)
 }
 
 val releaseFile = file("../app/keystore.properties")
 val useReleaseKeystore = releaseFile.exists()
 
 android {
-    compileSdk = 33
     namespace = "com.tinashe.hymnal"
 
     defaultConfig {
         applicationId = "com.tinashe.christInSong"
-        minSdk = 21
-        targetSdk = 33
         versionCode = 3433
         versionName = libs.versions.app.get()
         vectorDrawables.useSupportLibrary = true
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments += mapOf(
-                    "room.schemaLocation" to "$projectDir/schemas",
-                    "room.incremental" to "true",
-                )
+                arguments += mapOf("room.incremental" to "true")
             }
         }
     }
@@ -83,7 +76,6 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = libs.versions.jvmTarget.get()
         freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
     }
 
@@ -92,7 +84,12 @@ android {
     }
 }
 
+room {
+    schemaLocationDir.set(file("$projectDir/schemas"))
+}
+
 dependencies {
+    coreLibraryDesugaring(libs.coreLibraryDesugaring)
     implementation(libs.android.billing)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.browser)
@@ -123,6 +120,7 @@ dependencies {
     implementation(libs.kotlin.coroutines.playservices)
     implementation(libs.square.moshi.kotlin)
     kapt(libs.square.moshi.codegen)
+    compileOnly(libs.javax.annotation)
     implementation(libs.tapTarget)
     implementation(libs.timber)
 

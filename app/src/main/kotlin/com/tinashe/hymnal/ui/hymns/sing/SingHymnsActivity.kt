@@ -8,6 +8,7 @@ import android.transition.TransitionManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -98,6 +99,16 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
 
         val collectionId = intent.getIntExtra(ARG_COLLECTION_ID, -1)
         viewModel.loadData(collectionId)
+
+        onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (binding.numberPadView.isVisible) {
+                    hideNumPad()
+                } else {
+                    finishAfterTransition()
+                }
+            }
+        })
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -204,14 +215,6 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
             fabNumber.visibility = View.VISIBLE
             numberPadView.visibility = View.GONE
         }
-    }
-
-    override fun onBackPressed() {
-        if (binding.numberPadView.isVisible) {
-            hideNumPad()
-            return
-        }
-        super.onBackPressed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
