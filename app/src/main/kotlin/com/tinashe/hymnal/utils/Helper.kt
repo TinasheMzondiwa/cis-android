@@ -12,9 +12,6 @@ import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.constants.UiPref
 import timber.log.Timber
 import java.io.BufferedReader
-import java.io.File
-import java.io.FileInputStream
-import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.Reader
 import java.io.StringWriter
@@ -43,24 +40,6 @@ object Helper {
             }
         }
         return ""
-    }
-
-    /**
-     * Return a json string from a File
-     */
-    @Throws(Exception::class)
-    fun getJson(file: File): String {
-        val `is`: InputStream = FileInputStream(file)
-        val reader = BufferedReader(InputStreamReader(`is`))
-        val sb = StringBuilder()
-        var line: String? = reader.readLine()
-        while (line != null) {
-            sb.append(line).append("\n")
-
-            line = reader.readLine()
-        }
-        reader.close()
-        return sb.toString()
     }
 
     /**
@@ -97,7 +76,7 @@ object Helper {
     fun launchWebUrl(context: Context, url: String) {
         val builder = CustomTabsIntent.Builder()
             .setShowTitle(true)
-            .enableUrlBarHiding()
+            .setUrlBarHidingEnabled(true)
             .setStartAnimations(context, R.anim.slide_up, android.R.anim.fade_out)
             .setExitAnimations(context, android.R.anim.fade_in, R.anim.slide_down)
         try {
