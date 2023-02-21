@@ -11,6 +11,7 @@ import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.collections.CollectionHymns
 import com.tinashe.hymnal.databinding.HymnCollectionItemBinding
 import com.tinashe.hymnal.extensions.view.inflateView
+import hymnal.l10n.R as L10nR
 
 class CollectionHolder(
     private val containerView: View
@@ -26,15 +27,15 @@ class CollectionHolder(
             val resources = containerView.resources
             val count = model.hymns.size
             hymnsCount.text = when (count) {
-                0 -> resources.getString(R.string.hymn_count_zero)
-                else -> resources.getQuantityString(R.plurals.hymns_count, count, count)
+                0 -> resources.getString(L10nR.string.hymn_count_zero)
+                else -> resources.getQuantityString(L10nR.plurals.hymns_count, count, count)
             }
             descView.apply {
                 text = model.collection.description
                 isVisible = text.isNotEmpty()
             }
             dateView.text = buildSpannedString {
-                append(containerView.resources.getString(R.string.created_label))
+                append(containerView.resources.getString(L10nR.string.created_label))
                 append(" ")
                 bold { append(DateUtils.getRelativeTimeSpanString(model.collection.created)) }
             }

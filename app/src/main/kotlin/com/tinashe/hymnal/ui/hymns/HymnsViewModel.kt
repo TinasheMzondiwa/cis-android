@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.data.model.constants.Status
@@ -19,6 +18,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import hymnal.l10n.R as L10nR
 
 @HiltViewModel
 class HymnsViewModel @Inject constructor(
@@ -57,7 +57,7 @@ class HymnsViewModel @Inject constructor(
 
         hymns.firstOrNull { it.number == number }?.let {
             mutableSelectedHymnId.postValue(it.hymnId)
-        } ?: mutableMessage.postValue(context.getString(R.string.error_invalid_number, number))
+        } ?: mutableMessage.postValue(context.getString(L10nR.string.error_invalid_number, number))
     }
 
     private fun fetchData(hymnal: Hymnal? = null) = viewModelScope.launch {

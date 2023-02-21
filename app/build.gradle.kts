@@ -90,6 +90,9 @@ room {
 
 dependencies {
     coreLibraryDesugaring(libs.coreLibraryDesugaring)
+
+    implementation(projects.foundation.l10nStrings)
+
     implementation(libs.android.billing)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.browser)

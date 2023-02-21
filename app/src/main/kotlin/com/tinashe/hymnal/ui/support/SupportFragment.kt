@@ -18,6 +18,7 @@ import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.extensions.view.inflateView
 import com.tinashe.hymnal.utils.Helper
 import dagger.hilt.android.AndroidEntryPoint
+import hymnal.l10n.R as L10nR
 
 @AndroidEntryPoint
 class SupportFragment : Fragment(R.layout.fragment_support), MenuProvider {
@@ -34,10 +35,10 @@ class SupportFragment : Fragment(R.layout.fragment_support), MenuProvider {
 
         binding.apply {
             tvPolicy.setOnClickListener {
-                Helper.launchWebUrl(requireContext(), getString(R.string.app_privacy_policy))
+                Helper.launchWebUrl(requireContext(), getString(L10nR.string.app_privacy_policy))
             }
             tvTerms.setOnClickListener {
-                Helper.launchWebUrl(requireContext(), getString(R.string.app_terms))
+                Helper.launchWebUrl(requireContext(), getString(L10nR.string.app_terms))
             }
         }
 
@@ -63,10 +64,10 @@ class SupportFragment : Fragment(R.layout.fragment_support), MenuProvider {
         }
         viewModel.inAppProductsLiveData.observeNonNull(viewLifecycleOwner) { products ->
             if (products.isEmpty()) {
-                binding.tvOneTimeDonation.setText(R.string.error_un_available)
+                binding.tvOneTimeDonation.setText(L10nR.string.error_un_available)
                 return@observeNonNull
             } else {
-                binding.tvOneTimeDonation.setText(R.string.one_tine_donation)
+                binding.tvOneTimeDonation.setText(L10nR.string.one_tine_donation)
             }
             binding.chipGroupInApp.apply {
                 removeAllViews()
@@ -94,10 +95,10 @@ class SupportFragment : Fragment(R.layout.fragment_support), MenuProvider {
         }
         viewModel.subscriptionsLiveData.observeNonNull(viewLifecycleOwner) { subs ->
             if (subs.isEmpty()) {
-                binding.tvMonthlyDonation.setText(R.string.blank)
+                binding.tvMonthlyDonation.setText(L10nR.string.blank)
                 return@observeNonNull
             } else {
-                binding.tvMonthlyDonation.setText(R.string.monthly_donations)
+                binding.tvMonthlyDonation.setText(L10nR.string.monthly_donations)
             }
             binding.chipGroupSubs.apply {
                 removeAllViews()
@@ -109,7 +110,7 @@ class SupportFragment : Fragment(R.layout.fragment_support), MenuProvider {
                     ) as Chip
                     chip.apply {
                         id = product.sku.hashCode()
-                        text = getString(R.string.subscription_period, product.price)
+                        text = getString(L10nR.string.subscription_period, product.price)
                     }
                     addView(chip)
                 }
@@ -134,7 +135,7 @@ class SupportFragment : Fragment(R.layout.fragment_support), MenuProvider {
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
             R.id.action_account_settings -> {
-                Helper.launchWebUrl(requireContext(), getString(R.string.subscriptions_url))
+                Helper.launchWebUrl(requireContext(), getString(L10nR.string.subscriptions_url))
                 true
             }
             R.id.action_help -> {

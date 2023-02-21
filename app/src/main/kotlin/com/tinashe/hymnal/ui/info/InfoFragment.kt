@@ -9,6 +9,7 @@ import com.tinashe.hymnal.BuildConfig
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentInfoBinding
 import com.tinashe.hymnal.utils.Helper
+import hymnal.l10n.R as L10nR
 
 class InfoFragment : Fragment(R.layout.fragment_info) {
 
@@ -21,7 +22,7 @@ class InfoFragment : Fragment(R.layout.fragment_info) {
 
         binding.apply {
             buildInfo.setOnClickListener {
-                Helper.launchWebUrl(requireContext(), getString(R.string.app_link))
+                Helper.launchWebUrl(requireContext(), getString(L10nR.string.app_link))
             }
             tvBuildVersion.text = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
             tvShareApp.setOnClickListener {
@@ -29,8 +30,8 @@ class InfoFragment : Fragment(R.layout.fragment_info) {
                     .setType("text/plain")
                     .setText(
                         getString(
-                            R.string.app_share_message,
-                            getString(R.string.app_link)
+                            L10nR.string.app_share_message,
+                            getString(L10nR.string.app_link)
                         )
                     )
                     .startChooser()
@@ -39,13 +40,13 @@ class InfoFragment : Fragment(R.layout.fragment_info) {
                 Helper.sendFeedback(requireActivity())
             }
             tvViewSource.setOnClickListener {
-                Helper.launchWebUrl(requireContext(), getString(R.string.app_source))
+                Helper.launchWebUrl(requireContext(), getString(L10nR.string.app_source))
             }
             tvTwitter.setOnClickListener {
-                Helper.launchWebUrl(requireContext(), getString(R.string.app_twitter))
+                Helper.launchWebUrl(requireContext(), getString(L10nR.string.app_twitter))
             }
             tvReview.setOnClickListener {
-                Helper.launchWebUrl(requireContext(), getString(R.string.app_link))
+                Helper.launchWebUrl(requireContext(), getString(L10nR.string.app_link))
             }
         }
     }
