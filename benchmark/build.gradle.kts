@@ -3,17 +3,15 @@ import com.android.build.gradle.internal.dsl.ManagedVirtualDevice
 plugins {
     id("com.android.test")
     id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.sgp.base)
 }
 
 android {
     namespace = "app.hymnal.benchmark"
-    compileSdk = 33
 
     defaultConfig {
         minSdk = 23
-        targetSdk = 33
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["androidx.benchmark.suppressErrors"] = "EMULATOR"
     }
 
@@ -44,6 +42,7 @@ android {
 }
 
 dependencies {
+    coreLibraryDesugaring(libs.coreLibraryDesugaring)
     implementation(libs.androidx.profileinstaller)
     implementation(libs.test.androidx.benchmark.macro)
     implementation(libs.test.androidx.ext)
