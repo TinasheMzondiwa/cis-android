@@ -18,7 +18,6 @@ import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchaseHistory
 import com.tinashe.hymnal.BuildConfig
-import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.extensions.coroutines.SchedulerProvider
 import kotlinx.coroutines.CoroutineScope
@@ -28,6 +27,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
+import hymnal.l10n.R as L10nR
 
 sealed class BillingData {
     data class Message(val status: Status, val errorRes: Int? = null) : BillingData()
@@ -86,7 +86,7 @@ internal class BillingManagerImpl @Inject constructor(
                     billingData.emit(
                         BillingData.Message(
                             Status.ERROR,
-                            R.string.error_item_already_owned
+                            L10nR.string.error_item_already_owned
                         )
                     )
                 }
@@ -118,7 +118,7 @@ internal class BillingManagerImpl @Inject constructor(
                 billingData.emit(
                     BillingData.Message(
                         Status.ERROR,
-                        R.string.error_billing_client_unavailable
+                        L10nR.string.error_billing_client_unavailable
                     )
                 )
             }
@@ -155,7 +155,7 @@ internal class BillingManagerImpl @Inject constructor(
                     billingData.emit(
                         BillingData.Message(
                             Status.SUCCESS,
-                            R.string.success_purchase
+                            L10nR.string.success_purchase
                         )
                     )
                 }
@@ -163,7 +163,7 @@ internal class BillingManagerImpl @Inject constructor(
                 billingData.emit(
                     BillingData.Message(
                         Status.ERROR,
-                        R.string.error_item_already_owned
+                        L10nR.string.error_item_already_owned
                     )
                 )
             } else {
@@ -199,7 +199,7 @@ internal class BillingManagerImpl @Inject constructor(
                 billingData.emit(
                     BillingData.Message(
                         Status.ERROR,
-                        R.string.error_billing_client_unavailable
+                        L10nR.string.error_billing_client_unavailable
                     )
                 )
             }

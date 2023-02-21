@@ -11,6 +11,7 @@ import com.tinashe.hymnal.BuildConfig
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.constants.UiPref
 import timber.log.Timber
+import hymnal.l10n.R as L10nR
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.Reader
@@ -60,15 +61,15 @@ object Helper {
     fun sendFeedback(activity: Activity) {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:")
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(activity.getString(R.string.app_email)))
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(activity.getString(L10nR.string.app_email)))
             putExtra(
                 Intent.EXTRA_SUBJECT,
-                "${activity.getString(R.string.app_full_name)} v${BuildConfig.VERSION_NAME}"
+                "${activity.getString(L10nR.string.app_full_name)} v${BuildConfig.VERSION_NAME}"
             )
         }
         if (intent.resolveActivity(activity.packageManager) != null) {
             activity.startActivity(
-                Intent.createChooser(intent, activity.getString(R.string.send_with))
+                Intent.createChooser(intent, activity.getString(L10nR.string.send_with))
             )
         }
     }

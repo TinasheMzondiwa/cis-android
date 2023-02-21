@@ -29,6 +29,7 @@ import com.tinashe.hymnal.ui.hymns.hymnals.HymnalListFragment.Companion.SELECTED
 import com.tinashe.hymnal.ui.hymns.sing.SingHymnsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
+import hymnal.l10n.R as L10nR
 
 @AndroidEntryPoint
 class HymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider {
@@ -107,7 +108,7 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider {
 
         val searchItem = menu.findItem(R.id.action_search)
         val searchView: SearchView = searchItem.actionView as SearchView
-        searchView.queryHint = getString(R.string.hint_search_hymns)
+        searchView.queryHint = getString(L10nR.string.hint_search_hymns)
         searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                 appBarBehaviour?.setAppBarExpanded(false)
@@ -157,8 +158,8 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider {
             .setTarget(R.id.actions_hymnals)
             .setIcon(R.drawable.ic_bookshelf_prompt)
             .setBackgroundColour(requireContext().getColorPrimary())
-            .setPrimaryText(R.string.switch_between_hymnals)
-            .setSecondaryText(R.string.switch_between_hymnals_message)
+            .setPrimaryText(L10nR.string.switch_between_hymnals)
+            .setSecondaryText(L10nR.string.switch_between_hymnals_message)
             .show()
 
         viewModel.hymnalsPromptShown()

@@ -40,6 +40,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import hymnal.l10n.R as L10nR
 
 @AndroidEntryPoint
 class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
@@ -130,7 +131,7 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                 hideNumPad()
                 val position = pagerAdapter?.hymns?.indexOfFirst { it.number == number }
                 if (position == null || position < 0) {
-                    snackbar.show(messageText = getString(R.string.error_invalid_number, number))
+                    snackbar.show(messageText = getString(L10nR.string.error_invalid_number, number))
                     return@setOnNumSelectedCallback
                 }
                 viewPager.setCurrentItem(position, false)
