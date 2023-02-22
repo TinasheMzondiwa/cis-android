@@ -1,6 +1,7 @@
 package com.tinashe.hymnal.repository
 
 import android.content.Context
+import android.content.res.Resources
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -17,13 +18,16 @@ import com.tinashe.hymnal.data.model.constants.Hymnals
 import com.tinashe.hymnal.data.model.remote.RemoteHymn
 import com.tinashe.hymnal.data.model.response.Resource
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
-import com.tinashe.hymnal.utils.Helper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import timber.log.Timber
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.io.Reader
+import java.io.StringWriter
 import java.lang.reflect.Type
 import kotlin.coroutines.CoroutineContext
 
@@ -71,9 +75,33 @@ class HymnalRepository(
     private suspend fun loadHymns(code: String) {
         val res = Hymnals.fromString(code)?.resId ?: return
 
-        val jsonString = Helper.getJson(context.resources, res)
+        val jsonString = getJsonResource(context.resources, res)
         val hymns = parseJson(jsonString) ?: emptyList()
         hymnsDao.insertAll(hymns.map { it.toHymn(code) })
+    }
+
+    private fun getJsonResource(resources: Resources, resId: Int): String {
+        val resourceReader = resources.openRawResource(resId)
+        val writer = StringWriter()
+
+        try {
+            val reader = BufferedReader(InputStreamReader(resourceReader, "UTF-8") as Reader)
+            var line: String? = reader.readLine()
+            while (line != null) {
+                writer.write(line)
+                line = reader.readLine()
+            }
+            return writer.toString()
+        } catch (e: Exception) {
+            Timber.e("Unhandled exception while using JSONResourceReader")
+        } finally {
+            try {
+                resourceReader.close()
+            } catch (e: Exception) {
+                Timber.e(e, "Unhandled exception while using JSONResourceReader")
+            }
+        }
+        return ""
     }
 
     private fun parseJson(jsonString: String): List<RemoteHymn>? {

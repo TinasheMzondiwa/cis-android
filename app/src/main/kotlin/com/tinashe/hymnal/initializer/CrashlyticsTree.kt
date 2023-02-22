@@ -1,4 +1,4 @@
-package com.tinashe.hymnal.extensions
+package com.tinashe.hymnal.initializer
 
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics

@@ -22,12 +22,12 @@ import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.databinding.FragmentHymnsBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
-import com.tinashe.hymnal.extensions.context.getColorPrimary
 import com.tinashe.hymnal.ui.AppBarBehaviour
 import com.tinashe.hymnal.ui.hymns.adapter.HymnListAdapter
 import com.tinashe.hymnal.ui.hymns.hymnals.HymnalListFragment.Companion.SELECTED_HYMNAL_KEY
 import com.tinashe.hymnal.ui.hymns.sing.SingHymnsActivity
 import dagger.hilt.android.AndroidEntryPoint
+import hymnal.android.context.getColorPrimary
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import hymnal.l10n.R as L10nR
 

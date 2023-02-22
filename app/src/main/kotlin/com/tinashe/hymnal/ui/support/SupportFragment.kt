@@ -12,12 +12,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.tinashe.hymnal.BuildConfig
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentSupportBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.extensions.view.inflateView
-import com.tinashe.hymnal.utils.Helper
 import dagger.hilt.android.AndroidEntryPoint
+import hymnal.android.context.launchWebUrl
+import hymnal.android.context.sendFeedback
 import hymnal.l10n.R as L10nR
 
 @AndroidEntryPoint
@@ -35,10 +37,10 @@ class SupportFragment : Fragment(R.layout.fragment_support), MenuProvider {
 
         binding.apply {
             tvPolicy.setOnClickListener {
-                Helper.launchWebUrl(requireContext(), getString(L10nR.string.app_privacy_policy))
+                requireContext().launchWebUrl(getString(L10nR.string.app_privacy_policy))
             }
             tvTerms.setOnClickListener {
-                Helper.launchWebUrl(requireContext(), getString(L10nR.string.app_terms))
+                requireContext().launchWebUrl(getString(L10nR.string.app_terms))
             }
         }
 
@@ -60,7 +62,7 @@ class SupportFragment : Fragment(R.layout.fragment_support), MenuProvider {
                 chipGroupInApp.clearCheck()
                 chipGroupSubs.clearCheck()
             }
-            Helper.launchWebUrl(requireContext(), it)
+            requireContext().launchWebUrl(it)
         }
         viewModel.inAppProductsLiveData.observeNonNull(viewLifecycleOwner) { products ->
             if (products.isEmpty()) {
@@ -135,11 +137,11 @@ class SupportFragment : Fragment(R.layout.fragment_support), MenuProvider {
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
             R.id.action_account_settings -> {
-                Helper.launchWebUrl(requireContext(), getString(L10nR.string.subscriptions_url))
+                requireContext().launchWebUrl(getString(L10nR.string.subscriptions_url))
                 true
             }
             R.id.action_help -> {
-                Helper.sendFeedback(requireActivity())
+                requireContext().sendFeedback(BuildConfig.VERSION_NAME)
                 true
             }
             else -> false
