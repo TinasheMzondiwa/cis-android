@@ -18,7 +18,6 @@ import com.tinashe.hymnal.databinding.ActivityEditHymnBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.widget.SimpleTextWatcher
-import com.tinashe.hymnal.utils.IntentExtras
 import dagger.hilt.android.AndroidEntryPoint
 import org.wordpress.aztec.Aztec
 import org.wordpress.aztec.ITextFormat
@@ -146,7 +145,7 @@ class EditHymnActivity : AppCompatActivity(), IAztecToolbarClickListener {
             context,
             EditHymnActivity::class.java
         ).apply {
-            putExtra(IntentExtras.HYMN, hymn)
+            putExtra(EXTRA_HYMN, hymn)
         }
     }
 }

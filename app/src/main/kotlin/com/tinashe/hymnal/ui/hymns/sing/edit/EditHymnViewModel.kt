@@ -10,10 +10,11 @@ import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import com.tinashe.hymnal.repository.HymnalRepository
-import com.tinashe.hymnal.utils.IntentExtras
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+const val EXTRA_HYMN = "arg:hymn"
 
 @HiltViewModel
 class EditHymnViewModel @Inject constructor(
@@ -30,7 +31,7 @@ class EditHymnViewModel @Inject constructor(
     private var editHymn: Hymn? = null
 
     init {
-        savedStateHandle.get<Hymn?>(IntentExtras.HYMN)?.let { hymn ->
+        savedStateHandle.get<Hymn?>(EXTRA_HYMN)?.let { hymn ->
             editHymn = hymn
 
             val content = if (hymn.editedContent.isNullOrEmpty()) {

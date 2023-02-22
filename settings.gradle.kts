@@ -18,6 +18,7 @@ rootProject.name = "cis-android"
 include(
     ":app",
     ":benchmark",
+    ":foundation:android",
     ":foundation:l10n-strings"
 )
 
