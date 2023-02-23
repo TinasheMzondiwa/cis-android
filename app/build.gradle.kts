@@ -89,8 +89,6 @@ room {
 }
 
 dependencies {
-    coreLibraryDesugaring(libs.coreLibraryDesugaring)
-
     implementation(projects.foundation.android)
     implementation(projects.foundation.l10nStrings)
 

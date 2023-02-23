@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.androidx.navigation.safeargs) apply false
     alias(libs.plugins.gradle.cache.fix) apply false
     alias(libs.plugins.gradle.retry) apply false
+    alias(libs.plugins.sortDependencies) apply false
 }
 
 buildscript {

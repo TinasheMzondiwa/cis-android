@@ -8,5 +8,3 @@ android {
     namespace = "hymnal.l10n"
     buildFeatures { androidResources = true }
 }
-
-dependencies { coreLibraryDesugaring(libs.coreLibraryDesugaring) }
