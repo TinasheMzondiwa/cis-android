@@ -7,8 +7,6 @@ plugins {
 android { namespace = "hymnal.android" }
 
 dependencies {
-    coreLibraryDesugaring(libs.coreLibraryDesugaring)
-
     implementation(projects.foundation.l10nStrings)
 
     implementation(libs.androidx.appcompat)

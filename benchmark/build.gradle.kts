@@ -42,7 +42,6 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring(libs.coreLibraryDesugaring)
     implementation(libs.androidx.profileinstaller)
     implementation(libs.test.androidx.benchmark.macro)
     implementation(libs.test.androidx.ext)
