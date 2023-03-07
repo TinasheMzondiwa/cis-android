@@ -12,13 +12,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tinashe.hymnal.R
-import hymnal.content.model.Hymn
-import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.databinding.ActivityEditHymnBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.widget.SimpleTextWatcher
 import dagger.hilt.android.AndroidEntryPoint
+import hymnal.content.model.Hymn
+import hymnal.content.model.Status
 import org.wordpress.aztec.Aztec
 import org.wordpress.aztec.ITextFormat
 import org.wordpress.aztec.toolbar.IAztecToolbarClickListener

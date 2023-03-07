@@ -6,10 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import hymnal.content.model.Status
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

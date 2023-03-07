@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hymnal.content.api.HymnalRepository
 import hymnal.content.model.Hymn
+import hymnal.content.model.Status
 import javax.inject.Inject
 
 const val EXTRA_HYMN = "arg:hymn"

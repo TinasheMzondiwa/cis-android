@@ -18,8 +18,8 @@ import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchaseHistory
 import com.tinashe.hymnal.BuildConfig
-import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.extensions.coroutines.SchedulerProvider
+import hymnal.content.model.Status
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
