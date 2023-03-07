@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import hymnal.content.model.TitleBody
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
-import com.tinashe.hymnal.repository.HymnalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import hymnal.content.api.HymnalRepository
 import hymnal.content.model.CollectionHymns
 import hymnal.content.model.HymnCollection
 import kotlinx.coroutines.launch
@@ -30,13 +30,13 @@ class CollectionsViewModel @Inject constructor(
     fun loadData() = viewModelScope.launch {
         mutableViewState.postValue(ViewState.LOADING)
         repository.getCollectionHymns().collect { collections ->
-            mutableCollections.postValue(collections)
+            mutableCollections.postValue(collections.getOrDefault(emptyList()))
             mutableViewState.postValue(ViewState.HAS_RESULTS)
         }
     }
 
     fun performSearch(query: String?) = viewModelScope.launch {
-        val collections = repository.searchCollections(query)
+        val collections = repository.searchCollections(query).getOrDefault(emptyList())
         mutableCollections.postValue(collections)
         val state = if (collections.isNotEmpty() || query.isNullOrEmpty()) {
             ViewState.HAS_RESULTS
@@ -46,17 +46,13 @@ class CollectionsViewModel @Inject constructor(
         mutableViewState.postValue(state)
     }
 
-    fun addCollection(content: TitleBody) = viewModelScope.launch {
-        repository.addCollection(content)
-    }
+    fun addCollection(content: TitleBody) = repository.addCollection(content)
 
     fun updateHymnCollections(
         hymnId: Int,
         collection: HymnCollection,
         add: Boolean
-    ) = viewModelScope.launch {
-        repository.updateHymnCollections(hymnId, collection.collectionId, add)
-    }
+    ) = repository.updateHymnCollections(hymnId, collection.collectionId, add)
 
     fun onIntentToDelete(position: Int) {
         val data = mutableCollections.value?.toMutableList() ?: return
@@ -76,10 +72,8 @@ class CollectionsViewModel @Inject constructor(
 
     fun deleteConfirmed() {
         collectionToDelete?.let {
-            viewModelScope.launch {
-                repository.deleteCollection(it.second)
-                collectionToDelete = null
-            }
+            repository.deleteCollection(it.second)
+            collectionToDelete = null
         }
     }
 }

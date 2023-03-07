@@ -13,6 +13,7 @@ import com.tinashe.hymnal.databinding.HymnalListBottomSheetFragmentBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.hymns.hymnals.adapter.HymnalsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import hymnal.content.model.Hymnal
 
 @AndroidEntryPoint
 class HymnalListBottomSheetFragment : BottomSheetDialogFragment() {
@@ -21,7 +22,7 @@ class HymnalListBottomSheetFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: HymnalListBottomSheetFragmentBinding
 
-    private var hymnalSelected: ((hymnal.content.model.Hymnal) -> Unit)? = null
+    private var hymnalSelected: ((Hymnal) -> Unit)? = null
 
     private val listAdapter: HymnalsListAdapter = HymnalsListAdapter { model ->
         hymnalSelected?.invoke(model.toHymnal())
@@ -69,7 +70,7 @@ class HymnalListBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        fun newInstance(hymnalSelected: (hymnal.content.model.Hymnal) -> Unit): HymnalListBottomSheetFragment =
+        fun newInstance(hymnalSelected: (Hymnal) -> Unit): HymnalListBottomSheetFragment =
             HymnalListBottomSheetFragment().apply {
                 this.hymnalSelected = hymnalSelected
             }

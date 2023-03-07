@@ -4,11 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tinashe.hymnal.data.model.constants.Status
-import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
-import com.tinashe.hymnal.repository.HymnalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import hymnal.content.api.HymnalRepository
 import hymnal.content.model.CollectionHymns
 import hymnal.content.model.Hymn
 import kotlinx.coroutines.launch
@@ -18,9 +16,6 @@ import javax.inject.Inject
 class CollectionHymnsViewModel @Inject constructor(
     private val repository: HymnalRepository
 ) : ViewModel() {
-
-    private val mutableViewState = SingleLiveEvent<Status>()
-    val statusLiveData: LiveData<Status> = mutableViewState.asLiveData()
 
     private val mutableCollection = MutableLiveData<String>()
     val collectionTitleLiveData: LiveData<String> = mutableCollection.asLiveData()
@@ -33,8 +28,7 @@ class CollectionHymnsViewModel @Inject constructor(
 
     fun loadData(collectionId: Int) = viewModelScope.launch {
         val resource = repository.getCollection(collectionId)
-        mutableViewState.postValue(resource.status)
-        resource.data?.let {
+        resource.getOrNull()?.let {
             mutableHymnsList.postValue(it.hymns)
             mutableCollection.postValue(it.collection.title)
             collectionHymns = it
@@ -59,17 +53,14 @@ class CollectionHymnsViewModel @Inject constructor(
         hymnToDelete?.let { pair ->
             val collection = collectionHymns ?: return@let
             val id = collection.collection.collectionId
-            viewModelScope.launch {
-                repository.updateHymnCollections(pair.second.hymnId, id, false)
-                hymnToDelete = null
-            }
+
+            repository.updateHymnCollections(pair.second.hymnId, id, false)
+            hymnToDelete = null
         }
     }
 
     fun deleteCollectionConfirmed() {
         val collection = collectionHymns ?: return
-        viewModelScope.launch {
-            repository.deleteCollection(collection)
-        }
+        repository.deleteCollection(collection)
     }
 }

@@ -2,15 +2,16 @@ package com.tinashe.hymnal.repository
 
 import android.content.Context
 import com.squareup.moshi.Moshi
-import hymnal.storage.dao.CollectionsDao
-import hymnal.storage.dao.HymnsDao
-import hymnal.content.model.Hymn
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import com.tinashe.hymnal.utils.CoroutineRule
+import hymnal.content.api.HymnalRepository
+import hymnal.content.model.Hymn
+import hymnal.storage.dao.CollectionsDao
+import hymnal.storage.dao.HymnsDao
+import hymnal.storage.entity.HymnEntity
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
@@ -20,7 +21,6 @@ import org.junit.Test
 
 internal class HymnalRepositoryTest {
 
-    @ExperimentalCoroutinesApi
     @get:Rule
     var coroutinesTestRule = CoroutineRule()
 
@@ -32,10 +32,9 @@ internal class HymnalRepositoryTest {
 
     private lateinit var repository: HymnalRepository
 
-    @ExperimentalCoroutinesApi
     @Before
     fun setup() {
-        repository = HymnalRepository(
+        repository = HymnalRepositoryImpl(
             mockContext,
             mockMoshi,
             mockHymnsDao,
@@ -45,20 +44,21 @@ internal class HymnalRepositoryTest {
         )
     }
 
-    @ExperimentalCoroutinesApi
     @Test
     fun `should query hymns for selected code`() = runTest {
         // given
         val code = "english"
         val query = "again and again"
-        val mockResults = listOf<Hymn>(mockk())
+        val entities = listOf(HymnEntity(1, code, 1, "", query, null, null))
         every { mockPrefs.getSelectedHymnal() }.returns(code)
-        coEvery { mockHymnsDao.search(code, "%$query%") }.returns(mockResults)
+        coEvery { mockHymnsDao.search(code, "%$query%") }.returns(entities)
 
         // when
-        val results = repository.searchHymns(query)
+        val results = repository.searchHymns(query).getOrNull()
 
         // then
-        results shouldBeEqualTo mockResults
+        results shouldBeEqualTo listOf(
+            Hymn(1, code, 1, "", query, null, null)
+        )
     }
 }

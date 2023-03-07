@@ -10,4 +10,5 @@ android {
 
 dependencies {
     api(projects.core.hymnalContent.model)
+    api(libs.kotlin.coroutines)
 }

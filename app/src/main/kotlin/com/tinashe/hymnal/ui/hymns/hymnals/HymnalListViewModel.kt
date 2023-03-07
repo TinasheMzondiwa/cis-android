@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import hymnal.content.model.HymnalSort
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
-import com.tinashe.hymnal.repository.HymnalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import hymnal.content.api.HymnalRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,14 +32,14 @@ class HymnalListViewModel @Inject constructor(
 
     private fun getModels(): List<HymnalModel> {
         val resource = repository.getHymnals()
-        return resource.data?.map { hymnal ->
+        return resource.getOrDefault(emptyList()).map { hymnal ->
             HymnalModel(
                 hymnal.code,
                 hymnal.title,
                 hymnal.language,
                 hymnal.code == prefs.getSelectedHymnal()
             )
-        } ?: emptyList()
+        }
     }
 
     private fun sortData(data: List<HymnalModel>, order: HymnalSort): List<HymnalModel> {
