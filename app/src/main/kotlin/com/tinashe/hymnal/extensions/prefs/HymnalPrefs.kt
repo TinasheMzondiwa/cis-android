@@ -2,7 +2,7 @@ package com.tinashe.hymnal.extensions.prefs
 
 import androidx.annotation.FontRes
 import com.tinashe.hymnal.data.model.TextStyleModel
-import com.tinashe.hymnal.data.model.constants.HymnalSort
+import hymnal.content.model.HymnalSort
 import com.tinashe.hymnal.data.model.constants.UiPref
 
 interface HymnalPrefs {

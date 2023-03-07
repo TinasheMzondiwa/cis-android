@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.Hymn
+import hymnal.content.model.Hymn
 import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.databinding.ActivityEditHymnBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull

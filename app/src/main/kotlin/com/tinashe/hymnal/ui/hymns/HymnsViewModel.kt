@@ -5,8 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tinashe.hymnal.data.model.Hymn
-import com.tinashe.hymnal.data.model.Hymnal
+import hymnal.content.model.Hymn
 import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
@@ -48,7 +47,7 @@ class HymnsViewModel @Inject constructor(
     }
     val hymnListLiveData: LiveData<List<Hymn>> get() = mutableHymnsList.asLiveData()
 
-    fun hymnalSelected(hymnal: Hymnal) {
+    fun hymnalSelected(hymnal: hymnal.content.model.Hymnal) {
         fetchData(hymnal)
     }
 
@@ -60,7 +59,7 @@ class HymnsViewModel @Inject constructor(
         } ?: mutableMessage.postValue(context.getString(L10nR.string.error_invalid_number, number))
     }
 
-    private fun fetchData(hymnal: Hymnal? = null) = viewModelScope.launch {
+    private fun fetchData(hymnal: hymnal.content.model.Hymnal? = null) = viewModelScope.launch {
         repository.getHymns(hymnal).collectLatest { resource ->
             mutableViewState.postValue(resource.status)
             mutableHymnsList.postValue(resource.data?.hymns ?: emptyList())

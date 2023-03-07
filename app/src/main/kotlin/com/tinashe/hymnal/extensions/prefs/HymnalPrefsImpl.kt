@@ -5,7 +5,7 @@ import androidx.annotation.FontRes
 import androidx.core.content.edit
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.data.model.TextStyleModel
-import com.tinashe.hymnal.data.model.constants.HymnalSort
+import hymnal.content.model.HymnalSort
 import com.tinashe.hymnal.data.model.constants.UiPref
 
 class HymnalPrefsImpl(private val prefs: SharedPreferences) : HymnalPrefs {

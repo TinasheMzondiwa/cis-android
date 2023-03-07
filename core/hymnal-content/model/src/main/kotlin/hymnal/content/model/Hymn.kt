@@ -1,15 +1,11 @@
-package com.tinashe.hymnal.data.model
+package hymnal.content.model
 
 import android.os.Parcelable
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
-@Entity(tableName = "hymns")
 @Parcelize
 data class Hymn(
-    @PrimaryKey(autoGenerate = true)
-    val hymnId: Int = 0,
+    val hymnId: Int,
     val book: String,
     val number: Int,
     val title: String,

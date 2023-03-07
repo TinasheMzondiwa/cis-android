@@ -1,4 +1,4 @@
-package com.tinashe.hymnal.data.model.constants
+package hymnal.content.model
 
 enum class HymnalSort {
     TITLE,

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.TitleBody
+import hymnal.content.model.TitleBody
 import com.tinashe.hymnal.databinding.FragmentNewCollectionBinding
 import hymnal.l10n.R as L10nR
 

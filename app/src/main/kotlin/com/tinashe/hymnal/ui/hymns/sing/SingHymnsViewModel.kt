@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tinashe.hymnal.data.model.Hymn
-import com.tinashe.hymnal.data.model.Hymnal
+import hymnal.content.model.Hymn
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import com.tinashe.hymnal.repository.HymnalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -41,7 +40,7 @@ class SingHymnsViewModel @Inject constructor(
         }
     }
 
-    fun switchHymnal(hymnal: Hymnal) {
+    fun switchHymnal(hymnal: hymnal.content.model.Hymnal) {
         if (mutableHymnal.value == hymnal.title) {
             return
         }

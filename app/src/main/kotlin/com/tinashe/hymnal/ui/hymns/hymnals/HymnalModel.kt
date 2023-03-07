@@ -2,7 +2,6 @@ package com.tinashe.hymnal.ui.hymns.hymnals
 
 import androidx.annotation.Keep
 import androidx.recyclerview.widget.DiffUtil
-import com.tinashe.hymnal.data.model.Hymnal
 
 @Keep
 data class HymnalModel(
@@ -12,7 +11,7 @@ data class HymnalModel(
     var selected: Boolean
 ) {
 
-    fun toHymnal() = Hymnal(code, title, language)
+    fun toHymnal() = hymnal.content.model.Hymnal(code, title, language)
 
     companion object {
         val DIFF = object : DiffUtil.ItemCallback<HymnalModel>() {

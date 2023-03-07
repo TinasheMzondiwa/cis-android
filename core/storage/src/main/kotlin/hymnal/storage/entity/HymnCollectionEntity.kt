@@ -1,13 +1,13 @@
-package com.tinashe.hymnal.data.model.collections
+package hymnal.storage.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "collections")
-data class HymnCollection(
+data class HymnCollectionEntity(
     @PrimaryKey(autoGenerate = true)
     val collectionId: Int = 0,
     val title: String,
-    var description: String?,
+    val description: String?,
     val created: Long
 )

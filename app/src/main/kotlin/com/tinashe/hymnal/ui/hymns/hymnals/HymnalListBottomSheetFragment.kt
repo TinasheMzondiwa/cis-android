@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.databinding.HymnalListBottomSheetFragmentBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.hymns.hymnals.adapter.HymnalsListAdapter
@@ -22,7 +21,7 @@ class HymnalListBottomSheetFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: HymnalListBottomSheetFragmentBinding
 
-    private var hymnalSelected: ((Hymnal) -> Unit)? = null
+    private var hymnalSelected: ((hymnal.content.model.Hymnal) -> Unit)? = null
 
     private val listAdapter: HymnalsListAdapter = HymnalsListAdapter { model ->
         hymnalSelected?.invoke(model.toHymnal())
@@ -70,7 +69,7 @@ class HymnalListBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        fun newInstance(hymnalSelected: (Hymnal) -> Unit): HymnalListBottomSheetFragment =
+        fun newInstance(hymnalSelected: (hymnal.content.model.Hymnal) -> Unit): HymnalListBottomSheetFragment =
             HymnalListBottomSheetFragment().apply {
                 this.hymnalSelected = hymnalSelected
             }

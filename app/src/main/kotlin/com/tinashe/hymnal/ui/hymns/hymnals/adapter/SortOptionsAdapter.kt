@@ -6,7 +6,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.ChipGroup
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.constants.HymnalSort
+import hymnal.content.model.HymnalSort
 import com.tinashe.hymnal.databinding.HymnsSortOrderBinding
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import com.tinashe.hymnal.extensions.view.inflateView

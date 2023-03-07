@@ -1,4 +1,4 @@
-package com.tinashe.hymnal.data.model.collections
+package hymnal.storage.entity
 
 import androidx.room.Entity
 import androidx.room.Index
@@ -8,7 +8,7 @@ import androidx.room.Index
     primaryKeys = ["collectionId", "hymnId"],
     indices = [Index("hymnId", unique = false)]
 )
-class CollectionHymnCrossRef(
+class CollectionHymnCrossRefEntity(
     val collectionId: Int,
     val hymnId: Int
 )

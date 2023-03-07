@@ -3,7 +3,7 @@ package com.tinashe.hymnal.ui.hymns.hymnals
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.tinashe.hymnal.data.model.constants.HymnalSort
+import hymnal.content.model.HymnalSort
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import com.tinashe.hymnal.repository.HymnalRepository

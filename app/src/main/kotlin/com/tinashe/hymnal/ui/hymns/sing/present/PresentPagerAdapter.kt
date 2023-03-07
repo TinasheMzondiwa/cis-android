@@ -4,7 +4,7 @@ import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.tinashe.hymnal.data.model.Hymn
+import hymnal.content.model.Hymn
 
 class PresentPagerAdapter(
     fragment: FragmentActivity,

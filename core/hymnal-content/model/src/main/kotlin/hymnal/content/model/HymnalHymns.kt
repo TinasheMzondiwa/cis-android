@@ -1,4 +1,4 @@
-package com.tinashe.hymnal.data.model
+package hymnal.content.model
 
 data class HymnalHymns(
     val code: String,

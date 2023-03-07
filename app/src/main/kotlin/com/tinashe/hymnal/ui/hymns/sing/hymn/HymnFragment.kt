@@ -7,7 +7,7 @@ import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.Hymn
+import hymnal.content.model.Hymn
 import com.tinashe.hymnal.databinding.FragmentHymnBinding
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import dagger.hilt.android.AndroidEntryPoint

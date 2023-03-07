@@ -1,4 +1,4 @@
-package com.tinashe.hymnal.data.db.dao
+package hymnal.storage.dao
 
 import androidx.room.Delete
 import androidx.room.Insert

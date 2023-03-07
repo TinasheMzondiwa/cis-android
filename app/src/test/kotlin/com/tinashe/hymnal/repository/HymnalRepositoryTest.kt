@@ -2,9 +2,9 @@ package com.tinashe.hymnal.repository
 
 import android.content.Context
 import com.squareup.moshi.Moshi
-import com.tinashe.hymnal.data.db.dao.CollectionsDao
-import com.tinashe.hymnal.data.db.dao.HymnsDao
-import com.tinashe.hymnal.data.model.Hymn
+import hymnal.storage.dao.CollectionsDao
+import hymnal.storage.dao.HymnsDao
+import hymnal.content.model.Hymn
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import com.tinashe.hymnal.utils.CoroutineRule
 import io.mockk.coEvery
