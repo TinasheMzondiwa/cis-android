@@ -3,7 +3,7 @@ package com.tinashe.hymnal.ui.collections.adapter
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.tinashe.hymnal.data.model.collections.CollectionHymns
+import hymnal.content.model.CollectionHymns
 
 class CollectionListAdapter(
     private val callback: (Pair<CollectionHymns, View>) -> Unit

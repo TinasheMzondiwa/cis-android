@@ -1,7 +1,7 @@
 package com.tinashe.hymnal.ui.collections.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.tinashe.hymnal.data.model.collections.CollectionHymns
+import hymnal.content.model.CollectionHymns
 
 object CollectionsDiff : DiffUtil.ItemCallback<CollectionHymns>() {
     override fun areItemsTheSame(oldItem: CollectionHymns, newItem: CollectionHymns): Boolean {

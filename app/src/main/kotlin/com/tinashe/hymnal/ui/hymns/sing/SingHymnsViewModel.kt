@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tinashe.hymnal.data.model.Hymn
-import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.extensions.arch.asLiveData
-import com.tinashe.hymnal.repository.HymnalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import hymnal.content.api.HymnalRepository
+import hymnal.content.model.Hymn
+import hymnal.content.model.Hymnal
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,14 +27,14 @@ class SingHymnsViewModel @Inject constructor(
     fun loadData(collectionId: Int) = viewModelScope.launch {
         if (collectionId == -1) {
             repository.getHymns().collectLatest { resource ->
-                resource.data?.let {
+                resource.getOrNull()?.let {
                     mutableHymnsList.postValue(it.hymns)
                     mutableHymnal.postValue(it.title)
                 }
             }
         } else {
             val resource = repository.getCollection(collectionId)
-            resource.data?.let {
+            resource.getOrNull()?.let {
                 mutableHymnsList.postValue(it.hymns)
                 mutableHymnal.postValue(it.collection.title)
             }
@@ -47,7 +47,7 @@ class SingHymnsViewModel @Inject constructor(
         }
         viewModelScope.launch {
             repository.getHymns(hymnal).collectLatest { resource ->
-                resource.data?.let {
+                resource.getOrNull()?.let {
                     mutableHymnsList.postValue(it.hymns)
                     mutableHymnal.postValue(it.title)
                 }

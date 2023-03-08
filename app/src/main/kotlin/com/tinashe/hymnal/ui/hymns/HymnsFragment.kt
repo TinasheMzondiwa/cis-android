@@ -18,8 +18,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.Hymnal
-import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.databinding.FragmentHymnsBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.AppBarBehaviour
@@ -28,6 +26,7 @@ import com.tinashe.hymnal.ui.hymns.hymnals.HymnalListFragment.Companion.SELECTED
 import com.tinashe.hymnal.ui.hymns.sing.SingHymnsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import hymnal.android.context.getColorPrimary
+import hymnal.content.model.Hymnal
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import hymnal.l10n.R as L10nR
 
@@ -63,12 +62,6 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider {
         viewModel.showHymnalsPromptLiveData.observe(viewLifecycleOwner) {
             showHymnalsTargetPrompt()
         }
-        viewModel.statusLiveData.observeNonNull(viewLifecycleOwner) {
-            binding.apply {
-                hymnsListView.isVisible = it != Status.LOADING
-                progressBar.isVisible = it == Status.LOADING
-            }
-        }
         viewModel.messageLiveData.observeNonNull(viewLifecycleOwner) {
             binding.snackbar.show(messageText = it)
         }
@@ -79,6 +72,7 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider {
             openSelectedHymn(it)
         }
         viewModel.hymnListLiveData.observeNonNull(viewLifecycleOwner) { hymns ->
+            binding.progressBar.isVisible = false
             listAdapter.submitList(ArrayList(hymns))
         }
 

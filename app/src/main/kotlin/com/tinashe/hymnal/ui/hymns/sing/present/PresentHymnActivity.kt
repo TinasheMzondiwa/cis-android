@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.Hymn
+import hymnal.content.model.Hymn
 import com.tinashe.hymnal.databinding.ActivityPresentHymnBinding
 import com.tinashe.hymnal.extensions.view.viewBinding
 import timber.log.Timber

@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.databinding.FragmentHymnsBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.AppBarBehaviour
@@ -94,16 +93,11 @@ class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider 
             adapter = listAdapter
         }
 
-        viewModel.statusLiveData.observeNonNull(viewLifecycleOwner) {
-            binding.apply {
-                hymnsListView.isVisible = it != Status.LOADING
-                progressBar.isVisible = it == Status.LOADING
-            }
-        }
         viewModel.collectionTitleLiveData.observeNonNull(viewLifecycleOwner) {
             appBarBehaviour?.setAppBarTitle(it)
         }
         viewModel.hymnListLiveData.observeNonNull(viewLifecycleOwner) { hymns ->
+            binding.progressBar.isVisible = false
             listAdapter.submitList(ArrayList(hymns))
         }
     }

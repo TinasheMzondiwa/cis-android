@@ -18,8 +18,12 @@ rootProject.name = "cis-android"
 include(
     ":app",
     ":benchmark",
+    ":core:hymnal-content:api",
+    ":core:hymnal-content:model",
+    ":core:storage",
+    ":core:ui",
     ":foundation:android",
-    ":foundation:l10n-strings"
+    ":foundation:l10n-strings",
 )
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

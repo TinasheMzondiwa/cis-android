@@ -24,12 +24,6 @@ android {
         versionCode = 3433
         versionName = libs.versions.app.get()
         vectorDrawables.useSupportLibrary = true
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += mapOf("room.incremental" to "true")
-            }
-        }
     }
 
     signingConfigs {
@@ -84,13 +78,11 @@ android {
     }
 }
 
-room {
-    schemaLocationDir.set(file("$projectDir/schemas"))
-}
-
 dependencies {
     implementation(projects.foundation.android)
     implementation(projects.foundation.l10nStrings)
+    implementation(projects.core.hymnalContent.api)
+    implementation(projects.core.storage)
 
     implementation(libs.android.billing)
     implementation(libs.androidx.appcompat)
@@ -104,9 +96,6 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.profileinstaller)
-    implementation(libs.androidx.room)
-    implementation(libs.androidx.room.runtime)
-    kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.preference)
     implementation(libs.androidx.startup)
     implementation(libs.aztec)

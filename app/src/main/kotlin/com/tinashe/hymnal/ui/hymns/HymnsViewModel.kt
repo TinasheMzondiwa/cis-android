@@ -5,14 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tinashe.hymnal.data.model.Hymn
-import com.tinashe.hymnal.data.model.Hymnal
-import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
-import com.tinashe.hymnal.repository.HymnalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import hymnal.content.api.HymnalRepository
+import hymnal.content.model.Hymn
+import hymnal.content.model.Hymnal
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -28,9 +27,6 @@ class HymnsViewModel @Inject constructor(
 
     private val mutableShowHymnalsPrompt = SingleLiveEvent<Any>()
     val showHymnalsPromptLiveData: LiveData<Any> = mutableShowHymnalsPrompt.asLiveData()
-
-    private val mutableViewState = SingleLiveEvent<Status>()
-    val statusLiveData: LiveData<Status> = mutableViewState.asLiveData()
 
     private val mutableMessage = SingleLiveEvent<String>()
     val messageLiveData: LiveData<String> = mutableMessage.asLiveData()
@@ -61,10 +57,10 @@ class HymnsViewModel @Inject constructor(
     }
 
     private fun fetchData(hymnal: Hymnal? = null) = viewModelScope.launch {
-        repository.getHymns(hymnal).collectLatest { resource ->
-            mutableViewState.postValue(resource.status)
-            mutableHymnsList.postValue(resource.data?.hymns ?: emptyList())
-            resource.data?.title?.let {
+        repository.getHymns(hymnal).collectLatest { result ->
+            val hymns = result.getOrNull()
+            mutableHymnsList.postValue(hymns?.hymns ?: emptyList())
+            hymns?.title?.let {
                 mutableHymnal.postValue(it)
 
                 if (!prefs.isHymnalPromptSeen()) {
@@ -77,7 +73,7 @@ class HymnsViewModel @Inject constructor(
     }
 
     fun performSearch(query: String?) = viewModelScope.launch {
-        val results = repository.searchHymns(query)
+        val results = repository.searchHymns(query).getOrDefault(emptyList())
         mutableHymnsList.postValue(results)
     }
 

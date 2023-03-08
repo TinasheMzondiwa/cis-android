@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.collections.CollectionHymns
 import com.tinashe.hymnal.databinding.HymnCollectionTitleItemBinding
 import com.tinashe.hymnal.extensions.view.inflateView
 import com.tinashe.hymnal.ui.collections.adapter.CollectionsDiff
+import hymnal.content.model.CollectionHymns
 
 class CollectionTitlesListAdapter(
     private val callback: (Pair<CollectionHymns, Boolean>) -> Unit

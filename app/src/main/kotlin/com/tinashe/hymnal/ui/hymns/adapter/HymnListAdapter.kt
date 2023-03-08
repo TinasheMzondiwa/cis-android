@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.Hymn
+import hymnal.content.model.Hymn
 import com.tinashe.hymnal.databinding.HymnListItemBinding
 import com.tinashe.hymnal.extensions.view.inflate
 

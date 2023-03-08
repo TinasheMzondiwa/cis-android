@@ -5,24 +5,30 @@ import android.content.res.Resources
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
-import com.tinashe.hymnal.data.db.dao.CollectionsDao
-import com.tinashe.hymnal.data.db.dao.HymnsDao
-import com.tinashe.hymnal.data.model.Hymn
-import com.tinashe.hymnal.data.model.Hymnal
-import com.tinashe.hymnal.data.model.HymnalHymns
-import com.tinashe.hymnal.data.model.TitleBody
-import com.tinashe.hymnal.data.model.collections.CollectionHymnCrossRef
-import com.tinashe.hymnal.data.model.collections.CollectionHymns
-import com.tinashe.hymnal.data.model.collections.HymnCollection
 import com.tinashe.hymnal.data.model.constants.Hymnals
 import com.tinashe.hymnal.data.model.remote.RemoteHymn
-import com.tinashe.hymnal.data.model.response.Resource
 import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
+import hymnal.content.api.HymnalRepository
+import hymnal.content.model.CollectionHymns
+import hymnal.content.model.Hymn
+import hymnal.content.model.HymnCollection
+import hymnal.content.model.Hymnal
+import hymnal.content.model.HymnalHymns
+import hymnal.content.model.TitleBody
+import hymnal.storage.dao.CollectionsDao
+import hymnal.storage.dao.HymnsDao
+import hymnal.storage.entity.CollectionHymnCrossRefEntity
+import hymnal.storage.entity.CollectionHymnsEntity
+import hymnal.storage.entity.HymnCollectionEntity
+import hymnal.storage.entity.HymnEntity
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -31,40 +37,44 @@ import java.io.StringWriter
 import java.lang.reflect.Type
 import kotlin.coroutines.CoroutineContext
 
-class HymnalRepository(
+class HymnalRepositoryImpl(
     private val context: Context,
     private val moshi: Moshi,
     private val hymnsDao: HymnsDao,
     private val collectionsDao: CollectionsDao,
     private val prefs: HymnalPrefs,
     private val backgroundContext: CoroutineContext = Dispatchers.IO
-) {
+) : HymnalRepository, CoroutineScope by CoroutineScope(backgroundContext) {
 
     private val selectedCode: String get() = prefs.getSelectedHymnal()
 
-    fun getHymnals(): Resource<List<Hymnal>> {
+    override fun getHymnals(): Result<List<Hymnal>> {
         val hymnals = Hymnals.values().map {
             Hymnal(it.key, it.title, it.language)
         }
-        return Resource.success(hymnals)
+        return Result.success(hymnals)
     }
 
-    fun getHymns(selectedHymnal: Hymnal? = null) = flow {
-        val code = selectedHymnal?.code ?: selectedCode
-        if (hymnsDao.listAll(code).isEmpty()) {
-            emit(Resource.loading())
-            loadHymns(code)
-        }
+    override fun getHymns(selectedHymnal: Hymnal?): Flow<Result<HymnalHymns>> {
+        return flow {
+            val code = selectedHymnal?.code ?: selectedCode
 
-        prefs.setSelectedHymnal(code)
+            if (hymnsDao.listAll(code).isEmpty()) {
+                loadHymns(code)
+            }
 
-        val hymnal = getHymnal(code)
-        val hymns = hymnsDao.listAll(code)
-        emit(Resource.success(HymnalHymns(hymnal, hymns)))
-    }.catch {
-        Timber.e(it)
-        emit(Resource.error(it))
-    }.flowOn(backgroundContext)
+            prefs.setSelectedHymnal(code)
+
+            val hymnal = getHymnal(code)
+            val hymns = hymnsDao.listAll(code).map { it.toHymn() }
+
+            emit(Result.success(HymnalHymns(hymnal, hymns)))
+
+        }.catch {
+            Timber.e(it)
+            Result.failure<HymnalHymns>(it)
+        }.flowOn(backgroundContext)
+    }
 
     private fun getHymnal(code: String): Hymnal {
         return Hymnals.fromString(code)?.let {
@@ -77,7 +87,7 @@ class HymnalRepository(
 
         val jsonString = getJsonResource(context.resources, res)
         val hymns = parseJson(jsonString) ?: emptyList()
-        hymnsDao.insertAll(hymns.map { it.toHymn(code) })
+        hymnsDao.insertAll(hymns.map { it.toHymnEntity(code) })
     }
 
     private fun getJsonResource(resources: Resources, resId: Int): String {
@@ -111,52 +121,85 @@ class HymnalRepository(
         return adapter.fromJson(jsonString)
     }
 
-    suspend fun searchHymns(query: String?): List<Hymn> {
-        return hymnsDao.search(selectedCode, "%${query ?: ""}%")
+    override suspend fun searchHymns(query: String?): Result<List<Hymn>> {
+        val hymns = hymnsDao.search(selectedCode, "%${query ?: ""}%").map { it.toHymn() }
+        return Result.success(hymns)
     }
 
-    suspend fun updateHymn(hymn: Hymn) {
-        hymnsDao.update(hymn)
+    override fun updateHymn(hymn: Hymn) {
+        launch { hymnsDao.update(hymn.toEntity()) }
     }
 
-    fun getCollectionHymns(): Flow<List<CollectionHymns>> = collectionsDao.getCollectionsWithHymns()
+    override fun getCollectionHymns(): Flow<Result<List<CollectionHymns>>> = collectionsDao
+        .getCollectionsWithHymns()
+        .map { entities -> entities.map { it.toModel() } }
+        .map { Result.success(it) }
+        .catch {
+            Timber.e(it)
+            Result.failure<List<CollectionHymns>>(it)
+        }.flowOn(backgroundContext)
 
-    suspend fun searchCollections(query: String?): List<CollectionHymns> =
-        collectionsDao.searchFor("%${query ?: ""}%")
+    override suspend fun searchCollections(query: String?): Result<List<CollectionHymns>> {
+        val collections = collectionsDao.searchFor("%${query ?: ""}%")
+            .map { it.toModel() }
+        return Result.success(collections)
+    }
 
-    suspend fun addCollection(content: TitleBody) {
+    override fun addCollection(content: TitleBody) {
         val collection =
-            HymnCollection(
+            HymnCollectionEntity(
                 title = content.title,
                 description = content.body,
                 created = System.currentTimeMillis()
             )
-        collectionsDao.insert(collection)
+        launch { collectionsDao.insert(collection) }
     }
 
-    suspend fun updateHymnCollections(hymnId: Int, collectionId: Int, add: Boolean) {
-        if (add) {
-            collectionsDao.insertRef(CollectionHymnCrossRef(collectionId, hymnId))
-        } else {
-            collectionsDao.findRef(hymnId, collectionId)?.let {
-                collectionsDao.deleteRef(it)
+    override fun updateHymnCollections(hymnId: Int, collectionId: Int, add: Boolean) {
+        launch {
+            if (add) {
+                collectionsDao.insertRef(CollectionHymnCrossRefEntity(collectionId, hymnId))
+            } else {
+                collectionsDao.findRef(hymnId, collectionId)?.let {
+                    collectionsDao.deleteRef(it)
+                }
             }
         }
     }
 
-    suspend fun getCollection(id: Int): Resource<CollectionHymns> {
+    override suspend fun getCollection(id: Int): Result<CollectionHymns> {
         return collectionsDao.findById(id)?.let {
-            Resource.success(it)
-        } ?: Resource.error(IllegalArgumentException("Invalid Collection Id"))
+            Result.success(it.toModel())
+        } ?: Result.failure(IllegalArgumentException("Invalid Collection Id"))
     }
 
-    suspend fun deleteCollection(collection: CollectionHymns) {
+    override fun deleteCollection(collection: CollectionHymns) {
         val collectionId = collection.collection.collectionId
-        collection.hymns.forEach { hymn ->
-            collectionsDao.findRef(hymn.hymnId, collectionId)?.let {
-                collectionsDao.deleteRef(it)
+        launch {
+            collection.hymns.forEach { hymn ->
+                collectionsDao.findRef(hymn.hymnId, collectionId)?.let {
+                    collectionsDao.deleteRef(it)
+                }
             }
+            collectionsDao.deleteCollection(collectionId)
         }
-        collectionsDao.deleteCollection(collectionId)
     }
+
+    private fun HymnEntity.toHymn() = Hymn(
+        hymnId, book, number, title, content, majorKey, editedContent
+    )
+
+    private fun Hymn.toEntity() = HymnEntity(
+        hymnId, book, number, title, content, majorKey, editedContent
+    )
+
+    private fun CollectionHymnsEntity.toModel() = CollectionHymns(
+        collection = HymnCollection(
+            collection.collectionId,
+            collection.title,
+            collection.description,
+            collection.created
+        ),
+        hymns = hymns.map { it.toHymn() }
+    )
 }

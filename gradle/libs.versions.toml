@@ -1,5 +1,5 @@
 [versions]
-app = "3.5.1"
+app = "3.6.0"
 android-billing = "5.1.0"
 androidx-activity = "1.6.1"
 androidx-annotations = "1.6.0"
@@ -40,6 +40,7 @@ javax-annotation = "1.3.2"
 jdk = "19"
 kotlin = "1.8.10"
 kotlin-coroutines = "1.6.4"
+markwon = "4.6.2"
 sgp = "0.5.9"
 sortDependencies = "0.1"
 spotless = "6.16.0"
@@ -125,6 +126,7 @@ kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", 
 kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
 kotlin-coroutines-playservices = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlin-coroutines" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+markwon-core = { module = "io.noties.markwon:core", version.ref = "markwon" }
 square-moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "square-moshi" }
 square-moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "square-moshi" }
 tapTarget = { module = "uk.co.samuelwall:material-tap-target-prompt", version.ref = "tapTarget" }

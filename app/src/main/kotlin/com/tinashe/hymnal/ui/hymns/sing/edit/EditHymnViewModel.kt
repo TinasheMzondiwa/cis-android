@@ -4,14 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.tinashe.hymnal.data.model.Hymn
-import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
-import com.tinashe.hymnal.repository.HymnalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import hymnal.content.api.HymnalRepository
+import hymnal.content.model.Hymn
+import hymnal.content.model.Status
 import javax.inject.Inject
 
 const val EXTRA_HYMN = "arg:hymn"
@@ -54,12 +52,10 @@ class EditHymnViewModel @Inject constructor(
                     parsed = parsed.dropLast(suffix.length)
                 }
 
-                viewModelScope.launch {
-                    hymn.editedContent = parsed
-                    repository.updateHymn(hymn)
+                hymn.editedContent = parsed
+                repository.updateHymn(hymn)
 
-                    mutableViewState.postValue(Status.SUCCESS)
-                }
+                mutableViewState.postValue(Status.SUCCESS)
             }
         } else {
             mutableViewState.postValue(Status.ERROR)
@@ -68,12 +64,10 @@ class EditHymnViewModel @Inject constructor(
 
     fun undoChanges() {
         editHymn?.let { hymn ->
-            viewModelScope.launch {
-                hymn.editedContent = null
-                repository.updateHymn(hymn)
+            hymn.editedContent = null
+            repository.updateHymn(hymn)
 
-                mutableViewState.postValue(Status.SUCCESS)
-            }
+            mutableViewState.postValue(Status.SUCCESS)
         }
     }
 }

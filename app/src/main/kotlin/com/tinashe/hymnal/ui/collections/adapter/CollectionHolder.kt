@@ -8,9 +8,9 @@ import androidx.core.text.buildSpannedString
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.collections.CollectionHymns
 import com.tinashe.hymnal.databinding.HymnCollectionItemBinding
 import com.tinashe.hymnal.extensions.view.inflateView
+import hymnal.content.model.CollectionHymns
 import hymnal.l10n.R as L10nR
 
 class CollectionHolder(
