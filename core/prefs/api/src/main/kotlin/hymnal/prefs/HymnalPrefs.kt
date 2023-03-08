@@ -1,9 +1,9 @@
-package com.tinashe.hymnal.extensions.prefs
+package hymnal.prefs
 
 import androidx.annotation.FontRes
-import com.tinashe.hymnal.data.model.TextStyleModel
-import hymnal.content.model.HymnalSort
-import com.tinashe.hymnal.data.model.constants.UiPref
+import hymnal.prefs.model.TextStyleModel
+import hymnal.prefs.model.HymnalSort
+import hymnal.prefs.model.UiPref
 
 interface HymnalPrefs {
 

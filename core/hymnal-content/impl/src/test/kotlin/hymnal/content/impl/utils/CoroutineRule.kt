@@ -1,4 +1,4 @@
-package com.tinashe.hymnal.utils
+package hymnal.content.impl.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestDispatcher

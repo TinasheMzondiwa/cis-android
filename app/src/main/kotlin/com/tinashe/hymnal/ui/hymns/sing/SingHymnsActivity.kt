@@ -12,6 +12,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.transition.doOnEnd
 import androidx.core.transition.doOnStart
@@ -21,12 +22,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.transition.platform.MaterialArcMotion
 import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.constants.UiPref
-import com.tinashe.hymnal.data.model.constants.setDefaultNightMode
 import com.tinashe.hymnal.databinding.ActivitySingBinding
 import com.tinashe.hymnal.extensions.activity.applyMaterialTransform
 import com.tinashe.hymnal.extensions.arch.observeNonNull
-import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.collections.add.AddToCollectionFragment
 import com.tinashe.hymnal.ui.hymns.hymnals.HymnalListBottomSheetFragment
@@ -37,6 +35,8 @@ import com.tinashe.hymnal.ui.hymns.sing.present.PresentHymnActivity
 import com.tinashe.hymnal.ui.hymns.sing.style.TextStyleChanges
 import com.tinashe.hymnal.ui.hymns.sing.style.TextStyleFragment
 import dagger.hilt.android.AndroidEntryPoint
+import hymnal.prefs.HymnalPrefs
+import hymnal.prefs.model.UiPref
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -322,6 +322,17 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                 }
             }
         }
+    }
+
+    private fun UiPref.setDefaultNightMode() {
+        val theme = when (this) {
+            UiPref.DAY -> AppCompatDelegate.MODE_NIGHT_NO
+            UiPref.NIGHT -> AppCompatDelegate.MODE_NIGHT_YES
+            UiPref.FOLLOW_SYSTEM -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            UiPref.BATTERY_SAVER -> AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+        }
+
+        AppCompatDelegate.setDefaultNightMode(theme)
     }
 
     companion object {

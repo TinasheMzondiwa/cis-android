@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.ConcatAdapter
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.HymnalListFragmentBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
-import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import com.tinashe.hymnal.ui.hymns.hymnals.adapter.HymnalsListAdapter
 import com.tinashe.hymnal.ui.hymns.hymnals.adapter.SortOptionsAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import hymnal.prefs.HymnalPrefs
 import javax.inject.Inject
 
 @AndroidEntryPoint

@@ -1,51 +1,36 @@
 package com.tinashe.hymnal.data.di
 
-import android.app.Application
 import android.content.Context
+import androidx.preference.PreferenceManager
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfig
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tinashe.hymnal.data.model.cfg.DonationsConfig
-import com.tinashe.hymnal.extensions.coroutines.SchedulerProvider
+import com.tinashe.hymnal.extensions.prefs.HymnalPrefsImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import hymnal.prefs.HymnalPrefs
 
 @Module
 @InstallIn(SingletonComponent::class)
 object HymnalModule {
 
     @Provides
-    fun provideContext(app: Application): Context = app
-
-    @Provides
-    fun provideMoshi(): Moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
-
-    @Provides
-    fun provideFirebaseConfig(): FirebaseRemoteConfig {
-        return Firebase.remoteConfig.also {
+    fun provideConfig(): DonationsConfig {
+        val config = Firebase.remoteConfig.also {
             it.fetchAndActivate()
         }
+        return DonationsConfig(
+            enabled = config.getBoolean("cfg_donations_enabled")
+        )
     }
 
     @Provides
-    fun provideConfig(remoteConfig: FirebaseRemoteConfig, moshi: Moshi): DonationsConfig {
-        val jsonString = remoteConfig.getString("cfg_donations")
-        return if (jsonString.isEmpty()) {
-            DonationsConfig()
-        } else {
-            val jsonAdapter: JsonAdapter<DonationsConfig> =
-                moshi.adapter(DonationsConfig::class.java)
-            jsonAdapter.fromJson(jsonString) ?: DonationsConfig()
-        }
-    }
-
-    @Provides
-    fun provideSchedulers(): SchedulerProvider = SchedulerProvider()
+    fun provideHymnalPrefs(
+        @ApplicationContext context: Context
+    ): HymnalPrefs = HymnalPrefsImpl(
+        PreferenceManager.getDefaultSharedPreferences(context)
+    )
 }

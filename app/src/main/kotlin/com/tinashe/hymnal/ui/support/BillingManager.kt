@@ -18,7 +18,7 @@ import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchaseHistory
 import com.tinashe.hymnal.BuildConfig
-import com.tinashe.hymnal.extensions.coroutines.SchedulerProvider
+import hymnal.android.coroutines.DispatcherProvider
 import hymnal.content.model.Status
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -45,7 +45,7 @@ interface BillingManager {
 
 @Singleton
 internal class BillingManagerImpl @Inject constructor(
-    private val schedulerProvider: SchedulerProvider
+    private val dispatcherProvider: DispatcherProvider
 ) : BillingManager, PurchasesUpdatedListener, BillingClientStateListener {
 
     private var coroutineScope: CoroutineScope? = null
@@ -71,7 +71,7 @@ internal class BillingManagerImpl @Inject constructor(
     }
 
     override fun sync() {
-        coroutineScope?.launch(schedulerProvider.io) {
+        coroutineScope?.launch(dispatcherProvider.default) {
             queryPurchases()
         }
     }
@@ -146,7 +146,7 @@ internal class BillingManagerImpl @Inject constructor(
     }
 
     override fun onPurchasesUpdated(result: BillingResult, purchases: MutableList<Purchase>?) {
-        coroutineScope?.launch(schedulerProvider.io) {
+        coroutineScope?.launch(dispatcherProvider.default) {
             if (result.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
                 purchases.forEach { purchase ->
                     if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
@@ -189,7 +189,7 @@ internal class BillingManagerImpl @Inject constructor(
     override fun onBillingSetupFinished(result: BillingResult) {
         Timber.i("Billing SetupFinished: ${result.responseCode}")
 
-        coroutineScope?.launch(schedulerProvider.io) {
+        coroutineScope?.launch(dispatcherProvider.default) {
             if (result.responseCode == BillingClient.BillingResponseCode.OK) {
                 queryOneTimeDonations()
                 queryRecurringDonations()

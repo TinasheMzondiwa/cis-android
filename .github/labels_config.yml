@@ -1,14 +1,20 @@
 ci:
   - '.github/*'
 core:
-  - 'app/src/main/java/*'
-hymnals:
-  - 'app/src/main/res/raw/*'
+  - 'app/src/main/kotlin/*'
 dependencies:
   - 'gradle/libs.versions.toml'
-test:
-  - any: ['*/src/test/*','*/src/androidTest/*']
 gradle:
   - all: ['*.gradle.kts', '*.gradle']
+hymnals:
+  - 'core/hymnal-content/impl/src/main/res/raw/*'
+l10n:
+  - 'foundation/l10n-strings/*'
 layouts:
   - any: ['*.xml']
+prefs:
+  - 'core/prefs/*'
+storage:
+  - 'core/storage/*'
+test:
+  - any: ['*/src/test/*','*/src/androidTest/*']

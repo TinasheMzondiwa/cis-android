@@ -3,11 +3,11 @@ package com.tinashe.hymnal.ui.hymns.hymnals
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import hymnal.content.model.HymnalSort
 import com.tinashe.hymnal.extensions.arch.asLiveData
-import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hymnal.content.api.HymnalRepository
+import hymnal.prefs.HymnalPrefs
+import hymnal.prefs.model.HymnalSort
 import javax.inject.Inject
 
 @HiltViewModel
