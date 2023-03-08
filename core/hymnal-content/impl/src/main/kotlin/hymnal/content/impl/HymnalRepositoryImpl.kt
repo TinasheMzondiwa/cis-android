@@ -1,28 +1,26 @@
-package com.tinashe.hymnal.repository
+package hymnal.content.impl
 
 import android.content.Context
 import android.content.res.Resources
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
-import com.tinashe.hymnal.data.model.constants.Hymnals
-import com.tinashe.hymnal.data.model.remote.RemoteHymn
-import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
+import dagger.hilt.android.qualifiers.ApplicationContext
+import hymnal.android.coroutines.DispatcherProvider
 import hymnal.content.api.HymnalRepository
+import hymnal.content.impl.model.JsonHymn
 import hymnal.content.model.CollectionHymns
 import hymnal.content.model.Hymn
-import hymnal.content.model.HymnCollection
 import hymnal.content.model.Hymnal
 import hymnal.content.model.HymnalHymns
+import hymnal.content.model.Hymnals
 import hymnal.content.model.TitleBody
+import hymnal.prefs.HymnalPrefs
 import hymnal.storage.dao.CollectionsDao
 import hymnal.storage.dao.HymnsDao
 import hymnal.storage.entity.CollectionHymnCrossRefEntity
-import hymnal.storage.entity.CollectionHymnsEntity
 import hymnal.storage.entity.HymnCollectionEntity
-import hymnal.storage.entity.HymnEntity
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -35,16 +33,18 @@ import java.io.InputStreamReader
 import java.io.Reader
 import java.io.StringWriter
 import java.lang.reflect.Type
-import kotlin.coroutines.CoroutineContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class HymnalRepositoryImpl(
-    private val context: Context,
+@Singleton
+internal class HymnalRepositoryImpl @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val moshi: Moshi,
     private val hymnsDao: HymnsDao,
     private val collectionsDao: CollectionsDao,
     private val prefs: HymnalPrefs,
-    private val backgroundContext: CoroutineContext = Dispatchers.IO
-) : HymnalRepository, CoroutineScope by CoroutineScope(backgroundContext) {
+    private val dispatcherProvider: DispatcherProvider
+) : HymnalRepository, CoroutineScope by CoroutineScope(dispatcherProvider.io) {
 
     private val selectedCode: String get() = prefs.getSelectedHymnal()
 
@@ -73,7 +73,7 @@ class HymnalRepositoryImpl(
         }.catch {
             Timber.e(it)
             Result.failure<HymnalHymns>(it)
-        }.flowOn(backgroundContext)
+        }.flowOn(dispatcherProvider.io)
     }
 
     private fun getHymnal(code: String): Hymnal {
@@ -83,7 +83,7 @@ class HymnalRepositoryImpl(
     }
 
     private suspend fun loadHymns(code: String) {
-        val res = Hymnals.fromString(code)?.resId ?: return
+        val res = Hymnals.fromString(code)?.resId() ?: return
 
         val jsonString = getJsonResource(context.resources, res)
         val hymns = parseJson(jsonString) ?: emptyList()
@@ -114,10 +114,10 @@ class HymnalRepositoryImpl(
         return ""
     }
 
-    private fun parseJson(jsonString: String): List<RemoteHymn>? {
+    private fun parseJson(jsonString: String): List<JsonHymn>? {
         val listDataType: Type =
-            Types.newParameterizedType(List::class.java, RemoteHymn::class.java)
-        val adapter: JsonAdapter<List<RemoteHymn>> = moshi.adapter(listDataType)
+            Types.newParameterizedType(List::class.java, JsonHymn::class.java)
+        val adapter: JsonAdapter<List<JsonHymn>> = moshi.adapter(listDataType)
         return adapter.fromJson(jsonString)
     }
 
@@ -137,7 +137,7 @@ class HymnalRepositoryImpl(
         .catch {
             Timber.e(it)
             Result.failure<List<CollectionHymns>>(it)
-        }.flowOn(backgroundContext)
+        }.flowOn(dispatcherProvider.io)
 
     override suspend fun searchCollections(query: String?): Result<List<CollectionHymns>> {
         val collections = collectionsDao.searchFor("%${query ?: ""}%")
@@ -184,22 +184,4 @@ class HymnalRepositoryImpl(
             collectionsDao.deleteCollection(collectionId)
         }
     }
-
-    private fun HymnEntity.toHymn() = Hymn(
-        hymnId, book, number, title, content, majorKey, editedContent
-    )
-
-    private fun Hymn.toEntity() = HymnEntity(
-        hymnId, book, number, title, content, majorKey, editedContent
-    )
-
-    private fun CollectionHymnsEntity.toModel() = CollectionHymns(
-        collection = HymnCollection(
-            collection.collectionId,
-            collection.title,
-            collection.description,
-            collection.created
-        ),
-        hymns = hymns.map { it.toHymn() }
-    )
 }

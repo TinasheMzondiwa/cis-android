@@ -4,9 +4,10 @@ import android.content.SharedPreferences
 import androidx.annotation.FontRes
 import androidx.core.content.edit
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.TextStyleModel
-import hymnal.content.model.HymnalSort
-import com.tinashe.hymnal.data.model.constants.UiPref
+import hymnal.prefs.HymnalPrefs
+import hymnal.prefs.model.HymnalSort
+import hymnal.prefs.model.TextStyleModel
+import hymnal.prefs.model.UiPref
 
 class HymnalPrefsImpl(private val prefs: SharedPreferences) : HymnalPrefs {
 

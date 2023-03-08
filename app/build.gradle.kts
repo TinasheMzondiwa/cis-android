@@ -81,8 +81,8 @@ android {
 dependencies {
     implementation(projects.foundation.android)
     implementation(projects.foundation.l10nStrings)
-    implementation(projects.core.hymnalContent.api)
-    implementation(projects.core.storage)
+    implementation(projects.core.hymnalContent.impl)
+    implementation(projects.core.prefs.api)
 
     implementation(libs.android.billing)
     implementation(libs.androidx.appcompat)
@@ -105,12 +105,6 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.google.hilt.android)
     kapt(libs.google.hilt.compiler)
-    implementation(libs.kotlin.coroutines)
-    implementation(libs.kotlin.coroutines.android)
-    implementation(libs.kotlin.coroutines.playservices)
-    implementation(libs.square.moshi.kotlin)
-    kapt(libs.square.moshi.codegen)
-    compileOnly(libs.javax.annotation)
     implementation(libs.tapTarget)
     implementation(libs.timber)
 

@@ -1,4 +1,4 @@
-package hymnal.content.model
+package hymnal.prefs.model
 
 enum class HymnalSort {
     TITLE,

@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
-import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hymnal.content.api.HymnalRepository
 import hymnal.content.model.Hymn
 import hymnal.content.model.Hymnal
+import hymnal.prefs.HymnalPrefs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

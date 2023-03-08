@@ -1,18 +1,18 @@
-package com.tinashe.hymnal.repository
+package hymnal.content.impl
 
 import android.content.Context
 import com.squareup.moshi.Moshi
-import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
-import com.tinashe.hymnal.utils.CoroutineRule
 import hymnal.content.api.HymnalRepository
+import hymnal.content.impl.utils.CoroutineRule
+import hymnal.content.impl.utils.TestDispatcherProvider
 import hymnal.content.model.Hymn
+import hymnal.prefs.HymnalPrefs
 import hymnal.storage.dao.CollectionsDao
 import hymnal.storage.dao.HymnsDao
 import hymnal.storage.entity.HymnEntity
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Before
@@ -40,7 +40,7 @@ internal class HymnalRepositoryTest {
             mockHymnsDao,
             mockCollectionsDao,
             mockPrefs,
-            UnconfinedTestDispatcher()
+            TestDispatcherProvider()
         )
     }
 

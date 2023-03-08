@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.TextStyleModel
-import com.tinashe.hymnal.data.model.constants.UiPref
 import com.tinashe.hymnal.databinding.FragmentTextOptionsBinding
+import hymnal.prefs.model.TextStyleModel
+import hymnal.prefs.model.UiPref
 
 class TextStyleFragment : BottomSheetDialogFragment() {
 

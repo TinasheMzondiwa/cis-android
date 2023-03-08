@@ -5,7 +5,7 @@ import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
-import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
+import hymnal.prefs.HymnalPrefs
 import io.mockk.every
 import io.mockk.mockk
 import org.amshove.kluent.shouldBeEqualTo

@@ -1,17 +1,14 @@
-package com.tinashe.hymnal.data.model.remote
+package hymnal.content.impl.model
 
-import android.os.Parcelable
 import com.squareup.moshi.JsonClass
 import hymnal.storage.entity.HymnEntity
-import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
-@Parcelize
-data class RemoteHymn(
+internal data class JsonHymn(
     val title: String,
     val number: Int,
     val content: String
-) : Parcelable {
+)  {
     fun toHymnEntity(book: String): HymnEntity = HymnEntity(
         hymnId = 0,
         book = book,

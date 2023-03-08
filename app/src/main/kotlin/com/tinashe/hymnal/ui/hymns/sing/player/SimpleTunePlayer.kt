@@ -6,16 +6,17 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import com.tinashe.hymnal.data.model.constants.Hymnals
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
-import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
+import dagger.hilt.android.qualifiers.ApplicationContext
+import hymnal.content.model.Hymnals
+import hymnal.prefs.HymnalPrefs
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
 class SimpleTunePlayer @Inject constructor(
-    private val context: Context,
+    @ApplicationContext private val context: Context,
     private val prefs: HymnalPrefs
 ) : DefaultLifecycleObserver {
 
