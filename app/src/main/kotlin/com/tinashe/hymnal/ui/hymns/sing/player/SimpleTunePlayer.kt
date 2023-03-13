@@ -9,7 +9,6 @@ import androidx.lifecycle.LiveData
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import dagger.hilt.android.qualifiers.ApplicationContext
-import hymnal.content.model.Hymnals
 import hymnal.prefs.HymnalPrefs
 import timber.log.Timber
 import java.io.IOException
@@ -86,14 +85,14 @@ class SimpleTunePlayer @Inject constructor(
         private const val EXTENSION = ".mid"
 
         /**
-         * Add here [Hymnals] that do not have audio matching the original [Hymnals.ENGLISH].
+         * Add here Hymnals that do not have audio matching the original ENGLISH.
          */
         private val unavailableCodes = listOf(
-            Hymnals.SWAHILI,
-            Hymnals.ABAGUSII,
-            Hymnals.GIKUYU,
-            Hymnals.DHOLUO,
-            Hymnals.SDAH
-        ).map { it.key }
+            "swahili",
+            "gikuyu",
+            "abagusii",
+            "dholuo",
+            "sdah",
+        )
     }
 }

@@ -1,7 +1,6 @@
 package hymnal.content.impl
 
 import android.content.Context
-import android.content.res.Resources
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -9,11 +8,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import hymnal.android.coroutines.DispatcherProvider
 import hymnal.content.api.HymnalRepository
 import hymnal.content.impl.model.JsonHymn
+import hymnal.content.impl.model.JsonHymnal
 import hymnal.content.model.CollectionHymns
 import hymnal.content.model.Hymn
 import hymnal.content.model.Hymnal
 import hymnal.content.model.HymnalHymns
-import hymnal.content.model.Hymnals
 import hymnal.content.model.TitleBody
 import hymnal.prefs.HymnalPrefs
 import hymnal.storage.dao.CollectionsDao
@@ -23,15 +22,12 @@ import hymnal.storage.entity.HymnCollectionEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.io.Reader
-import java.io.StringWriter
 import java.lang.reflect.Type
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -49,75 +45,51 @@ internal class HymnalRepositoryImpl @Inject constructor(
     private val selectedCode: String get() = prefs.getSelectedHymnal()
 
     override fun getHymnals(): Result<List<Hymnal>> {
-        val hymnals = Hymnals.values().map {
+        val hymnals = readJsonFile<JsonHymnal>("config")?.map {
             Hymnal(it.key, it.title, it.language)
-        }
+        } ?: return Result.failure(RuntimeException("Could not load hymnals"))
+
         return Result.success(hymnals)
     }
 
     override fun getHymns(selectedHymnal: Hymnal?): Flow<Result<HymnalHymns>> {
-        return flow {
-            val code = selectedHymnal?.code ?: selectedCode
+        val code = selectedHymnal?.code ?: selectedCode
+        val hymnal = getHymnal(code)
 
-            if (hymnsDao.listAll(code).isEmpty()) {
-                loadHymns(code)
+        prefs.setSelectedHymnal(code)
+
+        return hymnsDao.listAll(code)
+            .onEach { if (it.isEmpty()) loadHymns(code) }
+            .map { entities -> entities.map { it.toHymn() } }
+            .map { hymns ->
+                Result.success(HymnalHymns(hymnal, hymns))
             }
-
-            prefs.setSelectedHymnal(code)
-
-            val hymnal = getHymnal(code)
-            val hymns = hymnsDao.listAll(code).map { it.toHymn() }
-
-            emit(Result.success(HymnalHymns(hymnal, hymns)))
-
-        }.catch {
-            Timber.e(it)
-            Result.failure<HymnalHymns>(it)
-        }.flowOn(dispatcherProvider.io)
+            .onStart { emit(Result.success(HymnalHymns(hymnal, emptyList()))) }
+            .catch {
+                Timber.e(it)
+                Result.failure<HymnalHymns>(it)
+            }.flowOn(dispatcherProvider.io)
     }
 
     private fun getHymnal(code: String): Hymnal {
-        return Hymnals.fromString(code)?.let {
-            Hymnal(it.key, it.title, it.language)
-        } ?: throw IllegalArgumentException("Invalid Hymnal code")
+        return getHymnals()
+            .getOrDefault(emptyList())
+            .firstOrNull { it.code == code }
+            ?: throw IllegalArgumentException("Invalid Hymnal code")
     }
 
-    private suspend fun loadHymns(code: String) {
-        val res = Hymnals.fromString(code)?.resId() ?: return
-
-        val jsonString = getJsonResource(context.resources, res)
-        val hymns = parseJson(jsonString) ?: emptyList()
+    private fun loadHymns(code: String) = launch {
+        val hymns = readJsonFile<JsonHymn>(code) ?: return@launch
         hymnsDao.insertAll(hymns.map { it.toHymnEntity(code) })
     }
 
-    private fun getJsonResource(resources: Resources, resId: Int): String {
-        val resourceReader = resources.openRawResource(resId)
-        val writer = StringWriter()
+    private inline fun <reified T> readJsonFile(assetFile: String): List<T>? {
+        val jsonString = context.assets.open("cis-hymnals/$assetFile.json")
+            .bufferedReader()
+            .use { it.readText() }
 
-        try {
-            val reader = BufferedReader(InputStreamReader(resourceReader, "UTF-8") as Reader)
-            var line: String? = reader.readLine()
-            while (line != null) {
-                writer.write(line)
-                line = reader.readLine()
-            }
-            return writer.toString()
-        } catch (e: Exception) {
-            Timber.e("Unhandled exception while using JSONResourceReader")
-        } finally {
-            try {
-                resourceReader.close()
-            } catch (e: Exception) {
-                Timber.e(e, "Unhandled exception while using JSONResourceReader")
-            }
-        }
-        return ""
-    }
-
-    private fun parseJson(jsonString: String): List<JsonHymn>? {
-        val listDataType: Type =
-            Types.newParameterizedType(List::class.java, JsonHymn::class.java)
-        val adapter: JsonAdapter<List<JsonHymn>> = moshi.adapter(listDataType)
+        val listDataType: Type = Types.newParameterizedType(List::class.java, T::class.java)
+        val adapter: JsonAdapter<List<T>> = moshi.adapter(listDataType)
         return adapter.fromJson(jsonString)
     }
 
