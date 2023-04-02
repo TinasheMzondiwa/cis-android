@@ -124,6 +124,11 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     tunePlayer.stopMedia()
+
+                    val hymn = viewModel.hymnListLiveData.value?.getOrNull(position) ?: return
+                    // We cannot edit markdown content for now.
+                    binding.bottomAppBar.menu.findItem(R.id.action_edit).isVisible =
+                        hymn.markdown.isNullOrEmpty()
                 }
             })
 

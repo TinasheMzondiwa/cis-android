@@ -9,7 +9,8 @@ data class Hymn(
     val book: String,
     val number: Int,
     val title: String,
-    val content: String,
+    val html: String?,
+    val markdown: String?,
     val majorKey: String?,
     var editedContent: String?
 ) : Parcelable

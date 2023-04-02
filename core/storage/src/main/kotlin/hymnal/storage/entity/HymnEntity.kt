@@ -10,7 +10,9 @@ data class HymnEntity(
     val book: String,
     val number: Int,
     val title: String,
-    val content: String,
+    /** html content **/
+    val content: String?,
+    val markdown: String?,
     val majorKey: String?,
     val editedContent: String?
 )
