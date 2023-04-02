@@ -33,7 +33,7 @@ class EditHymnViewModel @Inject constructor(
             editHymn = hymn
 
             val content = if (hymn.editedContent.isNullOrEmpty()) {
-                hymn.content to false
+                (hymn.html ?: "") to false
             } else {
                 (hymn.editedContent ?: "") to true
             }

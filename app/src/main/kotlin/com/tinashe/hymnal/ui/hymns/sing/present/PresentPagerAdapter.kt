@@ -8,13 +8,13 @@ import hymnal.content.model.Hymn
 
 class PresentPagerAdapter(
     fragment: FragmentActivity,
-    hymn: Hymn
+    private val hymn: Hymn
 ) : FragmentStateAdapter(fragment) {
 
     private val hymnVerses: List<String>
 
     init {
-        val verses = ((hymn.editedContent ?: hymn.content).parseAsHtml()).split("\n\n")
+        val verses = content()
         val chorus = verses.find { it.contains("CHORUS", true) }
         val parsed = arrayListOf<String>()
         verses.forEachIndexed { index, verse ->
@@ -27,8 +27,17 @@ class PresentPagerAdapter(
         hymnVerses = parsed
     }
 
+    private fun content() = when {
+        hymn.markdown.isNullOrEmpty() ->
+            (hymn.editedContent ?: hymn.html ?: "").parseAsHtml()
+        else -> (hymn.markdown ?: "")
+    } .split("\n\n")
+
     override fun getItemCount(): Int = hymnVerses.size
 
     override fun createFragment(position: Int): Fragment =
-        HymnVerseFragment.newInstance(hymnVerses[position])
+        HymnVerseFragment.newInstance(
+            hymnVerses[position],
+            hymn.html.isNullOrEmpty()
+        )
 }

@@ -107,6 +107,7 @@ dependencies {
     kapt(libs.google.hilt.compiler)
     implementation(libs.tapTarget)
     implementation(libs.timber)
+    implementation(libs.markwon.core)
 
     testImplementation(libs.bundles.testing.common)
     androidTestImplementation(libs.bundles.testing.android.common)

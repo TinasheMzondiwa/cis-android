@@ -7,11 +7,11 @@ import hymnal.storage.entity.CollectionHymnsEntity
 import hymnal.storage.entity.HymnEntity
 
 internal fun HymnEntity.toHymn() = Hymn(
-    hymnId, book, number, title, content, majorKey, editedContent
+    hymnId, book, number, title, content, markdown, majorKey, editedContent
 )
 
 internal fun Hymn.toEntity() = HymnEntity(
-    hymnId, book, number, title, content, majorKey, editedContent
+    hymnId, book, number, title, html, markdown, majorKey, editedContent
 )
 
 internal fun CollectionHymnsEntity.toModel() = CollectionHymns(
