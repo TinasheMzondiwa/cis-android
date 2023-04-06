@@ -1,6 +1,6 @@
 [versions]
 app = "3.6.0"
-android-billing = "5.1.0"
+android-billing = "5.2.0"
 androidx-activity = "1.7.0"
 androidx-annotations = "1.6.0"
 androidx-appcompat = "1.6.1"
