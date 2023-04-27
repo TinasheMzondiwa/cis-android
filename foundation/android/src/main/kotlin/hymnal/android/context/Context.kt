@@ -13,7 +13,7 @@ import timber.log.Timber
 import hymnal.l10n.R as L10nR
 
 @ColorInt
-fun Context.getColorPrimary() = getAttrColor(R.attr.colorPrimary)
+fun Context.getColorPrimary() = getAttrColor(androidx.appcompat.R.attr.colorPrimary)
 
 @ColorInt
 fun Context.getAttrColor(@AttrRes attrColor: Int) = theme.obtainStyledAttributes(intArrayOf(attrColor)).getColorOrThrow(0)
