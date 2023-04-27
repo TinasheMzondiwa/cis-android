@@ -60,10 +60,6 @@
 
 -keepnames class androidx.navigation.fragment.NavHostFragment
 
-# Application model classes
--keep class com.tinashe.hymnal.data.model.** { *; }
--keep class com.tinashe.hymnal.initializer.TimberInitializer
-
 # Ignore annotation used for build tooling.
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 
@@ -78,3 +74,8 @@
 -keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
 -keep class com.google.firebase.crashlytics.** { *; }
 -dontwarn com.google.firebase.crashlytics.**
+
+# Firebase
+-keep class com.google.android.gms.internal.** { *; }
+-keep class com.google.firebase.installations.** { *; }
+-keep interface com.google.firebase.installations.** { *; }
