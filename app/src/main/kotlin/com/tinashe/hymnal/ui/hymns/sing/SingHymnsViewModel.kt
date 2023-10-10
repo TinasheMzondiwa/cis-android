@@ -1,15 +1,16 @@
 package com.tinashe.hymnal.ui.hymns.sing
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tinashe.hymnal.extensions.arch.asLiveData
+import com.tinashe.hymnal.ui.hymns.HymnsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hymnal.content.api.HymnalRepository
 import hymnal.content.model.Hymn
 import hymnal.content.model.Hymnal
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,40 +19,29 @@ class SingHymnsViewModel @Inject constructor(
     private val repository: HymnalRepository
 ) : ViewModel() {
 
-    private val mutableHymnal = MutableLiveData<String>()
-    val hymnalTitleLiveData: LiveData<String> = mutableHymnal.asLiveData()
-
-    private val mutableHymnsList = MutableLiveData<List<Hymn>>()
-    val hymnListLiveData: LiveData<List<Hymn>> get() = mutableHymnsList.asLiveData()
+    private val _uiState = MutableStateFlow<HymnsState>(HymnsState.Loading)
+    val uiState: StateFlow<HymnsState> = _uiState
 
     fun loadData(collectionId: Int) = viewModelScope.launch {
         if (collectionId == -1) {
             repository.getHymns().collectLatest { resource ->
-                resource.getOrNull()?.let {
-                    mutableHymnsList.postValue(it.hymns)
-                    mutableHymnal.postValue(it.title)
+                resource.getOrNull()?.let { hymns ->
+                    _uiState.update { HymnsState.Success(hymns.title, hymns.hymns) }
                 }
             }
         } else {
             val resource = repository.getCollection(collectionId)
-            resource.getOrNull()?.let {
-                mutableHymnsList.postValue(it.hymns)
-                mutableHymnal.postValue(it.collection.title)
+            resource.getOrNull()?.let { hymns ->
+                _uiState.update { HymnsState.Success(hymns.collection.title, hymns.hymns) }
             }
         }
     }
 
     fun switchHymnal(hymnal: Hymnal) {
-        if (mutableHymnal.value == hymnal.title) {
-            return
-        }
-//        viewModelScope.launch {
-//            repository.getHymns(hymnal).collectLatest { resource ->
-//                resource.getOrNull()?.let {
-//                    mutableHymnsList.postValue(it.hymns)
-//                    mutableHymnal.postValue(it.title)
-//                }
-//            }
-//        }
+        repository.setSelectedHymnal(hymnal)
+    }
+
+    fun getHymn(position: Int) : Hymn? {
+        return (uiState.value as? HymnsState.Success)?.hymns?.getOrNull(position)
     }
 }

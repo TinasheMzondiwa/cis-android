@@ -27,6 +27,7 @@ import com.tinashe.hymnal.extensions.activity.applyMaterialTransform
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.collections.add.AddToCollectionFragment
+import com.tinashe.hymnal.ui.hymns.HymnsState
 import com.tinashe.hymnal.ui.hymns.hymnals.HymnalListBottomSheetFragment
 import com.tinashe.hymnal.ui.hymns.sing.edit.EditHymnActivity
 import com.tinashe.hymnal.ui.hymns.sing.player.PlaybackState
@@ -35,6 +36,7 @@ import com.tinashe.hymnal.ui.hymns.sing.present.PresentHymnActivity
 import com.tinashe.hymnal.ui.hymns.sing.style.TextStyleChanges
 import com.tinashe.hymnal.ui.hymns.sing.style.TextStyleFragment
 import dagger.hilt.android.AndroidEntryPoint
+import hymnal.android.coroutines.collectIn
 import hymnal.prefs.HymnalPrefs
 import hymnal.prefs.model.UiPref
 import kotlinx.coroutines.delay
@@ -80,18 +82,23 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
 
         val hymnId = intent.getIntExtra(ARG_SELECTED, 1)
 
-        viewModel.hymnalTitleLiveData.observeNonNull(this) {
-            title = it
-        }
-        viewModel.hymnListLiveData.observeNonNull(this) { hymns ->
-            pagerAdapter = SingFragmentsAdapter(this, hymns)
-            binding.viewPager.apply {
-                adapter = pagerAdapter
-                val position = (currentPosition ?: hymns.indexOfFirst { it.hymnId == hymnId })
-                    .takeUnless { it == -1 } ?: return@apply
+        viewModel.uiState.collectIn(this) { state ->
+            when (state) {
+                HymnsState.Error,
+                HymnsState.Loading,
+                is HymnsState.SearchResults -> Unit
+                is HymnsState.Success -> {
+                    title = state.title
+                    pagerAdapter = SingFragmentsAdapter(this@SingHymnsActivity, state.hymns)
+                    binding.viewPager.apply {
+                        adapter = pagerAdapter
+                        val position = (currentPosition ?: state.hymns.indexOfFirst { it.hymnId == hymnId })
+                            .takeUnless { it == -1 } ?: return@apply
 
-                setCurrentItem(position, false)
-                currentPosition = null
+                        setCurrentItem(position, false)
+                        currentPosition = null
+                    }
+                }
             }
         }
         tunePlayer.playbackLiveData.observeNonNull(this) {
@@ -125,7 +132,7 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                     super.onPageSelected(position)
                     tunePlayer.stopMedia()
 
-                    val hymn = viewModel.hymnListLiveData.value?.getOrNull(position) ?: return
+                    val hymn = viewModel.getHymn(position) ?: return
                     // We cannot edit markdown content for now.
                     binding.bottomAppBar.menu.findItem(R.id.action_edit).isVisible =
                         hymn.markdown.isNullOrEmpty()
