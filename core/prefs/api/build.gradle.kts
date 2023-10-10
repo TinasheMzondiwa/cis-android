@@ -6,4 +6,5 @@ plugins {
 
 dependencies {
     api(projects.core.prefs.model)
+    api(libs.kotlin.coroutines)
 }

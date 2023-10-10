@@ -4,10 +4,13 @@ import androidx.annotation.FontRes
 import hymnal.prefs.model.TextStyleModel
 import hymnal.prefs.model.HymnalSort
 import hymnal.prefs.model.UiPref
+import kotlinx.coroutines.flow.Flow
 
 interface HymnalPrefs {
 
     fun getSelectedHymnal(): String
+
+    fun getSelected(): Flow<String>
 
     fun setSelectedHymnal(code: String)
 

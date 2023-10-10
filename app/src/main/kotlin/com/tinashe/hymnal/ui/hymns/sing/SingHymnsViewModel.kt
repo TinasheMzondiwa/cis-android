@@ -45,13 +45,13 @@ class SingHymnsViewModel @Inject constructor(
         if (mutableHymnal.value == hymnal.title) {
             return
         }
-        viewModelScope.launch {
-            repository.getHymns(hymnal).collectLatest { resource ->
-                resource.getOrNull()?.let {
-                    mutableHymnsList.postValue(it.hymns)
-                    mutableHymnal.postValue(it.title)
-                }
-            }
-        }
+//        viewModelScope.launch {
+//            repository.getHymns(hymnal).collectLatest { resource ->
+//                resource.getOrNull()?.let {
+//                    mutableHymnsList.postValue(it.hymns)
+//                    mutableHymnal.postValue(it.title)
+//                }
+//            }
+//        }
     }
 }

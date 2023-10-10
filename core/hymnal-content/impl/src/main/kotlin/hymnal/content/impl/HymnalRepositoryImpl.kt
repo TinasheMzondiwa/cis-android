@@ -6,6 +6,8 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import dagger.hilt.android.qualifiers.ApplicationContext
 import hymnal.android.coroutines.DispatcherProvider
+import hymnal.android.coroutines.Scopable
+import hymnal.android.coroutines.ioScopable
 import hymnal.content.api.HymnalRepository
 import hymnal.content.impl.model.JsonHymn
 import hymnal.content.impl.model.JsonHymnal
@@ -19,14 +21,13 @@ import hymnal.storage.dao.CollectionsDao
 import hymnal.storage.dao.HymnsDao
 import hymnal.storage.entity.CollectionHymnCrossRefEntity
 import hymnal.storage.entity.HymnCollectionEntity
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.lang.reflect.Type
 import javax.inject.Inject
@@ -40,7 +41,7 @@ internal class HymnalRepositoryImpl @Inject constructor(
     private val collectionsDao: CollectionsDao,
     private val prefs: HymnalPrefs,
     private val dispatcherProvider: DispatcherProvider
-) : HymnalRepository, CoroutineScope by CoroutineScope(dispatcherProvider.io) {
+) : HymnalRepository, Scopable by ioScopable(dispatcherProvider) {
 
     private val selectedCode: String get() = prefs.getSelectedHymnal()
 
@@ -52,23 +53,25 @@ internal class HymnalRepositoryImpl @Inject constructor(
         return Result.success(hymnals)
     }
 
-    override fun getHymns(selectedHymnal: Hymnal?): Flow<Result<HymnalHymns>> {
-        val code = selectedHymnal?.code ?: selectedCode
-        val hymnal = getHymnal(code)
-
-        prefs.setSelectedHymnal(code)
-
-        return hymnsDao.listAll(code)
-            .onEach { if (it.isEmpty()) loadHymns(code) }
-            .map { entities -> entities.map { it.toHymn() } }
-            .map { hymns ->
-                Result.success(HymnalHymns(hymnal, hymns))
+    override fun getHymns(): Flow<Result<HymnalHymns>> = prefs.getSelected()
+        .flatMapLatest { code ->
+            hymnsDao.listAll(code)
+                .map { getHymnal(code) to it }
+        }
+        .map { (hymnal, entities) ->
+            val hymns = entities.map { it.toHymn() }
+            if (entities.isEmpty()) {
+                loadHymns(hymnal.code)
             }
-            .onStart { emit(Result.success(HymnalHymns(hymnal, emptyList()))) }
-            .catch {
-                Timber.e(it)
-                Result.failure<HymnalHymns>(it)
-            }.flowOn(dispatcherProvider.io)
+            Result.success(HymnalHymns(hymnal, hymns))
+        }
+        .catch {
+            Timber.e(it)
+            Result.failure<HymnalHymns>(it)
+        }.flowOn(dispatcherProvider.io)
+
+    override fun setSelectedHymnal(hymnal: Hymnal) {
+        prefs.setSelectedHymnal(hymnal.code)
     }
 
     private fun getHymnal(code: String): Hymnal {
@@ -78,7 +81,7 @@ internal class HymnalRepositoryImpl @Inject constructor(
             ?: throw IllegalArgumentException("Invalid Hymnal code")
     }
 
-    private fun loadHymns(code: String) = launch {
+    private fun loadHymns(code: String) = scope.launch {
         val hymns = readJsonFile<JsonHymn>(code) ?: return@launch
         hymnsDao.insertAll(hymns.map { it.toHymnEntity(code) })
     }
@@ -94,12 +97,16 @@ internal class HymnalRepositoryImpl @Inject constructor(
     }
 
     override suspend fun searchHymns(query: String?): Result<List<Hymn>> {
-        val hymns = hymnsDao.search(selectedCode, "%${query ?: ""}%").map { it.toHymn() }
-        return Result.success(hymns)
+        val entities = withContext(dispatcherProvider.io) {
+            hymnsDao.search(selectedCode, "%${query ?: ""}%")
+        }
+        return withContext(dispatcherProvider.default) {
+            Result.success(entities.map { it.toHymn() })
+        }
     }
 
     override fun updateHymn(hymn: Hymn) {
-        launch { hymnsDao.update(hymn.toEntity()) }
+        scope.launch { hymnsDao.update(hymn.toEntity()) }
     }
 
     override fun getCollectionHymns(): Flow<Result<List<CollectionHymns>>> = collectionsDao
@@ -124,11 +131,11 @@ internal class HymnalRepositoryImpl @Inject constructor(
                 description = content.body,
                 created = System.currentTimeMillis()
             )
-        launch { collectionsDao.insert(collection) }
+        scope.launch { collectionsDao.insert(collection) }
     }
 
     override fun updateHymnCollections(hymnId: Int, collectionId: Int, add: Boolean) {
-        launch {
+        scope.launch {
             if (add) {
                 collectionsDao.insertRef(CollectionHymnCrossRefEntity(collectionId, hymnId))
             } else {
@@ -147,7 +154,7 @@ internal class HymnalRepositoryImpl @Inject constructor(
 
     override fun deleteCollection(collection: CollectionHymns) {
         val collectionId = collection.collection.collectionId
-        launch {
+        scope.launch {
             collection.hymns.forEach { hymn ->
                 collectionsDao.findRef(hymn.hymnId, collectionId)?.let {
                     collectionsDao.deleteRef(it)

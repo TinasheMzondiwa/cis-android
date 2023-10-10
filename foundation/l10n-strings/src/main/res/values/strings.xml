@@ -9,6 +9,7 @@
     <string name="delete_collection_message">This action cannot be undone.</string>
     <string name="empty_collections">Your Collection of hymns will appear here</string>
     <string name="empty_collections_add">Create your first Collection</string>
+    <string name="empty_search_results">No results for <b>\"%1$s\"</b></string>
     <string name="error_billing_client_unavailable">Purchases are unavailable at the moment.\nPlease check back later.</string>
     <string name="error_empty_collection">Add hymns to Collection</string>
     <string name="error_required">Required</string>
