@@ -11,7 +11,9 @@ interface HymnalRepository {
 
     fun getHymnals(): Result<List<Hymnal>>
 
-    fun getHymns(selectedHymnal: Hymnal? = null): Flow<Result<HymnalHymns>>
+    fun getHymns(): Flow<Result<HymnalHymns>>
+
+    fun setSelectedHymnal(hymnal: Hymnal)
 
     suspend fun searchHymns(query: String?): Result<List<Hymn>>
 

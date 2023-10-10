@@ -26,6 +26,7 @@ import com.tinashe.hymnal.ui.hymns.hymnals.HymnalListFragment.Companion.SELECTED
 import com.tinashe.hymnal.ui.hymns.sing.SingHymnsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import hymnal.android.context.getColorPrimary
+import hymnal.android.coroutines.collectIn
 import hymnal.content.model.Hymnal
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import hymnal.l10n.R as L10nR
@@ -65,15 +66,26 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider {
         viewModel.messageLiveData.observeNonNull(viewLifecycleOwner) {
             binding.snackbar.show(messageText = it)
         }
-        viewModel.hymnalTitleLiveData.observeNonNull(viewLifecycleOwner) {
-            appBarBehaviour?.setAppBarTitle(it)
-        }
         viewModel.selectedHymnIdLiveData.observeNonNull(viewLifecycleOwner) {
             openSelectedHymn(it)
         }
-        viewModel.hymnListLiveData.observeNonNull(viewLifecycleOwner) { hymns ->
-            binding.progressBar.isVisible = false
-            listAdapter.submitList(ArrayList(hymns))
+
+        viewModel.uiState.collectIn(this) { state ->
+            binding.progressBar.isVisible = state == HymnsState.Loading
+            when (state) {
+                HymnsState.Error -> Unit
+                HymnsState.Loading -> Unit
+                is HymnsState.Success -> {
+                    binding.emptyResults.isVisible = false
+                    appBarBehaviour?.setAppBarTitle(state.title)
+                    listAdapter.submitList(state.hymns)
+                }
+                is HymnsState.SearchResults -> {
+                    listAdapter.submitList(state.results)
+                    binding.emptyResults.isVisible = state.results.isEmpty()
+                    binding.emptyResultsText.text = getString(L10nR.string.empty_search_results, state.query)
+                }
+            }
         }
 
         findNavController()

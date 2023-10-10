@@ -21,6 +21,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Before
@@ -59,7 +60,7 @@ internal class HymnalRepositoryTest {
         // given
         val code = "english"
         val query = "again and again"
-        val entities = listOf(HymnEntity(1, code, 1, "", query, null, null))
+        val entities = listOf(HymnEntity(1, code, 1, "", query, null, null, null))
         every { mockPrefs.getSelectedHymnal() }.returns(code)
         coEvery { mockHymnsDao.search(code, "%$query%") }.returns(entities)
 
@@ -68,7 +69,7 @@ internal class HymnalRepositoryTest {
 
         // then
         results shouldBeEqualTo listOf(
-            Hymn(1, code, 1, "", query, null, null)
+            Hymn(1, code, 1, "", query, null, null, null)
         )
     }
 
@@ -87,17 +88,17 @@ internal class HymnalRepositoryTest {
             onBufferOverflow = BufferOverflow.DROP_OLDEST
         )
         val hymnal = Hymnal("english", "Christ In Song", "English")
-        val entity = HymnEntity(1, hymnal.code, 1, "Title", "content", null, null)
+        val entity = HymnEntity(1, hymnal.code, 1, "Title", "content", null, null, null)
 
         every { mockPrefs.getSelectedHymnal() }.returns("english")
+        every { mockPrefs.getSelected() }.returns(flowOf("english"))
         every { mockPrefs.setSelectedHymnal(hymnal.code) }.returns(Unit)
         every { mockHymnsDao.listAll(hymnal.code) }.returns(dbFlow)
+        coEvery { mockHymnsDao.insertAll(any()) }.returns(Unit)
 
         val hymnsCapture = mutableListOf<List<HymnEntity>>()
 
         repository.getHymns().test {
-            awaitItem() shouldBeEqualTo Result.success(HymnalHymns(hymnal, emptyList()))
-
             dbFlow.emit(emptyList())
 
             awaitItem() shouldBeEqualTo Result.success(HymnalHymns(hymnal, emptyList()))
