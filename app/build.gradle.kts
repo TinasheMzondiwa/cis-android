@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
         applicationId = "com.tinashe.christInSong"
-        versionCode = 3435
+        versionCode = 3437
         versionName = libs.versions.app.get()
         vectorDrawables.useSupportLibrary = true
     }
@@ -62,11 +62,6 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             proguardFiles("benchmark-rules.pro")
         }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
