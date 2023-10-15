@@ -31,8 +31,12 @@ class SimpleTunePlayer @Inject constructor(
         if (isPlaying) {
             stopMedia()
         }
-        context.assets.openFd("$FOLDER/$number$EXTENSION")
-        !unavailableCodes.contains(prefs.getSelectedHymnal())
+        if (availableCodes.contains(prefs.getSelectedHymnal())) {
+            context.assets.openFd("$FOLDER/$number$EXTENSION")
+            true
+        } else {
+            false
+        }
     } catch (ex: IOException) {
         false
     }
@@ -85,14 +89,19 @@ class SimpleTunePlayer @Inject constructor(
         private const val EXTENSION = ".mid"
 
         /**
-         * Add here Hymnals that do not have audio matching the original ENGLISH.
+         * Add here Hymnals that have audio matching the original ENGLISH.
          */
-        private val unavailableCodes = listOf(
-            "swahili",
-            "gikuyu",
-            "abagusii",
-            "dholuo",
-            "sdah",
+        private val availableCodes = listOf(
+            "english",
+            "shona",
+            "ndebele",
+            "tswana",
+            "sotho",
+            "chichewa",
+            "tonga",
+            "venda",
+            "xitsonga",
+            "sepedi"
         )
     }
 }

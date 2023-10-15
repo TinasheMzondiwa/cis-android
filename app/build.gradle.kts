@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
         applicationId = "com.tinashe.christInSong"
-        versionCode = 3437
+        versionCode = 3438
         versionName = libs.versions.app.get()
         vectorDrawables.useSupportLibrary = true
     }
