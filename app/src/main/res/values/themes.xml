@@ -50,7 +50,7 @@
     <style name="Theme.CIS.Main">
         <!-- System bar attributes -->
         <item name="android:statusBarColor">@color/color_status_bar_main</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="M">
+        <item name="android:windowLightStatusBar">
             @bool/window_light_system_bar
         </item>
         <item name="android:navigationBarColor">@color/color_navigation_bar_main</item>
@@ -64,7 +64,7 @@
         <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">false</item>
     </style>
 
-    <style name="Theme.CIS.Present"/>
+    <style name="Theme.CIS.Present" />
 
     <style name="Theme.CIS.Picker">
         <item name="colorPrimary">@color/color_background</item>
