@@ -64,8 +64,6 @@
         <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">false</item>
     </style>
 
-    <style name="Theme.CIS.Present" />
-
     <style name="Theme.CIS.Picker">
         <item name="colorPrimary">@color/color_background</item>
         <item name="colorOnPrimary">@color/color_on_surface</item>
@@ -79,15 +77,6 @@
             @bool/window_light_system_bar
         </item>
         <item name="bottomSheetStyle">@style/Widget.CIS.BottomSheet.Modal</item>
-    </style>
-
-    <style name="Theme.CIS.Dialog">
-        <item name="android:windowBackground">@color/scrim</item>
-    </style>
-
-    <style name="Theme.CIS.ProgressAnimation">
-        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
-        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
     <style name="AlertDialog.Warning.Button" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
