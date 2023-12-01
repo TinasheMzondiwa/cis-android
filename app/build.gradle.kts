@@ -4,13 +4,13 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("kotlin-kapt")
     id("kotlin-parcelize")
     id("dagger.hilt.android.plugin")
     id("com.google.gms.google-services")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.firebase.crashlytics")
     alias(libs.plugins.sgp.base)
+    alias(libs.plugins.ksp)
 }
 
 val releaseFile = file("../app/keystore.properties")
@@ -102,7 +102,7 @@ dependencies {
     implementation(libs.google.firebase.crashlytics)
     implementation(libs.google.material)
     implementation(libs.google.hilt.android)
-    kapt(libs.google.hilt.compiler)
+    ksp(libs.google.hilt.compiler)
     implementation(libs.tapTarget)
     implementation(libs.timber)
     implementation(libs.markwon.core)
