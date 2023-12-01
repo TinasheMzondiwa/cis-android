@@ -4,7 +4,6 @@ plugins {
     id("com.android.library")
     id("dagger.hilt.android.plugin")
     kotlin("android")
-    kotlin("kapt")
 }
 
 android {
@@ -28,7 +27,7 @@ dependencies {
     implementation(projects.core.storage)
 
     implementation(libs.google.hilt.android)
-    kapt(libs.google.hilt.compiler)
+    ksp(libs.google.hilt.compiler)
     implementation(libs.square.moshi.kotlin)
     ksp(libs.square.moshi.codegen)
     compileOnly(libs.javax.annotation)

@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.sgp.base)
+    alias(libs.plugins.ksp)
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
 }
 
@@ -18,6 +18,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.extensions)
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.google.hilt.android)
-    kapt(libs.google.hilt.compiler)
+    ksp(libs.google.hilt.compiler)
     implementation(libs.timber)
 }
