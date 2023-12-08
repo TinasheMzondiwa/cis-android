@@ -28,7 +28,6 @@ androidx-work = "2.9.0"
 aztec = "v1.9.0"
 cash-app-turbine = "1.0.0"
 coil = "2.5.0"
-google-accompanist = "0.32.0"
 gradle-android = "8.2.0"
 gradle-cache-fix = "3.0"
 google-firebase-bom = "32.6.0"
@@ -113,10 +112,6 @@ aztec = { module = "org.wordpress:aztec", version.ref = "aztec" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 coil-core = { module = "io.coil-kt:coil", version.ref = "coil" }
 google-coreLibraryDesugaring = "com.android.tools:desugar_jdk_libs_minimal:2.0.4"
-google-accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "google-accompanist" }
-google-accompanist-navigation-material = { module = "com.google.accompanist:accompanist-navigation-material", version.ref = "google-accompanist" }
-google-accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "google-accompanist" }
-google-accompanist-systemUiController = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "google-accompanist" }
 google-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "google-firebase-bom" }
 google-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 google-firebase-config = { module = "com.google.firebase:firebase-config-ktx" }
