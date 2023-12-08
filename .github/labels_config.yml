@@ -1,20 +1,27 @@
 ci:
-  - '.github/*'
+  - changed-files:
+      - any-glob-to-any-file: .github/*
 core:
-  - 'app/src/main/kotlin/*'
+  - changed-files:
+      - any-glob-to-any-file: app/src/main/kotlin/*
 dependencies:
-  - 'gradle/libs.versions.toml'
+  - changed-files:
+      - any-glob-to-any-file: '**/*.toml'
 gradle:
-  - all: ['*.gradle.kts', '*.gradle']
+  - changed-files:
+      - any-glob-to-any-file: '**/build.gradle.kts'
 hymnals:
-  - 'core/hymnal-content/impl/src/main/res/raw/*'
+  - changed-files:
+      - any-glob-to-any-file: core/hymnal-content/impl/src/main/res/raw/*
 l10n:
-  - 'foundation/l10n-strings/*'
-layouts:
-  - any: ['*.xml']
+  - changed-files:
+      - any-glob-to-any-file: foundation/l10n-strings/*
 prefs:
-  - 'core/prefs/*'
+  - changed-files:
+      - any-glob-to-any-file: core/prefs/*
 storage:
-  - 'core/storage/*'
+  - changed-files:
+      - any-glob-to-any-file: core/storage/*
 test:
-  - any: ['*/src/test/*','*/src/androidTest/*']
+  - changed-files:
+      - any-glob-to-any-file: '**/src/test/**'
