@@ -1,7 +1,6 @@
 package com.tinashe.hymnal.ui.support
 
 import android.app.Activity
-import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,7 +17,7 @@ class SupportViewModel @Inject constructor(
     private val billingManager: BillingManager
 ) : ViewModel() {
 
-    private val mutablePurchaseResult = SingleLiveEvent<Pair<Status, @StringRes Int?>>()
+    private val mutablePurchaseResult = SingleLiveEvent<Pair<Status, Int?>>()
     val purchaseResultLiveData: LiveData<Pair<Status, Int?>> = mutablePurchaseResult.asLiveData()
 
     private val mutableDeepLinkUrl = SingleLiveEvent<String>()

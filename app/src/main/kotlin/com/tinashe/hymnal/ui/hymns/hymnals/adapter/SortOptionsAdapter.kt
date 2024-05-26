@@ -1,5 +1,6 @@
 package com.tinashe.hymnal.ui.hymns.hymnals.adapter
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -19,6 +20,7 @@ class SortOptionsAdapter(
 
     private var setUp: Boolean = false
 
+    @SuppressLint("NotifyDataSetChanged")
     fun init() {
         if (!setUp) {
             setUp = true

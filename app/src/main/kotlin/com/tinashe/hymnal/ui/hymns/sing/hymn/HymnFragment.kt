@@ -3,6 +3,7 @@ package com.tinashe.hymnal.ui.hymns.sing.hymn
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
@@ -41,7 +42,11 @@ class HymnFragment : Fragment(R.layout.fragment_hymn) {
             }
         }
 
-        val hymn: Hymn = arguments?.get(ARG_HYMN) as? Hymn ?: return
+        val hymn = BundleCompat.getParcelable(
+            requireArguments(),
+            ARG_HYMN, 
+            Hymn::class.java,
+        ) ?: return
 
         hymn.html?.let { html ->
             binding.hymnText.text = if (hymn.editedContent.isNullOrEmpty()) {

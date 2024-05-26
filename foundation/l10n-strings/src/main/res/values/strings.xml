@@ -58,7 +58,6 @@
     <string name="title_info">Info</string>
     <string name="title_save">Save</string>
     <string name="title_search">Search</string>
-    <string name="title_sing">Sing</string>
     <string name="title_support">Support</string>
     <string name="title_text_format">Text Format</string>
     <string name="title_undo">Undo</string>
@@ -72,7 +71,6 @@
     <string name="tap_to_close">Tap to close</string>
     <string name="sort_language">Language</string>
     <string name="sort_title">Title</string>
-    <string name="sort_offline">Downloaded</string>
     <string name="ordered_by">Ordered by %1$s</string>
     <string name="write_review">Write Review…</string>
 </resources>

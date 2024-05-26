@@ -16,3 +16,6 @@ version.properties
 app/src/main/assets/*
 app/src/main/play/*
 secrets/
+
+# Kotlin 2.0
+.kotlin/
