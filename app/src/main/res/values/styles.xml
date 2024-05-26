@@ -14,12 +14,6 @@
         <item name="searchViewStyle">@style/Widget.CIS.SearchView</item>
     </style>
 
-    <style name="Widget.CIS.Button.TextButton.DoublePadding" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:minWidth">0dp</item>
-        <item name="android:paddingStart">@dimen/spacing_double</item>
-        <item name="android:paddingEnd">@dimen/spacing_double</item>
-    </style>
-
     <style name="Widget.CIS.Chip" parent="Widget.MaterialComponents.Chip.Action">
         <item name="android:textAppearance">@style/TextAppearance.CIS.Chip</item>
         <item name="android:textColor">?attr/colorSurface</item>
@@ -36,11 +30,6 @@
     </style>
 
     <style name="Widget.CIS.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="Widget.CIS.TextEditText" parent="Widget.MaterialComponents.TextInputEditText.FilledBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
@@ -70,11 +59,6 @@
         <item name="android:orientation">vertical</item>
         <item name="android:scrollbars">vertical</item>
         <item name="android:clipToPadding">false</item>
-    </style>
-
-    <style name="ItemDecoration.CIS.Space" parent="">
-        <item name="android:paddingTop">@dimen/spacing_standard</item>
-        <item name="paddingHorizontal">@dimen/spacing_normal</item>
     </style>
 
     <style name="Widget.CIS.Button" parent="Widget.MaterialComponents.Button">

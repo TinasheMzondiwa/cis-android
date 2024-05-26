@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="argument_selected_hymn">selected_hymn</string>
-
     <string name="transition_shared_element">transition:shared_element</string>
 </resources>

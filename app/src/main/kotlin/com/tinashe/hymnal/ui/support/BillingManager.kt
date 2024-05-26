@@ -7,6 +7,7 @@ import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ConsumeParams
+import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchaseHistoryRecord
@@ -34,7 +35,7 @@ sealed class BillingData {
     data class InAppProducts(val products: List<DonateProduct>) : BillingData()
     data class SubscriptionProducts(val products: List<DonateProduct>) : BillingData()
     data class DeepLink(val url: String) : BillingData()
-    object None : BillingData()
+    data object None : BillingData()
 }
 
 interface BillingManager {
@@ -61,7 +62,7 @@ internal class BillingManagerImpl @Inject constructor(
         if (billingClient?.isReady != true) {
             billingClient = BillingClient.newBuilder(activity)
                 .setListener(this)
-                .enablePendingPurchases()
+                .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
                 .build()
 
             billingClient?.startConnection(this)
