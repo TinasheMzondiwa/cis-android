@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.sgp.base)
     alias(libs.plugins.ksp)
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
     id("dagger.hilt.android.plugin")
 }
 

@@ -2,15 +2,15 @@ import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-parcelize")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.sgp.base)
     id("dagger.hilt.android.plugin")
     id("com.google.gms.google-services")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.firebase.crashlytics")
-    alias(libs.plugins.sgp.base)
-    alias(libs.plugins.ksp)
 }
 
 val releaseFile = file("../app/keystore.properties")
@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
         applicationId = "com.tinashe.christInSong"
-        versionCode = 3438
+        versionCode = 3439
         versionName = libs.versions.app.get()
         vectorDrawables.useSupportLibrary = true
     }
