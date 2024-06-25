@@ -25,6 +25,7 @@ jobs:
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
         run: echo $FIREBASE_CONFIG > app/google-services.json
+             echo $FIREBASE_CONFIG > app-v2/google-services.json
 
       - name: Decode Keystore properties file
         env:
