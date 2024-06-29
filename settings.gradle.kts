@@ -17,6 +17,7 @@ dependencyResolutionManagement {
 rootProject.name = "cis-android"
 include(
     ":app",
+    ":app-v2",
     ":benchmark",
     ":core:hymnal-content:api",
     ":core:hymnal-content:impl",

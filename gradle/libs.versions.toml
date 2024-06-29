@@ -137,6 +137,9 @@ test-mockk = { module = "io.mockk:mockk", version.ref = "test-mockk" }
 test-robolectric = { module = "org.robolectric:robolectric", version.ref = "test-robolectric" }
 test-turbine = { module = "app.cash.turbine:turbine", version.ref = "cash-app-turbine" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 
 [bundles]
 compose = [
@@ -146,18 +149,15 @@ compose = [
     "androidx-compose-icons-extended",
     "androidx-compose-material3",
     "androidx-compose-runtime",
-    "androidx-compose-tooling-preview",
     "androidx-compose-ui",
     "androidx-compose-ui-util",
     "androidx-compose-windowSizeClass",
-    "androidx-lifecycle-runtime-compose"
+    "androidx-lifecycle-runtime-compose",
+    "androidx-ui-graphics",
 ]
 compose-tooling = [
     "androidx-compose-tooling",
-    "androidx-customview",
-    "androidx-customview-container",
-    "androidx-lifecycle-viewmodel-compose",
-    "androidx-savedstate",
+    "androidx-compose-tooling-preview",
 ]
 testing-android-common = [
     "test-androidx-archcore",
