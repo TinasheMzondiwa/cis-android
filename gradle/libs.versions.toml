@@ -2,7 +2,7 @@
 app = "3.9.2"
 android-billing = "7.0.0"
 androidx-activity = "1.9.1"
-androidx-annotations = "1.8.0"
+androidx-annotations = "1.8.2"
 androidx-appcompat = "1.7.0"
 androidx-browser = "1.8.0"
 androidx-compose-bom = "2024.06.00"
