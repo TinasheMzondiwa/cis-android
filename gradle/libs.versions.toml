@@ -101,7 +101,7 @@ androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = 
 aztec = { module = "org.wordpress:aztec", version.ref = "aztec" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 coil-core = { module = "io.coil-kt:coil", version.ref = "coil" }
-google-coreLibraryDesugaring = "com.android.tools:desugar_jdk_libs_minimal:2.0.4"
+google-coreLibraryDesugaring = "com.android.tools:desugar_jdk_libs_minimal:2.1.1"
 google-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "google-firebase-bom" }
 google-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 google-firebase-config = { module = "com.google.firebase:firebase-config-ktx" }
