@@ -115,7 +115,7 @@ class HymnalPrefsImpl @Inject constructor(
     }
 
     companion object {
-        private const val DEFAULT_CODE = "english"
+        private const val DEFAULT_CODE = "Celebration-Main"
 
         internal const val KEY_CODE = "pref:default_code"
         private const val KEY_UI_PREF = "pref:app_theme"

@@ -78,7 +78,7 @@ internal class HymnalRepositoryImpl @Inject constructor(
         return getHymnals()
             .getOrDefault(emptyList())
             .firstOrNull { it.code == code }
-            ?: throw IllegalArgumentException("Invalid Hymnal code")
+            ?: throw IllegalArgumentException("Invalid Hymnal code => $code")
     }
 
     private fun loadHymns(code: String) = scope.launch {
@@ -87,7 +87,7 @@ internal class HymnalRepositoryImpl @Inject constructor(
     }
 
     private inline fun <reified T> readJsonFile(assetFile: String): List<T>? {
-        val jsonString = context.assets.open("cis-hymnals/$assetFile.json")
+        val jsonString = context.assets.open("$assetFile.json")
             .bufferedReader()
             .use { it.readText() }
 

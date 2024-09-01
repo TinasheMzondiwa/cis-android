@@ -1,0 +1,62 @@
+[
+  {
+    "key": "Celebration-Main",
+    "title": "Celebration",
+    "language": "English"
+  },
+  {
+    "key": "Celebration-A",
+    "title": "Celebration A",
+    "language": "English"
+  },
+  {
+    "key": "Celebration-Christmas",
+    "title": "Celebration Christmas",
+    "language": "English"
+  },
+  {
+    "key": "BigBlueBook",
+    "title": "Celestial Chorus",
+    "language": "English"
+  },
+  {
+    "key": "SBBengali",
+    "title": "Sing Band - Bengali",
+    "language": "Bengali"
+  },
+  {
+    "key": "SBChildren",
+    "title": "Sing Band - Children",
+    "language": "Hindi"
+  },
+  {
+    "key": "SBEnglish",
+    "title": "Sing Band - English",
+    "language": "English"
+  },
+  {
+    "key": "SBHindi",
+    "title": "Sing Band - Hindi",
+    "language": "Hindi"
+  },
+  {
+    "key": "SBKannada",
+    "title": "Sing Band - Kannada",
+    "language": "Kannada"
+  },
+  {
+    "key": "SBMalayalam",
+    "title": "Sing Band - Malayalam",
+    "language": "Malayalam"
+  },
+  {
+    "key": "SBTamil",
+    "title": "Sing Band - Tamil",
+    "language": "Tamil"
+  },
+  {
+    "key": "SBTelugu",
+    "title": "Sing Band - Telugu",
+    "language": "Telugu"
+  }
+]

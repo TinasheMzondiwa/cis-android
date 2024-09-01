@@ -8,9 +8,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.sgp.base)
     id("dagger.hilt.android.plugin")
-    id("com.google.gms.google-services")
     id("androidx.navigation.safeargs.kotlin")
-    id("com.google.firebase.crashlytics")
 }
 
 val releaseFile = file("../app/keystore.properties")
@@ -20,7 +18,7 @@ android {
     namespace = "com.tinashe.hymnal"
 
     defaultConfig {
-        applicationId = "com.tinashe.christInSong"
+        applicationId = "sda.vellore.hymnal"
         versionCode = 3442
         versionName = libs.versions.app.get()
         vectorDrawables.useSupportLibrary = true
@@ -49,18 +47,6 @@ android {
             if (useReleaseKeystore) {
                 signingConfig = signingConfigs.getByName("release")
             }
-            manifestPlaceholders["enableReporting"] = true
-        }
-
-        val debug by getting {
-            manifestPlaceholders["enableReporting"] = false
-        }
-
-        val benchmark by creating {
-            initWith(release)
-            matchingFallbacks.add("release")
-            signingConfig = signingConfigs.getByName("debug")
-            proguardFiles("benchmark-rules.pro")
         }
     }
 
@@ -97,9 +83,6 @@ dependencies {
     implementation(libs.androidx.preference)
     implementation(libs.androidx.startup)
     implementation(libs.aztec)
-    implementation(platform(libs.google.firebase.bom))
-    implementation(libs.google.firebase.config)
-    implementation(libs.google.firebase.crashlytics)
     implementation(libs.google.material)
     implementation(libs.google.hilt.android)
     ksp(libs.google.hilt.compiler)

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.core.app.ShareCompat
+import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
 import com.tinashe.hymnal.BuildConfig
 import com.tinashe.hymnal.R
@@ -49,6 +50,7 @@ class InfoFragment : Fragment(R.layout.fragment_info) {
             tvReview.setOnClickListener {
                 requireContext().launchWebUrl( getString(L10nR.string.app_link))
             }
+            tvAppInfo.text = getString(L10nR.string.app_info).parseAsHtml()
         }
     }
 }

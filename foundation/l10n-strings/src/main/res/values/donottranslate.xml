@@ -1,13 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
     <string name="twitter">Twitter</string>
-    <string name="app_full_name">Christ In Song App</string>
-    <string name="app_info">Christ In Song App was made with ❤️ by Tinashe Mzondiwa, a solo mobile app developer.\nIf you enjoy using this app please consider leaving a review. It helps more than you can imagine.\n\nSpecial thanks to all the wonderful saints who provided hymnals to include in this app.</string>
+    <string name="app_full_name">Sing4Joy</string>
+    <string name="app_info">
+        <![CDATA[
+        <b>Typists:</b><br/>
+Isaac Chan<br/>
+Edmund Chong<br/>
+Carl Rex<br/>
+Quinston Wilson<br/>
+Biju Andrewson<br/>
+Justin Chu<br/>
+Dylan Wan<br/>
+Abhishek Micky<br/>
+Angeline Pinky<br/><br/>
+
+        <b>Logo Designs:</b><br/>
+Don Arthur<br/>
+Vandeman Wilson<br/>
+Jason Khor<br/>
+Carl Rex<br/><br/>
+
+        <b>Data Formatting:</b><br/>
+Carl Rex<br/><br/>
+
+        <b>Financial Contributors:</b><br/>
+Mark Rohit<br/>
+Lijo Tharakan<br/>
+Isaac Chan<br/>
+Jason Khor<br/>
+Akhilesh<br/>
+Edmund Chong<br/><br/>
+
+        <b>Corrections and Features improvement:</b><br/>
+Andrewson Biju<br/>
+Justin Chu<br/>
+Carl Rex<br/><br/>
+
+        <b>Special thanks to:</b><br/>
+Ernest Sean<br/>
+Praiselin Joseph<br/>
+Dweepika Karen<br/>
+Inishiah Jasper<br/>
+John Jebaraj<br/>
+Supriya Praveen<br/>
+Anila Rachel<br/>
+Rajeev Daniel<br/>
+Ananya Sophia<br/>
+Rhea Mahapure<br/>
+Deepa Sharon<br/>
+Salik Khan<br/>
+Daphna Sharon<br/>
+Sweety Anbiah<br/>
+Angeline Samuel<br/>
+Sharon Pearl<br/>
+Evelyn Sheena<br/>
+Jesson Patrick<br/>
+Dashami Stephen<br/>
+Sherin Sunimal<br/>
+Neelima Kachchhap<br/>
+Gail Giebel<br/><br/>
+
+<b>Inspiration:</b><br/>
+Isaac Chan<br/><br/>
+
+        <b>Organization and Concept Development:</b><br/>
+Carl Rex</b><br/></b><br/>
+Website: www.sdaecv.org
+]]>
+    </string>
     <string name="app_email">mobile@faithunfeigned.com</string>
-    <string name="app_link">https://play.google.com/store/apps/details?id=com.tinashe.christInSong</string>
+    <string name="app_link">https://play.google.com/store/apps/details?id=sda.vellore.hymnal</string>
     <string name="app_source">https://github.com/TinasheMzondiwa/cis-android</string>
     <string name="app_twitter">https://twitter.com/christinsongapp</string>
-    <string name="app_share_message">Get the Christ In Song App!\n\n%1$s</string>
+    <string name="app_share_message">Get the Sing4Joy App!\n\n%1$s</string>
     <string name="app_privacy_policy">https://christ-in-song.web.app/policy/</string>
     <string name="app_terms">https://christ-in-song.web.app/terms/</string>
     <string name="subscriptions_url">https://play.google.com/store/account/subscriptions</string>

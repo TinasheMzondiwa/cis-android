@@ -25,20 +25,13 @@
             android:paddingHorizontal="@dimen/spacing_medium"
             android:paddingVertical="@dimen/spacing_list">
 
-            <com.google.android.material.card.MaterialCardView
+            <ImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_gravity="center"
-                app:cardCornerRadius="@dimen/spacing_normal"
-                app:cardElevation="@dimen/spacing_micro">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/blank"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/cis" />
-            </com.google.android.material.card.MaterialCardView>
+                android:contentDescription="@string/blank"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher_round" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -83,23 +76,27 @@
                     android:id="@+id/tvViewSource"
                     style="@style/InfoLine"
                     android:text="@string/view_source_code"
+                    android:visibility="gone"
                     app:drawableStartCompat="@drawable/github" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@drawable/list_divider" />
+                    android:background="@drawable/list_divider"
+                    android:visibility="gone" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvTwitter"
                     style="@style/InfoLine"
                     android:text="@string/twitter"
+                    android:visibility="gone"
                     app:drawableStartCompat="@drawable/twitter" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@drawable/list_divider" />
+                    android:background="@drawable/list_divider"
+                    android:visibility="gone" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvFeedback"
@@ -133,6 +130,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAppInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_large"
