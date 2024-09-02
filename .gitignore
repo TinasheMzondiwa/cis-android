@@ -14,6 +14,7 @@ version.properties
 /app/play-key.json
 /app/Christ_key
 /app/keystore.properties
+/app/vellore-keystore.properties
 app/src/main/assets/*
 app/src/main/play/*
 secrets/

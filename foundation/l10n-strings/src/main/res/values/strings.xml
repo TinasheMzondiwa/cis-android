@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
     <string name="add_to_collection">Add to Collection</string>
-    <string name="app_name">CIS</string>
+    <string name="app_name">Sing4Joy</string>
     <string name="blank"/>
     <string name="collection_deleted">Collection Deleted</string>
     <string name="confirm_save">Confirm Save your changes?</string>
