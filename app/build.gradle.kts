@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
         applicationId = "com.tinashe.christInSong"
-        versionCode = 3442
+        versionCode = 3444
         versionName = libs.versions.app.get()
         vectorDrawables.useSupportLibrary = true
     }
@@ -71,6 +71,13 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+    }
+    sourceSets {
+        getByName("main") {
+            assets {
+                srcDirs("src/main/assets")
+            }
+        }
     }
 }
 
