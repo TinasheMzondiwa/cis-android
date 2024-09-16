@@ -3,7 +3,7 @@ name: Internal Release
 on:
   push:
     branches:
-      - main
+      - temp-release
 
 jobs:
   submit-release:
@@ -59,6 +59,8 @@ jobs:
 
       - name: Build Release
         run: ./gradlew app:bundleRelease --stacktrace
+        with:
+          filelocation: ${{ steps.decode_release_keystore.outputs.filePath }}
 
       - name: Publish to Internal track
         uses: r0adkll/upload-google-play@v1.1.3
