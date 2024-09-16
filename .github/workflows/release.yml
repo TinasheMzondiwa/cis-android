@@ -51,7 +51,7 @@ jobs:
         uses: akiojin/decode-base64-github-action@v0.1.0
         with:
           base64: ${{ secrets.KEYSTORE_FILE }}
-          output-path: secrects/Christ_key
+          output-path: secrets/Christ_key
 
       - name: Decode Playstore key
         id: play_store_key
