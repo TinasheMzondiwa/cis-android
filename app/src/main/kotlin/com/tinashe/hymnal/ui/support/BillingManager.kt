@@ -7,6 +7,7 @@ import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ConsumeParams
+import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchaseHistoryRecord
@@ -18,9 +19,8 @@ import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchaseHistory
 import com.tinashe.hymnal.BuildConfig
-import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.constants.Status
-import com.tinashe.hymnal.extensions.coroutines.SchedulerProvider
+import hymnal.android.coroutines.DispatcherProvider
+import hymnal.content.model.Status
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,13 +28,14 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
+import hymnal.l10n.R as L10nR
 
 sealed class BillingData {
     data class Message(val status: Status, val errorRes: Int? = null) : BillingData()
     data class InAppProducts(val products: List<DonateProduct>) : BillingData()
     data class SubscriptionProducts(val products: List<DonateProduct>) : BillingData()
     data class DeepLink(val url: String) : BillingData()
-    object None : BillingData()
+    data object None : BillingData()
 }
 
 interface BillingManager {
@@ -45,7 +46,7 @@ interface BillingManager {
 
 @Singleton
 internal class BillingManagerImpl @Inject constructor(
-    private val schedulerProvider: SchedulerProvider
+    private val dispatcherProvider: DispatcherProvider
 ) : BillingManager, PurchasesUpdatedListener, BillingClientStateListener {
 
     private var coroutineScope: CoroutineScope? = null
@@ -61,7 +62,7 @@ internal class BillingManagerImpl @Inject constructor(
         if (billingClient?.isReady != true) {
             billingClient = BillingClient.newBuilder(activity)
                 .setListener(this)
-                .enablePendingPurchases()
+                .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
                 .build()
 
             billingClient?.startConnection(this)
@@ -71,7 +72,7 @@ internal class BillingManagerImpl @Inject constructor(
     }
 
     override fun sync() {
-        coroutineScope?.launch(schedulerProvider.io) {
+        coroutineScope?.launch(dispatcherProvider.default) {
             queryPurchases()
         }
     }
@@ -86,7 +87,7 @@ internal class BillingManagerImpl @Inject constructor(
                     billingData.emit(
                         BillingData.Message(
                             Status.ERROR,
-                            R.string.error_item_already_owned
+                            L10nR.string.error_item_already_owned
                         )
                     )
                 }
@@ -118,7 +119,7 @@ internal class BillingManagerImpl @Inject constructor(
                 billingData.emit(
                     BillingData.Message(
                         Status.ERROR,
-                        R.string.error_billing_client_unavailable
+                        L10nR.string.error_billing_client_unavailable
                     )
                 )
             }
@@ -146,7 +147,7 @@ internal class BillingManagerImpl @Inject constructor(
     }
 
     override fun onPurchasesUpdated(result: BillingResult, purchases: MutableList<Purchase>?) {
-        coroutineScope?.launch(schedulerProvider.io) {
+        coroutineScope?.launch(dispatcherProvider.default) {
             if (result.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
                 purchases.forEach { purchase ->
                     if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
@@ -155,7 +156,7 @@ internal class BillingManagerImpl @Inject constructor(
                     billingData.emit(
                         BillingData.Message(
                             Status.SUCCESS,
-                            R.string.success_purchase
+                            L10nR.string.success_purchase
                         )
                     )
                 }
@@ -163,7 +164,7 @@ internal class BillingManagerImpl @Inject constructor(
                 billingData.emit(
                     BillingData.Message(
                         Status.ERROR,
-                        R.string.error_item_already_owned
+                        L10nR.string.error_item_already_owned
                     )
                 )
             } else {
@@ -189,7 +190,7 @@ internal class BillingManagerImpl @Inject constructor(
     override fun onBillingSetupFinished(result: BillingResult) {
         Timber.i("Billing SetupFinished: ${result.responseCode}")
 
-        coroutineScope?.launch(schedulerProvider.io) {
+        coroutineScope?.launch(dispatcherProvider.default) {
             if (result.responseCode == BillingClient.BillingResponseCode.OK) {
                 queryOneTimeDonations()
                 queryRecurringDonations()
@@ -199,7 +200,7 @@ internal class BillingManagerImpl @Inject constructor(
                 billingData.emit(
                     BillingData.Message(
                         Status.ERROR,
-                        R.string.error_billing_client_unavailable
+                        L10nR.string.error_billing_client_unavailable
                     )
                 )
             }

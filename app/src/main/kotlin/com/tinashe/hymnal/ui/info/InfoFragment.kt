@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import com.tinashe.hymnal.BuildConfig
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentInfoBinding
-import com.tinashe.hymnal.utils.Helper
+import hymnal.android.context.launchWebUrl
+import hymnal.android.context.sendFeedback
+import hymnal.l10n.R as L10nR
 
 class InfoFragment : Fragment(R.layout.fragment_info) {
 
@@ -21,7 +23,7 @@ class InfoFragment : Fragment(R.layout.fragment_info) {
 
         binding.apply {
             buildInfo.setOnClickListener {
-                Helper.launchWebUrl(requireContext(), getString(R.string.app_link))
+                requireActivity().launchWebUrl(getString(L10nR.string.app_link))
             }
             tvBuildVersion.text = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
             tvShareApp.setOnClickListener {
@@ -29,23 +31,23 @@ class InfoFragment : Fragment(R.layout.fragment_info) {
                     .setType("text/plain")
                     .setText(
                         getString(
-                            R.string.app_share_message,
-                            getString(R.string.app_link)
+                            L10nR.string.app_share_message,
+                            getString(L10nR.string.app_link)
                         )
                     )
                     .startChooser()
             }
             tvFeedback.setOnClickListener {
-                Helper.sendFeedback(requireActivity())
+                requireContext().sendFeedback(BuildConfig.VERSION_NAME)
             }
             tvViewSource.setOnClickListener {
-                Helper.launchWebUrl(requireContext(), getString(R.string.app_source))
+                requireContext().launchWebUrl(getString(L10nR.string.app_source))
             }
             tvTwitter.setOnClickListener {
-                Helper.launchWebUrl(requireContext(), getString(R.string.app_twitter))
+                requireContext().launchWebUrl(getString(L10nR.string.app_twitter))
             }
             tvReview.setOnClickListener {
-                Helper.launchWebUrl(requireContext(), getString(R.string.app_link))
+                requireContext().launchWebUrl( getString(L10nR.string.app_link))
             }
         }
     }

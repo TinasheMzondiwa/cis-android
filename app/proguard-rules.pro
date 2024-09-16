@@ -60,10 +60,6 @@
 
 -keepnames class androidx.navigation.fragment.NavHostFragment
 
-# Application model classes
--keep class com.tinashe.hymnal.data.model.** { *; }
--keep class com.tinashe.hymnal.initializer.TimberInitializer
-
 # Ignore annotation used for build tooling.
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 
@@ -78,3 +74,36 @@
 -keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
 -keep class com.google.firebase.crashlytics.** { *; }
 -dontwarn com.google.firebase.crashlytics.**
+
+# Firebase
+-keep class com.google.android.gms.internal.** { *; }
+-keep class com.google.firebase.installations.** { *; }
+-keep interface com.google.firebase.installations.** { *; }
+
+# With R8 full mode generic signatures are stripped for classes that are not
+# kept. Suspend functions are wrapped in continuations where the type argument
+# is used.
+-keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+
+# Parcelable.
+-keepattributes EnclosingClass,InnerClasses
+-keep,allowshrinking,allowobfuscation class * implements android.os.Parcelable {}
+-keep,allowshrinking,allowobfuscation class * implements android.os.Parcelable$Creator {}
+
+# For enumeration classes
+-keepclassmembers enum * {
+    <fields>;
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+-keep class **.R$* {
+    <fields>;
+}

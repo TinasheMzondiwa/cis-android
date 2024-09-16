@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.TextStyleModel
-import com.tinashe.hymnal.data.model.constants.UiPref
 import com.tinashe.hymnal.databinding.FragmentTextOptionsBinding
+import hymnal.android.intent.getParcelableCompat
+import hymnal.prefs.model.TextStyleModel
+import hymnal.prefs.model.UiPref
 
 class TextStyleFragment : BottomSheetDialogFragment() {
 
@@ -31,7 +32,7 @@ class TextStyleFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentTextOptionsBinding.bind(view)
 
-        val model = arguments?.get(ARG_MODEL) as? TextStyleModel
+        val model = arguments?.getParcelableCompat(ARG_MODEL, TextStyleModel::class.java)
             ?: return
 
         binding.apply {

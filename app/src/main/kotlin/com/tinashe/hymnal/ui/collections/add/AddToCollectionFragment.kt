@@ -12,6 +12,7 @@ import com.tinashe.hymnal.R
 import com.tinashe.hymnal.databinding.FragmentAddToCollectionBinding
 import com.tinashe.hymnal.ui.collections.CollectionsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import hymnal.l10n.R as L10nR
 
 @AndroidEntryPoint
 class AddToCollectionFragment : BottomSheetDialogFragment() {
@@ -59,8 +60,8 @@ class AddToCollectionFragment : BottomSheetDialogFragment() {
             } else {
                 binding.apply {
                     toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
-                    toolbar.setTitle(R.string.new_collection)
-                    btnNew.setText(R.string.title_save)
+                    toolbar.setTitle(L10nR.string.new_collection)
+                    btnNew.setText(L10nR.string.title_save)
                     btnNew.setIconResource(R.drawable.ic_done)
                 }
                 showFragment(NewCollectionFragment())
@@ -74,8 +75,8 @@ class AddToCollectionFragment : BottomSheetDialogFragment() {
         val id = arguments?.getInt(ARG_HYMN_ID) ?: return
         binding.apply {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_down)
-            toolbar.setTitle(R.string.add_to_collection)
-            btnNew.setText(R.string.title_new)
+            toolbar.setTitle(L10nR.string.add_to_collection)
+            btnNew.setText(L10nR.string.title_new)
             btnNew.setIconResource(R.drawable.ic_add)
 
             showFragment(ListCollectionsFragment.newInstance(id))

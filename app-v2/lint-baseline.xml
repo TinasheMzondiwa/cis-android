@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.5.0" type="baseline" client="gradle" dependencies="true" name="AGP (8.5.0)" variant="all" version="8.5.0">
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;Hymns&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;hymn_count_other&quot;>%1$d Hymns&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="25"
+            column="5"/>
+    </issue>
+
+</issues>

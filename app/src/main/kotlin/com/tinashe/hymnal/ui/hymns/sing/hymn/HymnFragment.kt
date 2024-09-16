@@ -3,14 +3,16 @@ package com.tinashe.hymnal.ui.hymns.sing.hymn
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.Hymn
 import com.tinashe.hymnal.databinding.FragmentHymnBinding
-import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import dagger.hilt.android.AndroidEntryPoint
+import hymnal.content.model.Hymn
+import hymnal.prefs.HymnalPrefs
+import io.noties.markwon.Markwon
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,6 +23,10 @@ class HymnFragment : Fragment(R.layout.fragment_hymn) {
     lateinit var prefs: HymnalPrefs
 
     private lateinit var binding: FragmentHymnBinding
+
+    private val markworn: Markwon by lazy {
+        Markwon.create(requireContext())
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,11 +42,22 @@ class HymnFragment : Fragment(R.layout.fragment_hymn) {
             }
         }
 
-        val hymn: Hymn = arguments?.get(ARG_HYMN) as? Hymn ?: return
-        binding.hymnText.text = if (hymn.editedContent.isNullOrEmpty()) {
-            hymn.content.parseAsHtml()
-        } else {
-            hymn.editedContent?.parseAsHtml()
+        val hymn = BundleCompat.getParcelable(
+            requireArguments(),
+            ARG_HYMN, 
+            Hymn::class.java,
+        ) ?: return
+
+        hymn.html?.let { html ->
+            binding.hymnText.text = if (hymn.editedContent.isNullOrEmpty()) {
+                html.parseAsHtml()
+            } else {
+                hymn.editedContent?.parseAsHtml()
+            }
+        }
+
+        hymn.markdown?.let { markdown ->
+            markworn.setMarkdown(binding.hymnText, markdown)
         }
     }
 

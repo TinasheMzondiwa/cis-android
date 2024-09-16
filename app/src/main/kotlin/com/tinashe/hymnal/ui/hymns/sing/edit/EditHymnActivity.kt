@@ -12,17 +12,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.Hymn
-import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.databinding.ActivityEditHymnBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.widget.SimpleTextWatcher
-import com.tinashe.hymnal.utils.IntentExtras
 import dagger.hilt.android.AndroidEntryPoint
+import hymnal.content.model.Hymn
+import hymnal.content.model.Status
 import org.wordpress.aztec.Aztec
 import org.wordpress.aztec.ITextFormat
 import org.wordpress.aztec.toolbar.IAztecToolbarClickListener
+import hymnal.l10n.R as L10nR
 
 @AndroidEntryPoint
 class EditHymnActivity : AppCompatActivity(), IAztecToolbarClickListener {
@@ -53,7 +53,7 @@ class EditHymnActivity : AppCompatActivity(), IAztecToolbarClickListener {
                 }
                 Status.ERROR -> {
                     binding.snackbar.show(
-                        messageId = R.string.error_invalid_content,
+                        messageId = L10nR.string.error_invalid_content,
                         longDuration = true
                     )
                 }
@@ -76,9 +76,9 @@ class EditHymnActivity : AppCompatActivity(), IAztecToolbarClickListener {
 
             btnSave.setOnClickListener {
                 MaterialAlertDialogBuilder(this@EditHymnActivity)
-                    .setMessage(R.string.confirm_save)
+                    .setMessage(L10nR.string.confirm_save)
                     .setNegativeButton(android.R.string.cancel, null)
-                    .setPositiveButton(R.string.title_save) { _, _ ->
+                    .setPositiveButton(L10nR.string.title_save) { _, _ ->
                         val html = edtHymn.toPlainHtml()
                         viewModel.saveContent(html)
                     }
@@ -108,9 +108,9 @@ class EditHymnActivity : AppCompatActivity(), IAztecToolbarClickListener {
             }
             R.id.action_undo -> {
                 MaterialAlertDialogBuilder(this@EditHymnActivity)
-                    .setMessage(R.string.undo_changes_confirm)
+                    .setMessage(L10nR.string.undo_changes_confirm)
                     .setNegativeButton(android.R.string.cancel, null)
-                    .setPositiveButton(R.string.title_undo) { _, _ ->
+                    .setPositiveButton(L10nR.string.title_undo) { _, _ ->
                         viewModel.undoChanges()
                     }
                     .show()
@@ -145,7 +145,7 @@ class EditHymnActivity : AppCompatActivity(), IAztecToolbarClickListener {
             context,
             EditHymnActivity::class.java
         ).apply {
-            putExtra(IntentExtras.HYMN, hymn)
+            putExtra(EXTRA_HYMN, hymn)
         }
     }
 }

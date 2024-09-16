@@ -3,16 +3,21 @@
 /local.properties
 .idea/*
 .DS_Store
-/build
+*build
 /captures
 .externalNativeBuild
 .cxx
 
 app/google-services.json
+app-v2/google-services.json
 version.properties
 /app/play-key.json
 /app/Christ_key
 /app/keystore.properties
+/app/vellore-keystore.properties
 app/src/main/assets/*
 app/src/main/play/*
 secrets/
+
+# Kotlin 2.0
+.kotlin/

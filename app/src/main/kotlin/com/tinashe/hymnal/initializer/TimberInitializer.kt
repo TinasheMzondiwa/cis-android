@@ -3,7 +3,6 @@ package com.tinashe.hymnal.initializer
 import android.content.Context
 import androidx.startup.Initializer
 import com.tinashe.hymnal.BuildConfig
-import com.tinashe.hymnal.extensions.CrashlyticsTree
 import timber.log.Timber
 
 class TimberInitializer : Initializer<Unit> {

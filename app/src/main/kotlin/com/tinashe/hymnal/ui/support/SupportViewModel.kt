@@ -1,15 +1,14 @@
 package com.tinashe.hymnal.ui.support
 
 import android.app.Activity
-import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import hymnal.content.model.Status
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,7 +17,7 @@ class SupportViewModel @Inject constructor(
     private val billingManager: BillingManager
 ) : ViewModel() {
 
-    private val mutablePurchaseResult = SingleLiveEvent<Pair<Status, @StringRes Int?>>()
+    private val mutablePurchaseResult = SingleLiveEvent<Pair<Status, Int?>>()
     val purchaseResultLiveData: LiveData<Pair<Status, Int?>> = mutablePurchaseResult.asLiveData()
 
     private val mutableDeepLinkUrl = SingleLiveEvent<String>()

@@ -9,11 +9,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.Hymnal
 import com.tinashe.hymnal.databinding.HymnalListBottomSheetFragmentBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.hymns.hymnals.adapter.HymnalsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import hymnal.content.model.Hymnal
 
 @AndroidEntryPoint
 class HymnalListBottomSheetFragment : BottomSheetDialogFragment() {

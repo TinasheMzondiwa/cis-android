@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import com.tinashe.hymnal.R
 import com.tinashe.hymnal.extensions.view.inflateView
+import hymnal.l10n.R as L10nR
 
 class FadingSnackbar(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
 
@@ -30,7 +31,7 @@ class FadingSnackbar(context: Context, attrs: AttributeSet) : FrameLayout(contex
     }
 
     fun show(
-        @StringRes messageId: Int = R.string.blank,
+        @StringRes messageId: Int = L10nR.string.blank,
         messageText: CharSequence? = null,
         @StringRes actionId: Int? = null,
         longDuration: Boolean = true,

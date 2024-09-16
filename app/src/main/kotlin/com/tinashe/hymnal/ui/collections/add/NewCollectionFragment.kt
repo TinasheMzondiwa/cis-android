@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.TitleBody
+import hymnal.content.model.TitleBody
 import com.tinashe.hymnal.databinding.FragmentNewCollectionBinding
+import hymnal.l10n.R as L10nR
 
 class NewCollectionFragment : Fragment(R.layout.fragment_new_collection) {
 
@@ -21,7 +22,7 @@ class NewCollectionFragment : Fragment(R.layout.fragment_new_collection) {
         val description = binding.edtDescription.text?.toString()
 
         return if (title.isNullOrEmpty()) {
-            binding.tilTitle.error = getString(R.string.error_required)
+            binding.tilTitle.error = getString(L10nR.string.error_required)
             null
         } else {
             TitleBody(title, description)

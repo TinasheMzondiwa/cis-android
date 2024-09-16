@@ -2,17 +2,15 @@ package com.tinashe.hymnal.ui.hymns.sing.present
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
-import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.Hymn
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.tinashe.hymnal.databinding.ActivityPresentHymnBinding
 import com.tinashe.hymnal.extensions.view.viewBinding
-import timber.log.Timber
+import hymnal.android.intent.getParcelableCompat
+import hymnal.content.model.Hymn
 
 class PresentHymnActivity : AppCompatActivity() {
 
@@ -24,9 +22,9 @@ class PresentHymnActivity : AppCompatActivity() {
 
         binding.btnExit.setOnClickListener { finish() }
 
-        toggleHideyBar()
+        enableImmersiveMode()
 
-        val hymn = intent.getParcelableExtra<Hymn?>(ARG_HYMN)
+        val hymn = intent.getParcelableCompat(ARG_HYMN, Hymn::class.java)
         if (hymn == null) {
             finish()
             return
@@ -35,30 +33,12 @@ class PresentHymnActivity : AppCompatActivity() {
         binding.viewPager.adapter = pagerAdapter
     }
 
-    /**
-     * Detects and toggles immersive mode (also known as "hidey bar" mode).
-     */
-    private fun toggleHideyBar() {
-        val uiOptions: Int = window.decorView.systemUiVisibility
-        var newUiOptions = uiOptions
-        val isImmersiveModeEnabled = uiOptions or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY == uiOptions
-        if (isImmersiveModeEnabled) {
-            Timber.i("Turning immersive mode mode off. ")
-        } else {
-            Timber.i("Turning immersive mode mode on.")
+    private fun enableImmersiveMode() {
+        with(WindowCompat.getInsetsController(window, window.decorView)) {
+            systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            hide(WindowInsetsCompat.Type.systemBars())
         }
-        binding.btnExit.isVisible = isImmersiveModeEnabled
-        val color = if (!isImmersiveModeEnabled) {
-            ContextCompat.getColor(this, R.color.scrim)
-        } else {
-            Color.TRANSPARENT
-        }
-        binding.contentOverLay.setBackgroundColor(color)
-
-        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_FULLSCREEN
-        newUiOptions = newUiOptions xor View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        window.decorView.systemUiVisibility = newUiOptions
     }
 
     companion object {

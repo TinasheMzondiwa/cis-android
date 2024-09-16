@@ -1,18 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="argument_selected_hymn">selected_hymn</string>
-
     <string name="transition_shared_element">transition:shared_element</string>
-
-    <string name="twitter">Twitter</string>
-    <string name="app_full_name">Christ In Song App</string>
-    <string name="app_info">Christ In Song App was made with ❤️ by Tinashe Mzondiwa, a solo mobile app developer.\nIf you enjoy using this app please consider leaving a review. It helps more than you can imagine.\n\nSpecial thanks to all the wonderful saints who provided hymnals to include in this app.</string>
-    <string name="app_email">tmzon08@gmail.com</string>
-    <string name="app_link">https://play.google.com/store/apps/details?id=com.tinashe.christInSong</string>
-    <string name="app_source">https://github.com/TinasheMzondiwa/cis-android</string>
-    <string name="app_twitter">https://twitter.com/christinsongapp</string>
-    <string name="app_share_message">Get the Christ In Song App!\n\n%1$s</string>
-    <string name="app_privacy_policy">https://christ-in-song.web.app/policy/</string>
-    <string name="app_terms">https://christ-in-song.web.app/terms/</string>
-    <string name="subscriptions_url">https://play.google.com/store/account/subscriptions</string>
 </resources>

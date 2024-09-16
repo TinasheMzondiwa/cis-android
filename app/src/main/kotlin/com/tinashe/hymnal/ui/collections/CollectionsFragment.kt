@@ -24,6 +24,7 @@ import com.tinashe.hymnal.ui.AppBarBehaviour
 import com.tinashe.hymnal.ui.collections.adapter.CollectionListAdapter
 import com.tinashe.hymnal.ui.widget.SwipeToDeleteCallback
 import dagger.hilt.android.AndroidEntryPoint
+import hymnal.l10n.R as L10nR
 
 @AndroidEntryPoint
 class CollectionsFragment : Fragment(R.layout.fragment_collections), MenuProvider {
@@ -36,7 +37,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections), MenuProvide
         CollectionListAdapter { pair ->
             val collection = pair.first
             if (collection.hymns.isEmpty()) {
-                binding.snackbar.show(messageId = R.string.error_empty_collection)
+                binding.snackbar.show(messageId = L10nR.string.error_empty_collection)
                 return@CollectionListAdapter
             }
 
@@ -54,8 +55,8 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections), MenuProvide
 
                 binding.snackbar.apply {
                     show(
-                        messageId = R.string.collection_deleted,
-                        actionId = R.string.title_undo,
+                        messageId = L10nR.string.collection_deleted,
+                        actionId = L10nR.string.title_undo,
                         longDuration = true,
                         actionClick = {
                             viewModel.undoDelete()

@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.databinding.FragmentHymnsBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
 import com.tinashe.hymnal.ui.AppBarBehaviour
@@ -27,6 +26,7 @@ import com.tinashe.hymnal.ui.hymns.adapter.HymnListAdapter
 import com.tinashe.hymnal.ui.hymns.sing.SingHymnsActivity
 import com.tinashe.hymnal.ui.widget.SwipeToDeleteCallback
 import dagger.hilt.android.AndroidEntryPoint
+import hymnal.l10n.R as L10nR
 
 @AndroidEntryPoint
 class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider {
@@ -58,8 +58,8 @@ class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider 
 
                 binding.snackbar.apply {
                     show(
-                        messageId = R.string.hymn_deleted,
-                        actionId = R.string.title_undo,
+                        messageId = L10nR.string.hymn_deleted,
+                        actionId = L10nR.string.title_undo,
                         longDuration = true,
                         actionClick = {
                             viewModel.undoDeleteHymn()
@@ -93,16 +93,11 @@ class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider 
             adapter = listAdapter
         }
 
-        viewModel.statusLiveData.observeNonNull(viewLifecycleOwner) {
-            binding.apply {
-                hymnsListView.isVisible = it != Status.LOADING
-                progressBar.isVisible = it == Status.LOADING
-            }
-        }
         viewModel.collectionTitleLiveData.observeNonNull(viewLifecycleOwner) {
             appBarBehaviour?.setAppBarTitle(it)
         }
         viewModel.hymnListLiveData.observeNonNull(viewLifecycleOwner) { hymns ->
+            binding.progressBar.isVisible = false
             listAdapter.submitList(ArrayList(hymns))
         }
     }
@@ -121,10 +116,10 @@ class CollectionHymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider 
         return when (menuItem.itemId) {
             R.id.action_delete -> {
                 MaterialAlertDialogBuilder(requireContext(), R.style.Theme_CIS_AlertDialog_Warning)
-                    .setTitle(R.string.delete_collection)
-                    .setMessage(R.string.delete_collection_message)
+                    .setTitle(L10nR.string.delete_collection)
+                    .setMessage(L10nR.string.delete_collection_message)
                     .setPositiveButton(android.R.string.cancel, null)
-                    .setNegativeButton(R.string.title_delete) { _, _ ->
+                    .setNegativeButton(L10nR.string.title_delete) { _, _ ->
                         viewModel.deleteCollectionConfirmed()
                         findNavController().popBackStack()
                     }

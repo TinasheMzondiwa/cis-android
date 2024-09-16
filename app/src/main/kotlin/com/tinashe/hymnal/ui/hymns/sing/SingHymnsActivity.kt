@@ -8,9 +8,11 @@ import android.transition.TransitionManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.transition.doOnEnd
 import androidx.core.transition.doOnStart
@@ -20,13 +22,12 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.transition.platform.MaterialArcMotion
 import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.constants.UiPref
 import com.tinashe.hymnal.databinding.ActivitySingBinding
 import com.tinashe.hymnal.extensions.activity.applyMaterialTransform
 import com.tinashe.hymnal.extensions.arch.observeNonNull
-import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import com.tinashe.hymnal.extensions.view.viewBinding
 import com.tinashe.hymnal.ui.collections.add.AddToCollectionFragment
+import com.tinashe.hymnal.ui.hymns.HymnsState
 import com.tinashe.hymnal.ui.hymns.hymnals.HymnalListBottomSheetFragment
 import com.tinashe.hymnal.ui.hymns.sing.edit.EditHymnActivity
 import com.tinashe.hymnal.ui.hymns.sing.player.PlaybackState
@@ -34,11 +35,14 @@ import com.tinashe.hymnal.ui.hymns.sing.player.SimpleTunePlayer
 import com.tinashe.hymnal.ui.hymns.sing.present.PresentHymnActivity
 import com.tinashe.hymnal.ui.hymns.sing.style.TextStyleChanges
 import com.tinashe.hymnal.ui.hymns.sing.style.TextStyleFragment
-import com.tinashe.hymnal.utils.Helper
 import dagger.hilt.android.AndroidEntryPoint
+import hymnal.android.coroutines.collectIn
+import hymnal.prefs.HymnalPrefs
+import hymnal.prefs.model.UiPref
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import hymnal.l10n.R as L10nR
 
 @AndroidEntryPoint
 class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
@@ -78,18 +82,23 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
 
         val hymnId = intent.getIntExtra(ARG_SELECTED, 1)
 
-        viewModel.statusLiveData.observeNonNull(this) {
-        }
-        viewModel.hymnalTitleLiveData.observeNonNull(this) {
-            title = it
-        }
-        viewModel.hymnListLiveData.observeNonNull(this) { hymns ->
-            pagerAdapter = SingFragmentsAdapter(this, hymns)
-            binding.viewPager.apply {
-                adapter = pagerAdapter
-                val position = currentPosition ?: hymns.indexOfFirst { it.hymnId == hymnId }
-                setCurrentItem(position, false)
-                currentPosition = null
+        viewModel.uiState.collectIn(this) { state ->
+            when (state) {
+                HymnsState.Error,
+                HymnsState.Loading,
+                is HymnsState.SearchResults -> Unit
+                is HymnsState.Success -> {
+                    title = state.title
+                    pagerAdapter = SingFragmentsAdapter(this@SingHymnsActivity, state.hymns)
+                    binding.viewPager.apply {
+                        adapter = pagerAdapter
+                        val position = (currentPosition ?: state.hymns.indexOfFirst { it.hymnId == hymnId })
+                            .takeUnless { it == -1 } ?: return@apply
+
+                        setCurrentItem(position, false)
+                        currentPosition = null
+                    }
+                }
             }
         }
         tunePlayer.playbackLiveData.observeNonNull(this) {
@@ -98,6 +107,16 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
 
         val collectionId = intent.getIntExtra(ARG_COLLECTION_ID, -1)
         viewModel.loadData(collectionId)
+
+        onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (binding.numberPadView.isVisible) {
+                    hideNumPad()
+                } else {
+                    finishAfterTransition()
+                }
+            }
+        })
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -113,12 +132,10 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                     super.onPageSelected(position)
                     tunePlayer.stopMedia()
 
-                    val hymns = pagerAdapter?.hymns
-                    if (hymns.isNullOrEmpty()) {
-                        return
-                    }
-                    val hymn = hymns[position]
-                    viewModel.hymnViewed(hymn)
+                    val hymn = viewModel.getHymn(position) ?: return
+                    // We cannot edit markdown content for now.
+                    binding.bottomAppBar.menu.findItem(R.id.action_edit).isVisible =
+                        hymn.markdown.isNullOrEmpty()
                 }
             })
 
@@ -126,7 +143,7 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                 hideNumPad()
                 val position = pagerAdapter?.hymns?.indexOfFirst { it.number == number }
                 if (position == null || position < 0) {
-                    snackbar.show(messageText = getString(R.string.error_invalid_number, number))
+                    snackbar.show(messageText = getString(L10nR.string.error_invalid_number, number))
                     return@setOnNumSelectedCallback
                 }
                 viewPager.setCurrentItem(position, false)
@@ -213,14 +230,6 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
         }
     }
 
-    override fun onBackPressed() {
-        if (binding.numberPadView.isVisible) {
-            hideNumPad()
-            return
-        }
-        super.onBackPressed()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.hymn_menu, menu)
         return super.onCreateOptionsMenu(menu)
@@ -297,7 +306,7 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
 
     override fun updateTheme(pref: UiPref) {
         prefs.setUiPref(pref)
-        Helper.switchToTheme(pref)
+        pref.setDefaultNightMode()
     }
 
     override fun updateTypeFace(fontRes: Int) {
@@ -325,6 +334,17 @@ class SingHymnsActivity : AppCompatActivity(), TextStyleChanges {
                 }
             }
         }
+    }
+
+    private fun UiPref.setDefaultNightMode() {
+        val theme = when (this) {
+            UiPref.DAY -> AppCompatDelegate.MODE_NIGHT_NO
+            UiPref.NIGHT -> AppCompatDelegate.MODE_NIGHT_YES
+            UiPref.FOLLOW_SYSTEM -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            UiPref.BATTERY_SAVER -> AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+        }
+
+        AppCompatDelegate.setDefaultNightMode(theme)
     }
 
     companion object {

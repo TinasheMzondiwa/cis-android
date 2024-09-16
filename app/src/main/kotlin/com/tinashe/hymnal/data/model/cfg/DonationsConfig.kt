@@ -1,6 +1,6 @@
 package com.tinashe.hymnal.data.model.cfg
 
-import com.squareup.moshi.JsonClass
+import androidx.annotation.Keep
 
-@JsonClass(generateAdapter = true)
+@Keep
 data class DonationsConfig(val enabled: Boolean = false)

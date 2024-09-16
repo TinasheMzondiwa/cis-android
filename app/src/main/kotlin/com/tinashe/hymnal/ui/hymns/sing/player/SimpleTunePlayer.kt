@@ -6,16 +6,16 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import com.tinashe.hymnal.data.model.constants.Hymnals
 import com.tinashe.hymnal.extensions.arch.SingleLiveEvent
 import com.tinashe.hymnal.extensions.arch.asLiveData
-import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
+import dagger.hilt.android.qualifiers.ApplicationContext
+import hymnal.prefs.HymnalPrefs
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
 class SimpleTunePlayer @Inject constructor(
-    private val context: Context,
+    @ApplicationContext private val context: Context,
     private val prefs: HymnalPrefs
 ) : DefaultLifecycleObserver {
 
@@ -31,8 +31,12 @@ class SimpleTunePlayer @Inject constructor(
         if (isPlaying) {
             stopMedia()
         }
-        context.assets.openFd("$FOLDER/$number$EXTENSION")
-        !unavailableCodes.contains(prefs.getSelectedHymnal())
+        if (availableCodes.contains(prefs.getSelectedHymnal())) {
+            context.assets.openFd("$FOLDER/$number$EXTENSION")
+            true
+        } else {
+            false
+        }
     } catch (ex: IOException) {
         false
     }
@@ -85,14 +89,19 @@ class SimpleTunePlayer @Inject constructor(
         private const val EXTENSION = ".mid"
 
         /**
-         * Add here [Hymnals] that do not have audio matching the original [Hymnals.ENGLISH].
+         * Add here Hymnals that have audio matching the original ENGLISH.
          */
-        private val unavailableCodes = listOf(
-            Hymnals.SWAHILI,
-            Hymnals.ABAGUSII,
-            Hymnals.GIKUYU,
-            Hymnals.DHOLUO,
-            Hymnals.SDAH
-        ).map { it.key }
+        private val availableCodes = listOf(
+            "english",
+            "shona",
+            "ndebele",
+            "tswana",
+            "sotho",
+            "chichewa",
+            "tonga",
+            "venda",
+            "xitsonga",
+            "sepedi"
+        )
     }
 }

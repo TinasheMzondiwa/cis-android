@@ -1,15 +1,17 @@
 package com.tinashe.hymnal.ui.hymns.hymnals.adapter
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.ChipGroup
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.constants.HymnalSort
 import com.tinashe.hymnal.databinding.HymnsSortOrderBinding
-import com.tinashe.hymnal.extensions.prefs.HymnalPrefs
 import com.tinashe.hymnal.extensions.view.inflateView
+import hymnal.prefs.HymnalPrefs
+import hymnal.prefs.model.HymnalSort
+import hymnal.l10n.R as L10nR
 
 class SortOptionsAdapter(
     private val prefs: HymnalPrefs,
@@ -18,6 +20,7 @@ class SortOptionsAdapter(
 
     private var setUp: Boolean = false
 
+    @SuppressLint("NotifyDataSetChanged")
     fun init() {
         if (!setUp) {
             setUp = true
@@ -58,17 +61,17 @@ class SortHolder(
             when {
                 checkedIds.contains(R.id.chipSortTitle) -> {
                     sort = HymnalSort.TITLE
-                    labelRes = R.string.sort_title
+                    labelRes = L10nR.string.sort_title
                 }
                 checkedIds.contains(R.id.chipSortLanguage) -> {
                     sort = HymnalSort.LANGUAGE
-                    labelRes = R.string.sort_language
+                    labelRes = L10nR.string.sort_language
                 }
                 else -> return@OnCheckedStateChangeListener
             }
             val resources = containerView.resources
             binding.sortLabel.text = resources.getString(
-                R.string.ordered_by,
+                L10nR.string.ordered_by,
                 resources.getString(labelRes)
             )
             sortChange(sort)
@@ -78,7 +81,7 @@ class SortHolder(
         containerView.setOnClickListener {
             binding.apply {
                 sortGroup.isVisible = !sortGroup.isVisible
-                sortHint.setText(if (sortGroup.isVisible) R.string.tap_to_close else R.string.tap_to_change)
+                sortHint.setText(if (sortGroup.isVisible) L10nR.string.tap_to_close else L10nR.string.tap_to_change)
                 val rotation = when (sortChevIcon.rotation) {
                     0f -> 180f
                     else -> 0f
@@ -92,11 +95,11 @@ class SortHolder(
 
     fun bind(sort: HymnalSort) {
         val labelRes = when (sort) {
-            HymnalSort.TITLE -> R.string.sort_title
-            HymnalSort.LANGUAGE -> R.string.sort_language
+            HymnalSort.TITLE -> L10nR.string.sort_title
+            HymnalSort.LANGUAGE -> L10nR.string.sort_language
         }
         binding.sortLabel.apply {
-            text = resources.getString(R.string.ordered_by, resources.getString(labelRes))
+            text = resources.getString(L10nR.string.ordered_by, resources.getString(labelRes))
         }
         binding.sortGroup.apply {
             setOnCheckedStateChangeListener(null)

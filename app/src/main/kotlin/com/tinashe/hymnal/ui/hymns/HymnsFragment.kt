@@ -18,17 +18,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import com.tinashe.hymnal.R
-import com.tinashe.hymnal.data.model.Hymnal
-import com.tinashe.hymnal.data.model.constants.Status
 import com.tinashe.hymnal.databinding.FragmentHymnsBinding
 import com.tinashe.hymnal.extensions.arch.observeNonNull
-import com.tinashe.hymnal.extensions.context.getColorPrimary
 import com.tinashe.hymnal.ui.AppBarBehaviour
 import com.tinashe.hymnal.ui.hymns.adapter.HymnListAdapter
 import com.tinashe.hymnal.ui.hymns.hymnals.HymnalListFragment.Companion.SELECTED_HYMNAL_KEY
 import com.tinashe.hymnal.ui.hymns.sing.SingHymnsActivity
 import dagger.hilt.android.AndroidEntryPoint
+import hymnal.android.context.getColorPrimary
+import hymnal.android.coroutines.collectIn
+import hymnal.content.model.Hymnal
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
+import hymnal.l10n.R as L10nR
 
 @AndroidEntryPoint
 class HymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider {
@@ -62,23 +63,29 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider {
         viewModel.showHymnalsPromptLiveData.observe(viewLifecycleOwner) {
             showHymnalsTargetPrompt()
         }
-        viewModel.statusLiveData.observeNonNull(viewLifecycleOwner) {
-            binding.apply {
-                hymnsListView.isVisible = it != Status.LOADING
-                progressBar.isVisible = it == Status.LOADING
-            }
-        }
         viewModel.messageLiveData.observeNonNull(viewLifecycleOwner) {
             binding.snackbar.show(messageText = it)
-        }
-        viewModel.hymnalTitleLiveData.observeNonNull(viewLifecycleOwner) {
-            appBarBehaviour?.setAppBarTitle(it)
         }
         viewModel.selectedHymnIdLiveData.observeNonNull(viewLifecycleOwner) {
             openSelectedHymn(it)
         }
-        viewModel.hymnListLiveData.observeNonNull(viewLifecycleOwner) { hymns ->
-            listAdapter.submitList(ArrayList(hymns))
+
+        viewModel.uiState.collectIn(this) { state ->
+            binding.progressBar.isVisible = state == HymnsState.Loading
+            when (state) {
+                HymnsState.Error -> Unit
+                HymnsState.Loading -> Unit
+                is HymnsState.Success -> {
+                    binding.emptyResults.isVisible = false
+                    appBarBehaviour?.setAppBarTitle(state.title)
+                    listAdapter.submitList(state.hymns)
+                }
+                is HymnsState.SearchResults -> {
+                    listAdapter.submitList(state.results)
+                    binding.emptyResults.isVisible = state.results.isEmpty()
+                    binding.emptyResultsText.text = getString(L10nR.string.empty_search_results, state.query)
+                }
+            }
         }
 
         findNavController()
@@ -107,7 +114,7 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider {
 
         val searchItem = menu.findItem(R.id.action_search)
         val searchView: SearchView = searchItem.actionView as SearchView
-        searchView.queryHint = getString(R.string.hint_search_hymns)
+        searchView.queryHint = getString(L10nR.string.hint_search_hymns)
         searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                 appBarBehaviour?.setAppBarExpanded(false)
@@ -157,8 +164,8 @@ class HymnsFragment : Fragment(R.layout.fragment_hymns), MenuProvider {
             .setTarget(R.id.actions_hymnals)
             .setIcon(R.drawable.ic_bookshelf_prompt)
             .setBackgroundColour(requireContext().getColorPrimary())
-            .setPrimaryText(R.string.switch_between_hymnals)
-            .setSecondaryText(R.string.switch_between_hymnals_message)
+            .setPrimaryText(L10nR.string.switch_between_hymnals)
+            .setSecondaryText(L10nR.string.switch_between_hymnals_message)
             .show()
 
         viewModel.hymnalsPromptShown()

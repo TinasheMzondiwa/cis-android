@@ -14,14 +14,16 @@ Written entirely in Kotlin & uses latest Android libraries like
 - [Dagger Hilt](https://dagger.dev/hilt/) for DI
 
 ## Setup
-Requires [Android Studio](https://developer.android.com/studio/) 4.0.0 or above
+* Requires latest stable [Android Studio](https://developer.android.com/studio/).
+* Clone the repo - `git clone`
+* Get submodules - `git submodule update --init --recursive`
 
 ## Links
 <a href='https://play.google.com/store/apps/details?id=com.tinashe.christInSong'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="200px"/></a>
 
 ## License
 
-    Copyright 2022 Tinashe Mzondiwa
+    Copyright 2023 Tinashe Mzondiwa
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
