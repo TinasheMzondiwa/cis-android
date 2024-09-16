@@ -1,3 +1,7 @@
 [submodule "core/hymnal-content/impl/src/main/assets/cis-hymnals"]
 	path = core/hymnal-content/impl/src/main/assets/cis-hymnals
 	url = https://github.com/TinasheMzondiwa/cis-hymnals.git
+
+[submodule "app/src/main/assets/midis"]
+	path = app/src/main/assets/midis
+	url = https://github.com/Faith-UnFeigned/cis-midis.git
