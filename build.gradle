@@ -16,7 +16,7 @@ buildscript {
     versions.navigation = '2.5.1'
     versions.arch_comp = '1.1.1'
     versions.startup = '1.1.1'
-    versions.recyclerview = '1.2.1'
+    versions.recyclerview = '1.3.2'
     versions.preference = '1.2.0'
     versions.browser = '1.4.0'
     versions.coroutines = '1.6.4'
