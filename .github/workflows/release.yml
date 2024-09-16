@@ -52,9 +52,6 @@ jobs:
         with:
           base64: ${{ secrets.KEYSTORE_FILE }}
           output-path: secrects/Christ_key
-      - run: |
-          echo "Path=${{ steps.decode-base64.outputs.output-path }}"
-          cat ${{ steps.decode-base64.outputs.output-path }}
 
       - name: Decode Playstore key
         id: play_store_key
