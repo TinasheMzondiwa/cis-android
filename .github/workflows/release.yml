@@ -35,9 +35,9 @@ jobs:
 
       - name: Decode Playstore key
         env:
-          PLAY_KEY: ${{ secrets.PLAY_KEY }}
+          KEY_CONTENTS: ${{ secrets.PLAY_KEY }}
         run: |
-          echo $PLAY_KEY > secrets/play-account.json
+          echo $KEY_CONTENTS > secrets/play-account.json
 
       - name: Decode Keystore properties file
         env:
