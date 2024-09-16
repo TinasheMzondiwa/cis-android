@@ -13,15 +13,13 @@ plugins {
     id("com.google.firebase.crashlytics")
 }
 
-val releaseFile = file("../app/keystore.properties")
+val releaseFile = file("../secrets/keystore.properties")
 val useReleaseKeystore = releaseFile.exists()
 val appVersionCode = readPropertyValue(
     filePath = "distribution/build_number.properties",
     key = "BUILD_NUMBER",
     defaultValue = "1"
 ).toInt() + 3444
-
-println("KEY FILE EXISTS: ${file("../secrets/Christ_key").exists()}")
 
 android {
     namespace = "com.tinashe.hymnal"
