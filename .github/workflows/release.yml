@@ -54,6 +54,9 @@ jobs:
           fileDir: 'secrets'
           encodedString: ${{ secrets.PLAY_KEY_BASE_64 }}
 
+      - name: Verify Christ_key file exists
+        run: test -f secrets/Christ_key || { echo "Christ_key file not found"; exit 1; }
+
       - name: Generate build number
         run: echo "BUILD_NUMBER=${{github.run_number}}" > distribution/build_number.properties
 
