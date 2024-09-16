@@ -10,10 +10,6 @@
 
 app/google-services.json
 app-v2/google-services.json
-version.properties
-/app/play-key.json
 /app/vellore-keystore.properties
-/secrets/Christ_key
-/secrets/keystore.properties
 # Kotlin 2.0
 .kotlin/

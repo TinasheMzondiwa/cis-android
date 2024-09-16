@@ -14,7 +14,7 @@ plugins {
 }
 
 val appVersionCode = readPropertyValue(
-    filePath = "../secrets/build_number.properties",
+    filePath = "build_number.properties",
     key = "BUILD_NUMBER",
     defaultValue = "1"
 ).toInt() + 3444
