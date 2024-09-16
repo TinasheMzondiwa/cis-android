@@ -33,32 +33,31 @@ jobs:
           echo $FIREBASE_CONFIG > app/google-services.json
           echo $FIREBASE_CONFIG > app-v2/google-services.json
 
-      - name: Decode Keystore properties file
-        env:
-          KEY_PROPERTIES: ${{ secrets.KEY_STORE_PROPERTIES }}
-        run: echo $KEY_PROPERTIES > app/keystore.properties
-
-      - name: Decode Release Keystore File
-        id: decode_release_keystore
-        uses: timheuer/base64-to-file@v1.2
-        with:
-          fileName: 'Christ_key'
-          fileDir: 'secrets'
-          encodedString: ${{ secrets.KEYSTORE_FILE }}
-
       - name: Decode Playstore key
         id: play_store_key
-        uses: timheuer/base64-to-file@v1.2
+        uses: akiojin/decode-base64-github-action@v0.1.0
         with:
-          fileName: 'play-account.json'
-          fileDir: 'secrets'
-          encodedString: ${{ secrets.PLAY_KEY_BASE_64 }}
+          base64: ${{ secrets.PLAY_KEY_BASE_64 }}
+          output-path: secrets/play-account.json
 
       - name: Generate build number
         run: echo "BUILD_NUMBER=${{github.run_number}}" > distribution/build_number.properties
 
       - name: Build Release
         run: ./gradlew app:bundleRelease --stacktrace
+
+      - uses: r0adkll/sign-android-release@v1
+        name: Sign Release file
+        id: build_signed
+        with:
+          releaseDirectory: app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.KEYSTORE_FILE }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+        env:
+          # override default build-tools version (29.0.3) -- optional
+          BUILD_TOOLS_VERSION: "34.0.0"
 
       - name: Publish to Internal track
         uses: r0adkll/upload-google-play@v1.1.3

@@ -13,8 +13,6 @@ plugins {
     id("com.google.firebase.crashlytics")
 }
 
-val releaseFile = file("../app/keystore.properties")
-val useReleaseKeystore = releaseFile.exists()
 val appVersionCode = readPropertyValue(
     filePath = "distribution/build_number.properties",
     key = "BUILD_NUMBER",
@@ -31,29 +29,11 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
 
-    signingConfigs {
-        if (useReleaseKeystore) {
-            val keyProps = Properties().apply {
-                load(FileInputStream(releaseFile))
-            }
-
-            create("release") {
-                storeFile = file(keyProps.getProperty("release.keystore"))
-                storePassword = keyProps.getProperty("release.keystore.password")
-                keyAlias = keyProps.getProperty("key.alias")
-                keyPassword = keyProps.getProperty("key.password")
-            }
-        }
-    }
-
     buildTypes {
         val release by getting {
             isShrinkResources = true
             isMinifyEnabled = true
             proguardFiles("proguard-rules.pro")
-            if (useReleaseKeystore) {
-                signingConfig = signingConfigs.getByName("release")
-            }
             manifestPlaceholders["enableReporting"] = true
         }
 
