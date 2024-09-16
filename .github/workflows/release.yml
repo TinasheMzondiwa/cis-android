@@ -1,0 +1,70 @@
+name: Internal Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  submit-release:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          token: ${{ secrets.CIS_MIDIS_TOKEN }}
+
+      - name: checkout submodules
+        run: |
+          git submodule init
+          git submodule update
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+
+      - name: Decode Firebase google-services.json
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+        run: |
+          echo $FIREBASE_CONFIG > app/google-services.json
+          echo $FIREBASE_CONFIG > app-v2/google-services.json
+
+      - name: Decode Playstore key
+        env:
+          PLAY_KEY: ${{ secrets.PLAY_KEY }}
+        run: |
+          echo $PLAY_KEY > secrets/play-account.json
+
+      - name: Decode Keystore properties file
+        env:
+          KEY_PROPERTIES: ${{ secrets.KEY_STORE_PROPERTIES }}
+        run: echo $KEY_PROPERTIES > app/keystore.properties
+
+      - name: Decode Release Keystore File
+        id: decode_release_keystore
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: 'Christ_key'
+          fileDir: 'secrets'
+          encodedString: ${{ secrets.KEYSTORE_FILE }}
+
+      - name: Generate build number
+        run: echo "BUILD_NUMBER=${{github.run_number}}" > distribution/build_number.properties
+
+      - name: Build Release
+        run: ./gradlew app:bundleRelease --stacktrace
+
+      - name: Publish to Internal track
+        uses: r0adkll/upload-google-play@v1.1.3
+        with:
+          serviceAccountJson: secrets/play-account.json
+          packageName: com.tinashe.christInSong
+          track: internal
+          status: completed
+          whatsNewDirectory: distribution/whatsnew
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab
+          mappingFile: app/build/outputs/mapping/release/mapping.txt

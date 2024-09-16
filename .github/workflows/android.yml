@@ -16,6 +16,11 @@ jobs:
           submodules: recursive
           token: ${{ secrets.CIS_MIDIS_TOKEN }}
 
+      - name: checkout submodules
+        run: |
+          git submodule init
+          git submodule update
+
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
