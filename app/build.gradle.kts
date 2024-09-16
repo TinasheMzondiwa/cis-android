@@ -21,6 +21,8 @@ val appVersionCode = readPropertyValue(
     defaultValue = "1"
 ).toInt() + 3444
 
+println("KEY FILE EXISTS: ${file("../secrets/Christ_key").exists()}")
+
 android {
     namespace = "com.tinashe.hymnal"
 
