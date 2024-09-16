@@ -33,18 +33,6 @@ jobs:
           echo $FIREBASE_CONFIG > app/google-services.json
           echo $FIREBASE_CONFIG > app-v2/google-services.json
 
-      - name: Decode Keystore properties file
-        env:
-          KEY_PROPERTIES: ${{ secrets.KEY_STORE_PROPERTIES }}
-        run: echo $KEY_PROPERTIES > secrets/keystore.properties
-
-      - name: Decode Release Keystore File
-        id: decode_release_keystore
-        uses: akiojin/decode-base64-github-action@v0.1.0
-        with:
-          base64: ${{ secrets.KEYSTORE_FILE }}
-          output-path: secrets/Christ_key
-
       - name: Decode Playstore key
         id: play_store_key
         uses: akiojin/decode-base64-github-action@v0.1.0
@@ -56,7 +44,17 @@ jobs:
         run: echo "BUILD_NUMBER=${{github.run_number}}" > distribution/build_number.properties
 
       - name: Build Release
-        run: ./gradlew app:bundleRelease --stacktrace
+        run: ./gradlew app:assembleRelease --stacktrace
+
+      - uses: r0adkll/sign-android-release@v1
+        name: Sign APK
+        id: build_signed
+        with:
+          releaseDirectory: app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.KEYSTORE_FILE }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
 
       - name: Publish to Internal track
         uses: r0adkll/upload-google-play@v1.1.3
