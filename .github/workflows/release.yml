@@ -3,7 +3,7 @@ name: Internal Release
 on:
   push:
     branches:
-      - main
+      - temp-release
 
 jobs:
   submit-release:
