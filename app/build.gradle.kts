@@ -15,13 +15,18 @@ plugins {
 
 val releaseFile = file("../app/keystore.properties")
 val useReleaseKeystore = releaseFile.exists()
+val appVersionCode = readPropertyValue(
+    filePath = "distribution/build_number.properties",
+    key = "BUILD_NUMBER",
+    defaultValue = "1"
+).toInt() + 3444
 
 android {
     namespace = "com.tinashe.hymnal"
 
     defaultConfig {
         applicationId = "com.tinashe.christInSong"
-        versionCode = 3444
+        versionCode = appVersionCode
         versionName = libs.versions.app.get()
         vectorDrawables.useSupportLibrary = true
     }
@@ -116,4 +121,23 @@ dependencies {
 
     testImplementation(libs.bundles.testing.common)
     androidTestImplementation(libs.bundles.testing.android.common)
+}
+
+/**
+ * Reads a value saved in a [Properties] file
+ */
+fun Project.readPropertyValue(
+    filePath: String,
+    key: String,
+    defaultValue: String
+): String {
+    val file = file(filePath)
+    return if (file.exists()) {
+        val keyProps = Properties().apply {
+            load(FileInputStream(file))
+        }
+        return keyProps.getProperty(key, defaultValue)
+    } else {
+        defaultValue
+    }
 }
