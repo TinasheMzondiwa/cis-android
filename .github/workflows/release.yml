@@ -35,7 +35,7 @@ jobs:
 
       - name: Decode Playstore key
         id: play_store_key
-        uses: akiojin/decode-base64-github-action@v0.1.0
+        uses: akiojin/decode-base64-github-action@v1.0.2
         with:
           base64: ${{ secrets.PLAY_KEY_BASE_64 }}
           output-path: secrets/play-account.json
