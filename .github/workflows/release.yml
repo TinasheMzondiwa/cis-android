@@ -38,13 +38,23 @@ jobs:
           KEY_PROPERTIES: ${{ secrets.KEY_STORE_PROPERTIES }}
         run: echo $KEY_PROPERTIES > app/keystore.properties
 
+#      - name: Decode Release Keystore File
+#        id: decode_release_keystore
+#        uses: timheuer/base64-to-file@v1.2
+#        with:
+#          fileName: 'Christ_key'
+#          fileDir: 'secrets'
+#          encodedString: ${{ secrets.KEYSTORE_FILE }}
+
       - name: Decode Release Keystore File
         id: decode_release_keystore
-        uses: timheuer/base64-to-file@v1.2
+        uses: akiojin/decode-base64-github-action@v0.1.0
         with:
-          fileName: 'Christ_key'
-          fileDir: 'secrets'
-          encodedString: ${{ secrets.KEYSTORE_FILE }}
+          base64: ${{ secrets.KEYSTORE_FILE }}
+          output-path: secrects/Christ_key
+      - run: |
+          echo "Path=${{ steps.decode-base64.outputs.output-path }}"
+          cat ${{ steps.decode-base64.outputs.output-path }}
 
       - name: Decode Playstore key
         id: play_store_key
@@ -53,9 +63,6 @@ jobs:
           fileName: 'play-account.json'
           fileDir: 'secrets'
           encodedString: ${{ secrets.PLAY_KEY_BASE_64 }}
-
-      - name: Verify Christ_key file exists
-        run: test -f secrets/Christ_key || { echo "Christ_key file not found"; exit 1; }
 
       - name: Generate build number
         run: echo "BUILD_NUMBER=${{github.run_number}}" > distribution/build_number.properties
