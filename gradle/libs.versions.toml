@@ -1,6 +1,6 @@
 [versions]
 app = "3.4.0"
-android-billing = "7.0.0"
+android-billing = "7.1.0"
 androidx-activity = "1.9.2"
 androidx-annotations = "1.8.2"
 androidx-appcompat = "1.7.0"
