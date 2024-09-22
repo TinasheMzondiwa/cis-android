@@ -66,13 +66,13 @@ ksp {
 }
 
 dependencies {
-    implementation(projects.features.navigation)
     implementation(projects.libraries.ui)
     implementation(projects.foundation.l10nStrings)
     implementation(projects.libraries.navigation.api)
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.material3.adaptive.navigation.suite)
 
     implementation(platform(libs.google.firebase.bom))
     implementation(libs.google.firebase.config)
