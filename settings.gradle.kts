@@ -25,6 +25,7 @@ include(
     ":core:prefs:api",
     ":core:prefs:model",
     ":core:storage",
+    ":features:hymns",
     ":foundation:android",
     ":foundation:l10n-strings",
     ":libraries:navigation:api",

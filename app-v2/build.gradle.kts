@@ -66,6 +66,8 @@ ksp {
 }
 
 dependencies {
+    implementation(projects.core.hymnalContent.impl)
+    implementation(projects.features.hymns)
     implementation(projects.libraries.ui)
     implementation(projects.foundation.l10nStrings)
     implementation(projects.libraries.navigation.api)
