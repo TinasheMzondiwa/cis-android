@@ -11,6 +11,7 @@ import com.tinashe.hymnal.databinding.FragmentTextOptionsBinding
 import hymnal.android.intent.getParcelableCompat
 import hymnal.prefs.model.TextStyleModel
 import hymnal.prefs.model.UiPref
+import library.hymnal.fonts.R as FontsR
 
 class TextStyleFragment : BottomSheetDialogFragment() {
 
@@ -62,10 +63,10 @@ class TextStyleFragment : BottomSheetDialogFragment() {
             chipGroupTypeface.apply {
                 check(
                     when (model.fontRes) {
-                        R.font.lato -> R.id.chipTypefaceLato
-                        R.font.andada -> R.id.chipTypefaceAndada
-                        R.font.roboto -> R.id.chipTypefaceRoboto
-                        R.font.gentium_basic -> R.id.chipTypefaceGentium
+                        FontsR.font.lato -> R.id.chipTypefaceLato
+                        FontsR.font.andada -> R.id.chipTypefaceAndada
+                        FontsR.font.roboto -> R.id.chipTypefaceRoboto
+                        FontsR.font.gentium_basic -> R.id.chipTypefaceGentium
                         else -> R.id.chipTypefaceProxima
                     }
                 )
@@ -73,11 +74,11 @@ class TextStyleFragment : BottomSheetDialogFragment() {
                 setOnCheckedStateChangeListener { _, checkedIds ->
                     checkedIds.forEach { checkedId ->
                         when (checkedId) {
-                            R.id.chipTypefaceLato -> R.font.lato
-                            R.id.chipTypefaceAndada -> R.font.andada
-                            R.id.chipTypefaceRoboto -> R.font.roboto
-                            R.id.chipTypefaceGentium -> R.font.gentium_basic
-                            R.id.chipTypefaceProxima -> R.font.proxima_nova_soft_regular
+                            R.id.chipTypefaceLato -> FontsR.font.lato
+                            R.id.chipTypefaceAndada -> FontsR.font.andada
+                            R.id.chipTypefaceRoboto -> FontsR.font.roboto
+                            R.id.chipTypefaceGentium -> FontsR.font.gentium_basic
+                            R.id.chipTypefaceProxima -> FontsR.font.proxima_nova_soft_regular
                             else -> null
                         }?.let { typeface ->
                             styleChanges?.updateTypeFace(typeface)

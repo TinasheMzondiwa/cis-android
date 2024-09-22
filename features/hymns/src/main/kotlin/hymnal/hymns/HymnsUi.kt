@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -103,10 +104,12 @@ fun HymnsUi(state: State, modifier: Modifier = Modifier) {
     ) { paddingValues ->
         when (state) {
             is State.Content -> LazyColumn(
-                modifier = Modifier.padding(paddingValues),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
                 state = listState,
             ) {
-                items(state.hymns, key = { it.id}) { hymn ->
+                items(state.hymns, key = { it.id }) { hymn ->
                     ListItem(
                         headlineContent = { Text(hymn.title) },
                         modifier = Modifier.animateItem()
@@ -115,7 +118,9 @@ fun HymnsUi(state: State, modifier: Modifier = Modifier) {
             }
 
             State.Loading -> Box(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator()

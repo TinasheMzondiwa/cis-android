@@ -30,7 +30,9 @@ include(
     ":foundation:l10n-strings",
     ":libraries:navigation:api",
     ":libraries:navigation:model",
+    ":libraries:fonts",
     ":libraries:ui",
+    ":services:prefs:impl",
 )
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

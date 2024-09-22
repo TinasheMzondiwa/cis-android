@@ -71,6 +71,7 @@ dependencies {
     implementation(projects.libraries.ui)
     implementation(projects.foundation.l10nStrings)
     implementation(projects.libraries.navigation.api)
+    implementation(projects.services.prefs.impl)
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.activity.compose)

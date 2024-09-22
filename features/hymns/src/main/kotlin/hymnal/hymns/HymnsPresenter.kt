@@ -17,7 +17,7 @@ import kotlinx.collections.immutable.toImmutableList
 import libraries.hymnal.navigation.api.HymnsScreen
 
 class HymnsPresenter @AssistedInject constructor(
-    private val repository: HymnalRepository
+  //  private val repository: HymnalRepository
 ) : Presenter<State> {
 
     @CircuitInject(HymnsScreen::class, SingletonComponent::class)
@@ -29,10 +29,10 @@ class HymnsPresenter @AssistedInject constructor(
     @Composable
     override fun present(): State {
         val hymnalHymns by produceRetainedState<HymnalHymns?>(initialValue = null) {
-            repository.getHymns()
-                .collect { hymns ->
-                    value = hymns.getOrNull()
-                }
+//            repository.getHymns()
+//                .collect { hymns ->
+//                    value = hymns.getOrNull()
+//                }
 
         }
         val title by rememberRetained(hymnalHymns) { mutableStateOf(hymnalHymns?.title) }

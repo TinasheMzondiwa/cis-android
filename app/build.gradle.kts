@@ -71,6 +71,7 @@ dependencies {
     implementation(projects.foundation.l10nStrings)
     implementation(projects.core.hymnalContent.impl)
     implementation(projects.core.prefs.api)
+    implementation(projects.libraries.fonts)
 
     implementation(libs.android.billing)
     implementation(libs.androidx.appcompat)

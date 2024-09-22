@@ -1,7 +1,6 @@
-package com.tinashe.hymnal.extensions.prefs
+package services.hymnal.prefs.impl
 
 import android.content.Context
-import androidx.annotation.FontRes
 import androidx.core.content.edit
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.SharedPreferencesMigration
@@ -75,7 +74,7 @@ class HymnalPrefsImpl @Inject constructor(
         }
     }
 
-    override fun setFontRes(@FontRes fontRes: Int) {
+    override fun setFontRes(fontRes: Int) {
         prefs.edit { putInt(KEY_FONT_STYLE, fontRes) }
     }
 
