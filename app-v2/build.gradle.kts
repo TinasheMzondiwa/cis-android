@@ -12,32 +12,20 @@ plugins {
     id("com.google.firebase.crashlytics")
 }
 
-val releaseFile = file("../app/keystore.properties")
-val useReleaseKeystore = releaseFile.exists()
+val appVersionCode = readPropertyValue(
+    filePath = "build_number.properties",
+    key = "BUILD_NUMBER",
+    defaultValue = "1"
+).toInt() + 3444
 
 android {
     namespace = "app.hymnal"
 
     defaultConfig {
         applicationId = "com.tinashe.christInSong"
-        versionCode = 3439
+        versionCode = appVersionCode
         versionName = libs.versions.app.get()
         vectorDrawables.useSupportLibrary = true
-    }
-
-    signingConfigs {
-        if (useReleaseKeystore) {
-            val keyProps = Properties().apply {
-                load(FileInputStream(releaseFile))
-            }
-
-            create("release") {
-                storeFile = file(keyProps.getProperty("release.keystore"))
-                storePassword = keyProps.getProperty("release.keystore.password")
-                keyAlias = keyProps.getProperty("key.alias")
-                keyPassword = keyProps.getProperty("key.password")
-            }
-        }
     }
 
     buildTypes {
@@ -45,9 +33,6 @@ android {
             isShrinkResources = true
             isMinifyEnabled = true
             proguardFiles("proguard-rules.pro")
-            if (useReleaseKeystore) {
-                signingConfig = signingConfigs.getByName("release")
-            }
             manifestPlaceholders["enableReporting"] = true
         }
 
@@ -62,6 +47,14 @@ android {
             proguardFiles("benchmark-rules.pro")
         }
     }
+
+    sourceSets {
+        getByName("main") {
+            assets {
+                srcDirs("src/main/assets")
+            }
+        }
+    }
 }
 
 slack {
@@ -69,7 +62,7 @@ slack {
 }
 
 dependencies {
-    implementation(projects.core.ui)
+    implementation(projects.libraries.ui)
     implementation(projects.foundation.l10nStrings)
 
 
@@ -91,4 +84,23 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.compose.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+}
+
+/**
+ * Reads a value saved in a [Properties] file
+ */
+fun Project.readPropertyValue(
+    filePath: String,
+    key: String,
+    defaultValue: String
+): String {
+    val file = file(filePath)
+    return if (file.exists()) {
+        val keyProps = Properties().apply {
+            load(FileInputStream(file))
+        }
+        return keyProps.getProperty(key, defaultValue)
+    } else {
+        defaultValue
+    }
 }
