@@ -61,13 +61,17 @@ slack {
     features { compose() }
 }
 
+ksp {
+    arg("circuit.codegen.mode", "hilt")
+}
+
 dependencies {
+    implementation(projects.features.navigation)
     implementation(projects.libraries.ui)
     implementation(projects.foundation.l10nStrings)
-
+    implementation(projects.libraries.navigation.api)
 
     implementation(libs.androidx.core)
-    implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.activity.compose)
 
     implementation(platform(libs.google.firebase.bom))
@@ -75,6 +79,7 @@ dependencies {
     implementation(libs.google.firebase.crashlytics)
     implementation(libs.google.hilt.android)
     ksp(libs.google.hilt.compiler)
+    ksp(libs.circuit.codegen)
 
 
     testImplementation(libs.test.junit)
