@@ -31,6 +31,7 @@ include(
     ":libraries:navigation:api",
     ":libraries:navigation:model",
     ":libraries:fonts",
+    ":libraries:models",
     ":libraries:ui",
     ":services:prefs:impl",
 )

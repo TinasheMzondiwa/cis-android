@@ -3,12 +3,10 @@ package services.hymnal.prefs.impl
 import android.content.Context
 import androidx.core.content.edit
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.SharedPreferencesMigration
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.preference.PreferenceManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import hymnal.android.coroutines.DispatcherProvider
@@ -26,26 +24,13 @@ import timber.log.Timber
 import javax.inject.Inject
 import library.hymnal.fonts.R as FontsR
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
-    name = "hymnal_prefs",
-    produceMigrations = {
-        listOf(
-            SharedPreferencesMigration(
-                it,
-                "${it.packageName}_preferences",
-                setOf(HymnalPrefsImpl.KEY_CODE)
-            )
-        )
-    }
-)
-
 class HymnalPrefsImpl @Inject constructor(
     @ApplicationContext context: Context,
+    private val dataStore: DataStore<Preferences>,
     dispatcherProvider: DispatcherProvider
 ) : HymnalPrefs, Scopable by ioScopable(dispatcherProvider) {
 
     private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-    private val dataStore: DataStore<Preferences> = context.dataStore
 
     private fun preferencesFlow(): Flow<Preferences> = dataStore.data
         .catch { exception ->
@@ -116,7 +101,7 @@ class HymnalPrefsImpl @Inject constructor(
     companion object {
         private const val DEFAULT_CODE = "english"
 
-        internal const val KEY_CODE = "pref:default_code"
+        const val KEY_CODE = "pref:default_code"
         private const val KEY_UI_PREF = "pref:app_theme"
         private const val KEY_FONT_STYLE = "pref:font_res"
         private const val KEY_FONT_SIZE = "pref:font_size"

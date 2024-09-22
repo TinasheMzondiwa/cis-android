@@ -8,9 +8,10 @@ plugins {
 
 
 dependencies {
-    implementation(projects.core.prefs.api)
+    api(projects.core.prefs.api)
     implementation(projects.foundation.android)
     implementation(projects.libraries.fonts)
+    implementation(projects.libraries.models)
 
     implementation(libs.androidx.datastore.prefs)
     implementation(libs.androidx.preference)

@@ -48,6 +48,10 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     sourceSets {
         getByName("main") {
             assets {
@@ -69,12 +73,15 @@ dependencies {
     implementation(projects.core.hymnalContent.impl)
     implementation(projects.features.hymns)
     implementation(projects.libraries.ui)
+    implementation(projects.foundation.android)
     implementation(projects.foundation.l10nStrings)
+    implementation(projects.libraries.models)
     implementation(projects.libraries.navigation.api)
     implementation(projects.services.prefs.impl)
 
-    implementation(libs.androidx.core)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.datastore.prefs)
     implementation(libs.material3.adaptive.navigation.suite)
 
     implementation(platform(libs.google.firebase.bom))

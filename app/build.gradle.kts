@@ -70,8 +70,9 @@ dependencies {
     implementation(projects.foundation.android)
     implementation(projects.foundation.l10nStrings)
     implementation(projects.core.hymnalContent.impl)
-    implementation(projects.core.prefs.api)
     implementation(projects.libraries.fonts)
+    implementation(projects.libraries.models)
+    implementation(projects.services.prefs.impl)
 
     implementation(libs.android.billing)
     implementation(libs.androidx.appcompat)
