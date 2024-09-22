@@ -2,6 +2,7 @@ package hymnal.hymns
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -32,6 +33,7 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -77,6 +79,20 @@ fun HymnsUi(state: State, modifier: Modifier = Modifier) {
                     }
                 },
                 modifier = Modifier,
+                navigationIcon = {
+                    when (state) {
+                        is State.Content -> {
+                            IconButton(onClick = { state.eventSink(Event.OnSortClicked) }) {
+                                Icon(
+                                    state.sortType.icon,
+                                    contentDescription = stringResource(state.sortType.title),
+                                )
+                            }
+                        }
+
+                        State.Loading -> Unit
+                    }
+                },
                 actions = {
                     IconButton(onClick = { }) {
                         Icon(
@@ -112,7 +128,15 @@ fun HymnsUi(state: State, modifier: Modifier = Modifier) {
                 items(state.hymns, key = { it.id }) { hymn ->
                     ListItem(
                         headlineContent = { Text(hymn.title) },
-                        modifier = Modifier.animateItem()
+                        modifier = Modifier
+                            .animateItem()
+                            .padding(horizontal = 8.dp)
+                            .background(
+                                MaterialTheme.colorScheme.surface,
+                                RoundedCornerShape(12.dp)
+                            )
+                            .clip(RoundedCornerShape(12.dp))
+                            .clickable { state.eventSink(Event.OnHymnClicked(hymn)) },
                     )
                 }
             }
@@ -135,13 +159,14 @@ private fun Preview() {
     HymnalTheme {
         HymnsUi(
             State.Content(
+                SortType.NUMBER,
                 "Title", persistentListOf(
                     HymnModel(1, "Title 1", 1),
                     HymnModel(2, "Title 2", 2),
                     HymnModel(3, "Title 3", 3),
                     HymnModel(4, "Title 4", 4),
                     HymnModel(5, "Title 5", 5),
-                )
+                ), {}
             )
         )
     }

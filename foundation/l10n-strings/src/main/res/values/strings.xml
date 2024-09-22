@@ -70,6 +70,7 @@
     <string name="tap_to_change">Tap to change</string>
     <string name="tap_to_close">Tap to close</string>
     <string name="sort_language">Language</string>
+    <string name="sort_number">Number</string>
     <string name="sort_title">Title</string>
     <string name="ordered_by">Ordered by %1$s</string>
     <string name="write_review">Write Review…</string>
