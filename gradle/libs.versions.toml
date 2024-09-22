@@ -20,6 +20,7 @@ androidx-room = "2.6.1"
 androidx-startup = "1.2.0"
 aztec = "v1.9.0"
 cash-app-turbine = "1.1.0"
+circuit = "0.24.0"
 coil = "2.7.0"
 desugar_jdk_libs_minimal = "2.1.2"
 gradle-android = "8.6.1"
@@ -93,6 +94,18 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 aztec = { module = "org.wordpress:aztec", version.ref = "aztec" }
+circuit-codegen = { module = "com.slack.circuit:circuit-codegen", version.ref = "circuit" }
+circuit-codegen-annotations = { module = "com.slack.circuit:circuit-codegen-annotations", version.ref = "circuit" }
+circuit-foundation = { module = "com.slack.circuit:circuit-foundation", version.ref = "circuit" }
+circuit-overlay = { module = "com.slack.circuit:circuit-overlay", version.ref = "circuit" }
+circuit-retained = { module = "com.slack.circuit:circuit-retained", version.ref = "circuit" }
+circuit-runtime = { module = "com.slack.circuit:circuit-runtime", version.ref = "circuit" }
+circuit-runtime-presenter = { module = "com.slack.circuit:circuit-runtime-presenter", version.ref = "circuit" }
+circuit-runtime-screen = { module = "com.slack.circuit:circuit-runtime-screen", version.ref = "circuit" }
+circuit-runtime-ui = { module = "com.slack.circuit:circuit-runtime-ui", version.ref = "circuit" }
+circuitx-android = { module = "com.slack.circuit:circuitx-android", version.ref = "circuit" }
+circuitx-gesture-navigation = { module = "com.slack.circuit:circuitx-gesture-navigation", version.ref = "circuit" }
+circuitx-overlays = { module = "com.slack.circuit:circuitx-overlays", version.ref = "circuit" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 coil-core = { module = "io.coil-kt:coil", version.ref = "coil" }
 google-coreLibraryDesugaring = { module = "com.android.tools:desugar_jdk_libs_minimal", version.ref = "desugar_jdk_libs_minimal" }
@@ -107,7 +120,6 @@ gradle-android = { module = "com.android.tools.build:gradle", version.ref = "gra
 javax-annotation = { module = "javax.annotation:javax.annotation-api", version.ref = "javax-annotation" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
-kotlin-coroutines-playservices = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlin-coroutines" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 markwon-core = { module = "io.noties.markwon:core", version.ref = "markwon" }
 square-moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "square-moshi" }
@@ -135,6 +147,19 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 
 [bundles]
+circuit = [
+    "circuit-codegen-annotations",
+    "circuit-foundation",
+    "circuit-overlay",
+    "circuit-retained",
+    "circuit-runtime",
+    "circuit-runtime-presenter",
+    "circuit-runtime-screen",
+    "circuit-runtime-ui",
+    "circuitx-android",
+    "circuitx-gesture-navigation",
+    "circuitx-overlays",
+]
 compose = [
     "androidx-compose-foundation",
     "androidx-compose-foundation-layout",
