@@ -1,4 +1,4 @@
-package hymnal.ui.theme
+package libraries.hymnal.ui
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

@@ -25,9 +25,9 @@ include(
     ":core:prefs:api",
     ":core:prefs:model",
     ":core:storage",
-    ":core:ui",
     ":foundation:android",
     ":foundation:l10n-strings",
+    ":libraries:ui",
 )
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
