@@ -22,5 +22,5 @@ data class HomeState(
 
 sealed interface Event : CircuitUiEvent {
     data class OnItemSelected(val item: NavItemModel) : Event
-    data class OnNavEvent(val event: NavEvent) : Event
+    data class OnNavEvent(val navEvent: NavEvent) : Event
 }

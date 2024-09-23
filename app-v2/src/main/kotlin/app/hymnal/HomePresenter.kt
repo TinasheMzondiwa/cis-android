@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import app.hymnal.model.NavItemModel
 import app.hymnal.model.toModel
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.foundation.onNavEvent
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
@@ -53,7 +54,7 @@ class HomePresenter @AssistedInject constructor(
                 }
 
                 is Event.OnNavEvent -> {
-                    // Handle navigation events
+                    navigator.onNavEvent(event.navEvent)
                 }
             }
         }

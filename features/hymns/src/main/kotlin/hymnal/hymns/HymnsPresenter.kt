@@ -7,7 +7,9 @@ import androidx.compose.runtime.setValue
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.retained.produceRetainedState
 import com.slack.circuit.retained.rememberRetained
+import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.components.SingletonComponent
@@ -16,15 +18,17 @@ import hymnal.content.model.HymnalHymns
 import hymnal.hymns.model.HymnModel
 import kotlinx.collections.immutable.toImmutableList
 import libraries.hymnal.navigation.api.HymnsScreen
+import libraries.hymnal.navigation.api.SingHymnScreen
 
 class HymnsPresenter @AssistedInject constructor(
+    @Assisted private val navigator: Navigator,
     private val repository: HymnalRepository
 ) : Presenter<State> {
 
     @CircuitInject(HymnsScreen::class, SingletonComponent::class)
     @AssistedFactory
     interface Factory {
-        fun create(): HymnsPresenter
+        fun create(navigator: Navigator): HymnsPresenter
     }
 
     @Composable
@@ -53,7 +57,7 @@ class HymnsPresenter @AssistedInject constructor(
             ) { event ->
                 when (event) {
                     is Event.OnHymnClicked -> {
-
+                        navigator.goTo(SingHymnScreen(event.hymn.id))
                     }
 
                     Event.OnSortClicked -> {
