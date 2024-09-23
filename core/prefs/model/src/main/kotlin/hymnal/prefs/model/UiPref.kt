@@ -7,7 +7,7 @@ enum class UiPref(val value: String) {
     FOLLOW_SYSTEM("follow_system");
 
     companion object {
-        private val map = values().associateBy(UiPref::value)
+        private val map = entries.associateBy(UiPref::value)
 
         fun fromString(type: String) = map[type]
     }

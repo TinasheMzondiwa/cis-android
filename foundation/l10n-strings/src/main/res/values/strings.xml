@@ -74,4 +74,5 @@
     <string name="sort_title">Title</string>
     <string name="ordered_by">Ordered by %1$s</string>
     <string name="write_review">Write Review…</string>
+    <string name="navigation_back">Back</string>
 </resources>
