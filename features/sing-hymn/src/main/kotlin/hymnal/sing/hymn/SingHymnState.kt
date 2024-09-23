@@ -22,5 +22,6 @@ sealed interface Event {
 @Immutable
 data class DisplayPrefs(
     @FontRes val fontRes: Int,
-    val fontSize: Float
+    val fontSize: Float,
+    val color: Int = 0,
 )
