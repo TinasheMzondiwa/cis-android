@@ -72,6 +72,7 @@ ksp {
 dependencies {
     implementation(projects.core.hymnalContent.impl)
     implementation(projects.features.hymns)
+    implementation(projects.features.search)
     implementation(projects.features.singHymn)
     implementation(projects.libraries.ui)
     implementation(projects.foundation.android)

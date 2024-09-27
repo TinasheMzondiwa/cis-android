@@ -94,24 +94,29 @@ fun HymnsUi(state: State, modifier: Modifier = Modifier) {
                     }
                 },
                 actions = {
-                    IconButton(onClick = { }) {
-                        Icon(
-                            Icons.Rounded.Search,
-                            contentDescription = stringResource(L10nR.string.title_search),
-                        )
+                    when (state) {
+                        is State.Content -> {
+                            IconButton(onClick = { state.eventSink(Event.OnSearchClicked) }) {
+                                Icon(
+                                    Icons.Rounded.Search,
+                                    contentDescription = stringResource(L10nR.string.title_search),
+                                )
 
-                    }
-                    IconButton(onClick = { }) {
-                        Icon(
-                            Icons.Rounded.Dialpad,
-                            contentDescription = stringResource(L10nR.string.title_number),
-                        )
-                    }
-                    IconButton(onClick = { }) {
-                        Icon(
-                            Icons.AutoMirrored.Rounded.LibraryBooks,
-                            contentDescription = stringResource(L10nR.string.title_number),
-                        )
+                            }
+                            IconButton(onClick = { }) {
+                                Icon(
+                                    Icons.Rounded.Dialpad,
+                                    contentDescription = stringResource(L10nR.string.title_number),
+                                )
+                            }
+                            IconButton(onClick = { }) {
+                                Icon(
+                                    Icons.AutoMirrored.Rounded.LibraryBooks,
+                                    contentDescription = stringResource(L10nR.string.title_number),
+                                )
+                            }
+                        }
+                        State.Loading -> Unit
                     }
                 },
                 scrollBehavior = scrollBehavior

@@ -18,6 +18,7 @@ import hymnal.content.model.HymnalHymns
 import hymnal.hymns.model.HymnModel
 import kotlinx.collections.immutable.toImmutableList
 import libraries.hymnal.navigation.api.HymnsScreen
+import libraries.hymnal.navigation.api.SearchScreen
 import libraries.hymnal.navigation.api.SingHymnScreen
 
 class HymnsPresenter @AssistedInject constructor(
@@ -56,15 +57,14 @@ class HymnsPresenter @AssistedInject constructor(
                 (hymns ?: emptyList()).toImmutableList()
             ) { event ->
                 when (event) {
-                    is Event.OnHymnClicked -> {
-                        navigator.goTo(SingHymnScreen(event.hymn.id))
-                    }
+                    is Event.OnHymnClicked -> navigator.goTo(SingHymnScreen(event.hymn.id))
 
                     Event.OnSortClicked -> {
                         sortType = sortType.next()
                     }
-                }
 
+                    Event.OnSearchClicked -> navigator.goTo(SearchScreen)
+                }
             }
         }
     }

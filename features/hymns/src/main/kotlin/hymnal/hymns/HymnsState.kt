@@ -26,6 +26,7 @@ sealed interface State : CircuitUiState {
 
 sealed interface Event : CircuitUiEvent {
     data object OnSortClicked : Event
+    data object OnSearchClicked : Event
     data class OnHymnClicked(val hymn: HymnModel) : Event
 
 }
