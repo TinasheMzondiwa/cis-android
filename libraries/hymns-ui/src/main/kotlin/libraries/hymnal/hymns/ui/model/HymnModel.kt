@@ -1,4 +1,4 @@
-package hymnal.hymns.model
+package libraries.hymnal.hymns.ui.model
 
 import androidx.compose.runtime.Immutable
 
