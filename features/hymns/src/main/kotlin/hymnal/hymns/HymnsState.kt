@@ -8,8 +8,8 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
-import hymnal.hymns.model.HymnModel
 import kotlinx.collections.immutable.ImmutableList
+import libraries.hymnal.hymns.ui.model.HymnModel
 import hymnal.l10n.R as L10nR
 
 sealed interface State : CircuitUiState {

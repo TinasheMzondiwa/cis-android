@@ -29,6 +29,7 @@ include(
     ":features:search",
     ":features:sing-hymn",
     ":foundation:android",
+    ":libraries:hymns-ui",
     ":foundation:l10n-strings",
     ":libraries:navigation:api",
     ":libraries:navigation:model",

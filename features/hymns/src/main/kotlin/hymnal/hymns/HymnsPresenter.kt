@@ -15,8 +15,8 @@ import dagger.assisted.AssistedInject
 import dagger.hilt.components.SingletonComponent
 import hymnal.content.api.HymnalRepository
 import hymnal.content.model.HymnalHymns
-import hymnal.hymns.model.HymnModel
 import kotlinx.collections.immutable.toImmutableList
+import libraries.hymnal.hymns.ui.model.HymnModel
 import libraries.hymnal.navigation.api.HymnsScreen
 import libraries.hymnal.navigation.api.SearchScreen
 import libraries.hymnal.navigation.api.SingHymnScreen
