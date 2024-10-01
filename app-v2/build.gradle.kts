@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ksp)
     alias(libs.plugins.sgp.base)
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.hilt)
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 }
