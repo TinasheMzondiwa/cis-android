@@ -22,7 +22,6 @@ androidx-startup = "1.2.0"
 aztec = "v1.9.0"
 cash-app-turbine = "1.1.0"
 circuit = "0.24.0"
-coil = "2.7.0"
 desugar_jdk_libs_minimal = "2.1.2"
 gradle-android = "8.7.0"
 gradle-cache-fix = "3.0.1"
@@ -60,7 +59,6 @@ timber = "5.0.1"
 
 [libraries]
 android-billing = { module = "com.android.billingclient:billing-ktx", version.ref = "android-billing" }
-androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-annotations = { module = "androidx.annotation:annotation", version.ref = "androidx-annotations" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
@@ -108,21 +106,16 @@ circuit-runtime-ui = { module = "com.slack.circuit:circuit-runtime-ui", version.
 circuitx-android = { module = "com.slack.circuit:circuitx-android", version.ref = "circuit" }
 circuitx-gesture-navigation = { module = "com.slack.circuit:circuitx-gesture-navigation", version.ref = "circuit" }
 circuitx-overlays = { module = "com.slack.circuit:circuitx-overlays", version.ref = "circuit" }
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-coil-core = { module = "io.coil-kt:coil", version.ref = "coil" }
 google-coreLibraryDesugaring = { module = "com.android.tools:desugar_jdk_libs_minimal", version.ref = "desugar_jdk_libs_minimal" }
 google-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "google-firebase-bom" }
 google-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 google-firebase-config = { module = "com.google.firebase:firebase-config-ktx" }
 google-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "google-hilt" }
 google-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "google-hilt" }
-google-hilt-gradle = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "google-hilt" }
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
-gradle-android = { module = "com.android.tools.build:gradle", version.ref = "gradle-android" }
 javax-annotation = { module = "javax.annotation:javax.annotation-api", version.ref = "javax-annotation" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlinx-collectionsImmutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-immutable" }
 material3-adaptive-navigation-suite = { module = "androidx.compose.material3:material3-adaptive-navigation-suite", version.ref = "material3-adaptive-navigation-suite" }
 markwon-core = { module = "io.noties.markwon:core", version.ref = "markwon" }
