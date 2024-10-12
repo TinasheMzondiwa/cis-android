@@ -3,7 +3,7 @@ import com.android.build.gradle.internal.dsl.ManagedVirtualDevice
 plugins {
     id("com.android.test")
     id("org.jetbrains.kotlin.android")
-    alias(libs.plugins.sgp.base)
+    alias(libs.plugins.foundry.base)
 }
 
 android {
