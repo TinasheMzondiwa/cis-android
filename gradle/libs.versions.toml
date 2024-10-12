@@ -23,6 +23,7 @@ aztec = "v1.9.0"
 cash-app-turbine = "1.1.0"
 circuit = "0.24.0"
 desugar_jdk_libs_minimal = "2.1.2"
+foundry = "0.20.0"
 gradle-android = "8.7.0"
 gradle-cache-fix = "3.0.1"
 google-firebase-bom = "33.4.0"
@@ -39,7 +40,6 @@ kotlin-coroutines = "1.9.0"
 kotlinx-immutable = "0.3.8"
 ksp = "2.0.20-1.0.25"
 markwon = "4.6.2"
-sgp = "0.19.4"
 sortDependencies = "0.8"
 spotless = "6.25.0"
 square-moshi = "1.15.1"
@@ -204,6 +204,8 @@ testing-common = [
 android-application = { id = "com.android.application", version.ref = "gradle-android" }
 android-library = { id = "com.android.library", version.ref = "gradle-android" }
 androidx-navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "androidx-navigation" }
+foundry-base = { id = "com.slack.foundry.base", version.ref = "foundry" }
+foundry-root = { id = "com.slack.foundry.root", version.ref = "foundry" }
 google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "google-firebase-crashlytics" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 gradle-cache-fix = { id = "org.gradle.android.cache-fix", version.ref = "gradle-cache-fix" }
@@ -214,7 +216,5 @@ kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-sgp-base = { id = "com.slack.gradle.base", version.ref = "sgp" }
-sgp-root = { id = "com.slack.gradle.root", version.ref = "sgp" }
 sortDependencies = { id = "com.squareup.sort-dependencies", version.ref = "sortDependencies" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

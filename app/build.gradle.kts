@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.sgp.base)
+    alias(libs.plugins.foundry.base)
     alias(libs.plugins.hilt)
     id("com.google.gms.google-services")
     id("androidx.navigation.safeargs.kotlin")
